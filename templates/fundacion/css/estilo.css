@@ -1,0 +1,130 @@
+
+* {
+  padding: 0;
+  margin: 0;
+}
+p {
+  margin-bottom: 20px;
+}
+.wrapper {
+  width: 80%;
+  margin: auto;
+  overflow:hidden;
+}
+header {
+  background: rgba(0,0,0,0.9);
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+}
+
+nav {
+}
+
+nav ul {
+  list-style: none;
+  overflow: hidden; /* Limpiamos errores de float */
+}
+nav ul li {
+  float: left;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  margin-right: -1px;
+}
+nav ul li a {
+  display: block; /* Convertimos los elementos a en elementos bloque para manipular el padding */
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+.bnav{
+	margin: 0px auto;
+    width: 50%;
+}
+/*link a las redes sociales redes sociales*/
+.redes{float: right;margin-right: 9%; margin-top: -3.9%;}
+.icon{    display: inline-block;
+    float: left;
+    width: 26px;
+    height: 26px;
+    margin: 3px;
+    margin-top: 10px}
+.icon.face{ background-color:#3B5991;background-image: url(/fileimages/redes/face.svg); background-size: 100%;}
+.icon.face:hover{background-image: url(/fileimages/redes/face.svg); background-size: 100%;}
+.icon.twit{background-color:#80C7F0;background-image: url(/fileimages/redes/twit.svg); background-size: 100%;}
+.icon.twit:hover{background-image: url(/fileimages/redes/twit.svg); background-size: 100%;}
+.icon.goog{background-color:#C63F2D;background-image: url(/fileimages/redes/g.png); background-size: 100%;}
+.icon.goog:hover{background-image: url(/fileimages/redes/g.png); background-size: 100%;}
+.icon.ytb{background-color:#C7332D;background-image: url(/fileimages/redes/yout.svg); background-size: 100%;}
+.icon.ytb:hover{background-image: url(/fileimages/redes/yout.svg); background-size: 100%;}
+.icon.tuto{background-color:#BC161C;background-image: url(/fileimages/redes/tuto.svg); background-size: 100%;}
+.icon.tuto:hover{background-image: url(/fileimages/redes/tuto.svg); background-size: 100%;}
+.icon.insta{background-color:#53729B;background-image: url(/fileimages/redes/inst.svg); background-size: 100%;}
+.icon.insta:hover{background-image: url(/fileimages/redes/inst.svg); background-size: 100%;}
+.icon.suscr{margin-left: 21px;width: 80px;text-align: center;padding-top: 8px;color: white;background-color:#BB161C;background-size: 100%;text-decoration: none;}
+.tv{
+	    margin-top: 1px;
+    margin-left: -16px !important;
+    width: 38px;
+}
+.tv-color{}
+.menunavegador{
+	 color: white !important;
+    font-size: 13px;
+    padding-right: 0px !important;
+    margin-left: -15px;
+    margin-right: -8px;}
+.menunavegador2{color:white !important;font-size: 15px;padding-right: 5px;
+    margin-left: 0px;
+    margin-right: -9px;}
+.logo{margin-top: 68px;width: 65%;height: 100%;margin-left: 13%;}
+.publicidadheader{margin-top: 77px;width: 102%;height: 100%;margin-left: -19%;}
+.liston{display:inline-block !important;}
+.sec{
+
+    display: inline-block !important;
+  float: left !important;
+    width: 109px !important;
+    height: 32px !important;
+    margin: -2px !important;
+    text-align: center;
+    color:white;
+
+}
+.texto{margin: -8px;}
+.sec.uno{background: #BC161C;}
+.sec.dos{background:#EB6E36;}
+.sec.tres{background:#007989;}
+.sec.cuatro{background:#892787;}
+.sec.cinco{background:#D80080;}
+.sec.seis{background:#6D6E70;}
+.sec.siete{background:#D15D45;}
+.sec.ocho{background:#8C1C6B;}
+.sec.nueve{background:#643700;}
+.sec.diez{background:#FFA42D;}
+
+.sec.uno:hover{background: #BC161C;color:white;}
+.sec.dos:hover{background:#EB6E36;color:white;}
+.sec.tres:hover{background:#007989;color:white;}
+.sec.cuatro:hover{background:#892787;color:white;}
+.sec.cinco:hover{background:#D80080;color:white;}
+.sec.seis:hover{background:#6D6E70;color:white;}
+.sec.siete:hover{background:#D15D45;color:white;}
+.sec.ocho:hover{background:#8C1C6B;color:white;}
+.sec.nueve:hover{background:#643700;color:white;}
+.sec.diez:hover{background:#FFA42D;color:white;}
+
+.navlist>li.activo {
+  background-color: #2B388F;
+}
+
+@media screen and (max-width: 450px){
+	.nav>li{width: 100%;text-align: center;}
+	.menunavegador2{display: none !important;}
+	.menunavegador{background: #222222 !important;}
+	.menunavegador:hover{background: #BB161C !important;}
+	.redes{float: right;margin-right: 21%;margin-top: -10.6%;}
+	.publicidadheader{margin-left:0%;width: 100%;margin-top: 13px;height: 83px;}
+	.tv-color{color:black !important;background: #222222 !important;}
+	.tv-color:hover{background: #BB161C !important;}
+}

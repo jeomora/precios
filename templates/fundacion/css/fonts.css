@@ -1,0 +1,36 @@
+@font-face {
+    font-family: Marvel-Regular;
+    src: url(../fonts/Marvel-Regular.ttf) format('truetype');
+}
+@font-face {
+    font-family: Pretty-girl;
+    src: url(../fonts/PrettyGirl.ttf) format('truetype');
+}
+@font-face {
+    font-family: Myriad-ProBold;
+    src: url(../fonts/MyriadPro-BoldIt_0.otf) format('truetype');
+}
+@font-face {
+    font-family: Myriad-ProIt;
+    src: url(../fonts/MyriadPro-It.otf) format('truetype');
+}
+@font-face {
+    font-family: Myriad-Regular;
+    src: url(../fonts/MyriadPro-Regular.otf) format('truetype');
+}
+@font-face {
+    font-family: Myriad-Semibold;
+    src: url(../fonts/MyriadPro-Semibold.otf) format('truetype');
+}
+@font-face {
+    font-family: Roboto-Black;
+    src: url(../fonts/Roboto-Black.ttf) format('truetype');
+}
+@font-face {
+    font-family: Roboto-Bold;
+    src: url(../fonts/Roboto-Bold.ttf) format('truetype');
+}
+@font-face {
+    font-family: Roboto-Regular;
+    src: url(../fonts/Roboto-Regular.ttf) format('truetype');
+}

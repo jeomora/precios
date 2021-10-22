@@ -1,0 +1,665 @@
+.slider-title{
+font-family: Pretty-girl;
+font-size: 35px;
+}
+
+.text-slider {
+    font-size: 15px;
+    text-align: left;
+}
+/*home*/
+
+.sky-blue-back{
+    background-color: #42afc4;
+    height: 100%;
+}
+
+.blue-background{
+    background-color: #337ab7;
+    height: 100%;
+}
+
+.text-nosotros {
+    font-family: Pretty-girl;
+    font-size: 462%;
+    color: white;
+    padding-top: 1.3%;
+    text-align: center;
+}
+
+.text-nosotros-content{
+    font-family: Roboto-Regular;
+    font-size: 120%;
+    color: white;
+    text-align: center;
+    margin-bottom: -10.5%;
+}
+
+.text-nosotros-opc{
+    font-family: Pretty-girl;
+    font-size: 245%;
+    color: white;
+    text-align: center;
+    padding-left: 6%;
+    margin-top: 4%;
+    margin-bottom: 3%;
+    padding-right: 6%;
+}
+
+.text-historia{
+    font-family: Pretty-girl;
+    font-size: 370%;
+    margin-left: 97%;
+    margin-top: -5%;
+}
+
+.title-content{
+    font-size: 120%;
+}
+
+.text-historia-content {
+    font-family: Roboto-Regular;
+    font-size: 120%;
+    margin-top: -1%;
+    padding-left: 14%;
+    padding-right: 21%;
+}
+
+.text-somos {
+    font-family: Pretty-girl;
+    font-size: 370%;
+    margin-left: 48%;
+    margin-top: 14%;
+    color: white;
+}
+
+.text-somos-content {
+    font-family: Roboto-Regular;
+    font-size: 120%;
+    margin-top: 15px;
+    padding-left: 0%;
+    padding-right: 0%;
+    color: white;
+}
+
+.text-reto {
+    font-family: Pretty-girl;
+    font-size: 244%;
+    margin-top: 1.8%;
+    color: white;
+}
+
+.text-metas{
+    font-family: Pretty-girl;
+    font-size: 380%;
+    margin-left: 94%;
+    margin-top: 12%;
+}
+
+.text-metas-content {
+    font-family: Roboto-Regular;
+    font-size: 120%;
+    margin-top: 2.5%;
+    padding-left: 15%;
+    padding-right: 17.5%;
+    margin-bottom: 2%;
+}
+
+.metas-list{
+    list-style-image: url('../fileimages/nosotrosRecurso12.svg');
+}
+
+.metas-list li{
+    margin-bottom: 4%;
+    padding-left: 11%;
+    margin-left: -18%;
+    list-style: none;
+    background-image: url(../fileimages/nosotrosRecurso12.svg);
+    background-repeat: no-repeat;
+    background-position: left-center;
+    background-size: 32px;
+}
+
+.text-consejo{
+    font-family: Pretty-girl;
+    font-size: 403%;
+    color: white;
+    padding-top: 5%;
+    text-align: center;
+}
+
+.text-consejo-opc {
+    font-family: Roboto-regular;
+    color: white;
+    padding-top: 1.4%;
+    text-align: center;
+    margin: 17%;
+    margin-top: 6%;
+    margin-bottom: 0.6%;
+    font-size: 123%;
+}
+
+.text-consejo-title{
+    font-family: Pretty-girl;
+    font-size: 264%;
+    color: white;
+    padding-top: 6%;
+    margin-bottom: -9%;
+    text-align: center;
+}
+
+.text-voluntarios {
+    font-family: Pretty-girl;
+    font-size: 385%;
+    margin-left: 83%;
+    margin-top: -10%;
+}
+
+.text-voluntarios-content {
+    font-family: Roboto-Regular;
+    font-size: 120%;
+    margin-top: 6%;
+    padding-left: 16.5%;
+    padding-right: 14%;
+}
+
+.text-mes {
+    font-family: Pretty-girl;
+    font-size: 248%;
+    margin-left: 25%;
+    margin-top: 1%;
+}
+
+.text-mes-content {
+    font-family: Roboto-Regular;
+    font-size: 125%;
+    margin-top: 0%;
+    padding-left: 25.5%;
+    padding-right: 17%;
+}
+
+.transforma{
+    font-family: Pretty-girl;
+    font-size: 264%;
+    margin-left: 24%;
+    margin-top: 2%;
+    color: white;
+    text-decoration: underline;
+    margin-bottom: 2%;
+}
+.titcircsper{
+  margin-left: -15%;
+}
+
+.text-transparencia {
+    font-family: Pretty-girl;
+    font-size: 370%;
+    margin-left: 89%;
+    margin-top: 17%;
+    color: white;
+}
+
+.text-transparencia-content {
+    font-family: Roboto-Regular;
+    font-size: 125%;
+    margin-top: 4%;
+    padding-left: 16.5%;
+    padding-right: 16%;
+    color: white;
+    margin-bottom: 3%;
+}
+
+.text-certificacion-title{
+    font-family: Pretty-girl;
+    font-size: 256%;
+    color: white;
+    padding-top: 4%;
+    margin-bottom: 1%;
+    text-align: center;
+    margin-left: 23%;
+}
+
+.text-certificacion {
+    font-family: Roboto-Regular;
+    font-size: 125%;
+    margin-top: 0%;
+    padding-left: 24.5%;
+    padding-right: 0;
+    color: white;
+    text-align: center;
+    margin-right: -4%;
+    padding-bottom: 25px;
+}
+
+.sec-recurso3 {
+    width: 18%;
+    margin-left: 151%;
+    margin-top: 17%;
+}
+
+.sec-recurso7{
+    width: 90%;
+    margin: -26%;
+    margin-left: -11%;
+}
+
+.sec-recurso8 {
+    width: 52%;
+    margin-left: 59%;
+    margin-top: -7%;
+}
+
+.sec-recurso9{
+    width: 58%;
+    margin: 10.5%;
+}
+
+.sec2-recurso9 {
+    width: 12%;
+    margin: 4%;
+    margin-left: 19%;
+    margin-bottom: 2%;
+}
+
+.sec3-recurso9 {
+    width: 24%;
+    margin-left: 116%;
+    margin-top: -25%;
+}
+
+.sec5-recurso9 {
+    width: 20%;
+    margin-left: -29%;
+    margin-top: -7%;
+}
+
+.sec6-recurso9 {
+    width: 45%;
+    margin-left: 350%;
+    margin-top: 6%;
+}
+
+.sec7-recurso9 {
+    width: 12%;
+    margin-left: 88%;
+    margin-bottom: 2%;
+    margin-top: -10%;
+}
+
+.sec8-recurso9{
+    width: 12%;
+    margin-bottom: 0%;
+    margin-top: -10%;
+}
+
+.sec9-recurso9 {
+    width: 43%;
+    margin-top: -1%;
+    margin-left: 51%;
+}
+
+.sec10-recurso9 {
+    width: 12%;
+    margin-left: 96%;
+    margin-top: -12%;
+}
+
+.sec-recurso10{
+    width: 30%;
+    margin: 13%;
+}
+
+.sec-recurso11{
+    width: 57%;
+    margin: 13%;
+}
+
+.sec-recurso12 {
+    width: 23%;
+    margin-left: 66%;
+    margin-top: -38%;
+}
+
+.sec-recurso12-list {
+    width: 23%;
+    margin-left: 66%;
+    margin-top: -38%;
+}
+
+.sec-recurso13 {
+    width: 73%;
+    margin-left: 58%;
+    margin-top: 43%
+}
+
+.sec-recurso14 {
+    width: 51%;
+    margin-left: 64%;
+    margin-top: 15%;
+    margin-bottom: -70%;
+}
+
+.sec-recurso15 {
+    width: 29%;
+    margin-left: 25%;
+    margin-top: 28%;
+    z-index: 5000;
+}
+
+.sec-video-mes {
+    width: 93%;
+    margin-left: -3%;
+    margin-top: 3%;
+    height: 427px;
+}
+
+
+/*para el personal*/
+.circulo-personal{
+margin: 12%;
+margin-bottom: 6%;
+}
+
+
+
+/*.circulo-personal:hover + .triangle-isosceles{
+display : block;
+}
+*/
+
+
+.triangle-isosceles {
+    display: none;
+    width: 300px;
+    margin-top: -110%;
+    position: absolute;
+    float: initial;
+    padding: 15px;
+    margin-left: 75%;
+    color: #000;
+    background-color: #ffce67;
+    -webkit-border-radius: 10px;
+    z-index: 1;
+    border-radius: 10px;
+}
+
+
+
+.text-personal {
+    text-align: left;
+}
+
+.titulo-personal {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+.contenido-personal {
+    font-size: 13px;
+}
+
+
+/*.triangle-isosceles:after {
+  content:"";
+  position:absolute;
+  bottom:-15px;
+  left:50px;
+  border-width:15px 25px 0px 1px;
+  border-style:solid;
+  border-color:#f3961c transparent;
+
+  display:block;
+  width:0;
+}*/
+
+
+
+.triangle-isosceles:after {
+  content:"";
+  position:absolute;
+  bottom:-20px; /* value = - border-top-width - border-bottom-width */
+  left:10px; /* controls horizontal position */
+  border-width:30px 30px 0 0; /* vary these values to change the angle of the vertex */
+  border-style:solid;
+  border-color:#ffce67 transparent;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}
+
+
+.sociales-personal {
+    text-align: left;
+
+    float: none;
+     position: static;
+     right: 0px;
+     padding-right: 0px;
+     width: 100%;
+     padding-left:0px;
+    text-align:left;
+}
+
+
+.sociales-personal>li>a{
+    color: #616161;
+}
+
+.fa.fa-facebook.facebook-personal{
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 20px;
+}
+
+.fa.fa-twitter.twitter-personal{
+    border-radius: 15px;
+    text-align: center;
+    padding: 6px 8px;
+    /* padding-right: 4px; */
+    /* padding-bottom: 3px; */
+    font-size: 20px;
+}
+
+.fa.fa-youtube.youtube-personal {
+    border-radius: 15px;
+    text-align: center;
+    font-size: 20px;
+    padding: 6px 8px;
+}
+
+.fa.fa-instagram.instagram-personal {
+    border-radius: 15px;
+    text-align: center;
+    font-size: 20px;
+    padding: 6px 10px;
+}
+
+
+
+.green {
+    background-color: #b8d000;
+    height: 100%;
+}
+
+.olive {
+    background-color: #b8d000;
+    height: 100%;
+}
+
+.text-involucrate {
+    font-family: Pretty-girl;
+    font-size: 518%;
+    color: white;
+    padding-top: 9.4%;
+    text-align: center;
+}
+
+.text-opc{
+    font-family: Pretty-girl;
+    font-size: 245%;
+    color: white;
+    padding-top: 1.4%;
+    text-align: center;
+    margin: 17%;
+    margin-top: 6%;
+    margin-bottom: 5%;
+}
+
+.title-inv {
+    font-family: Pretty-girl;
+    font-size: 374%;
+    margin-left: 46%;
+    margin-top: 18%;
+    text-align: right;
+
+}
+
+.content-inv {
+    font-family: Roboto-Regular;
+    font-size: 124%;
+    margin-top: 5%;
+    padding-left: 6%;
+    padding-right: 13%;
+}
+
+.title-participa {
+    font-family: Pretty-girl;
+    font-size: 399%;
+    margin-left: 26%;
+    margin-top: 5%;
+    color: white;
+    margin-bottom: 5%;
+}
+
+.participacion {
+    font-family: Pretty-girl;
+    font-size: 205%;
+    margin-top: 5%;
+}
+
+.title-dona{
+    font-family: Pretty-girl;
+    font-size: 399%;
+    margin-left: 26%;
+    margin-top: -2%;
+    color: white;
+    text-align: center;
+}
+
+.underline{
+    text-decoration: underline;
+    color: white;
+}
+
+.video-inv{
+    width: 90%;
+    height: 449px;
+    margin-left: 9%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.boton-form{
+    margin-top: -1%;
+    margin-left: 6%;
+}
+
+.img-involucrate1{
+    width: 37%;
+    margin-top: 12%;
+    margin-left: 33%;
+}
+
+.img-involucrate7{
+    width: 15rem;
+    margin-top: 27rem;
+    margin-left: 54%;
+}
+
+.img-involucrate5{
+    width: 60%;
+    margin-top: 22%;
+}
+
+.img-involucrate9{
+    width: 214%;
+    margin-top: 38%;
+    margin-left: -186%;
+}
+
+.img-involucrate10{
+    width: 11%;
+    margin-top: -2%;
+    margin-left: 4%;
+}
+
+.img-involucrate11{
+    width: 45%;
+    margin-top: 70%;
+    margin-left: 35%;
+}
+
+.img-involucrate12 {
+    width: 48%;
+    margin: 4%;
+    margin-left: -148%;
+}
+
+.img2-involucrate12 {
+    width: 5%;
+    margin-left: 20%;
+    margin-top: -21%;
+}
+
+.img3-involucrate12 {
+    width: 5%;
+    margin-left: 30%;
+    margin-top: -12%;
+}
+
+.img4-involucrate12 {
+    width: 34%;
+    margin-left: -172%;
+    margin-top: -63%;
+}
+
+.img-involucrate13 {
+    width: 7%;
+    margin-top: -2%;
+    margin-left: 4%;
+}
+
+.img-involucrate14 {
+    width: 24%;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-bottom: 4%;
+}
+
+.formulario-involucrate {
+    padding-left: 10%;
+    padding-top: 11%;
+}
+
+.form-involucrate {
+    width: 86%;
+    margin-left: 8%;
+    margin-top: -5%;
+}
+
+.formulario-involucrate {
+    padding-left: 1%;
+    padding-top: 4.5%;
+    margin-left: 4%;
+}
+
+.text-area{
+    height: 136px;
+    font-family: Roboto-Regular;
+    font-size: 18px;
+    border: none;
+    border-radius: 0px;
+    width: 100%;
+    margin-bottom: -1%;
+}
