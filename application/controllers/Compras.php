@@ -103,7 +103,8 @@ class Compras extends MY_Controller {
 						"estatus"		=>	4,
 						"fecha_registro"=>	date("Y-m-d H:i:s"),
 						"code_relacion"	=>	$this->getOldVal($sheet,$i,"E"),
-						"um_nuevo"		=>	$this->getOldVal($sheet,$i,"D")
+						"um_nuevo"		=>	$this->getOldVal($sheet,$i,"D"),
+						"codecaja"		=>	$this->codeCaja()
 					];
 
 					$rojatzo = $this->rojo_md->get("id_rojo",[ 'codigo' => $this->getOldVal($sheet,$i,"A"), "estatus" => 4 ]);
@@ -200,5 +201,20 @@ class Compras extends MY_Controller {
 			$this->cambio_md->insert($cambio);
 		}
 		$this->jsonResponse($upda);
+	}
+
+	private function codeCaja(){
+		$codigo = $this->rojo_md->codeCaja(NULL)[0];
+		$busca1 = $this->prod_md->get(NULL,["codigo"=>$codigo->codecaja]);
+		$busca2 = $this->prod_md->get(NULL,["code"=>$codigo->codecaja]);
+		if($busca1 || $busca2){
+			$codigo = $this->rojo_md->codeCaja(NULL);
+			$busca1 = $this->prod_md->get(NULL,["codigo"=>$codigo->codecaja]);
+			$busca2 = $this->prod_md->get(NULL,["code"=>$codigo->codecaja]);
+			if($busca1 || $busca2){
+				$codigo = $this->rojo_md->codeCaja(NULL);
+			}
+		}
+		return $codigo->codecaja;
 	}
 }

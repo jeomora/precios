@@ -485,5 +485,28 @@ class Uploads extends MY_Controller {
 		}
 	}
 
+	public function getCambioDesc(){
+		$rojos = $this->rojo_md->getCambioDesc(NULL);
+		$this->jsonResponse($rojos);
+	}
+
+	public function setCambiar($val1){
+		$user = $this->session->userdata();
+		$rojo = $this->rojo_md->update( ["estatus"=>8] , ["id_rojo"=>$val1] );
+		$cambio = [
+			"id_usuario"	=>	$user["id_usuario"],
+			"accion"		=>	8,
+			"antes"			=>	$val1,
+			"despues"		=>	"MOSTRAR DESCRIPCIÓN"
+		];
+		$this->cambio_md->insert($cambio);
+		$this->jsonResponse("Se realizó el cambio");
+	}
+
+	public function getAltas(){
+		$rojos = $this->rojo_md->getAltas(NULL);
+		$this->jsonResponse($rojos);
+	}
+
 	
 }

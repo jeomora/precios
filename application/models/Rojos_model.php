@@ -33,12 +33,13 @@ class Rojos_model extends MY_Model {
 	}
 
 	public function getRojos($where = []){
-		$this->db->select("r.id_rojo,r.codigo,r.descripcion,p.nombre,r.costo,r.fecha_registro,p.codigo as code1,p.code as code2,pr.preciocinco,l.ides,u.ides as uni,l.iva,preciouno,preciodos,preciotres,preciocuatro")
+		$this->db->select("r.id_rojo,r.codigo,r.descripcion,p.nombre,r.costo,r.fecha_registro,p.codigo as code1,p.code as code2,pr.preciocinco,l.ides,u.ides as uni,l.iva,preciouno,preciodos,preciotres,preciocuatro, usr.nombre as usu")
 			->from("rojos r")
 			->join("productos p","r.codigo = p.codigo","left")
-			->join("precios pr","p.id_producto = pr.id_producto" ,"left")
+			->join("precios pr","p.id_producto = pr.id_producto AND pr.estatus = 1" ,"left")
 			->join("lineas l ","p.linea = l.id_linea","left")
 			->join("unidades u","p.ums = u.id_unidad","left") 
+			->join("usuarios usr","r.agrego = usr.id_usuario","left")
 			->where("r.estatus = 1")
 			->group_by("r.id_rojo")
 			->order_by("r.fecha_registro","DESC");
@@ -76,6 +77,7 @@ class Rojos_model extends MY_Model {
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["ides"]=	$comparativa[$i]->ides;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["uni"]=	$comparativa[$i]->uni;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["iva"]=	$comparativa[$i]->iva;
+				$comparativaIndexada[$comparativa[$i]->id_rojo]["usu"]=	$comparativa[$i]->usu;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["relaciones"]=	[];
 				$flag++;
 			}
@@ -83,9 +85,9 @@ class Rojos_model extends MY_Model {
 			$this->db->select("c.id_caja,c.cajaco,c.cajaum,rcc.cantidad,rcc.id_catalogo,cg.codigo,cg.descripcion,preciocinco,preciouno,preciodos,preciotres,preciocuatro
 					FROM cajas c 
 					LEFT JOIN relcajacata rcc ON c.id_caja = rcc.id_caja 
-					LEFT JOIN catalogo cg ON rcc.id_catalogo = cg.id_catalogo 
+					LEFT JOIN catalogo cg ON rcc.id_catalogo = cg.id_catalogo AND cg.estatus = 1 
 					LEFT JOIN productos p ON cg.codigo = cg.codigo 
-					LEFT JOIN precios pr ON p.id_producto = pr.id_producto
+					LEFT JOIN precios pr ON p.id_producto = pr.id_producto AND pr.estatus = 1 
 					WHERE c.estatus = 1 AND c.cajaco = '".$comparativa[$i]->codigo."'")
 				->order_by("c.id_caja","DESC");
 			$comparativa2 = $this->db->get()->result();
@@ -125,6 +127,86 @@ class Rojos_model extends MY_Model {
 		->where("r.agrego",$user["id_usuario"])
 		->where("r.fecha_registro BETWEEN DATE_SUB(CURDATE(), INTERVAL 21 DAY) AND DATE_ADD(CURDATE(), INTERVAL 3 DAY)")
 		->order_by("r.fecha_registro","DESC");
+		if($where !== NULL){
+			if(is_array($where)){
+				foreach ($where as $field => $value) {
+					$this->db->where($field, $value);
+				}
+			}else{
+				$this->db->where($this->PRI_INDEX, $where);
+			}
+		}
+		$result = $this->db->get()->result();
+		if($result){
+			if(is_array($where)){
+				return $result;
+			}else{
+				return $result;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	public function getCambioDesc($where=[]){
+		$this->db->select("r.id_rojo,r.codigo,r.descripcion,r.fecha_registro,usr.nombre")
+		->from("rojos r")
+		->join("usuarios usr","r.agrego = usr.id_usuario","left")
+		->where("r.estatus",5)
+		->order_by("r.fecha_registro","DESC");
+		if($where !== NULL){
+			if(is_array($where)){
+				foreach ($where as $field => $value) {
+					$this->db->where($field, $value);
+				}
+			}else{
+				$this->db->where($this->PRI_INDEX, $where);
+			}
+		}
+		$result = $this->db->get()->result();
+		if($result){
+			if(is_array($where)){
+				return $result;
+			}else{
+				return $result;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	public function getAltas($where=[]){
+		$this->db->select("r.id_rojo,r.codigo,r.descripcion,r.costo,r.fecha_registro,r.code_relacion,r.um_nuevo ,pz.preciouno,pz.preciodos,pz.preciotres,pz.preciocuatro,pz.preciocinco,p.codigo as code1,p.nombre,l.nombre as linea,l.iva,l.ides,usr.nombre as usua,r.codecaja")
+		->from("rojos r")
+		->join("usuarios usr","r.agrego = usr.id_usuario","left")
+		->join("productos p","r.code_relacion = p.codigo","left")
+		->join("precios pz","p.id_producto = pz.id_producto AND pz.estatus = 1","left")
+		->join("lineas l","p.linea = l.id_linea","left")
+		->where("r.estatus",4)
+		->order_by("r.fecha_registro","DESC");
+		if($where !== NULL){
+			if(is_array($where)){
+				foreach ($where as $field => $value) {
+					$this->db->where($field, $value);
+				}
+			}else{
+				$this->db->where($this->PRI_INDEX, $where);
+			}
+		}
+		$result = $this->db->get()->result();
+		if($result){
+			if(is_array($where)){
+				return $result;
+			}else{
+				return $result;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	public function codeCaja($where=[]){
+		$this->db->select("FLOOR(RAND()*(999999-1000+1))+10 as codecaja HAVING codecaja NOT IN (SELECT codigo FROM productos)");
 		if($where !== NULL){
 			if(is_array($where)){
 				foreach ($where as $field => $value) {

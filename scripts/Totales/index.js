@@ -1,6 +1,7 @@
 'use strict';
 var rojosArray = [];
 var almacena = [];
+var descChange = 0;
 
 jQuery(document).ready(function() {
     $("#titlePrincipal").html("CAMBIO DE PRECIOS ADMINISTRADOR");
@@ -9,11 +10,15 @@ jQuery(document).ready(function() {
     getMaxNew().done(function(resp){
         if (resp.nuevo != null){
             $(".btn-show-rojos").html( setZeros2(parseInt(resp.nuevo)+1) )
+            $(".btn-show-altas").html( setZeros2(parseInt(resp.nuevo)+1) )
         }else{
             $(".btn-show-rojos").html( setZeros2(1) )
+            $(".btn-show-altas").html( setZeros2(1) )
         }
     })
+    getMeDesc();
     getMeRojos();
+    getMeAltas();
     getMeNews();
 });
 
@@ -144,6 +149,200 @@ var myDropzoneExcel = new Dropzone("div#kt_dropzone_tres", {
     }
 });
 
+/******** DESCRIPCIONES DE PRODUCTOS ********
+ * *********************************
+ * *********************************
+ * *********************************
+ * *********************************
+*********************************/
+
+function getCambioDesc() {
+    return $.ajax({
+        url: site_url+"Uploads/getCambioDesc",
+        type: "POST",
+        cache: false,
+    });
+}
+function getMeDesc(){
+    getCambioDesc().done(function(resp){
+        $(".descosBody").html("")
+        if(resp){
+            $.each(resp,function(index,value){
+                $(".descosBody").append('<tr class="descoTr descoTr'+value.id_rojo+'"><td>'+
+                    '<button type="button" class="btn btn-outline-info descoBtn" data-id-rojo="'+value.id_rojo+'" data-toggle="modal" data-target="#kt_modal_desco">CAMBIAR</button></td>'+
+                    '</td><td>'+value.nombre+'</td><td>'+value.codigo+'</td><td>'+value.descripcion+'</td></tr>')
+            })
+        }else{
+            $(".descosBody").html('<tr><td colspan="4" style="font-size:24px;">NO SE HAN SOLICITADO CAMBIOS</td></tr>')
+            
+        }
+    })
+}
+
+$(document).off("click",".descoBtn").on("click",".descoBtn",function(event){
+    event.preventDefault();
+    var dis = $(this)
+    var idrojo = dis.data("idRojo");
+    descChange = idrojo;
+});
+
+$(document).off("click",".change_row").on("click",".change_row",function(event){
+    event.preventDefault();
+    setCambiar().done(function(resp){
+        toastr.success("Se envió el cambio de descripción","Listo");
+        $('#kt_modal_desco').modal('hide');
+        $(".descoTr"+descChange).remove();
+    })
+    
+})
+
+function setCambiar() {
+    return $.ajax({
+        url: site_url+"Uploads/setCambiar/"+descChange,
+        type: "POST",
+        cache: false,
+    });
+}
+
+/******** DESCRIPCIONES DE PRODUCTOS ********
+ * *********************************
+ * *********************************
+ * *********************************
+ * *********************************
+*********************************/
+
+function getAltas() {
+    return $.ajax({
+        url: site_url+"Uploads/getAltas",
+        type: "POST",
+        cache: false,
+    });
+}
+
+
+function isnulo(vlo){
+    vlo = vlo == null ? "" : vlo;
+    return vlo;
+}
+function getMeAltas(){
+    getAltas().done(function(resp){
+        $(".altasBody").html("")
+        if(resp){
+            console.log(resp);
+            var chain = "";
+            $.each(resp,function(index,value){
+                value.preciouno = isnulo(value.preciouno);value.preciodos = isnulo(value.preciodos);value.preciotres = isnulo(value.preciotres);value.preciocuatro = isnulo(value.preciocuatro);value.preciocinco = isnulo(value.preciocinco);
+                value.iva = isnulo(value.iva);value.linea = isnulo(value.linea);value.ides = isnulo(value.ides);value.code1 = isnulo(value.code1);value.nombre = isnulo(value.nombre);
+                var renglon10 = ( value.costo/value.um_nuevo ) / ( 1+(value.iva/100) );
+
+                //MARGENES
+                var mar1 = Math.round(((value.preciouno*100)/(value.preciocinco-0.01))-100);
+                var mar2 = Math.round(((value.preciodos*100)/(value.preciocinco-0.01))-100);
+                var mar3 = Math.round(((value.preciotres*100)/(value.preciocinco-0.01))-100);
+                var mar4 = Math.round(((value.preciocuatro*100)/(value.preciocinco-0.01))-100);
+
+                //PRECIOS CAJA*
+                var pre1 = Math.ceil( ((value.costo * (mar1/100))+parseFloat(value.costo))*10 )/10;
+                var pre2 = Math.ceil( ((value.costo * (mar2/100))+parseFloat(value.costo))*10 )/10;
+                var pre3 = Math.ceil( ((value.costo * (mar3/100))+parseFloat(value.costo))*10 )/10;
+                var pre4 = Math.ceil( ((value.costo * (mar4/100))+parseFloat(value.costo))*10 )/10;
+                var pre5 = value.costo/value.um_nuevo + 0.01;
+
+                //MARGENES PIEZA
+                //MARGENES
+                var mar11 = Math.round(((value.preciouno*100)/(value.preciocinco-0.01))-100);
+                var mar22 = Math.round(((value.preciodos*100)/(value.preciocinco-0.01))-100);
+                var mar33 = Math.round(((value.preciotres*100)/(value.preciocinco-0.01))-100);
+                var mar44 = Math.round(((value.preciocuatro*100)/(value.preciocinco-0.01))-100);
+
+                //POR PIEZA
+                var costopz = value.costo / value.um_nuevo;
+                var pre11 = Math.ceil( ((costopz * (mar11/100))+parseFloat(costopz))*10 )/10;
+                var pre22 = Math.ceil( ((costopz * (mar22/100))+parseFloat(costopz))*10 )/10;
+                var pre33 = Math.ceil( ((costopz * (mar33/100))+parseFloat(costopz))*10 )/10;
+                var pre44 = Math.ceil( ((costopz * (mar44/100))+parseFloat(costopz))*10 )/10;
+                var pre55 = parseFloat(value.costo) + 0.01;
+
+                var arreid_rojo = { "id_rojo":value.id_rojo,"codigo1":value.codigo,"codigo2":"","lin":"","desc1":value.descripcion,"um":"","code3":value.codecaja,"desc2":value.descripcion, 
+                    "cantidad":value.um_nuevo,"costo":value.costo,"iva":value.iva,"mar1":mar1,"mar11":mar11, "mar2":mar2,"mar22":mar22, "mar3":mar3,"mar33":mar33,"pre5":pre5, 
+                    "mar4":mar4,"mar44":mar44, "pre1":pre1,"pre11":pre11,"pre2":pre2,"pre22":pre22, "pre3":pre3,"pre33":pre33, "pre4":pre4,"pre44":pre44,"mostrar":0,"matriz":"","costopz":costopz,
+                    "estatus":2 }
+                rojosArray[value.id_rojo] = arreid_rojo;
+
+                var codeCaja = value.codecaja;
+
+                chain = '<tr class="rojoTr rojoTr'+value.id_rojo+'" data-id-rojo="'+value.id_rojo+'">'+
+                    '<td><button type="button" class="btn btn-outline-warning rojoBtn" data-id-rojo="'+value.id_rojo+'">Mostrar</button></td>'+
+                    '<td>'+value.usua+'</td><td>'+value.codigo+'</td>'+
+                    '<td><textarea type="text" class="form-control inputransparent descoUno" placeholder="'+value.descripcion+'" value="'+value.descripcion+'">'+value.descripcion+'</textarea></td>'+
+                    '<td><input type="text" class="form-control cantRojo" placeholder="'+formatMoney(value.um_nuevo,0)+'" value="'+formatMoney(value.um_nuevo,0)+'"/></td>'+
+                    '<td><input type="text" class="form-control costoRojo" placeholder="'+formatMoney(value.costo)+'" value="'+formatMoney(value.costo)+'"/></td>'+
+                    '<td class="thAsoc">'+value.linea+'<br>'+value.ides+'</td><td class="thAsoc">'+value.code1+'</td><td class="thAsoc">'+value.nombre+'</td>'+
+                    '<td class="ivaClass"><input type="text" class="form-control inputransparent ivaRojo" placeholder="'+formatMoney(value.iva,0)+'" value="'+formatMoney(value.iva,0)+'"/></td>'+
+                    '<td class="renglon10Class">'+formatMoney(renglon10,5)+'</td>'+
+                    '<td class="preciososRojos"><input type="text" class="form-control pre11Rojo" placeholder="'+formatMoney(pre11)+'" value="'+formatMoney(pre11)+'"/></td>'+
+                    '<td class="preciososRojos"><input type="text" class="form-control pre22Rojo" placeholder="'+formatMoney(pre22)+'" value="'+formatMoney(pre22)+'"/></td>'+
+                    '<td class="preciososRojos"><input type="text" class="form-control pre33Rojo" placeholder="'+formatMoney(pre33)+'" value="'+formatMoney(pre33)+'"/></td>'+
+                    '<td class="preciososRojos"><input type="text" class="form-control pre44Rojo" placeholder="'+formatMoney(pre44)+'" value="'+formatMoney(pre44)+'"/></td>'+
+                    '<td class="pre5">'+formatMoney(pre5)+'</td>'+
+                    '<td class="margen1Class"><input type="text" class="form-control inputransparent mar11Rojo" placeholder="'+mar11+'" value="'+mar11+'"/></td>'+
+                    '<td class="margen1Class"><input type="text" class="form-control inputransparent mar22Rojo" placeholder="'+mar22+'" value="'+mar22+'"/></td>'+
+                    '<td class="margen1Class"><input type="text" class="form-control inputransparent mar33Rojo" placeholder="'+mar33+'" value="'+mar33+'"/></td>'+
+                    '<td class="margen1Class"><input type="text" class="form-control inputransparent mar44Rojo" placeholder="'+mar44+'" value="'+mar44+'"/></td>'+
+                    '<td><input type="text" class="form-control inputransparent codeDos" placeholder="'+codeCaja+'" value="'+codeCaja+'"/></td>'+
+                    '<td><textarea type="text" class="form-control inputransparent descoDos" placeholder="'+value.descripcion+'" value="'+value.descripcion+'">'+value.descripcion+'</textarea></td>'+
+                    '<td class="preciososRojos"><input type="text" class="form-control pre1Rojo" placeholder="'+formatMoney(pre1)+'" value="'+formatMoney(pre1)+'"/></td>'+
+                    '<td class="preciososRojos"><input type="text" class="form-control pre2Rojo" placeholder="'+formatMoney(pre2)+'" value="'+formatMoney(pre2)+'"/></td>'+
+                    '<td class="preciososRojos"><input type="text" class="form-control pre3Rojo" placeholder="'+formatMoney(pre3)+'" value="'+formatMoney(pre3)+'"/></td>'+
+                    '<td class="preciososRojos"><input type="text" class="form-control pre4Rojo" placeholder="'+formatMoney(pre4)+'" value="'+formatMoney(pre4)+'"/></td>'+
+                    '</td><td class="pre55">'+formatMoney(pre55)+'</td>'+
+                    '<td class="margen2Class"><input type="text" class="form-control inputransparent mar1Rojo" placeholder="'+mar1+'" value="'+mar1+'"/></td>'+
+                    '<td class="margen2Class"><input type="text" class="form-control inputransparent mar2Rojo" placeholder="'+mar2+'" value="'+mar2+'"/></td>'+
+                    '<td class="margen2Class"><input type="text" class="form-control inputransparent mar3Rojo" placeholder="'+mar3+'" value="'+mar3+'"/></td>'+
+                    '<td class="margen2Class"><input type="text" class="form-control inputransparent mar4Rojo" placeholder="'+mar4+'" value="'+mar4+'"/></td>'+
+                    '</tr>';
+
+                $(".altasBody").append(chain)
+            });
+        }else{
+            $(".altasBody").html('<tr><td colspan="10" style="font-size:24px;">NO HAY SOLICITUDES PARA ALTA DE PRODUCTOS</td></tr>')
+            
+        }
+    })
+}
+
+$(document).off("click",".descoBtn").on("click",".descoBtn",function(event){
+    event.preventDefault();
+    var dis = $(this)
+    var idrojo = dis.data("idRojo");
+    descChange = idrojo;
+});
+
+$(document).off("click",".change_row").on("click",".change_row",function(event){
+    event.preventDefault();
+    setCambiar().done(function(resp){
+        toastr.success("Se envió el cambio de descripción","Listo");
+        $('#kt_modal_desco').modal('hide');
+        $(".descoTr"+descChange).remove();
+    })
+    
+})
+
+function setCambiar() {
+    return $.ajax({
+        url: site_url+"Uploads/setCambiar/"+descChange,
+        type: "POST",
+        cache: false,
+    });
+}
+
+/********CAMBIO DE PRECIOS ********
+ * *********************************
+ * *********************************
+ * *********************************
+ * *********************************
+*********************************/
+
 function getRojos() {
     return $.ajax({
         url: site_url+"Uploads/getRojos",
@@ -153,8 +352,8 @@ function getRojos() {
 }
 
 function getMeRojos(){
-    $("#bodySucA").html("");
     getRojos().done(function(resp){
+        $("#bodySucA").html("");
         if(resp){
             $.each(resp,function(index,value){
                 
@@ -224,27 +423,14 @@ function initializeTable(value,val = []){
     rojosArray[value.id_rojo] = arreid_rojo;
     
     $("#bodySucA").append('<tr class="rojoTr rojoTr'+value.id_rojo+'" data-id-rojo="'+value.id_rojo+'" data-id-caja="'+val.id_caja+'">'+
-        '<td><button type="button" class="btn btn-outline-warning rojoBtn" data-id-rojo="'+value.id_rojo+'" data-id-caja="'+val.id_caja+'">Mostrar</button></td><td>'+value.code1+'</td>'+
+        '<td><button type="button" class="btn btn-outline-warning rojoBtn" data-id-rojo="'+value.id_rojo+'" data-id-caja="'+val.id_caja+'">Mostrar</button></td><td>'+value.usu+'</td>'+
+        '<td>'+value.code1+'</td>'+
         '<td>'+value.code2+'</td><td>'+value.ides+'</td><td>'+value.descripcion+'</td><td>'+value.uni+'</td>'+
         '<td><input type="text" class="form-control cantRojo" placeholder="'+formatMoney(val.cantidad,0)+'" value="'+formatMoney(val.cantidad,0)+'"/></td>'+
         '<td><input type="text" class="form-control costoRojo" placeholder="'+formatMoney(value.costo)+'" value="'+formatMoney(value.costo)+'"/></td>'+
         '<td class="cincoRojo" data-id-costo="'+value.preciocinco+'">$ '+formatMoney(value.preciocinco)+'</td><td class="difes">$ '+formatMoney(dif1)+'</td>'+
         '<td class="ivaClass"><input type="text" class="form-control inputransparent ivaRojo" placeholder="'+formatMoney(value.iva,0)+'" value="'+formatMoney(value.iva,0)+'"/></td>'+
         '<td class="renglon10Class">'+formatMoney(renglon10,5)+'</td>'+
-        '<td class="preciososRojos"><input type="text" class="form-control pre1Rojo" placeholder="'+formatMoney(pre1)+'" value="'+formatMoney(pre1)+'"/>'+
-        '<span class="difPrecios difP1">'+formatMoney(difp1)+'</span></td>'+
-        '<td class="preciososRojos"><input type="text" class="form-control pre2Rojo" placeholder="'+formatMoney(pre2)+'" value="'+formatMoney(pre2)+'"/>'+
-        '<span class="difPrecios difP2">'+formatMoney(difp2)+'</span></td>'+
-        '<td class="preciososRojos"><input type="text" class="form-control pre3Rojo" placeholder="'+formatMoney(pre3)+'" value="'+formatMoney(pre3)+'"/>'+
-        '<span class="difPrecios difP3">'+formatMoney(difp3)+'</span></td>'+
-        '<td class="preciososRojos"><input type="text" class="form-control pre4Rojo" placeholder="'+formatMoney(pre4)+'" value="'+formatMoney(pre4)+'"/>'+
-        '<span class="difPrecios difP4">'+formatMoney(difp4)+'</span></td>'+
-        '<td class="pre5">'+formatMoney(pre5)+'</td>'+
-        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar1Rojo" placeholder="'+mar1+'" value="'+mar1+'"/></td>'+
-        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar2Rojo" placeholder="'+mar2+'" value="'+mar2+'"/></td>'+
-        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar3Rojo" placeholder="'+mar3+'" value="'+mar3+'"/></td>'+
-        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar4Rojo" placeholder="'+mar4+'" value="'+mar4+'"/></td>'+
-        '<td>'+val.codigo+'</td><td>'+value.ides+'</td><td>'+val.descripcion+'</td>'+
         '<td class="preciososRojos"><input type="text" class="form-control pre11Rojo" placeholder="'+formatMoney(pre11)+'" value="'+formatMoney(pre11)+'"/>'+
         '<span class="difPrecios difP11">'+formatMoney(difp11)+'</span></td>'+
         '<td class="preciososRojos"><input type="text" class="form-control pre22Rojo" placeholder="'+formatMoney(pre22)+'" value="'+formatMoney(pre22)+'"/>'+
@@ -253,11 +439,25 @@ function initializeTable(value,val = []){
         '<span class="difPrecios difP33">'+formatMoney(difp33)+'</span></td>'+
         '<td class="preciososRojos"><input type="text" class="form-control pre44Rojo" placeholder="'+formatMoney(pre44)+'" value="'+formatMoney(pre44)+'"/>'+
         '<span class="difPrecios difP44">'+formatMoney(difp44)+'</span></td>'+
+        '<td class="pre5">'+formatMoney(pre5)+'</td>'+
+        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar11Rojo" placeholder="'+mar11+'" value="'+mar11+'"/></td>'+
+        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar22Rojo" placeholder="'+mar22+'" value="'+mar22+'"/></td>'+
+        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar33Rojo" placeholder="'+mar33+'" value="'+mar33+'"/></td>'+
+        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar44Rojo" placeholder="'+mar44+'" value="'+mar44+'"/></td>'+
+        '<td>'+val.codigo+'</td><td>'+value.ides+'</td><td>'+val.descripcion+'</td>'+
+        '<td class="preciososRojos"><input type="text" class="form-control pre1Rojo" placeholder="'+formatMoney(pre1)+'" value="'+formatMoney(pre1)+'"/>'+
+        '<span class="difPrecios difP1">'+formatMoney(difp1)+'</span></td>'+
+        '<td class="preciososRojos"><input type="text" class="form-control pre2Rojo" placeholder="'+formatMoney(pre2)+'" value="'+formatMoney(pre2)+'"/>'+
+        '<span class="difPrecios difP2">'+formatMoney(difp2)+'</span></td>'+
+        '<td class="preciososRojos"><input type="text" class="form-control pre3Rojo" placeholder="'+formatMoney(pre3)+'" value="'+formatMoney(pre3)+'"/>'+
+        '<span class="difPrecios difP3">'+formatMoney(difp3)+'</span></td>'+
+        '<td class="preciososRojos"><input type="text" class="form-control pre4Rojo" placeholder="'+formatMoney(pre4)+'" value="'+formatMoney(pre4)+'"/>'+
+        '<span class="difPrecios difP4">'+formatMoney(difp4)+'</span></td>'+
         '</td><td class="pre55">'+formatMoney(pre55)+'</td>'+
-        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar11Rojo" placeholder="'+mar11+'" value="'+mar11+'"/></td>'+
-        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar22Rojo" placeholder="'+mar22+'" value="'+mar22+'"/></td>'+
-        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar33Rojo" placeholder="'+mar33+'" value="'+mar33+'"/></td>'+
-        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar44Rojo" placeholder="'+mar44+'" value="'+mar44+'"/></td>'+
+        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar1Rojo" placeholder="'+mar1+'" value="'+mar1+'"/></td>'+
+        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar2Rojo" placeholder="'+mar2+'" value="'+mar2+'"/></td>'+
+        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar3Rojo" placeholder="'+mar3+'" value="'+mar3+'"/></td>'+
+        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar4Rojo" placeholder="'+mar4+'" value="'+mar4+'"/></td>'+
         '</tr>')
 }
 
