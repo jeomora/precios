@@ -430,9 +430,15 @@ class Uploads extends MY_Controller {
 					"pre44"		=> $value->pre44,
 					"costopz"	=> $value->costopz,
 					"matriz"	=> $value->matriz,
+					"estatus"	=> $value->estatus,
 				];
 				$detail = $this->det_md->insert($new_nuevo);
-				$this->rojo_md->update(["estatus"=>2],["id_rojo"=>$value->id_rojo]);
+				if ($value->estatus == 2) {
+					$this->rojo_md->update(["estatus"=>7],["id_rojo"=>$value->id_rojo]);
+				}else{
+					$this->rojo_md->update(["estatus"=>2],["id_rojo"=>$value->id_rojo]);
+				}
+
 				$matriz = $this->prod_md->get(NULL,["codigo"=>$value->codigo1]);
 				if($matriz){
 					$new_precios = [

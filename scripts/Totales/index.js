@@ -2,7 +2,7 @@
 var rojosArray = [];
 var almacena = [];
 var descChange = 0;
-
+var idLinea = 0;
 jQuery(document).ready(function() {
     $("#titlePrincipal").html("CAMBIO DE PRECIOS ADMINISTRADOR");
     $(".spinSpan").css("display","none")
@@ -16,6 +16,8 @@ jQuery(document).ready(function() {
             $(".btn-show-altas").html( setZeros2(1) )
         }
     })
+
+    
     getMeDesc();
     getMeRojos();
     getMeAltas();
@@ -107,7 +109,7 @@ var myDropzoneCatalogo = new Dropzone("div#kt_dropzone_dos", {
     }
 });
 
-var myDropzoneExcel = new Dropzone("div#kt_dropzone_tres", {
+/*var myDropzoneExcel = new Dropzone("div#kt_dropzone_tres", {
     paramName: "file_excel",
     maxFiles: 1,
     maxFilesize: 200, // MB
@@ -147,7 +149,7 @@ var myDropzoneExcel = new Dropzone("div#kt_dropzone_tres", {
         }
         
     }
-});
+});*/
 
 /******** DESCRIPCIONES DE PRODUCTOS ********
  * *********************************
@@ -170,7 +172,8 @@ function getMeDesc(){
             $.each(resp,function(index,value){
                 $(".descosBody").append('<tr class="descoTr descoTr'+value.id_rojo+'"><td>'+
                     '<button type="button" class="btn btn-outline-info descoBtn" data-id-rojo="'+value.id_rojo+'" data-toggle="modal" data-target="#kt_modal_desco">CAMBIAR</button></td>'+
-                    '</td><td>'+value.nombre+'</td><td>'+value.codigo+'</td><td>'+value.descripcion+'</td></tr>')
+                    '</td><td>'+value.nombre+'</td><td>'+value.codigo+'</td>'+
+                    '<td><input type="text" class="form-control inputransparent descoRojo" placeholder="'+value.descripcion+'" value="'+value.descripcion+'"/></td><td>'+value.producto+'</td></tr>')
             })
         }else{
             $(".descosBody").html('<tr><td colspan="4" style="font-size:24px;">NO SE HAN SOLICITADO CAMBIOS</td></tr>')
@@ -225,6 +228,7 @@ function isnulo(vlo){
     return vlo;
 }
 function getMeAltas(){
+    
     getAltas().done(function(resp){
         $(".altasBody").html("")
         if(resp){
@@ -274,11 +278,13 @@ function getMeAltas(){
                 chain = '<tr class="rojoTr rojoTr'+value.id_rojo+'" data-id-rojo="'+value.id_rojo+'">'+
                     '<td><button type="button" class="btn btn-outline-warning rojoBtn" data-id-rojo="'+value.id_rojo+'">Mostrar</button></td>'+
                     '<td>'+value.usua+'</td><td>'+value.codigo+'</td>'+
+                    '<td><span class="form-control seLine seLine'+value.id_rojo+'"></span>'+
+                    '<span class="listaLineas" data-toggle="modal" data-target="#kt_modal_lineas" style="cursor:pointer;background:aqua;" data-id-rojo="'+value.id_rojo+'">Cambiar linea</span></td>'+
                     '<td><textarea type="text" class="form-control inputransparent descoUno" placeholder="'+value.descripcion+'" value="'+value.descripcion+'">'+value.descripcion+'</textarea></td>'+
                     '<td><input type="text" class="form-control cantRojo" placeholder="'+formatMoney(value.um_nuevo,0)+'" value="'+formatMoney(value.um_nuevo,0)+'"/></td>'+
                     '<td><input type="text" class="form-control costoRojo" placeholder="'+formatMoney(value.costo)+'" value="'+formatMoney(value.costo)+'"/></td>'+
                     '<td class="thAsoc">'+value.linea+'<br>'+value.ides+'</td><td class="thAsoc">'+value.code1+'</td><td class="thAsoc">'+value.nombre+'</td>'+
-                    '<td class="ivaClass"><input type="text" class="form-control inputransparent ivaRojo" placeholder="'+formatMoney(value.iva,0)+'" value="'+formatMoney(value.iva,0)+'"/></td>'+
+                    '<td class="ivaClass"><input type="text" class="form-control inputransparent ivaRojo ivaRojo'+value.id_rojo+'" placeholder="'+formatMoney(value.iva,0)+'" value="'+formatMoney(value.iva,0)+'"/></td>'+
                     '<td class="renglon10Class">'+formatMoney(renglon10,5)+'</td>'+
                     '<td class="preciososRojos"><input type="text" class="form-control pre11Rojo" placeholder="'+formatMoney(pre11)+'" value="'+formatMoney(pre11)+'"/></td>'+
                     '<td class="preciososRojos"><input type="text" class="form-control pre22Rojo" placeholder="'+formatMoney(pre22)+'" value="'+formatMoney(pre22)+'"/></td>'+
@@ -318,6 +324,27 @@ $(document).off("click",".descoBtn").on("click",".descoBtn",function(event){
     descChange = idrojo;
 });
 
+$(document).off("click",".listaLineas").on("click",".listaLineas",function(event){
+    event.preventDefault();
+    var dis = $(this)
+    var idrojo = dis.data("idRojo");
+    idLinea = idrojo;
+});
+
+$(document).off("click",".rowLinea").on("click",".rowLinea",function(event){
+    event.preventDefault();
+    var dis = $(this)
+    var ides = dis.data("idRojo");
+    $(".seLine"+idLinea).html(ides);
+    rojosArray[idLinea]["lin"] = ides;
+
+    var iva = dis.data("idIva");
+    $(".ivaRojo"+idLinea).attr("value",iva)
+    $(".ivaRojo"+idLinea).val(iva)
+    changeIva($(".ivaRojo"+idLinea));
+    $('#kt_modal_lineas').modal('hide');
+});
+
 $(document).off("click",".change_row").on("click",".change_row",function(event){
     event.preventDefault();
     setCambiar().done(function(resp){
@@ -335,6 +362,30 @@ function setCambiar() {
         cache: false,
     });
 }
+
+$(document).off("change keyup",".descoUno").on("change keyup",".descoUno",function(event){
+    event.preventDefault();
+    var idrojo = $(this).closest(".rojoTr").data("idRojo");
+    $(this).attr("value",formatMoney($(this).val()));
+    rojosArray[idrojo]["desc1"] = $(this).val();
+    console.log(rojosArray)
+})
+
+$(document).off("change keyup",".descoDos").on("change keyup",".descoDos",function(event){
+    event.preventDefault();
+    var idrojo = $(this).closest(".rojoTr").data("idRojo");
+    $(this).attr("value",formatMoney($(this).val()));
+    rojosArray[idrojo]["desc2"] = $(this).val();
+    console.log(rojosArray)
+})
+
+$(document).off("change keyup",".codeDos").on("change keyup",".codeDos",function(event){
+    event.preventDefault();
+    var idrojo = $(this).closest(".rojoTr").data("idRojo");
+    $(this).attr("value",formatMoney($(this).val()));
+    rojosArray[idrojo]["code3"] = $(this).val();
+    console.log(rojosArray)
+})
 
 /********CAMBIO DE PRECIOS ********
  * *********************************
@@ -922,7 +973,5 @@ function oldResultsB(value){
     })
 
     oldsB += '</tbody></table></div>';
-    $(".otrosShowsB").prepend(oldsB)
-
-                                                       
+    $(".otrosShowsB").prepend(oldsB)                                                     
 }

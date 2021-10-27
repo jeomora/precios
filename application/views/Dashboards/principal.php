@@ -32,6 +32,7 @@
     ::-webkit-scrollbar {-webkit-appearance:none;width: 7px;position: absolute;background: rgba(0,0,0,0.1);}
     ::-webkit-scrollbar-thumb {border-radius: 4px;background-color: rgba(255, 0, 24, .5);-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5)}
     .footer{display:none !important;}
+    .rowLinea:hover{background:#ffc7c7;cursor:pointer;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -118,15 +119,6 @@
                             </a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a class="nav-link" id="sucursal-tab-3" data-toggle="tab" href="#store-exc" aria-controls="sucursal">
-                                <span class="nav-text">EXCEL <br>CAMBIOS  <br>
-                                    <span class="fechaUpload">
-                                        
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item mb-2">
                             <a class="nav-link" id="sucursal-tab-4" data-toggle="tab" href="#store-sua" aria-controls="sucursal">
                                 <span class="nav-text">SUCURSALES <br>A   <br>
                                     <span class="fechaUpload">
@@ -156,7 +148,7 @@
                                     <table class="table table-bordered" style="text-align:center;">
                                         <thead>
                                             <tr class="bg-light-info" >
-                                                <th colspan="3" style="padding:0;background:white">
+                                                <th colspan="4" style="padding:0;background:white">
                                                     <button type="button" class="btn btn-outline-info btn-lg btn-block btn-show-rojos" style="border-radius:0;">
                                                         
                                                     </button>
@@ -175,6 +167,7 @@
                                                 <th style="width:70px">MOSTRAR</th>
                                                 <th style="width:100px">COMPRAS</th>
                                                 <th style="width:100px">CÓDIGO</th>
+                                                <th style="width:100px">LIN</th>
                                                 <th style="width:350px">DESCRIPCIÓN</th>
                                                 <th style="width:100px">CANT</th>
                                                 <th style="width:150px">PAQUETE</th>
@@ -264,14 +257,15 @@
 
                                 <h1 style="margin-top:30px;">EDITAR DESCRIPCIONES</h1>
 
-                                <div class="row col-xl-4 descos">
+                                <div class="row col-xl-6 descos">
                                     <table class="table table-bordered" style="text-align:center;">
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th width="20%">CAMBIAR</th>
                                                 <th width="20%">COMPRAS</th>
                                                 <th width="20%">CÓDIGO</th>
-                                                <th width="40%">NUEVA DESCRIPCIÓN</th>
+                                                <th width="30%">NUEVA DESCRIPCIÓN</th>
+                                                <th width="30%">DESCRIPCIÓN ANTERIOR</th>
                                             </tr>
                                         </thead>
                                         <tbody class="descosBody">
@@ -335,35 +329,7 @@
                                 
 
                             </div>
-                            <div class="tab-pane fade" id="store-exc" role="tabpanel" aria-labelledby="store-tab-exc"><!-- EXCEL -->
-
-                                <h1 style="padding-bottom:20px;">SUBIR ARCHIVO EXCEL CAMBIO DE PRECIOS</h1>
-                                
-                                <!--begin::Row-->
-                                <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <a href="assets/uploads/precios.xlsx" target="_blank" class="btn btn-light-success font-weight-bold mr-2">
-                                            DESCARGAR PLANTILLA <br> (SUBIR PRODUCTOS A CAMBIAR)
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="dropzone dropzone-default dropzone-success" id="kt_dropzone_tres">
-                                            <div class="dropzone-msg dz-message needsclick">
-                                                <h3 class="dropzone-msg-title">SUBIR ARCHIVO EXCEL</h3>
-                                                <span class="dropzone-msg-desc">Clic para seleccionar arhivo y/o arrastre el archivo excel.</span>
-                                            </div>
-                                        </div>
-                                    </div>                          
-                                </div>
-                                <!--end::Row-->
-                                <!--begin::Row-->
-                                <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
-                                             
-                                    
-                                </div>
-                                <!--end::Row-->
-
-                            </div>
+                            
                             <div class="tab-pane fade" id="store-sua" role="tabpanel" aria-labelledby="store-tab-sua" style="padding:30px"><!-- SUCURSALES A -->
 
                                 <h1>SUCURSALES A</h1>
@@ -497,6 +463,46 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-success change_row">EDITAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+
+<!--begin::Modal EDITAR DESCRIPCIÓN  -->
+<div class="modal fade" id="kt_modal_lineas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">LINEAS DE PRODUCTOS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered" style="text-align:center;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>NOMBRE</th>
+                            <th>IVA</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                        <?php foreach ($lineas as $key => $value):?>
+                            <tr class="rowLinea" data-id-rojo="<?php echo $value->ides ?>" data-id-iva="<?php echo number_format($value->iva,0) ?>">
+                                <td><?php echo $value->ides ?></td>
+                                <td><?php echo $value->nombre ?></td>
+                                <td><?php echo number_format($value->iva,0) ?></td>
+                            </tr>
+                        <?php endforeach;?>
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                
             </div>
         </div>
     </div>

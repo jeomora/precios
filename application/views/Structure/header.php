@@ -28,6 +28,7 @@
             var base_url = "<?php echo base_url("/") ?>";//No carga el archivo index
             var site_url = "<?php echo site_url("/") ?>";//Si carga el index 
             var user_name = "<?php echo $this->session->userdata('username') ?>";//Si carga el index 
+            
         </script>
 
         <!-- Favicon-->

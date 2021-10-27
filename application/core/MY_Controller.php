@@ -29,6 +29,7 @@ class MY_Controller extends CI_Controller {
 		$this->folder = "Structure";
 		$this->load->model("Sucursales_model", "sucu_md");
 		$this->load->model("Avatars_model", "ava_md");
+
 	}
 
 	public function estructura($view, $data = NULL) {

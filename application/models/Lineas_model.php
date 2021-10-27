@@ -10,7 +10,10 @@ class Lineas_model extends MY_Model {
 	} 
 
 	public function getLineas($where=[]){
-		$this->db->select("nombre FROM lineas");
+		$this->db->select("nombre,ides,iva")
+		->from("lineas")
+		->where("estatus",1)
+		->order_by("nombre","ASC");
 		if($where !== NULL){
 			if(is_array($where)){
 				foreach ($where as $field => $value) {

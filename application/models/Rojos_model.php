@@ -126,6 +126,7 @@ class Rojos_model extends MY_Model {
 		->where("r.estatus <> 0")
 		->where("r.agrego",$user["id_usuario"])
 		->where("r.fecha_registro BETWEEN DATE_SUB(CURDATE(), INTERVAL 21 DAY) AND DATE_ADD(CURDATE(), INTERVAL 3 DAY)")
+		->group_by("r.codigo")
 		->order_by("r.fecha_registro","DESC");
 		if($where !== NULL){
 			if(is_array($where)){
@@ -149,10 +150,12 @@ class Rojos_model extends MY_Model {
 	}
 
 	public function getCambioDesc($where=[]){
-		$this->db->select("r.id_rojo,r.codigo,r.descripcion,r.fecha_registro,usr.nombre")
+		$this->db->select("r.id_rojo,r.codigo,r.descripcion,r.fecha_registro,usr.nombre,p.nombre AS producto")
 		->from("rojos r")
 		->join("usuarios usr","r.agrego = usr.id_usuario","left")
+		->join("productos p","r.codigo = p.codigo","LEFT")
 		->where("r.estatus",5)
+		->group_by("r.codigo")
 		->order_by("r.fecha_registro","DESC");
 		if($where !== NULL){
 			if(is_array($where)){
@@ -206,7 +209,7 @@ class Rojos_model extends MY_Model {
 	}
 
 	public function codeCaja($where=[]){
-		$this->db->select("FLOOR(RAND()*(999999-1000+1))+10 as codecaja HAVING codecaja NOT IN (SELECT codigo FROM productos)");
+		$this->db->select("FLOOR(RAND()*(999999-1000+1))+10 as codecaja FROM lineas HAVING codecaja NOT IN (SELECT codigo FROM productos) LIMIT 1");
 		if($where !== NULL){
 			if(is_array($where)){
 				foreach ($where as $field => $value) {

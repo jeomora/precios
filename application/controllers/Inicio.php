@@ -13,6 +13,7 @@ class Inicio extends MY_Controller {
 		$this->load->model("Cambios_model", "cambio_md");
 		$this->load->model("Productos_model", "prod_md");
 		$this->load->model("Cajas_model", "caja_md");
+		$this->load->model("Lineas_model", "ln_md");
 		$this->load->model("Nuevos_model", "new_md");
 		$this->load->library("form_validation");
 	}
@@ -29,6 +30,8 @@ class Inicio extends MY_Controller {
 			$fcatalo = $this->caja_md->getMaxReg(NULL)[0];
 			$data["hmatriz"]= $this->dateDiff(date('Y-m-d H:i:s',strtotime($fmatriz->fecha)));
 			$data["hcatalo"]= $this->dateDiff(date('Y-m-d H:i:s',strtotime($fcatalo->fecha)));
+		
+			$data["lineas"] = $this->ln_md->getLineas(NULL);
 			if ($user["id_grupo"] === "1" || $user["id_grupo"] === 1) { // ADMIN
 				$data['scripts'] = [
 					'/scripts/Totales/index',
