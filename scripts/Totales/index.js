@@ -417,11 +417,10 @@ function getMeRojos(){
 
 function initializeTable(value,val = []){
     
-    var dif1 = value.costo - value.preciocinco;var cods2 = "";
+    var dif1 = value.costo - value.preciocinco;
     if (jQuery.isEmptyObject(val)){
         val.cantidad = 1;
-        val.codigo = value.code1;
-        cods2 = value.code2;
+        val.codigo = "";
         val.descripcion = "";
         val.id_caja = 0;
         val.preciouno = value.preciouno;
@@ -469,7 +468,7 @@ function initializeTable(value,val = []){
     var difp1=pre1-value.costo;var difp2=pre2-value.costo;var difp3=pre3-value.costo;var difp4=pre4-value.costo;
     var difp11=pre11-costopz;var difp22=pre22-costopz;var difp33=pre33-costopz;var difp44=pre44-costopz;
 
-    var arreid_rojo = { "id_rojo":value.id_rojo,"codigo1":val.codigo,"codigo2":cods2,"lin":value.ides,"desc1":value.descripcion,"um":value.uni,"code3":value.code1,"desc2":val.descripcion, 
+    var arreid_rojo = { "id_rojo":value.id_rojo,"codigo1":value.code1,"codigo2":value.code2,"lin":value.ides,"desc1":value.descripcion,"um":value.uni,"code3":val.codigo,"desc2":val.descripcion, 
         "cantidad":val.cantidad,"costo":value.costo,"iva":value.iva,"mar1":mar1,"mar11":mar11, "mar2":mar2,"mar22":mar22, "mar3":mar3,"mar33":mar33,"pre5":pre5, 
         "mar4":mar4,"mar44":mar44, "pre1":pre1,"pre11":pre11,"pre2":pre2,"pre22":pre22, "pre3":pre3,"pre33":pre33, "pre4":pre4,"pre44":pre44,"mostrar":0,"matriz":value.preciocinco,"costopz":costopz,"estatus":1 }
     rojosArray[value.id_rojo] = arreid_rojo;
