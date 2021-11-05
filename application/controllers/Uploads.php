@@ -20,6 +20,7 @@ class Uploads extends MY_Controller {
 		$this->load->model("Nuevos_model", "new_md");
 		$this->load->model("Nuevodetail_model", "det_md");
 		$this->load->model("Listos_model", "listo_md");
+		$this->load->model("Paquetes_model", "pack_md");
 		$this->load->library("form_validation");
 	}
 
@@ -235,6 +236,7 @@ class Uploads extends MY_Controller {
 		$flag = 0;
 		$catalogo = [];
 		$filena = false;
+		$hayCaja = false;
 		if(strpos($dom,"Lista de Precios (PAQUETES)")){
 			$filena = true;
 		}
@@ -286,41 +288,17 @@ class Uploads extends MY_Controller {
 
 					if($pos[$i] <> ""){
 						if( substr($pos[$i], 2,1) == "-" ){
-							$cajafa	=	substr($pos[$i], 0,2);
 							$cajaco	=	str_replace(" ", "", substr($pos[$i], 3,15));
-							$cajads	=	str_replace("  ", "", substr($pos[$i], 20,52));
-							$cajaum	=	substr($pos[$i], 72,3);
-							$new_cajon =[
-								"cajafa"	=>	$cajafa,
-								"cajaco"	=>	$cajaco,
-								"cajads"	=>	$cajads,
-								"cajaum"	=>	$cajaum,
-								"fecha_registro"=>	date("Y-m-d H:i:s"),
-								"registro"	=>	$user["id_usuario"]
-							];
-							$hayCaja = $this->caja_md->get(NULL,["estatus"=>1,"cajaco"=>$cajaco]);
-							if($hayCaja){
-								$this->caja_md->update(["estatus"=>0],["estatus"=>1,"cajaco"=>$cajaco]);
-							}
-							$new_caja = $this->caja_md->insert($new_cajon);
+							$hayCaja = $this->prod_md->get(NULL,["estatus"=>1,"codigo"=>$cajaco]);
 						}else{
-							if(isset( $catalogo[ str_replace(" ", "", substr($pos[$i], 4,17)) ] )){
-								$new_cata = $this->cata_md->get(NULL,["estatus"=>1,"codigo"=>str_replace(" ", "", substr($pos[$i], 4,17))])[0];
-								$new_rel = $this->relcc_md->insert(["id_caja"=>$new_caja,"id_catalogo"=>$new_cata->id_catalogo,"cantidad"=>str_replace(",", "", str_replace(" ", "", substr($pos[$i], 65,8)))]);
-							}else{
-								$new_catas =[
-									"codigo"		=>	str_replace(" ", "", substr($pos[$i], 4,17)),
-									"descripcion"	=>	str_replace("  ", "", substr($pos[$i], 21,44)),
-									"unidad"		=>	str_replace(",", "", str_replace(" ", "", substr($pos[$i], 65,8))),
-									"registro"		=>	$user["id_usuario"],
-								];
-								$catalogo[$new_catas["codigo"]]["caja1"] = $new_caja;
-								$haycata = $this->cata_md->get(NULL,["estatus"=>1,"codigo"=>str_replace(" ", "", substr($pos[$i], 4,17))]);
-								if($haycata){
-									$this->cata_md->update(["estatus"=>0],["estatus"=>1,"codigo"=>str_replace(" ", "", substr($pos[$i], 4,17))]);
+							if($hayCaja){
+								$codpz = str_replace(" ", "", substr($pos[$i], 4,17));
+								$canpz = str_replace(",", "", str_replace(" ", "", substr($pos[$i], 65,8)));
+								$pieza = $this->prod_md->get(NULL,["estatus"=>1,"codigo"=>$codpz]);
+								if($pieza) {
+									$this->pack_md->update(["estatus"=>0],["estatus"=>1,"id_caja"=>$hayCaja[0]->id_producto,"id_pieza"=>$pieza[0]->id_producto]);
+									$this->pack_md->insert([ "estatus"=>1,"id_caja"=>$hayCaja[0]->id_producto,"id_pieza"=>$pieza[0]->id_producto,"cantidad"=>$canpz ]);
 								}
-								$new_cata = $this->cata_md->insert($new_catas);
-								$new_rel = $this->relcc_md->insert(["id_caja"=>$new_caja,"id_catalogo"=>$new_cata,"cantidad"=>str_replace(",", "", str_replace(" ", "", substr($pos[$i], 65,8)))]);
 							}
 						}
 					}				}
@@ -443,11 +421,11 @@ class Uploads extends MY_Controller {
 				if($matriz){
 					$new_precios = [
 						"id_producto"		=>	$matriz[0]->id_producto,
-						"preciouno"			=>	$value->pre1,
-						"preciodos"			=>	$value->pre2,
-						"preciotres"		=>	$value->pre3,
-						"preciocuatro"		=>	$value->pre4,
-						"preciocinco"		=>	$value->pre5,
+						"preciouno"			=>	$value->pre11,
+						"preciodos"			=>	$value->pre22,
+						"preciotres"		=>	$value->pre33,
+						"preciocuatro"		=>	$value->pre44,
+						"preciocinco"		=>	$value->costopz,
 						"registro"			=> $user["id_usuario"]
 					];
 					$this->prize_md->update(["estatus"=>0],["id_producto"=>$matriz[0]->id_producto]);
@@ -456,16 +434,39 @@ class Uploads extends MY_Controller {
 					if ($matriz) {
 						$new_precios = [
 							"id_producto"		=>	$matriz[0]->id_producto,
-							"preciouno"			=>	$value->pre11,
-							"preciodos"			=>	$value->pre22,
-							"preciotres"		=>	$value->pre33,
-							"preciocuatro"		=>	$value->pre44,
-							"preciocinco"		=>	$value->costopz,
+							"preciouno"			=>	$value->pre1,
+							"preciodos"			=>	$value->pre2,
+							"preciotres"		=>	$value->pre3,
+							"preciocuatro"		=>	$value->pre4,
+							"preciocinco"		=>	$value->pre5,
 							"registro"			=> $user["id_usuario"]
 						];
 						$this->prize_md->update(["estatus"=>0],["id_producto"=>$matriz[0]->id_producto]);
 						$this->prize_md->insert($new_precios);
 					}
+				}else{
+					$linea = $this->line_md->get(NULL,["ides"=>$value->lin])[0];
+					
+					$new_producto = [
+						"codigo"	=>	$value->codigo1,
+						"nombre"	=>	$value->desc1,
+						"registro"	=>	$user["id_usuario"],
+						"linea"		=>	$linea->id_linea,
+						"unidad"	=>	$value->cantidad,
+						"ums"		=>	1,
+						"code"		=>	$value->codigo1
+					];
+					$prodo = $this->prod_md->insert($new_producto);
+					$new_precios = [
+						"id_producto"		=>	$prodo,
+						"preciouno"			=>	$value->pre11,
+						"preciodos"			=>	$value->pre22,
+						"preciotres"		=>	$value->pre33,
+						"preciocuatro"		=>	$value->pre44,
+						"preciocinco"		=>	$value->costopz,
+						"registro"			=> $user["id_usuario"]
+					];
+					$this->prize_md->insert($new_precios);
 				}
 			}
 		}
@@ -496,17 +497,20 @@ class Uploads extends MY_Controller {
 		$this->jsonResponse($rojos);
 	}
 
-	public function setCambiar($val1){
+	public function setCambiar(){
 		$user = $this->session->userdata();
-		$rojo = $this->rojo_md->update( ["estatus"=>8] , ["id_rojo"=>$val1] );
+		$values = json_decode($this->input->post("value"));
+		$rojo = $this->rojo_md->update( ["estatus"=>8,] , ["id_rojo"=>$values->id_rojo] );
 		$cambio = [
 			"id_usuario"	=>	$user["id_usuario"],
 			"accion"		=>	8,
-			"antes"			=>	$val1,
-			"despues"		=>	"MOSTRAR DESCRIPCIÓN"
+			"antes"			=>	$values->id_rojo,
+			"despues"		=>	$values->nuevo
 		];
+		$rojo = $this->rojo_md->get(NULL,["id_rojo"=>$values->id_rojo])[0];
+		$producto = $this->prod_md->update(["nombre"=>$values->nuevo],["codigo"=>$rojo->codigo]);
 		$this->cambio_md->insert($cambio);
-		$this->jsonResponse("Se realizó el cambio");
+		$this->jsonResponse($cambio);
 	}
 
 	public function getAltas(){

@@ -96,6 +96,16 @@
                             </a>
                         </li>
                         <li class="nav-item mb-2">
+                            <a class="nav-link" id="sucursal-tab-oferta" data-toggle="tab" href="#store-oferta">
+                                <span class="nav-text">
+                                    AGREGAR <br>OFERTAS
+                                </span>
+                                <span>
+                                    
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item mb-2">
                             <a class="nav-link" id="sucursal-tab-mat" data-toggle="tab" href="#store-mat">
                                 <span class="nav-text">
                                     MATRICIAL  <br>
@@ -256,16 +266,16 @@
                             <div class="tab-pane fade" id="store-edit" role="tabpanel" aria-labelledby="store-tab-edit"><!-- MATRICIAL -->
 
                                 <h1 style="margin-top:30px;">EDITAR DESCRIPCIONES</h1>
-
-                                <div class="row col-xl-6 descos">
+                                <div class="row col-xl-1"></div>
+                                <div class="row col-xl-10 descos">
                                     <table class="table table-bordered" style="text-align:center;">
                                         <thead class="thead-dark">
                                             <tr>
-                                                <th width="20%">CAMBIAR</th>
-                                                <th width="20%">COMPRAS</th>
-                                                <th width="20%">CÓDIGO</th>
-                                                <th width="30%">NUEVA DESCRIPCIÓN</th>
-                                                <th width="30%">DESCRIPCIÓN ANTERIOR</th>
+                                                <th width="10%">CAMBIAR</th>
+                                                <th width="15%">COMPRAS</th>
+                                                <th width="25%">CÓDIGO</th>
+                                                <th width="25%">NUEVA DESCRIPCIÓN</th>
+                                                <th width="25%">DESCRIPCIÓN ANTERIOR</th>
                                             </tr>
                                         </thead>
                                         <tbody class="descosBody">
@@ -277,10 +287,9 @@
                                         </tbody>
                                     </table>
                                 </div>
-
                             </div>
 
-                            <div class="tab-pane fade" id="store-mat" role="tabpanel" aria-labelledby="store-tab-mat"><!-- MATRICIAL -->
+                            <div class="tab-pane fade" id="store-mat" role="tabpanel" aria-labelledby="store-tab-mat"><!-- DESCRIPCIONES -->
 
                                 <h1>SUBIR ARCHIVO MATRICIAL</h1>
                                 <!--begin::Row-->
@@ -308,6 +317,51 @@
                                 </div>
                                 end::Row-->
                             </div>
+
+                            <div class="tab-pane fade" id="store-oferta" role="tabpanel" aria-labelledby="store-tab-oferta"><!-- OFERTAS -->
+
+                                <h1 style="margin-top:30px;">AGREGAR OFERTAS</h1>
+                                <div class="col-xl-12" style="padding:20px">
+                                    <!--<button type="button" class="btn btn-success btn-shadow-hover font-weight-bold mr-2"  data-toggle="modal" data-target="#kt_modal_oferta">
+                                        AGREGAR OFERTA
+                                    </button>-->
+
+                                    <a href="assets/uploads/ofertas frutas.xlsx" class="btn btn-warning btn-shadow-hover font-weight-bold mr-2">
+                                        PLANTILLA FRUTAS
+                                    </a>
+                                    <a href="assets/uploads/ofertas verduras.xlsx" class="btn btn-success btn-shadow-hover font-weight-bold mr-2">
+                                        PLANTILLA VERDURAS
+                                    </a>
+                                    <a href="assets/uploads/ofertas varios.xlsx" class="btn btn-info btn-shadow-hover font-weight-bold mr-2">
+                                        PLANTILLA PROMOCIONES
+                                    </a>
+                                </div>
+
+                                
+                                <div class="row col-xl-12"></div>
+                                <div class="row col-xl-1"></div>
+                                <div class="row col-xl-12 descos">
+                                    <table class="table" style="text-align:center;">
+                                        <thead class="bg-info text-white">
+                                            <tr>
+                                                <th width="12%">CAMBIAR/ELIMINAR</th>
+                                                <th width="12%">CÓDIGO</th>
+                                                <th width="40%">DESCRIPCIÓN</th>
+                                                <th width="6%">UM</th>
+                                                <th width="15%">OFERTA</th>
+                                                <th width="15%">MÁXIMO</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="promoBody">
+                                            <tr>
+                                                <td colspan="6" style="font-size:24px;padding:0">
+                                                    <img src="assets/img/loading1.gif" style="width:90px">CARGANDO LAS OFERTAS <img src="assets/img/loading1.gif" style="width:90px">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         
                             <div class="tab-pane fade" id="store-cat" role="tabpanel" aria-labelledby="store-tab-cat"><!-- CATÁLOGOS -->
 
@@ -325,9 +379,6 @@
                                     </div>
                                 </div>
                                 <!--end::Row-->
-                                
-                                
-
                             </div>
                             
                             <div class="tab-pane fade" id="store-sua" role="tabpanel" aria-labelledby="store-tab-sua" style="padding:30px"><!-- SUCURSALES A -->
@@ -409,9 +460,6 @@
                                     <?php endif; ?>
 
                                 </div>
-
-                                
-
                             </div>
 
 
@@ -424,7 +472,6 @@
                                 <div class="row col-xl-12 otrosShowsB" style="padding-bottom:20px;padding-top:30px;">
 
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -508,3 +555,77 @@
     </div>
 </div>
 <!--end::Modal-->
+
+<!--begin::Modal AGREGAR OFERTAS  
+<div class="modal fade" id="kt_modal_oferta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">AGREGAR OFERTAS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row col-xl-12">
+                    <div class="form-group col-xl-12">
+                        <label class="col-xl-1 col-form-label"></label>
+                        <div class="col-xl-10 col-form-label">
+                            <div class="radio-inline">
+                                <label class="radio">
+                                    <input type="radio" name="radios1"/>
+                                    <span></span>MIÉRCOLES
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="radios1"/>
+                                    <span></span>JUEVES
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="radios1"/>
+                                    <span></span>FIN DE SEMANA
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="radios1"/>
+                                    <span></span>JUEVES A MIÉRCOLES
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="radios1"/>
+                                    <span></span>SELECCIONAR RANGO DE FECHAS
+                                </label>
+                            </div>
+                            <span class="form-text text-muted">SELECCIONE UNA DE LAS OPCIONES</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="form-group col-6">
+                        <label>PRODUCTO <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control"  placeholder="Buscar producto" name="ofproducto" />
+                        <span class="form-text text-muted">La lista de productos se empezara a mostrar a partir de la tercer letra</span>
+                    </div>
+                    <div class="form-group col-2">
+                        <label>OFERTA <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control"  placeholder="$" name="ofoferta" />
+                        <span class="form-text text-muted">Precio de la oferta</span>
+                    </div>
+                    <div class="form-group col-2">
+                        <label>MAXIMO <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control"  placeholder="MAX" name="ofmaximo" />
+                        <span class="form-text text-muted">Restricción de la oferta</span>
+                    </div>
+                    <div class="form-group col-2" style="padding-top:20px;">                        
+                        <button class="btn btn-icon btn-success btn-lg mr-4">
+                            <i class="icon-2x text-white flaticon2-add-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success change_row">EDITAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+end::Modal-->

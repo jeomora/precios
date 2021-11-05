@@ -60,6 +60,10 @@ class Usuarios extends MY_Controller {
 		$data = $this->user_md->getUsuarios(NULL);
 		$this->jsonResponse($data);
 	}
+	public function getPassos( $cual ){
+		$data = $this->user_md->get(NULL,["id_usuario"=>$cual])[0];
+		$this->jsonResponse( $this->showPassword($data->password) );
+	}
 	public function getUser($id_usuario){
 		$usuario = $this->user_md->get(NULL,["id_usuario"=>$id_usuario])[0];
 		$this->jsonResponse($usuario);

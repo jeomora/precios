@@ -64,7 +64,7 @@ class Usuarios_model extends MY_Model {
 	}
 
 	public function getUsuarios($where=[]){
-		$this->db->select("u.id_usuario,u.nombre,u.apellido,u.telefono,u.estatus,u.email,g.nombre as grupo,a.nombre as imagen")
+		$this->db->select("u.id_usuario,u.nombre,u.password,u.apellido,u.telefono,u.estatus,u.email,g.nombre as grupo,a.nombre as imagen")
 		->from($this->TABLE_NAME." u")
 		->join("grupos g","u.id_grupo = g.id_grupo","LEFT")
 		->join("avatars a","u.imagen = a.id_avatar","LEFT")

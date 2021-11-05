@@ -115,7 +115,7 @@ class MY_Controller extends CI_Controller {
 		$iv = substr( hash( 'sha256', $secret_iv ), 0, 16 );
 		//$decrypted = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($this->KEY), base64_decode($password), MCRYPT_MODE_CBC, md5(md5($this->KEY))), "\0");
 		$output = openssl_decrypt( base64_decode( $password ), $encrypt_method, $key, 0, $iv );
-		return $decrypted;
+		return $output;
 	}
 
 

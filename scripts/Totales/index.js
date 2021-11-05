@@ -173,7 +173,8 @@ function getMeDesc(){
                 $(".descosBody").append('<tr class="descoTr descoTr'+value.id_rojo+'"><td>'+
                     '<button type="button" class="btn btn-outline-info descoBtn" data-id-rojo="'+value.id_rojo+'" data-toggle="modal" data-target="#kt_modal_desco">CAMBIAR</button></td>'+
                     '</td><td>'+value.nombre+'</td><td>'+value.codigo+'</td>'+
-                    '<td><input type="text" class="form-control inputransparent descoRojo" placeholder="'+value.descripcion+'" value="'+value.descripcion+'"/></td><td>'+value.producto+'</td></tr>')
+                    '<td><input type="text" class="form-control inputransparent descoRojo descoRojo'+value.id_rojo+'" placeholder="'+value.descripcion+'" value="'+value.descripcion+'" data-id-rojo="'+value.id_rojo+'"/></td>'+
+                    '<td>'+value.producto+'</td></tr>')
             })
         }else{
             $(".descosBody").html('<tr><td colspan="4" style="font-size:24px;">NO SE HAN SOLICITADO CAMBIOS</td></tr>')
@@ -189,21 +190,29 @@ $(document).off("click",".descoBtn").on("click",".descoBtn",function(event){
     descChange = idrojo;
 });
 
+$(document).off("change keyup",".descoRojo").on("change keyup",".descoRojo",function(event){
+    event.preventDefault();
+    var idrojo = $(this).data("idRojo");
+    $(this).attr("value",$(this).val());
+})
+
 $(document).off("click",".change_row").on("click",".change_row",function(event){
     event.preventDefault();
-    setCambiar().done(function(resp){
+    setCambiar( JSON.stringify({"id_rojo":descChange,"nuevo":$(".descoRojo"+descChange).val()}) ).done(function(resp){
         toastr.success("Se envió el cambio de descripción","Listo");
         $('#kt_modal_desco').modal('hide');
         $(".descoTr"+descChange).remove();
     })
-    
 })
 
-function setCambiar() {
+function setCambiar(values) {
     return $.ajax({
-        url: site_url+"Uploads/setCambiar/"+descChange,
+        url: site_url+"Uploads/setCambiar",
         type: "POST",
-        cache: false,
+        dataType: "JSON",
+        data:{
+            value : values
+        }
     });
 }
 
@@ -232,9 +241,12 @@ function getMeAltas(){
     getAltas().done(function(resp){
         $(".altasBody").html("")
         if(resp){
-            console.log(resp);
             var chain = "";
             $.each(resp,function(index,value){
+                var lins = "";
+                if(value.ides != "" && value.ides != null){
+                    lins = value.ides
+                }
                 value.preciouno = isnulo(value.preciouno);value.preciodos = isnulo(value.preciodos);value.preciotres = isnulo(value.preciotres);value.preciocuatro = isnulo(value.preciocuatro);value.preciocinco = isnulo(value.preciocinco);
                 value.iva = isnulo(value.iva);value.linea = isnulo(value.linea);value.ides = isnulo(value.ides);value.code1 = isnulo(value.code1);value.nombre = isnulo(value.nombre);
                 var renglon10 = ( value.costo/value.um_nuevo ) / ( 1+(value.iva/100) );
@@ -267,7 +279,7 @@ function getMeAltas(){
                 var pre44 = Math.ceil( ((costopz * (mar44/100))+parseFloat(costopz))*10 )/10;
                 var pre55 = parseFloat(value.costo) + 0.01;
 
-                var arreid_rojo = { "id_rojo":value.id_rojo,"codigo1":value.codigo,"codigo2":"","lin":"","desc1":value.descripcion,"um":"","code3":value.codecaja,"desc2":value.descripcion, 
+                var arreid_rojo = { "id_rojo":value.id_rojo,"codigo1":value.codigo,"codigo2":"","lin":lins,"desc1":value.descripcion,"um":"","code3":value.codecaja,"desc2":value.descripcion, 
                     "cantidad":value.um_nuevo,"costo":value.costo,"iva":value.iva,"mar1":mar1,"mar11":mar11, "mar2":mar2,"mar22":mar22, "mar3":mar3,"mar33":mar33,"pre5":pre5, 
                     "mar4":mar4,"mar44":mar44, "pre1":pre1,"pre11":pre11,"pre2":pre2,"pre22":pre22, "pre3":pre3,"pre33":pre33, "pre4":pre4,"pre44":pre44,"mostrar":0,"matriz":"","costopz":costopz,
                     "estatus":2 }
@@ -278,7 +290,7 @@ function getMeAltas(){
                 chain = '<tr class="rojoTr rojoTr'+value.id_rojo+'" data-id-rojo="'+value.id_rojo+'">'+
                     '<td><button type="button" class="btn btn-outline-warning rojoBtn" data-id-rojo="'+value.id_rojo+'">Mostrar</button></td>'+
                     '<td>'+value.usua+'</td><td>'+value.codigo+'</td>'+
-                    '<td><span class="form-control seLine seLine'+value.id_rojo+'"></span>'+
+                    '<td><span class="form-control seLine seLine'+value.id_rojo+'">'+lins+'</span>'+
                     '<span class="listaLineas" data-toggle="modal" data-target="#kt_modal_lineas" style="cursor:pointer;background:aqua;" data-id-rojo="'+value.id_rojo+'">Cambiar linea</span></td>'+
                     '<td><textarea type="text" class="form-control inputransparent descoUno" placeholder="'+value.descripcion+'" value="'+value.descripcion+'">'+value.descripcion+'</textarea></td>'+
                     '<td><input type="text" class="form-control cantRojo" placeholder="'+formatMoney(value.um_nuevo,0)+'" value="'+formatMoney(value.um_nuevo,0)+'"/></td>'+
@@ -345,23 +357,6 @@ $(document).off("click",".rowLinea").on("click",".rowLinea",function(event){
     $('#kt_modal_lineas').modal('hide');
 });
 
-$(document).off("click",".change_row").on("click",".change_row",function(event){
-    event.preventDefault();
-    setCambiar().done(function(resp){
-        toastr.success("Se envió el cambio de descripción","Listo");
-        $('#kt_modal_desco').modal('hide');
-        $(".descoTr"+descChange).remove();
-    })
-    
-})
-
-function setCambiar() {
-    return $.ajax({
-        url: site_url+"Uploads/setCambiar/"+descChange,
-        type: "POST",
-        cache: false,
-    });
-}
 
 $(document).off("change keyup",".descoUno").on("change keyup",".descoUno",function(event){
     event.preventDefault();
@@ -421,10 +416,12 @@ function getMeRojos(){
 }
 
 function initializeTable(value,val = []){
-    var dif1 = value.costo - value.preciocinco;
+    
+    var dif1 = value.costo - value.preciocinco;var cods2 = "";
     if (jQuery.isEmptyObject(val)){
         val.cantidad = 1;
-        val.codigo = "";
+        val.codigo = value.code1;
+        cods2 = value.code2;
         val.descripcion = "";
         val.id_caja = 0;
         val.preciouno = value.preciouno;
@@ -450,7 +447,11 @@ function initializeTable(value,val = []){
     var pre2 = Math.ceil( ((value.costo * (mar2/100))+parseFloat(value.costo))*10 )/10;
     var pre3 = Math.ceil( ((value.costo * (mar3/100))+parseFloat(value.costo))*10 )/10;
     var pre4 = Math.ceil( ((value.costo * (mar4/100))+parseFloat(value.costo))*10 )/10;
-
+    console.log(value)
+    console.log(value.costo)
+    console.log(mar1)
+    console.log((value.costo * (mar1/100)))
+    console.log(((value.costo * (mar1/100))+parseFloat(value.costo)))
     //MARGENES PIEZA
     //MARGENES
     var mar11 = Math.round(((val.preciouno*100)/(val.preciocinco-0.01))-100);
@@ -468,7 +469,7 @@ function initializeTable(value,val = []){
     var difp1=pre1-value.costo;var difp2=pre2-value.costo;var difp3=pre3-value.costo;var difp4=pre4-value.costo;
     var difp11=pre11-costopz;var difp22=pre22-costopz;var difp33=pre33-costopz;var difp44=pre44-costopz;
 
-    var arreid_rojo = { "id_rojo":value.id_rojo,"codigo1":value.code1,"codigo2":value.code2,"lin":value.ides,"desc1":value.descripcion,"um":value.uni,"code3":val.codigo,"desc2":val.descripcion, 
+    var arreid_rojo = { "id_rojo":value.id_rojo,"codigo1":val.codigo,"codigo2":cods2,"lin":value.ides,"desc1":value.descripcion,"um":value.uni,"code3":value.code1,"desc2":val.descripcion, 
         "cantidad":val.cantidad,"costo":value.costo,"iva":value.iva,"mar1":mar1,"mar11":mar11, "mar2":mar2,"mar22":mar22, "mar3":mar3,"mar33":mar33,"pre5":pre5, 
         "mar4":mar4,"mar44":mar44, "pre1":pre1,"pre11":pre11,"pre2":pre2,"pre22":pre22, "pre3":pre3,"pre33":pre33, "pre4":pre4,"pre44":pre44,"mostrar":0,"matriz":value.preciocinco,"costopz":costopz,"estatus":1 }
     rojosArray[value.id_rojo] = arreid_rojo;
@@ -931,7 +932,6 @@ function getMeNews(){
     $(".otrosShowsB").html("");
     getNuevos().done(function(resp){
         $(".otrosShowsB").html("");
-        console.log(resp)
         if(resp){
             $.each(resp,function(index,value){
                 oldResultsB(value);
