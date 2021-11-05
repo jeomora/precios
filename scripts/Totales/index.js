@@ -420,7 +420,8 @@ function initializeTable(value,val = []){
     var dif1 = value.costo - value.preciocinco;
     if (jQuery.isEmptyObject(val)){
         val.cantidad = 1;
-        val.codigo = "";
+        val.codigo = value.code1;
+        val.cods = value.code2;
         val.descripcion = "";
         val.id_caja = 0;
         val.preciouno = value.preciouno;
@@ -468,15 +469,15 @@ function initializeTable(value,val = []){
     var difp1=pre1-value.costo;var difp2=pre2-value.costo;var difp3=pre3-value.costo;var difp4=pre4-value.costo;
     var difp11=pre11-costopz;var difp22=pre22-costopz;var difp33=pre33-costopz;var difp44=pre44-costopz;
 
-    var arreid_rojo = { "id_rojo":value.id_rojo,"codigo1":value.code1,"codigo2":value.code2,"lin":value.ides,"desc1":value.descripcion,"um":value.uni,"code3":val.codigo,"desc2":val.descripcion, 
+    var arreid_rojo = { "id_rojo":value.id_rojo,"codigo1":val.codigo,"codigo2":val.cods,"lin":value.ides,"desc1":value.descripcion,"um":value.uni,"code3":value.code1,"desc2":val.descripcion, 
         "cantidad":val.cantidad,"costo":value.costo,"iva":value.iva,"mar1":mar1,"mar11":mar11, "mar2":mar2,"mar22":mar22, "mar3":mar3,"mar33":mar33,"pre5":pre5, 
         "mar4":mar4,"mar44":mar44, "pre1":pre1,"pre11":pre11,"pre2":pre2,"pre22":pre22, "pre3":pre3,"pre33":pre33, "pre4":pre4,"pre44":pre44,"mostrar":0,"matriz":value.preciocinco,"costopz":costopz,"estatus":1 }
     rojosArray[value.id_rojo] = arreid_rojo;
     
     $("#bodySucA").append('<tr class="rojoTr rojoTr'+value.id_rojo+'" data-id-rojo="'+value.id_rojo+'" data-id-caja="'+val.id_caja+'">'+
         '<td><button type="button" class="btn btn-outline-warning rojoBtn" data-id-rojo="'+value.id_rojo+'" data-id-caja="'+val.id_caja+'">Mostrar</button></td><td>'+value.usu+'</td>'+
-        '<td>'+value.code1+'</td>'+
-        '<td>'+value.code2+'</td><td>'+value.ides+'</td><td>'+value.descripcion+'</td><td>'+value.uni+'</td>'+
+        '<td>'+val.codigo+'</td>'+
+        '<td>'+val.cods+'</td><td>'+value.ides+'</td><td>'+value.descripcion+'</td><td>'+value.uni+'</td>'+
         '<td><input type="text" class="form-control cantRojo" placeholder="'+formatMoney(val.cantidad,0)+'" value="'+formatMoney(val.cantidad,0)+'"/></td>'+
         '<td><input type="text" class="form-control costoRojo" placeholder="'+formatMoney(value.costo)+'" value="'+formatMoney(value.costo)+'"/></td>'+
         '<td class="cincoRojo" data-id-costo="'+value.preciocinco+'">$ '+formatMoney(value.preciocinco)+'</td><td class="difes">$ '+formatMoney(dif1)+'</td>'+
@@ -495,7 +496,7 @@ function initializeTable(value,val = []){
         '<td class="margen1Class"><input type="text" class="form-control inputransparent mar22Rojo" placeholder="'+mar22+'" value="'+mar22+'"/></td>'+
         '<td class="margen1Class"><input type="text" class="form-control inputransparent mar33Rojo" placeholder="'+mar33+'" value="'+mar33+'"/></td>'+
         '<td class="margen1Class"><input type="text" class="form-control inputransparent mar44Rojo" placeholder="'+mar44+'" value="'+mar44+'"/></td>'+
-        '<td>'+val.codigo+'</td><td>'+value.ides+'</td><td>'+val.descripcion+'</td>'+
+        '<td>'+value.code1+'</td><td>'+value.ides+'</td><td>'+val.descripcion+'</td>'+
         '<td class="preciososRojos"><input type="text" class="form-control pre1Rojo" placeholder="'+formatMoney(pre1)+'" value="'+formatMoney(pre1)+'"/>'+
         '<span class="difPrecios difP1">'+formatMoney(difp1)+'</span></td>'+
         '<td class="preciososRojos"><input type="text" class="form-control pre2Rojo" placeholder="'+formatMoney(pre2)+'" value="'+formatMoney(pre2)+'"/>'+
@@ -895,12 +896,12 @@ function addTable(nuevo){
         if (value){
             var renglon10 = ( value.costo/value.cantidad ) / ( 1+(value.iva/100) );
             new_table += '<tr><td>'+value.codigo1+'</td><td>'+value.codigo2+'</td><td>'+value.lin+'</td><td>'+value.desc1+'</td><td>'+value.um+'</td><td>'+value.cantidad+'</td><td>'+value.costo+'</td>'+
-                '<td class="ivaClass">'+formatMoney(value.iva,0)+'</td><td class="renglon10Class">'+formatMoney(renglon10)+'</td><td>'+formatMoney(value.pre1)+'</td><td>'+formatMoney(value.pre2)+
-                '</td><td>'+formatMoney(value.pre3)+'</td><td>'+formatMoney(value.pre4)+'</td><td>'+formatMoney(parseFloat(value.costo)+0.01)+'</td>'+
-                '<td class="margen1Class">'+value.mar1+'</td><td class="margen1Class">'+value.mar2+'</td><td class="margen1Class">'+value.mar3+'</td><td class="margen1Class">'+value.mar4+'</td>'+
+                '<td class="ivaClass">'+formatMoney(value.iva,0)+'</td><td class="renglon10Class">'+formatMoney(renglon10)+'</td><td>'+formatMoney(value.pre11)+'</td><td>'+formatMoney(value.pre22)+
+                '</td><td>'+formatMoney(value.pre33)+'</td><td>'+formatMoney(value.pre44)+'</td><td>'+formatMoney(value.costopz)+'</td>'+
+                '<td class="margen1Class">'+value.mar11+'</td><td class="margen1Class">'+value.mar22+'</td><td class="margen1Class">'+value.mar33+'</td><td class="margen1Class">'+value.mar44+'</td>'+
                 '<td>'+value.code3+'</td><td>'+value.desc2+'</td>'+
-                '<td>'+formatMoney(value.pre11)+'</td><td>'+formatMoney(value.pre22)+'</td><td>'+formatMoney(value.pre33)+'</td><td>'+formatMoney(value.pre44)+'</td><td>'+formatMoney(value.costopz)+'</td>'+
-                '<td class="margen2Class">'+value.mar11+'</td><td class="margen2Class">'+value.mar22+'</td><td class="margen2Class">'+value.mar33+'</td><td class="margen2Class">'+value.mar44+'</td></tr>'
+                '<td>'+formatMoney(value.pre1)+'</td><td>'+formatMoney(value.pre2)+'</td><td>'+formatMoney(value.pre3)+'</td><td>'+formatMoney(value.pre4)+'</td><td>'+formatMoney(parseFloat(value.costo)+0.01)+'</td>'+
+                '<td class="margen2Class">'+value.mar1+'</td><td class="margen2Class">'+value.mar2+'</td><td class="margen2Class">'+value.mar3+'</td><td class="margen2Class">'+value.mar4+'</td></tr>'
         }
     })
     

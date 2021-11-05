@@ -88,7 +88,7 @@
                         <li class="nav-item mb-2">
                             <a class="nav-link" id="sucursal-tab-edit" data-toggle="tab" href="#store-edit">
                                 <span class="nav-text">
-                                    EDITAR <br>DESCRIPCIONES
+                                    EDITAR <br>PRODUCTOS
                                 </span>
                                 <span>
                                     
@@ -174,19 +174,19 @@
                                                 </th>
                                             </tr>
                                             <tr class="bg-light-info" >
-                                                <th style="width:70px">MOSTRAR</th>
-                                                <th style="width:100px">COMPRAS</th>
-                                                <th style="width:100px">CÓDIGO</th>
-                                                <th style="width:100px">LIN</th>
-                                                <th style="width:350px">DESCRIPCIÓN</th>
-                                                <th style="width:100px">CANT</th>
-                                                <th style="width:150px">PAQUETE</th>
-                                                <th style="width:90px" class="thAsoc">LINEA</th>
-                                                <th style="width:90px" class="thAsoc">CÓD</th>
-                                                <th style="width:200px" class="thAsoc">DESCR</th>
+                                                <th style="width:70px;background: #C9F7F5 !important;">MOSTRAR</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">COMPRAS</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">CÓDIGO</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">LIN</th>
+                                                <th style="width:350px;background: #C9F7F5 !important;">DESCRIPCIÓN</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">CANT</th>
+                                                <th style="width:150px;background: #C9F7F5 !important;">PAQUETE</th>
+                                                <th style="width:90px;background: #C9F7F5 !important;" class="thAsoc">LINEA</th>
+                                                <th style="width:90px;background: #C9F7F5 !important;" class="thAsoc">CÓD</th>
+                                                <th style="width:200px;background: #C9F7F5 !important;" class="thAsoc">DESCR</th>
                                                 <th style="width:100px" class="ivaClass">IVA</th>
                                                 <th style="width:100px" class="renglon10Class">RENGLON 10</th>
-                                                <th colspan="5">PRECIOS DEL 1 AL 5</th>
+                                                <th colspan="5" style="background: #C9F7F5 !important;">PRECIOS DEL 1 AL 5</th>
                                                 <th style="width:100px" colspan="4" class="margen1Class">MARGENES</th>
                                                 <th style="width:180px">CÓDIGO</th>
                                                 <th style="width:350px">DESCRIPCIÓN</th>
@@ -225,25 +225,25 @@
                                                 </th>
                                             </tr>
                                             <tr class="bg-light-success">
-                                                <th style="width:70px">MOSTRAR</th>
-                                                <th style="width:100px">COMPRAS</th>
-                                                <th style="width:100px">CÓDIGO</th>
-                                                <th style="width:100px">RENGLON 18</th>
-                                                <th style="width:50px">LIN</th>
-                                                <th style="width:350px">DESCRIPCIÓN</th>
-                                                <th style="width:50px">UM</th>
-                                                <th style="width:100px">C</th>
-                                                <th style="width:150px">PAQUETE</th>
-                                                <th style="width:100px">MATRICIAL</th>
-                                                <th style="width:100px">DIF</th>
+                                                <th style="width:70px;background: #C9F7F5 !important;">MOSTRAR</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">COMPRAS</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">CÓDIGO</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">RENGLON 18</th>
+                                                <th style="width:50px;background: #C9F7F5 !important;">LIN</th>
+                                                <th style="width:350px;background: #C9F7F5 !important;">DESCRIPCIÓN</th>
+                                                <th style="width:50px;background: #C9F7F5 !important;">UM</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">C</th>
+                                                <th style="width:150px;background: #C9F7F5 !important;">PAQUETE</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">MATRICIAL</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">DIF</th>
                                                 <th style="width:100px" class="ivaClass">IVA</th>
                                                 <th style="width:100px" class="renglon10Class">RENGLON 10</th>
-                                                <th colspan="5">PRECIOS DEL 1 AL 5</th>
+                                                <th colspan="5" style="background: #C9F7F5 !important;">PRECIOS DEL 1 AL 5</th>
                                                 <th style="width:100px" colspan="4" class="margen1Class">MARGENES</th>
-                                                <th style="width:100px">CÓDIGO</th>
-                                                <th style="width:70px">LIN</th>
-                                                <th style="width:350px">DESCRIPCIÓN</th>
-                                                <th style="" colspan="5">PRECIOS DEL 1 AL 5</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">CÓDIGO</th>
+                                                <th style="width:70px;background: #C9F7F5 !important;">LIN</th>
+                                                <th style="width:350px;background: #C9F7F5 !important;">DESCRIPCIÓN</th>
+                                                <th colspan="5" style="background: #C9F7F5 !important;">PRECIOS DEL 1 AL 5</th>
                                                 <th style="width:100px" colspan="4" class="margen2Class">MARGENES</th>
                                             </tr>
                                         </thead>
@@ -431,26 +431,26 @@
                                                             <td><?php echo $val["costo"] ?></td>
                                                             <td class="ivaClass"><?php echo $val["iva"] ?></td>
                                                             <td class="renglon10Class"><?php echo number_format($renglon10,2,".",",") ?></td>
-                                                            <td><?php echo number_format($val["pre1"],2,".",",") ?></td>
-                                                            <td><?php echo number_format($val["pre2"],2,".",",") ?></td>
-                                                            <td><?php echo number_format($val["pre3"],2,".",",") ?></td>
-                                                            <td><?php echo number_format($val["pre4"],2,".",",") ?></td>
-                                                            <td><?php echo number_format(($val["costo"]+0.01),2,".",",") ?></td>
-                                                            <td class="margen1Class"><?php echo $val["mar1"] ?></td>
-                                                            <td class="margen1Class"><?php echo $val["mar2"] ?></td>
-                                                            <td class="margen1Class"><?php echo $val["mar3"] ?></td>
-                                                            <td class="margen1Class"><?php echo $val["mar4"] ?></td>
-                                                            <td><?php echo $val["code3"] ?></td>
-                                                            <td><?php echo $val["desc2"] ?></td>
                                                             <td><?php echo number_format($val["pre11"],2,".",",") ?></td>
                                                             <td><?php echo number_format($val["pre22"],2,".",",") ?></td>
                                                             <td><?php echo number_format($val["pre33"],2,".",",") ?></td>
                                                             <td><?php echo number_format($val["pre44"],2,".",",") ?></td>
+                                                            <td><?php echo number_format(($val["costo"]+0.01),2,".",",") ?></td>
+                                                            <td class="margen1Class"><?php echo $val["mar11"] ?></td>
+                                                            <td class="margen1Class"><?php echo $val["mar22"] ?></td>
+                                                            <td class="margen1Class"><?php echo $val["mar33"] ?></td>
+                                                            <td class="margen1Class"><?php echo $val["mar44"] ?></td>
+                                                            <td><?php echo $val["code3"] ?></td>
+                                                            <td><?php echo $val["desc2"] ?></td>
+                                                            <td><?php echo number_format($val["pre1"],2,".",",") ?></td>
+                                                            <td><?php echo number_format($val["pre2"],2,".",",") ?></td>
+                                                            <td><?php echo number_format($val["pre3"],2,".",",") ?></td>
+                                                            <td><?php echo number_format($val["pre4"],2,".",",") ?></td>
                                                             <td><?php echo number_format($val["costopz"],2,".",",") ?></td>
-                                                            <td class="margen2Class"><?php echo $val["mar11"] ?></td>
-                                                            <td class="margen2Class"><?php echo $val["mar22"] ?></td>
-                                                            <td class="margen2Class"><?php echo $val["mar33"] ?></td>
-                                                            <td class="margen2Class"><?php echo $val["mar44"] ?></td>
+                                                            <td class="margen2Class"><?php echo $val["mar1"] ?></td>
+                                                            <td class="margen2Class"><?php echo $val["mar2"] ?></td>
+                                                            <td class="margen2Class"><?php echo $val["mar3"] ?></td>
+                                                            <td class="margen2Class"><?php echo $val["mar4"] ?></td>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 </tbody>

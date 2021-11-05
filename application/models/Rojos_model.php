@@ -82,19 +82,19 @@ class Rojos_model extends MY_Model {
 				$flag++;
 			}
 
-			$this->db->select("c.id_producto,c.codigo,p.cantidad,c.nombre as descripcion,pz.preciocinco,pz.preciouno,pz.preciodos,pz.preciotres,pz.preciocuatro
+			$this->db->select("c.id_producto,c.code,c.codigo,p.cantidad,c.nombre as descripcion,pz.preciocinco,pz.preciouno,pz.preciodos,pz.preciotres,pz.preciocuatro
 				FROM paquetes p 
-					LEFT JOIN productos c ON p.id_pieza = c.id_producto 
+					LEFT JOIN productos c ON p.id_pieza = c.id_producto AND c.estatus = 1 
 					LEFT JOIN precios pz ON p.id_pieza = pz.id_producto AND pz.estatus = 1 
-					WHERE c.estatus = 1 AND p.id_caja = '".$comparativa[$i]->id_producto."'")
+					WHERE p.estatus = 1 AND p.id_caja = '".$comparativa[$i]->id_producto."'")
 				->order_by("c.id_producto","DESC");
 			$comparativa2 = $this->db->get()->result();
-			for ($e=0; $e<sizeof($comparativa2); $e++) {
+			for ($e=0; $e<sizeof($comparativa2); $e++){
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["relaciones"][$comparativa2[$e]->id_producto]["codigo"] = $comparativa2[$e]->codigo;
+				$comparativaIndexada[$comparativa[$i]->id_rojo]["relaciones"][$comparativa2[$e]->id_producto]["cods"] = $comparativa2[$e]->code;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["relaciones"][$comparativa2[$e]->id_producto]["cantidad"] = $comparativa2[$e]->cantidad;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["relaciones"][$comparativa2[$e]->id_producto]["descripcion"] = $comparativa2[$e]->descripcion;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["relaciones"][$comparativa2[$e]->id_producto]["id_caja"] = $comparativa2[$e]->id_producto;
-
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["relaciones"][$comparativa2[$e]->id_producto]["preciouno"]=	$comparativa2[$e]->preciouno;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["relaciones"][$comparativa2[$e]->id_producto]["preciodos"]=	$comparativa2[$e]->preciodos;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["relaciones"][$comparativa2[$e]->id_producto]["preciotres"]=	$comparativa2[$e]->preciotres;
