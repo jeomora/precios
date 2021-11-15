@@ -20,7 +20,7 @@ class MY_Controller extends CI_Controller {
 		$this->ASSETS = "./assets/";
 		$this->UPLOADS = "uploads/";
 		$this->KEY='APGoyQGOKAR5iXQ1wiO6i4jNczeMV7Sg';//Para encriptar las contraseñas
-
+		$this->qrcode = "";
 		$this->load->vars($data);
 		$this->header = "Structure/header";
 		$this->top_menu  = "Structure/top_menu";
@@ -42,6 +42,16 @@ class MY_Controller extends CI_Controller {
 		$this->load->view($view, $data);
 		$this->load->view($this->footer, $data);
 		$this->load->view($this->main, $data);
+	}
+
+	public function estructuraQr($view, $data = NULL) {
+		$data["svgs33"] = $this->ava_md->get();
+		$data["dayss"] = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
+		$data["monthss"] = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+		$data["sucursales"] = $this->sucu_md->get(NULL);
+		$this->load->view("Structure/headerQr", $data);
+		$this->load->view($view, $data);
+		$this->load->view("Structure/footerQr", $data);
 	}
 
 	public function jsonResponse( $response ) {

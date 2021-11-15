@@ -17,6 +17,17 @@ jQuery(document).ready(function() {
         }
     })
 
+    /*$('#output').qrcode({
+        render: "canvas", 
+        text: 'b7501031302741\r\nc14', 
+        width: 220,
+        height: 220,
+        background: "#FFFFFF",
+        foreground: "#3F47CC",
+        src: site_url+'assets/img/abarrotes.png',
+        imgWidth: 90,
+        imgHeight: 90
+    })*/
     
     getMeDesc();
     getMeRojos();

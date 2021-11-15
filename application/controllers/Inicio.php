@@ -34,6 +34,7 @@ class Inicio extends MY_Controller {
 			$data["lineas"] = $this->ln_md->getLineas(NULL);
 			if ($user["id_grupo"] === "1" || $user["id_grupo"] === 1) { // ADMIN
 				$data['scripts'] = [
+					'/scripts/qrcode',
 					'/scripts/Totales/index',
 				];
 				$this->estructura("Dashboards/principal", $data);

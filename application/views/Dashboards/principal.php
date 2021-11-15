@@ -44,31 +44,8 @@
 			<!--begin::Dashboard-->
             <!--begin::Row-->
             <div class="row">
-                <div class="col-xl-12">
-                    <!--begin::Engage Widget 8
-                    <div class="card card-custom gutter-b card-stretch card-shadowless">
-                        <div class="card-body p-0 d-flex">
-                            <div class="d-flex align-items-start justify-content-start flex-grow-1 bg-light-info p-8 card-rounded flex-grow-1 position-relative">
-                                <div class="d-flex flex-column align-items-start flex-grow-1 h-100">
-                                    <div class="p-1 flex-grow-1">
-                                        <h4 class="text-info font-weight-bolder">Cambio de Precios</h4>
-                                        <p class="text-dark font-weight-bold mt-3">
-                                            En la siguiente sección podrá obtener los precios sugeridos para cambio de precios en sucursales "A" y sucursales "B".<br>
-                                            Es necesario seguir los siguientes pasos: <br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.- Subir archivo matricial.<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.- Subir archivo de catálogos (Se sugiere subirlo sólo cuando se armen diferentes paquetes).<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.- Descargar la plantilla para agregar los productos que cambiaran de precio.<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.- Subir archivo Excel para buscar los nuevos precios.<br>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="position-absolute right-0 bottom-0 mr-5 overflow-hidden">
-                                    <img src="assets/media/svg/illustrations/dashboard.svg" style="height:350px;width:350px;margin-bottom:-80px;" id="imgStart" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    end::Engage Widget 8-->
+                <div class="col-xl-12" id="output">
+                    
                 </div>
             </div>
             <!--end::Row-->
@@ -393,10 +370,15 @@
                                             <table class="table table-bordered" style="text-align:center;">
                                                 <thead>
                                                     <tr>
-                                                        <th class="gensuca" colspan="4" style="padding:0">
+                                                        <th class="gensuca" colspan="5" style="padding:0">
                                                             <?php echo "GEN SUCA21-0".$value["id_nuevo"] ?>
                                                         </th>
-                                                        <th colspan="8">
+                                                        <th>
+                                                            <a class="nav-link" target="_blank" href="Codigos/qrme/<?php echo $value['id_nuevo'] ?>">
+                                                                <img src="assets/img/codigo-qr.png" style="height:45px">
+                                                            </a>
+                                                        </th>
+                                                        <th colspan="6">
                                                             <?php echo $fecha ?>
                                                         </th>
                                                         <th colspan="18" style="background:rgb(255,51,51)">AJUSTES</th>
