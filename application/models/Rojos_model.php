@@ -42,7 +42,7 @@ class Rojos_model extends MY_Model {
 			->join("usuarios usr","r.agrego = usr.id_usuario","left")
 			->where("r.estatus = 1")
 			->group_by("r.id_rojo")
-			->order_by("r.fecha_registro","DESC");
+			->order_by("r.id_rojo","DESC");
 
 
 		if ($where !== NULL) {

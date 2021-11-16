@@ -14,11 +14,12 @@
      @media only screen and (max-width: 900px) {
         .tableFixHead{ overflow: auto;}
     }
-    .ivaClass{background: rgb(255,204,102);}
-    .pre5{background: rgb(204,153,255);}
-    .renglon10Class{background: rgb(196,215,155);}
-    .margen1Class{background: rgb(255,117,173);width:100px;}
-    .margen2Class{background: rgb(255,192,0);width:100px;}
+    .codDes { position: sticky; left: 0; z-index: 10;background:#dfdfdf;border:1px solid !important;}
+    .ivaClass{background: rgb(255,204,102,0.5);}
+    .pre5{background: rgb(204,153,255,0.5);}
+    .renglon10Class{background: rgb(196,215,155,0.5);}
+    .margen1Class{background: rgb(255,117,173,0.5);width:100px;}
+    .margen2Class{background: rgb(255,192,0,0.5);width:100px;}
     li.nav-item.mb-2{border:1px solid #ccc;border-radius:12px;text-align:center;}
     a#sucursal-tab-uno,a#sucursal-tab-mat,a#sucursal-tab-2,a#sucursal-tab-3,a#sucursal-tab-4,a#sucursal-tab-5{padding-left:3rem;padding-right:3rem;}
     .inputransparent{background:rgba(0,0,0,.10);}
@@ -29,10 +30,19 @@
     .precioB{background:#bdd7ee;}
     th.thAsoc{background:#3595e9 !important;}
     td.thAsoc{background:#3595e950 !important;}
-    ::-webkit-scrollbar {-webkit-appearance:none;width: 7px;position: absolute;background: rgba(0,0,0,0.1);}
-    ::-webkit-scrollbar-thumb {border-radius: 4px;background-color: rgba(255, 0, 24, .5);-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5)}
+    .rowScroll::-webkit-scrollbar {-webkit-appearance:none;width: 7px;position: absolute;background: rgba(0,0,0,0.1);}
+    .rowScroll::-webkit-scrollbar-thumb {border-radius: 4px;background-color: rgba(255, 0, 24, .5);-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5)} 
     .footer{display:none !important;}
     .rowLinea:hover{background:#ffc7c7;cursor:pointer;}
+    input.form-control.costoRojo,input.form-control.pre11Rojo,input.form-control.pre22Rojo,input.form-control.pre33Rojo,input.form-control.pre1Rojo,input.form-control.pre2Rojo,input.form-control.pre3Rojo,input.form-control.pre4Rojo {width: 100px;}
+    input.form-control.cantRojo,input.form-control.inputransparent.ivaRojo,input.form-control.pre44Rojo,input.form-control.mar11Rojo,input.form-control.mar22Rojo,input.form-control.mar33Rojo,input.form-control.mar44Rojo,input.form-control.mar1Rojo,input.form-control.mar2Rojo,input.form-control.mar3Rojo,input.form-control.mar4Rojo{width: 70px;}
+    textarea.form-control.inputransparent.descoUno,textarea.form-control.inputransparent.descoDos,input.form-control.inputransparent.codeDos{width:150px;}
+    textarea.form-control.inputransparent.descoUno,textarea.form-control.inputransparent.descoDos{height:100px;}
+    .thAsoc{width: 170px;}
+    @media (min-width: 992px){
+        .content{padding:0px 0;}
+    }
+    tr.rojoTr:hover{background:#fbf6d4;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -40,21 +50,22 @@
 	<!--begin::Entry-->
 	<div class="d-flex flex-column-fluid">
 		<!--begin::Container-->
-		<div class=" container" style="min-width:96vw;">
+		<div class=" container" style="min-width:95vw;">
 			<!--begin::Dashboard-->
-            <!--begin::Row-->
-            <div class="row">
-                <div class="col-xl-12" id="output">
-                    
-                </div>
-            </div>
-            <!--end::Row-->
 
-            <div class="row">
+
+            <div class="row" style="height:100%">
                 <div class="col-xl-12">
                     <ul class="nav nav-pills"  role="tablist">
                         <li class="nav-item mb-2">
-                            <a class="nav-link active" id="sucursal-tab-uno" data-toggle="tab" href="#store-uno">
+                            <a class="nav-link active" id="sucursal-tab-excel" data-toggle="tab" href="#store-excel">
+                                <span class="nav-text">EXCEL <br>PRECIOS
+
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a class="nav-link" id="sucursal-tab-uno" data-toggle="tab" href="#store-uno">
                                 <span class="nav-text">CALCULAR <br>PRECIOS
                                     <span class="fechaUpload">
                                         
@@ -127,62 +138,28 @@
                 </div>
                 <div class="col-xl-12">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-content" id="myTabContent1" style="overflow-x:scroll;">
-                            <div class="tab-pane fade active show" id="store-uno" role="tabpanel" aria-labelledby="store-tab-uno" style="width:3500px;height:50rem;"><!-- MATRICIAL -->
-                                <h1 style="margin-top:30px;">ALTA DE PRODUCTOS</h1>
-
-                                <div class="row col-xl-12 altes">
-                                    <table class="table table-bordered" style="text-align:center;">
-                                        <thead>
-                                            <tr class="bg-light-info" >
-                                                <th colspan="4" style="padding:0;background:white">
-                                                    <button type="button" class="btn btn-outline-info btn-lg btn-block btn-show-rojos" style="border-radius:0;">
-                                                        
-                                                    </button>
-                                                </th>
-                                                <th colspan="3">
-                                                    <?php echo $fecha ?>
-                                                </th>
-                                                <th colspan="3" class="thAsoc">
-                                                    PRODUCTO ASOCIADO
-                                                </th>
-                                                <th colspan="22" class="bg-info text-white" style="text-align:left">
-                                                    ALTA DE PRODUCTO
-                                                </th>
-                                            </tr>
-                                            <tr class="bg-light-info" >
-                                                <th style="width:70px;background: #C9F7F5 !important;">MOSTRAR</th>
-                                                <th style="width:100px;background: #C9F7F5 !important;">COMPRAS</th>
-                                                <th style="width:100px;background: #C9F7F5 !important;">CÓDIGO</th>
-                                                <th style="width:100px;background: #C9F7F5 !important;">LIN</th>
-                                                <th style="width:350px;background: #C9F7F5 !important;">DESCRIPCIÓN</th>
-                                                <th style="width:100px;background: #C9F7F5 !important;">CANT</th>
-                                                <th style="width:150px;background: #C9F7F5 !important;">PAQUETE</th>
-                                                <th style="width:90px;background: #C9F7F5 !important;" class="thAsoc">LINEA</th>
-                                                <th style="width:90px;background: #C9F7F5 !important;" class="thAsoc">CÓD</th>
-                                                <th style="width:200px;background: #C9F7F5 !important;" class="thAsoc">DESCR</th>
-                                                <th style="width:100px" class="ivaClass">IVA</th>
-                                                <th style="width:100px" class="renglon10Class">RENGLON 10</th>
-                                                <th colspan="5" style="background: #C9F7F5 !important;">PRECIOS DEL 1 AL 5</th>
-                                                <th style="width:100px" colspan="4" class="margen1Class">MARGENES</th>
-                                                <th style="width:180px">CÓDIGO</th>
-                                                <th style="width:350px">DESCRIPCIÓN</th>
-                                                <th style="" colspan="5">PRECIOS DEL 1 AL 5</th>
-                                                <th style="width:100px" colspan="4" class="margen2Class">MARGENES</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="altasBody">
-                                            <tr>
-                                                <td colspan="15" style="font-size:24px;padding:0">
-                                                    <img src="assets/img/loading5.gif" style="width:90px">CARGANDO ALTAS DE PRODICTOS <img src="assets/img/loading5.gif" style="width:90px">
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                        <div class="tab-content" id="myTabContent1" style="overflow-x:hidden;">
+                            <div class="tab-pane fade active show rowScroll" id="store-excel" role="tabpanel" aria-labelledby="store-tab-excel"  ><!-- MATRICIAL -->
+                                <h1 style="">SUBIR EXCEL CON PRECIOS</h1>
+                                <!--begin::Row-->
+                                <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
+                                    <div class="col-xl-2">
+                                        <a href="Compras/plantillaSin" class="btn btn-text-primary btn-icon-primary font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #F64E60;border:1px solid #F64E60;padding:20px;">
+                                            <i class="flaticon2-file"></i> PLANTILLA <br>AJUSTE DE PRECIOS
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="dropzone dropzone-default dropzone-success" id="kt_dropzone_tres">
+                                            <div class="dropzone-msg dz-message needsclick">
+                                                <h3 class="dropzone-msg-title">SUBIR ARCHIVO EXCEL</h3>
+                                                <span class="dropzone-msg-desc">Clic para seleccionar arhivo y/o arrastre el archivo excel.</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
-
-
+                                <!--end::Row-->
+                            </div>
+                            <div class="tab-pane fade rowScroll" id="store-uno" role="tabpanel" aria-labelledby="store-tab-uno"  ><!-- MATRICIAL -->
                                 <h1 style="margin-top:30px;">AJUSTE DE PRECIOS</h1>
                                 <!--begin::Row-->
                                 <div class="row col-xl-12 tableFixHead" style="padding-bottom:20px;height:50rem;">
@@ -233,6 +210,58 @@
                                             <tr>
                                                 <td colspan="17" style="height:200px;font-size:30px;line-height:200px;font-weight:bold;border-bottom:0 !important;">
                                                     CARGANDO, POR FAVOR ESPERE.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h1 style="margin-top:30px;">ALTA DE PRODUCTOS</h1>
+
+                                <div class="row col-xl-12 altes tableFixHead">
+                                    <table class="table table-bordered" style="text-align:center;">
+                                        <thead>
+                                            <tr class="bg-light-info" >
+                                                <th colspan="4" style="padding:0;background:white">
+                                                    <button type="button" class="btn btn-outline-info btn-lg btn-block btn-show-rojos" style="border-radius:0;">
+                                                        
+                                                    </button>
+                                                </th>
+                                                <th colspan="3">
+                                                    <?php echo $fecha ?>
+                                                </th>
+                                                <th colspan="3" class="thAsoc">
+                                                    PRODUCTO ASOCIADO
+                                                </th>
+                                                <th colspan="22" class="bg-info text-white" style="text-align:left">
+                                                    ALTA DE PRODUCTO
+                                                </th>
+                                            </tr>
+                                            <tr class="bg-light-info" >
+                                                <th style="width:70px;background: #C9F7F5 !important;">MOSTRAR</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">COMPRAS</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">CÓDIGO</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">LIN</th>
+                                                <th style="width:350px;background: #C9F7F5 !important;">DESCRIPCIÓN</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">CANT</th>
+                                                <th style="width:150px;background: #C9F7F5 !important;">PAQUETE</th>
+                                                <th style="width:90px;background: #C9F7F5 !important;" class="thAsoc">LINEA</th>
+                                                <th style="width:90px;background: #C9F7F5 !important;" class="thAsoc">CÓD</th>
+                                                <th style="width:350px;background: #C9F7F5 !important;" class="thAsoc">DESCR</th>
+                                                <th style="width:100px" class="ivaClass">IVA</th>
+                                                <th style="width:100px" class="renglon10Class">RENGLON 10</th>
+                                                <th colspan="5" style="background: #C9F7F5 !important;">PRECIOS DEL 1 AL 5</th>
+                                                <th style="width:100px" colspan="4" class="margen1Class">MARGENES</th>
+                                                <th style="width:180px">CÓDIGO</th>
+                                                <th style="width:350px">DESCRIPCIÓN</th>
+                                                <th style="" colspan="5">PRECIOS DEL 1 AL 5</th>
+                                                <th style="width:100px" colspan="4" class="margen2Class">MARGENES</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="altasBody">
+                                            <tr>
+                                                <td colspan="15" style="font-size:24px;padding:0">
+                                                    <img src="assets/img/loading5.gif" style="width:90px">CARGANDO ALTAS DE PRODICTOS <img src="assets/img/loading5.gif" style="width:90px">
                                                 </td>
                                             </tr>
                                         </tbody>

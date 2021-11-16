@@ -75,7 +75,7 @@
                         </a>
                     </div>
                     <div class="col-xl-2">
-                        <a href="assets/uploads/templates/ajustes.xlsx" class="btn btn-text-primary btn-icon-primary font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #F64E60;border:1px solid #F64E60;padding:20px;">
+                        <a href="Compras/plantillaSin" class="btn btn-text-primary btn-icon-primary font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #F64E60;border:1px solid #F64E60;padding:20px;">
                             <i class="flaticon2-file"></i> PLANTILLA <br>AJUSTE DE PRECIOS
                         </a>
                     </div>

@@ -62,4 +62,59 @@ class Productos_model extends MY_Model {
 			return false;
 		}
 	}
+
+	public function getPlantilla($where=[]){
+		$this->db->select("p.id_producto,p.codigo,p.nombre,p.code ,l.nombre as linea, l.ides, l.iva, u.ides as uns,pz.preciouno,pz.preciodos,pz.preciotres,pz.preciocuatro,pz.preciocinco")
+		->from("productos p")
+		->join("lineas l","p.linea = l.id_linea AND l.estatus = 1","LEFT")
+		->join("unidades u","p.ums = u.id_unidad AND u.estatus = 1","LEFT")
+		->join("precios pz","p.id_producto = pz.id_producto AND pz.estatus = 1","LEFT")
+		->order_by("l.ides,p.nombre","ASC");
+		if($where !== NULL){
+			if(is_array($where)){
+				foreach ($where as $field => $value) {
+					$this->db->where($field, $value);
+				}
+			}else{
+				$this->db->where($this->PRI_INDEX, $where);
+			}
+		}
+		$result = $this->db->get()->result();
+		if($result){
+			if(is_array($where)){
+				return $result;
+			}else{
+				return $result;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	public function getPlantillaSin($where=[]){
+		$this->db->select("p.id_producto,p.codigo,p.nombre,p.code ,l.nombre as linea, l.ides, l.iva, u.ides as uns")
+		->from("productos p")
+		->join("lineas l","p.linea = l.id_linea AND l.estatus = 1","LEFT")
+		->join("unidades u","p.ums = u.id_unidad AND u.estatus = 1","LEFT")
+		->order_by("l.ides,p.nombre","ASC");
+		if($where !== NULL){
+			if(is_array($where)){
+				foreach ($where as $field => $value) {
+					$this->db->where($field, $value);
+				}
+			}else{
+				$this->db->where($this->PRI_INDEX, $where);
+			}
+		}
+		$result = $this->db->get()->result();
+		if($result){
+			if(is_array($where)){
+				return $result;
+			}else{
+				return $result;
+			}
+		}else{
+			return false;
+		}
+	}
 }

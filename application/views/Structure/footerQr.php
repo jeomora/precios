@@ -85,7 +85,7 @@
 <!--end::Page Vendors -->
 <?php if (isset($scripts) && $scripts): ?>
     <?php foreach ($scripts as $row): ?>
-    <script type="text/javascript" src="<?php echo base_url($row.'.js?ver=2.13') ?>"></script>
+    <script type="text/javascript" src="<?php echo base_url($row.'.js?ver=2.14') ?>"></script>
     <?php endforeach ?>
 <?php endif ?>
   <script>

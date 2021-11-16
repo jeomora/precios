@@ -16,18 +16,6 @@ jQuery(document).ready(function() {
             $(".btn-show-altas").html( setZeros2(1) )
         }
     })
-
-    /*$('#output').qrcode({
-        render: "canvas", 
-        text: 'b7501031302741\r\nc14', 
-        width: 220,
-        height: 220,
-        background: "#FFFFFF",
-        foreground: "#3F47CC",
-        src: site_url+'assets/img/abarrotes.png',
-        imgWidth: 90,
-        imgHeight: 90
-    })*/
     
     getMeDesc();
     getMeRojos();
@@ -120,7 +108,7 @@ var myDropzoneCatalogo = new Dropzone("div#kt_dropzone_dos", {
     }
 });
 
-/*var myDropzoneExcel = new Dropzone("div#kt_dropzone_tres", {
+var myDropzoneExcel = new Dropzone("div#kt_dropzone_tres", {
     paramName: "file_excel",
     maxFiles: 1,
     maxFilesize: 200, // MB
@@ -128,7 +116,7 @@ var myDropzoneCatalogo = new Dropzone("div#kt_dropzone_dos", {
     renameFilename: function (filename) {
         return filename;
     },
-    url: site_url+"Uploads/upload_excel",
+    url: site_url+"Compras/upload_excel",
     autoProcessQueue: true,
     queuecomplete: function (resp) {
         toastr.options = {
@@ -160,7 +148,7 @@ var myDropzoneCatalogo = new Dropzone("div#kt_dropzone_dos", {
         }
         
     }
-});*/
+});
 
 /******** DESCRIPCIONES DE PRODUCTOS ********
  * *********************************
@@ -433,7 +421,7 @@ function initializeTable(value,val = []){
         val.cantidad = 1;
         val.codigo = value.code1;
         val.cods = value.code2;
-        val.descripcion = "";
+        val.descripcion = value.descripcion;
         val.id_caja = 0;
         val.preciouno = value.preciouno;
         val.preciodos = value.preciodos;
@@ -458,11 +446,7 @@ function initializeTable(value,val = []){
     var pre2 = Math.ceil( ((value.costo * (mar2/100))+parseFloat(value.costo))*10 )/10;
     var pre3 = Math.ceil( ((value.costo * (mar3/100))+parseFloat(value.costo))*10 )/10;
     var pre4 = Math.ceil( ((value.costo * (mar4/100))+parseFloat(value.costo))*10 )/10;
-    console.log(value)
-    console.log(value.costo)
-    console.log(mar1)
-    console.log((value.costo * (mar1/100)))
-    console.log(((value.costo * (mar1/100))+parseFloat(value.costo)))
+
     //MARGENES PIEZA
     //MARGENES
     var mar11 = Math.round(((val.preciouno*100)/(val.preciocinco-0.01))-100);
@@ -488,7 +472,7 @@ function initializeTable(value,val = []){
     $("#bodySucA").append('<tr class="rojoTr rojoTr'+value.id_rojo+'" data-id-rojo="'+value.id_rojo+'" data-id-caja="'+val.id_caja+'">'+
         '<td><button type="button" class="btn btn-outline-warning rojoBtn" data-id-rojo="'+value.id_rojo+'" data-id-caja="'+val.id_caja+'">Mostrar</button></td><td>'+value.usu+'</td>'+
         '<td>'+val.codigo+'</td>'+
-        '<td>'+val.cods+'</td><td>'+value.ides+'</td><td>'+value.descripcion+'</td><td>'+value.uni+'</td>'+
+        '<td>'+val.cods+'</td><td>'+value.ides+'</td><td class="codDes">'+val.descripcion+'</td><td>'+value.uni+'</td>'+
         '<td><input type="text" class="form-control cantRojo" placeholder="'+formatMoney(val.cantidad,0)+'" value="'+formatMoney(val.cantidad,0)+'"/></td>'+
         '<td><input type="text" class="form-control costoRojo" placeholder="'+formatMoney(value.costo)+'" value="'+formatMoney(value.costo)+'"/></td>'+
         '<td class="cincoRojo" data-id-costo="'+value.preciocinco+'">$ '+formatMoney(value.preciocinco)+'</td><td class="difes">$ '+formatMoney(dif1)+'</td>'+
@@ -507,7 +491,7 @@ function initializeTable(value,val = []){
         '<td class="margen1Class"><input type="text" class="form-control inputransparent mar22Rojo" placeholder="'+mar22+'" value="'+mar22+'"/></td>'+
         '<td class="margen1Class"><input type="text" class="form-control inputransparent mar33Rojo" placeholder="'+mar33+'" value="'+mar33+'"/></td>'+
         '<td class="margen1Class"><input type="text" class="form-control inputransparent mar44Rojo" placeholder="'+mar44+'" value="'+mar44+'"/></td>'+
-        '<td>'+value.code1+'</td><td>'+value.ides+'</td><td>'+val.descripcion+'</td>'+
+        '<td>'+value.code1+'</td><td>'+value.ides+'</td><td>'+value.descripcion+'</td>'+
         '<td class="preciososRojos"><input type="text" class="form-control pre1Rojo" placeholder="'+formatMoney(pre1)+'" value="'+formatMoney(pre1)+'"/>'+
         '<span class="difPrecios difP1">'+formatMoney(difp1)+'</span></td>'+
         '<td class="preciososRojos"><input type="text" class="form-control pre2Rojo" placeholder="'+formatMoney(pre2)+'" value="'+formatMoney(pre2)+'"/>'+
@@ -837,10 +821,7 @@ $(document).off("click",".rojoBtn").on("click",".rojoBtn",function(event){
     $(".rojoTr"+idrojo).toggleClass("blockTh");
     dis.toggleClass("btn-outline-warning")
     dis.toggleClass("btn-primary")
-    console.log(idrojo)
-    console.log(rojosArray)
-    console.log(rojosArray[idrojo])
-    console.log(rojosArray[idrojo]["mostrar"])
+    
     if(dis.html() == "Mostrar"){
         dis.html("No Mostrar");
         rojosArray[idrojo]["mostrar"] = 1;
@@ -897,7 +878,8 @@ function getMaxNew(){
 }
 
 function addTable(nuevo){
-    var new_table = '<div class=row><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="4" style="padding:0">'+setZeros2(nuevo)+'</th><th colspan="8">'+
+    var new_table = '<div class=row><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="5" style="padding:0">'+setZeros2(nuevo)+'</th>'+
+        '<th><a class="nav-link" target="_blank" href="Codigos/qrme/'+nuevo+'"><img src="assets/img/codigo-qr.png" style="height:45px"></a></th><th colspan="7">'+
         formatDate2(getDate())+'</th><th colspan="18" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr><th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th>'+
         '<th style="width:350px" >DESCRIPCIÓN</th><th style="width:70px" >UM</th><th style="width:100px" >C</th><th style="width:150px" >PAQUETE</th>'+
         '<th style="width:100px" class="ivaClass">IVA</th><th style="width:100px" class="renglon10Class">RENGLON 10</th><th colspan="5">PRECIOS DEL 1 AL 5</th>'+
