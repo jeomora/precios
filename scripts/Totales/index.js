@@ -667,18 +667,18 @@ $(document).off("change keyup",".pre44Rojo").on("change keyup",".pre44Rojo",func
 function adjMarPz(dis,cual){
     var idrojo = dis.closest(".rojoTr").data("idRojo");
     var pcio = dis.val().replace(/,/g , '');
-    var pre1 =  ((pcio - parseFloat(rojosArray[idrojo].costopz)) / rojosArray[idrojo].costopz)*100;
+    var pre1 =  Math.floor( ((pcio - parseFloat(rojosArray[idrojo].costopz)) / rojosArray[idrojo].costopz)*100 );
     rojosArray[idrojo][cual] = pre1;
-    dis.closest(".rojoTr").find("."+cual+"Rojo").val(formatMoney(pre1,0));
-    dis.closest(".rojoTr").find("."+cual+"Rojo").attr("value",formatMoney(pre1,0));
+    dis.closest(".rojoTr").find("."+cual+"Rojo").val(pre1);
+    dis.closest(".rojoTr").find("."+cual+"Rojo").attr("value",pre1);
 }
 function adjMar(dis,cual){
     var idrojo = dis.closest(".rojoTr").data("idRojo");
     var pcio = dis.val().replace(/,/g , '');
-    var pre1 =  ((pcio - parseFloat(rojosArray[idrojo].costo)) / rojosArray[idrojo].costo)*100;
+    var pre1 =  Math.floor( ((pcio - parseFloat(rojosArray[idrojo].costo)) / rojosArray[idrojo].costo)*100 );
     rojosArray[idrojo][cual] = pre1;
-    dis.closest(".rojoTr").find("."+cual+"Rojo").val(formatMoney(pre1,0));
-    dis.closest(".rojoTr").find("."+cual+"Rojo").attr("value",formatMoney(pre1,0));
+    dis.closest(".rojoTr").find("."+cual+"Rojo").val(pre1);
+    dis.closest(".rojoTr").find("."+cual+"Rojo").attr("value",pre1);
 }
 
 function cambioPrecios(precio,cual){
