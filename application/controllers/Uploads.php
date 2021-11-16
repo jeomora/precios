@@ -518,5 +518,9 @@ class Uploads extends MY_Controller {
 		$this->jsonResponse($rojos);
 	}
 
+	public function delRemove($valo){
+		$this->rojo_md->update(["estatus"=>0],["id_rojo"=>$valo]);
+		$this->jsonResponse("DONE B**CH");
+	}
 	
 }

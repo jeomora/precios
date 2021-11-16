@@ -470,7 +470,10 @@ function initializeTable(value,val = []){
     rojosArray[value.id_rojo] = arreid_rojo;
     
     $("#bodySucA").append('<tr class="rojoTr rojoTr'+value.id_rojo+'" data-id-rojo="'+value.id_rojo+'" data-id-caja="'+val.id_caja+'">'+
-        '<td><button type="button" class="btn btn-outline-warning rojoBtn" data-id-rojo="'+value.id_rojo+'" data-id-caja="'+val.id_caja+'">Mostrar</button></td><td>'+value.usu+'</td>'+
+        '<td><button type="button" class="btn btn-outline-warning rojoBtn" data-id-rojo="'+value.id_rojo+'" data-id-caja="'+val.id_caja+'">Mostrar</button>'+
+        '<button type="button" class="btn btn-outline-danger rojoDel" data-id-rojo="'+value.id_rojo+'" data-id-caja="'+val.id_caja+'">Eliminar</button>'+
+        '<button type="button" class="btn btn-danger rojoSure rojoSure'+value.id_rojo+'" data-id-rojo="'+value.id_rojo+'" data-id-caja="'+val.id_caja+'">¿Segur@?</button>'+
+        '</td><td>'+value.usu+'</td>'+
         '<td>'+val.codigo+'</td>'+
         '<td>'+val.cods+'</td><td>'+value.ides+'</td><td class="codDes">'+val.descripcion+'</td><td>'+value.uni+'</td>'+
         '<td><input type="text" class="form-control cantRojo" placeholder="'+formatMoney(val.cantidad,0)+'" value="'+formatMoney(val.cantidad,0)+'"/></td>'+
@@ -599,39 +602,85 @@ function initializeTableB(value,val = []){
         '</tr>')
 }
 
+$(document).off("click",".rojoDel").on("click",".rojoDel",function(event){
+    event.preventDefault();
+    var ides = $(this).data("idRojo");
+    $(this).css("display","none");
+    $(".rojoSure"+ides).css("display","block")
+})
+$(document).off("click",".rojoSure").on("click",".rojoSure",function(event){
+    event.preventDefault();
+    var ides = $(this).data("idRojo");
+    delRemove(ides).done(function(resp){
+        $(".rojoTr"+ides).remove();
+    })
+})
+function delRemove(valo){
+    return $.ajax({
+        url: site_url+"Uploads/delRemove/"+valo,
+        type: "GET",
+        dataType: "JSON",
+    });
+}
 //SI CAMBIA EL PRECIO MANUALMENTE NO SE MODIFICAN LOS MARGENES NI LOS DEMAS PRECIOS
 $(document).off("change keyup",".pre1Rojo").on("change keyup",".pre1Rojo",function(event){
     event.preventDefault();
-    cambioPrecios($(this),"pre1")    
+    cambioPrecios($(this),"pre1")
+    adjMar($(this),"mar1")    
 })
 $(document).off("change keyup",".pre11Rojo").on("change keyup",".pre11Rojo",function(event){
     event.preventDefault();
     cambioPrecios($(this),"pre11")
+    adjMarPz($(this),"mar11")
 })
 $(document).off("change keyup",".pre2Rojo").on("change keyup",".pre2Rojo",function(event){
     event.preventDefault();
     cambioPrecios($(this),"pre2")
+    adjMar($(this),"mar2")
 })
 $(document).off("change keyup",".pre22Rojo").on("change keyup",".pre22Rojo",function(event){
     event.preventDefault();
     cambioPrecios($(this),"pre22")
+    adjMarPz($(this),"mar22")
 })
 $(document).off("change keyup",".pre3Rojo").on("change keyup",".pre3Rojo",function(event){
     event.preventDefault();
     cambioPrecios($(this),"pre3")
+    adjMar($(this),"mar3")
 })
 $(document).off("change keyup",".pre33Rojo").on("change keyup",".pre33Rojo",function(event){
     event.preventDefault();
     cambioPrecios($(this),"pre33")
+    adjMarPz($(this),"mar33")
 })
 $(document).off("change keyup",".pre4Rojo").on("change keyup",".pre4Rojo",function(event){
     event.preventDefault();
     cambioPrecios($(this),"pre4")
+    adjMar($(this),"mar4")
 })
 $(document).off("change keyup",".pre44Rojo").on("change keyup",".pre44Rojo",function(event){
     event.preventDefault();
     cambioPrecios($(this),"pre44")
+    adjMarPz($(this),"mar44")
 })
+
+function adjMarPz(dis,cual){
+    var idrojo = dis.closest(".rojoTr").data("idRojo");
+    var pcio = dis.val().replace(/,/g , '');
+    var pre1 =  ((pcio - parseFloat(rojosArray[idrojo].costopz)) / rojosArray[idrojo].costopz)*100;
+    rojosArray[idrojo][cual] = pre1;
+    dis.closest(".rojoTr").find("."+cual+"Rojo").val(formatMoney(pre1,0));
+    dis.closest(".rojoTr").find("."+cual+"Rojo").attr("value",formatMoney(pre1,0));
+}
+function adjMar(dis,cual){
+    var idrojo = dis.closest(".rojoTr").data("idRojo");
+    var pcio = dis.val().replace(/,/g , '');
+    var pre1 =  ((pcio - parseFloat(rojosArray[idrojo].costo)) / rojosArray[idrojo].costo)*100;
+    rojosArray[idrojo][cual] = pre1;
+    dis.closest(".rojoTr").find("."+cual+"Rojo").val(formatMoney(pre1,0));
+    dis.closest(".rojoTr").find("."+cual+"Rojo").attr("value",formatMoney(pre1,0));
+}
+
 function cambioPrecios(precio,cual){
     var idrojo = precio.closest(".rojoTr").data("idRojo");
     precio.attr("value",formatMoney(precio.val()));

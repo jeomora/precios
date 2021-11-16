@@ -43,6 +43,8 @@
         .content{padding:0px 0;}
     }
     tr.rojoTr:hover{background:#fbf6d4;}
+    .rojoSure{display:none;}
+    .rojoDel,.rojoSure{margin-top:10px;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
