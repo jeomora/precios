@@ -97,4 +97,72 @@ class Nuevos_model extends MY_Model {
 		}
 	}
 
+
+	public function getRojo($valo){
+		$user = $this->session->userdata();
+		$this->db->select("n.id_nuevo,n.fecha_registro,n.agrego,n.estatus,nd.id_detail,nd.id_rojo,nd.code1,nd.code2,nd.code3,linea,nd.desc1,nd.unidad,nd.desc2,nd.cantidad,nd.costo,nd.iva,nd.mar1,
+			,nd.mar2,nd.mar3,nd.mar4,nd.mar11,nd.mar22,nd.mar33,nd.mar44,nd.pre1,nd.pre2,nd.pre3,nd.pre4,nd.pre5,nd.pre11,nd.pre22,nd.pre33,nd.pre44,nd.pre55,nd.costopz,nd.matriz,u.nombre,l.estatus as listo")
+			->from("nuevos n")
+			->join("nuevo_detail nd","n.id_nuevo = nd.id_nuevo","left")
+			->join("usuarios u","n.agrego = u.id_usuario" ,"left") 
+			->join("listos l","nd.id_detail = l.id_detalle AND l.estatus = 1 AND l.id_sucursal = ".$user["id_sucursal"]."" ,"left") 
+			->where("n.estatus = 1")
+			->where("n.id_nuevo",$valo)
+			->where("n.fecha_registro BETWEEN DATE_SUB(CURDATE(), INTERVAL 21 DAY) AND DATE_ADD(CURDATE(), INTERVAL 3 DAY)")
+			->order_by("n.id_nuevo","DESC");
+
+		$comparativa = $this->db->get()->result();
+		$comparativaIndexada = [];
+		for ($i=0; $i<sizeof($comparativa); $i++) {
+			if (isset($comparativaIndexada[$comparativa[$i]->id_nuevo])) {
+				
+			}else{
+				$comparativaIndexada[$comparativa[$i]->id_nuevo]					=	[];
+				$comparativaIndexada[$comparativa[$i]->id_nuevo]["fecha_registro"]	=	$comparativa[$i]->fecha_registro;
+				$comparativaIndexada[$comparativa[$i]->id_nuevo]["nombre"]			=	$comparativa[$i]->nombre;
+				$comparativaIndexada[$comparativa[$i]->id_nuevo]["id_nuevo"]		=	$comparativa[$i]->id_nuevo;
+				$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"]		=	[];
+			}
+
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["detalle"]=	$comparativa[$i]->id_detail;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["costo"]	=	$comparativa[$i]->costo;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["code1"]	=	$comparativa[$i]->code1;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["code2"]	=	$comparativa[$i]->code2;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["code3"]	=	$comparativa[$i]->code3;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["desc1"]	=	$comparativa[$i]->desc1;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["desc2"]	=	$comparativa[$i]->desc2;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["unidad"]	=	$comparativa[$i]->unidad;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["cantidad"]=	$comparativa[$i]->cantidad;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["costopz"]=	$comparativa[$i]->costopz;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["iva"]	=	$comparativa[$i]->iva;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["linea"]	=	$comparativa[$i]->linea;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["matriz"]	=	$comparativa[$i]->matriz;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre1"]	=	$comparativa[$i]->pre1;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre2"]	=	$comparativa[$i]->pre2;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre3"]	=	$comparativa[$i]->pre3;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre4"]	=	$comparativa[$i]->pre4;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre5"]	=	$comparativa[$i]->pre5;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre11"]	=	$comparativa[$i]->pre11;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre22"]	=	$comparativa[$i]->pre22;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre33"]	=	$comparativa[$i]->pre33;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre44"]	=	$comparativa[$i]->pre44;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre55"]	=	$comparativa[$i]->costopz;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["mar1"]	=	$comparativa[$i]->mar1;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["mar2"]	=	$comparativa[$i]->mar2;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["mar3"]	=	$comparativa[$i]->mar3;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["mar4"]	=	$comparativa[$i]->mar4;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["mar11"]	=	$comparativa[$i]->mar11;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["mar22"]	=	$comparativa[$i]->mar22;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["mar33"]	=	$comparativa[$i]->mar33;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["mar44"]	=	$comparativa[$i]->mar44;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["listo"]	=	$comparativa[$i]->listo;
+		}
+		if ($comparativaIndexada) {
+			return $comparativaIndexada;
+		} else {
+			return false;
+		}
+	}
+
+	
 }

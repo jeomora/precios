@@ -17,9 +17,9 @@ jQuery(document).ready(function() {
         }
     })
     
-    getMeDesc();
-    getMeRojos();
-    getMeAltas();
+    //getMeDesc();
+    //getMeRojos();
+    //getMeAltas();
     getMeNews();
 });
 

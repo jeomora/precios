@@ -409,10 +409,15 @@
                                                                 <img src="assets/img/codigo-qr.png" style="height:45px">
                                                             </a>
                                                         </th>
+                                                        <th>
+                                                            <a class="nav-link" target="_blank" href="Uploads/excelA/<?php echo $value['id_nuevo'] ?>">
+                                                                <img src="assets/img/excel.svg" style="height:45px">
+                                                            </a>
+                                                        </th>
                                                         <th colspan="6">
                                                             <?php echo $fecha ?>
                                                         </th>
-                                                        <th colspan="18" style="background:rgb(255,51,51)">AJUSTES</th>
+                                                        <th colspan="17" style="background:rgb(255,51,51)">AJUSTES</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width:100px" >CÓDIGO</th>
