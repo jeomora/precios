@@ -18,7 +18,7 @@ jQuery(document).ready(function() {
     })
     
     //getMeDesc();
-    //getMeRojos();
+    getMeRojos();
     //getMeAltas();
     getMeNews();
 });
@@ -279,7 +279,7 @@ function getMeAltas(){
                 var pre55 = parseFloat(value.costo) + 0.01;
 
                 var arreid_rojo = { "id_rojo":value.id_rojo,"codigo1":value.codigo,"codigo2":"","lin":lins,"desc1":value.descripcion,"um":"","code3":value.codecaja,"desc2":value.descripcion, 
-                    "cantidad":value.um_nuevo,"costo":value.costo,"iva":value.iva,"mar1":mar1,"mar11":mar11, "mar2":mar2,"mar22":mar22, "mar3":mar3,"mar33":mar33,"pre5":pre5, 
+                    "cantidad":value.um_nuevo,"costo":value.costo,"iva":value.iva,"mar1":mar1,"mar11":mar11, "mar2":mar2,"mar22":mar22, "mar3":mar3,"mar33":mar33,"pre5":pre55, 
                     "mar4":mar4,"mar44":mar44, "pre1":pre1,"pre11":pre11,"pre2":pre2,"pre22":pre22, "pre3":pre3,"pre33":pre33, "pre4":pre4,"pre44":pre44,"mostrar":0,"matriz":"","costopz":costopz,
                     "estatus":2 }
                 rojosArray[value.id_rojo] = arreid_rojo;
@@ -427,7 +427,7 @@ function initializeTable(value,val = []){
         val.preciodos = value.preciodos;
         val.preciotres = value.preciotres;
         val.preciocuatro = value.preciocuatro;
-        val.preciocinco = value.preciocinco;
+        val.preciocinco = parseFloat(value.costo)+.01;
     }else{
         val.cantidad = val.cantidad == 0 ? 1 : val.cantidad == "" ? 1 : val.cantidad == null ? 1 : val.cantidad;
     }
@@ -465,7 +465,7 @@ function initializeTable(value,val = []){
     var difp11=pre11-costopz;var difp22=pre22-costopz;var difp33=pre33-costopz;var difp44=pre44-costopz;
 
     var arreid_rojo = { "id_rojo":value.id_rojo,"codigo1":val.codigo,"codigo2":val.cods,"lin":value.ides,"desc1":value.descripcion,"um":value.uni,"code3":value.code1,"desc2":val.descripcion, 
-        "cantidad":val.cantidad,"costo":value.costo,"iva":value.iva,"mar1":mar1,"mar11":mar11, "mar2":mar2,"mar22":mar22, "mar3":mar3,"mar33":mar33,"pre5":pre5, 
+        "cantidad":val.cantidad,"costo":value.costo,"iva":value.iva,"mar1":mar1,"mar11":mar11, "mar2":mar2,"mar22":mar22, "mar3":mar3,"mar33":mar33,"pre5":pre55, 
         "mar4":mar4,"mar44":mar44, "pre1":pre1,"pre11":pre11,"pre2":pre2,"pre22":pre22, "pre3":pre3,"pre33":pre33, "pre4":pre4,"pre44":pre44,"mostrar":0,"matriz":value.preciocinco,"costopz":costopz,"estatus":1 }
     rojosArray[value.id_rojo] = arreid_rojo;
     
@@ -560,7 +560,7 @@ function initializeTableB(value,val = []){
     var difp11=pre11-costopz;var difp22=pre22-costopz;var difp33=pre33-costopz;var difp44=pre44-costopz;
 
     var arreid_rojo = { "id_rojo":value.id_rojo,"codigo1":value.code1,"codigo2":value.code2,"lin":value.ides,"desc1":value.descripcion,"um":value.uni,"code3":val.codigo,"desc2":val.descripcion, 
-        "cantidad":val.cantidad,"costo":value.costo,"iva":value.iva,"mar1":mar1,"mar11":mar11, "mar2":mar2,"mar22":mar22, "mar3":mar3,"mar33":mar33,"pre5":pre5, 
+        "cantidad":val.cantidad,"costo":value.costo,"iva":value.iva,"mar1":mar1,"mar11":mar11, "mar2":mar2,"mar22":mar22, "mar3":mar3,"mar33":mar33,"pre5":pre55, 
         "mar4":mar4,"mar44":mar44, "pre1":pre1,"pre11":pre11,"pre2":pre2,"pre22":pre22, "pre3":pre3,"pre33":pre33, "pre4":pre4,"pre44":pre44,"mostrar":0,"matriz":value.preciocinco,"costopz":costopz,"estatus":1 }
     rojosArray[value.id_rojo] = arreid_rojo;
     
@@ -667,7 +667,7 @@ $(document).off("change keyup",".pre44Rojo").on("change keyup",".pre44Rojo",func
 function adjMarPz(dis,cual){
     var idrojo = dis.closest(".rojoTr").data("idRojo");
     var pcio = dis.val().replace(/,/g , '');
-    var pre1 =  Math.floor( ((pcio - parseFloat(rojosArray[idrojo].costopz)) / rojosArray[idrojo].costopz)*100 );
+    var pre1 =   ((pcio - parseFloat(rojosArray[idrojo].costopz)) / rojosArray[idrojo].costopz)*100 ;
     rojosArray[idrojo][cual] = pre1;
     dis.closest(".rojoTr").find("."+cual+"Rojo").val(pre1);
     dis.closest(".rojoTr").find("."+cual+"Rojo").attr("value",pre1);
@@ -675,7 +675,7 @@ function adjMarPz(dis,cual){
 function adjMar(dis,cual){
     var idrojo = dis.closest(".rojoTr").data("idRojo");
     var pcio = dis.val().replace(/,/g , '');
-    var pre1 =  Math.floor( ((pcio - parseFloat(rojosArray[idrojo].costo)) / rojosArray[idrojo].costo)*100 );
+    var pre1 =   ((pcio - parseFloat(rojosArray[idrojo].costo)) / rojosArray[idrojo].costo)*100 ;
     rojosArray[idrojo][cual] = pre1;
     dis.closest(".rojoTr").find("."+cual+"Rojo").val(pre1);
     dis.closest(".rojoTr").find("."+cual+"Rojo").attr("value",pre1);
@@ -896,6 +896,7 @@ $(document).off("click",".btn-show-rojos").on("click",".btn-show-rojos",function
     })
     
     if(almacena.length != 0){
+        console.log(almacena)
         saveRojos(JSON.stringify(almacena)).done(function(resp){
             $(".btn-show-rojos").html( setZeros2( parseInt(resp)+1 ) );
             addTable(resp)
@@ -928,8 +929,9 @@ function getMaxNew(){
 
 function addTable(nuevo){
     var new_table = '<div class=row><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="5" style="padding:0">'+setZeros2(nuevo)+'</th>'+
-        '<th><a class="nav-link" target="_blank" href="Codigos/qrme/'+nuevo+'"><img src="assets/img/codigo-qr.png" style="height:45px"></a></th><th colspan="7">'+
-        formatDate2(getDate())+'</th><th colspan="18" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr><th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th>'+
+        '<th><a class="nav-link" target="_blank" href="Codigos/qrme/'+nuevo+'"><img src="assets/img/codigo-qr.png" style="height:45px"></a></th><th>'+
+        '<a class="nav-link" target="_blank" href="Uploads/excelA/'+nuevo+'"><img src="assets/img/excel.svg" style="height:45px"></a></th><th colspan="7">'+
+        formatDate2(getDate())+'</th><th colspan="17" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr><th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th>'+
         '<th style="width:350px" >DESCRIPCIÓN</th><th style="width:70px" >UM</th><th style="width:100px" >C</th><th style="width:150px" >PAQUETE</th>'+
         '<th style="width:100px" class="ivaClass">IVA</th><th style="width:100px" class="renglon10Class">RENGLON 10</th><th colspan="5">PRECIOS DEL 1 AL 5</th>'+
         '<th style="width:100px" colspan="4" class="margen1Class">MARGENES</th><th style="width:100px" >CÓDIGO</th><th style="width:350px" >DESCRIPCIÓN</th>'+
@@ -985,11 +987,13 @@ function getMeNews(){
 
 function oldResultsB(value){
     var oldsB = '<div class="row" style="overflow-x:scroll;padding-bottom: 50px;"><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="4" style="padding:0">'+
-                                setZeros2(value.id_nuevo)+'</th><th colspan="8">'+formatDate2(value.fecha_registro)+'</th><th colspan="18" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr>'+
+                                setZeros2(value.id_nuevo)+'</th>'+
+                                '<th><a class="nav-link" target="_blank" href="Uploads/excelB/'+value.id_nuevo+'"><img src="assets/img/excel.svg" style="height:45px"></a></th>'+
+                                '<th colspan="7">'+formatDate2(value.fecha_registro)+'</th><th colspan="18" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr>'+
                                 '<th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th><th style="width:350px" >DESCRIPCIÓN</th><th style="width:70px" >UM</th>'+
-                                '<th style="width:100px" >C</th><th style="width:150px" >PAQUETE</th><th style="width:100px" class="ivaClass">IVA</th><th style="width:100px" class="renglon10Class">RENGLON 10</th>'+
+                                '<th style="width:100px" >C</th><th style="width:150px" >COSTO<br>PZA</th><th style="width:100px" class="ivaClass">IVA</th><th style="width:100px" class="renglon10Class">RENGLON 10</th>'+
                                 '<th colspan="3" style="background:#bdd7ee">PRECIOS DEL 1 AL 3</th><th style="width:100px" colspan="3" class="margen1Class">MARGENES</th><th style="width:100px" >CÓDIGO</th><th style="width:350px" >DESCRIPCIÓN</th>'+
-                                '<th style="width:100px" >COSTO<br>PZA</th><th style="background:#bdd7ee" colspan="3">PRECIOS DEL 1 AL 3</th><th style="width:100px" colspan="3" class="margen2Class">MARGENES</th></tr></thead><tbody>';
+                                '<th style="width:100px" >PAQUETE</th><th style="background:#bdd7ee" colspan="3">PRECIOS DEL 1 AL 3</th><th style="width:100px" colspan="3" class="margen2Class">MARGENES</th></tr></thead><tbody>';
 
     $.each(value.detalles,function(inx,val){
         var renglon10 = ( val.pre4/val.cantidad ) / ( 1+(val.iva/100) );
@@ -1007,11 +1011,11 @@ function oldResultsB(value){
         var pre22 = Math.ceil( ((costopz * (val.mar22/100))+parseFloat(costopz))*10 )/10;
         var pre33 = Math.ceil( ((costopz * (val.mar33/100))+parseFloat(costopz))*10 )/10;
 
-        oldsB +=    '<tr><td>'+val.code1+'</td><td>'+val.code2+'</td><td>'+val.linea+'</td><td>'+val.desc1+'</td><td>'+val.unidad+'</td><td>'+val.cantidad+'</td><td>'+val.pre4+'</td>'+
-                    '<td class="ivaClass">'+val.iva+'</td><td class="renglon10Class">'+formatMoney(renglon10)+'</td><td class="precioB">'+formatMoney(pre1)+'</td><td class="precioB">'+formatMoney(pre2)+
-                    '</td><td class="precioB">'+formatMoney(pre3)+'</td><td class="margen1Class">'+val.mar1+'</td><td class="margen1Class">'+val.mar2+'</td>'+
-                    '<td class="margen1Class">'+val.mar3+'</td><td>'+val.code3+'</td><td>'+val.desc2+'</td><td>'+formatMoney(costopz)+'</td><td class="precioB">'+formatMoney(pre11)+'</td><td class="precioB">'+
-                    formatMoney(pre22)+'</td><td class="precioB">'+pre33+'</td><td class="margen2Class">'+val.mar11+'</td><td class="margen2Class">'+val.mar22+'</td><td class="margen2Class">'+val.mar33+'</td></tr>';
+        oldsB +=    '<tr><td>'+val.code1+'</td><td>'+val.code2+'</td><td>'+val.linea+'</td><td>'+val.desc1+'</td><td>'+val.unidad+'</td><td>'+val.cantidad+'</td><td>'+formatMoney(costopz)+'</td>'+
+                    '<td class="ivaClass">'+val.iva+'</td><td class="renglon10Class">'+formatMoney(renglon10)+'</td><td class="precioB">'+formatMoney(pre11)+'</td><td class="precioB">'+formatMoney(pre22)+
+                    '</td><td class="precioB">'+formatMoney(pre33)+'</td><td class="margen1Class">'+formatMoney(val.mar11,0)+'</td><td class="margen1Class">'+formatMoney(val.mar22,0)+'</td>'+
+                    '<td class="margen1Class">'+formatMoney(val.mar33,0)+'</td><td>'+val.code3+'</td><td>'+val.desc2+'</td><td>'+formatMoney(val.pre4)+'</td><td class="precioB">'+formatMoney(pre1)+'</td><td class="precioB">'+
+                    formatMoney(pre2)+'</td><td class="precioB">'+pre3+'</td><td class="margen2Class">'+formatMoney(val.mar1,0)+'</td><td class="margen2Class">'+formatMoney(val.mar2,0)+'</td><td class="margen2Class">'+formatMoney(val.mar3,0)+'</td></tr>';
     })
 
     oldsB += '</tbody></table></div>';
