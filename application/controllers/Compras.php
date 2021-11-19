@@ -339,16 +339,17 @@ class Compras extends MY_Controller {
 		$fecha =  $dias[date('w')]." ".date('d')." DE ".$meses[date('n')-1]. " DEL ".date('Y') ;
 
 		$hoja1 = $this->excelfile->getActiveSheet();
-		$hoja1->mergeCells('A'.$rws2.':C'.$rws2);
-		$this->excelfile->getActiveSheet()->getStyle('A'.$rws2.':C'.$rws2)->applyFromArray($styleArray);
-		$this->cellStyle('A'.$rws2.':C'.$rws2, "44546A", "FFFFFF", TRUE, 18, "Bahnschrift");
+		$hoja1->mergeCells('A'.$rws2.':D'.$rws2);
+		$this->excelfile->getActiveSheet()->getStyle('A'.$rws2.':D'.$rws2)->applyFromArray($styleArray);
+		$this->cellStyle('A'.$rws2.':D'.$rws2, "44546A", "FFFFFF", TRUE, 18, "Bahnschrift");
 		$hoja1->setCellValue("A{$rws2}", "AJUSTE DE PRECIOS ".$fecha);
 		$rws2++;
-		$this->excelfile->getActiveSheet()->getStyle('A'.$rws2.':C'.$rws2)->applyFromArray($styleArray);
-		$this->cellStyle('A'.$rws2.':C'.$rws2, "44546A", "FFFFFF", TRUE, 18, "Bahnschrift");
+		$this->excelfile->getActiveSheet()->getStyle('A'.$rws2.':D'.$rws2)->applyFromArray($styleArray);
+		$this->cellStyle('A'.$rws2.':D'.$rws2, "44546A", "FFFFFF", TRUE, 18, "Bahnschrift");
 		$hoja1->setCellValue("A{$rws2}", "CÓDIGO")->getColumnDimension('A')->setWidth(25);
 		$hoja1->setCellValue("B{$rws2}", "DESCRIPCIÓN")->getColumnDimension('B')->setWidth(50);
 		$hoja1->setCellValue("C{$rws2}", "PRECIO")->getColumnDimension('C')->setWidth(18);
+		$hoja1->setCellValue("D{$rws2}", "PRECIO 5")->getColumnDimension('D')->setWidth(18);
 
 		
 		$this->excelfile->setActiveSheetIndex(1);
@@ -357,18 +358,19 @@ class Compras extends MY_Controller {
 		
 		
 
-		$prods = $this->prod_md->getPlantillaSin(NULL);
+		$prods = $this->prod_md->getPlantilla(NULL);
 		//$this->jsonResponse($prods);
-		$hoja->mergeCells('A'.$rws.':C'.$rws);
-		$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':C'.$rws)->applyFromArray($styleArray);
-		$this->cellStyle('A'.$rws.':C'.$rws, "99E993", "000000", TRUE, 16, "Franklin Gothic Book");
+		$hoja->mergeCells('A'.$rws.':D'.$rws);
+		$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':D'.$rws)->applyFromArray($styleArray);
+		$this->cellStyle('A'.$rws.':D'.$rws, "99E993", "000000", TRUE, 16, "Franklin Gothic Book");
 		$hoja->setCellValue("A{$rws}", "PRODUCTOS AL DÍA ".$fecha);
 		$rws++;
-		$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':C'.$rws)->applyFromArray($styleArray);
-		$this->cellStyle('A'.$rws.':C'.$rws, "99E993", "000000", TRUE, 12, "Franklin Gothic Book");
+		$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':D'.$rws)->applyFromArray($styleArray);
+		$this->cellStyle('A'.$rws.':D'.$rws, "99E993", "000000", TRUE, 12, "Franklin Gothic Book");
 		$hoja->setCellValue("A{$rws}", "CÓDIGO")->getColumnDimension('A')->setWidth(25);
 		$hoja->setCellValue("B{$rws}", "DESCRIPCIÓN")->getColumnDimension('B')->setWidth(35);
 		$hoja->setCellValue("C{$rws}", "U.M.")->getColumnDimension('C')->setWidth(18);
+		$hoja1->setCellValue("D{$rws}", "PRECIO 5")->getColumnDimension('D')->setWidth(18);
 	
 		$rws++;
 		$lin = "";
@@ -376,25 +378,27 @@ class Compras extends MY_Controller {
 			foreach($prods as $key => $value){
 				if ($lin <> $value->linea) {
 					$lin = $value->linea;
-					$hoja->mergeCells('A'.$rws.':C'.$rws);
-					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':C'.$rws)->applyFromArray($styleArray);
-					$this->cellStyle('A'.$rws.':C'.$rws, "000000", "FFFFFF", TRUE, 16, "Franklin Gothic Book");
+					$hoja->mergeCells('A'.$rws.':D'.$rws);
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':D'.$rws)->applyFromArray($styleArray);
+					$this->cellStyle('A'.$rws.':D'.$rws, "000000", "FFFFFF", TRUE, 16, "Franklin Gothic Book");
 					$hoja->setCellValue("A{$rws}", $value->linea);
 					$rws++;
 				}
-				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':C'.$rws)->applyFromArray($styleArray);
-				$this->cellStyle('A'.$rws.':C'.$rws, "FFFFFF", "000000", FALSE, 12, "Franklin Gothic Book");
-				$hoja->setCellValue("A{$rws}", $value->codigo)->getColumnDimension('A')->setWidth(25);
-				$hoja->setCellValue("B{$rws}", $value->nombre)->getColumnDimension('B')->setWidth(50);
-				$hoja->setCellValue("C{$rws}", $value->uns)->getColumnDimension('C')->setWidth(18);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':D'.$rws)->applyFromArray($styleArray);
+				$this->cellStyle('A'.$rws.':D'.$rws, "FFFFFF", "000000", FALSE, 12, "Franklin Gothic Book");
+				$hoja->setCellValue("A{$rws}", $value->codigo);
+				$hoja->setCellValue("B{$rws}", $value->nombre);
+				$hoja->setCellValue("C{$rws}", $value->uns);
+				$hoja->setCellValue("D{$rws}", $value->preciocinco);
 				$rws++;
 			}
 		}
 		$this->excelfile->setActiveSheetIndex(0);
 		for ($i=3; $i <= 100; $i++) { 
-			$this->excelfile->getActiveSheet()->getStyle('A'.$i.':C'.$i)->applyFromArray($styleArray);
-			$this->cellStyle('A'.$i.':C'.$i, "FFFFFF", "000000", FALSE, 12, "Franklin Gothic Book");
+			$this->excelfile->getActiveSheet()->getStyle('A'.$i.':D'.$i)->applyFromArray($styleArray);
+			$this->cellStyle('A'.$i.':D'.$i, "FFFFFF", "000000", FALSE, 12, "Franklin Gothic Book");
 			$hoja1->setCellValue("B{$i}", "=VLOOKUP(A".$i.",PRODUCTOS!A4:C".$rws.",2,FALSE)");
+			$hoja1->setCellValue("D{$i}", "=VLOOKUP(A".$i.",PRODUCTOS!A4:D".$rws.",4,FALSE)");
 		}
 		$dias = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
 		$meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");

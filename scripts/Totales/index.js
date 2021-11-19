@@ -1,6 +1,8 @@
 'use strict';
 var rojosArray = [];
 var almacena = [];
+var brojosArray = [];
+var balmacena = [];
 var descChange = 0;
 var idLinea = 0;
 jQuery(document).ready(function() {
@@ -18,7 +20,7 @@ jQuery(document).ready(function() {
     })
     
     //getMeDesc();
-    getMeRojos();
+    //getMeRojos();
     //getMeAltas();
     getMeNews();
 });
@@ -978,7 +980,11 @@ function getMeNews(){
         $(".otrosShowsB").html("");
         if(resp){
             $.each(resp,function(index,value){
-                oldResultsB(value);
+                if(value.sucb == 0){
+                    oldResultsB(value);
+                }else{
+                    oldResultsBDone(value);
+                }
             })
         }
     })
@@ -986,6 +992,297 @@ function getMeNews(){
 
 
 function oldResultsB(value){
+    var oldsB = '<div class="row" style="overflow-x:scroll;margin-bottom: 50px;"><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca bg-light-danger" colspan="4" style="padding:0">'+
+                                setZeros2(value.id_nuevo)+'</th>'+
+                                '<th class="bg-light-danger"><a class="nav-link guardaBes" data-id-rojo="'+value.id_nuevo+'"><img src="assets/img/send.svg" style="height:50px"></a></th>'+
+                                '<th class="bg-light-danger" colspan="7">'+formatDate2(value.fecha_registro)+'</th><th colspan="18" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr>'+
+                                '<th></th><th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th><th style="width:350px" >DESCRIPCIÓN</th><th style="width:70px" >UM</th>'+
+                                '<th style="width:100px" >C</th><th style="width:150px" >COSTO<br>PZA</th><th style="width:100px" class="ivaClass">IVA</th><th style="width:100px" class="renglon10Class">RENGLON 10</th>'+
+                                '<th colspan="3" style="background:#bdd7ee">PRECIOS DEL 1 AL 3</th><th style="width:100px" colspan="3" class="margen1Class">MARGENES</th><th style="width:100px" >CÓDIGO</th><th style="width:350px" >DESCRIPCIÓN</th>'+
+                                '<th style="width:100px" >PAQUETE</th><th style="background:#bdd7ee" colspan="3">PRECIOS DEL 1 AL 3</th><th style="width:100px" colspan="3" class="margen2Class">MARGENES</th></tr></thead><tbody>';
+
+    $.each(value.detalles,function(inx,val){
+
+        if(val.estatusb != "0"){
+            var renglon10 = ( val.pre4/val.cantidad ) / ( 1+(val.iva/100) );
+            var pre5 = val.pre4/val.cantidad + 0.01;
+            var pre55 = parseFloat(val.pre4) + 0.01;
+
+            //PRECIOS PIEZA*
+            var pre1 = Math.ceil( ((val.pre4 * (val.mar1/100))+parseFloat(val.pre4))*10 )/10;
+            var pre2 = Math.ceil( ((val.pre4 * (val.mar2/100))+parseFloat(val.pre4))*10 )/10;
+            var pre3 = Math.ceil( ((val.pre4 * (val.mar3/100))+parseFloat(val.pre4))*10 )/10;
+
+            //POR CAJA
+            var costopz = val.pre4 / val.cantidad;
+            var pre11 = Math.ceil( ((costopz * (val.mar11/100))+parseFloat(costopz))*10 )/10;
+            var pre22 = Math.ceil( ((costopz * (val.mar22/100))+parseFloat(costopz))*10 )/10;
+            var pre33 = Math.ceil( ((costopz * (val.mar33/100))+parseFloat(costopz))*10 )/10;
+
+            var difp1=pre1-value.costo;var difp2=pre2-value.costo;var difp3=pre3-value.costo;
+            var difp11=pre11-costopz;var difp22=pre22-costopz;var difp33=pre33-costopz;
+
+            var arreid_rojo = { "id_rojo":val.detalle,"codigo1":val.code1,"codigo2":val.code2,"lin":val.linea,"desc1":val.desc1,"um":val.unidad,"code3":val.code3,"desc2":val.desc2, 
+                        "cantidad":val.cantidad,"costo":val.pre4,"iva":val.iva,"bmar1":val.mar1,"bmar11":val.mar11,"bmar2":val.mar2,"bmar22":val.mar22,"bmar3":val.mar3,"bmar33":val.mar33,"bpre1":pre1,
+                        "bpre11":pre11,"bpre2":pre2,"bpre22":pre22,"bpre3":pre3,"bpre33":pre33,"mostrar":0,"matriz":"","costopz":costopz,"estatus":2,"id_nuevo":value.id_nuevo }
+                    brojosArray[val.detalle] = arreid_rojo;
+
+            oldsB +=    '<tr class="brojoTr brojoTr'+val.detalle+' bgensuc'+val.id_nuevo+'" data-id-rojo="'+val.detalle+'">'+
+                    '<td><button type="button" class="btn btn-outline-danger detBDel" data-id-rojo="'+val.detalle+'">Eliminar</button>'+
+                    '<button type="button" class="btn btn-danger detSure detSure'+val.detalle+'" data-id-rojo="'+val.detalle+'">¿Segur@?</button></td>'+
+                    '<td>'+val.code1+'</td><td>'+val.code2+'</td><td>'+val.linea+'</td><td>'+val.desc1+'</td><td>'+val.unidad+'</td><td>'+
+                    val.cantidad+'</td><td class="bpre4">'+formatMoney(costopz)+'</td>'+
+                    '<td class="ivaClass">'+val.iva+'</td><td class="renglon10Class">'+formatMoney(renglon10)+'</td>'+
+                    '<td class="precioB"><input type="text" class="form-control bpre11Rojo" placeholder="'+formatMoney(pre11)+'" value="'+formatMoney(pre11)+'"/>'+
+                    '<span class="difPrecios bdifP11">'+formatMoney(difp11)+'</span></td>'+
+                    '<td class="precioB"><input type="text" class="form-control bpre22Rojo" placeholder="'+formatMoney(pre22)+'" value="'+formatMoney(pre22)+'"/>'+
+                    '<span class="difPrecios bdifP22">'+formatMoney(difp22)+'</span></td>'+
+                    '<td class="precioB"><input type="text" class="form-control bpre33Rojo" placeholder="'+formatMoney(pre33)+'" value="'+formatMoney(pre33)+'"/>'+
+                    '<span class="difPrecios bdifP33">'+formatMoney(difp33)+'</span></td>'+
+                    '<td class="margen1Class"><input type="text" class="form-control inputransparent bmar11Rojo" placeholder="'+formatMoney(val.mar11,0)+'" value="'+formatMoney(val.mar11,0)+'"/></td>'+
+                    '<td class="margen1Class"><input type="text" class="form-control inputransparent bmar22Rojo" placeholder="'+formatMoney(val.mar22,0)+'" value="'+formatMoney(val.mar22,0)+'"/></td>'+
+                    '<td class="margen1Class"><input type="text" class="form-control inputransparent bmar33Rojo" placeholder="'+formatMoney(val.mar33,0)+'" value="'+formatMoney(val.mar33,0)+'"/></td>'+
+                    '<td>'+val.code3+'</td><td>'+val.desc2+'</td>'+
+                    '<td><input type="text" class="form-control bcostoRojo" placeholder="'+formatMoney(val.pre4)+'" value="'+formatMoney(val.pre4)+'"/></td>'+
+                    '<td class="precioB"><input type="text" class="form-control bpre1Rojo" placeholder="'+formatMoney(pre1)+'" value="'+formatMoney(pre1)+'"/>'+
+                    '<span class="difPrecios bdifP1">'+formatMoney(difp1)+'</span></td>'+
+                    '<td class="precioB"><input type="text" class="form-control bpre2Rojo" placeholder="'+formatMoney(pre2)+'" value="'+formatMoney(pre2)+'"/>'+
+                    '<span class="difPrecios bdifP2">'+formatMoney(difp2)+'</span></td>'+
+                    '<td class="precioB"><input type="text" class="form-control bpre3Rojo" placeholder="'+formatMoney(pre3)+'" value="'+formatMoney(pre3)+'"/>'+
+                    '<span class="difPrecios bdifP3">'+formatMoney(difp3)+'</span></td>'+
+                    '<td class="margen2Class"><input type="text" class="form-control inputransparent bmar1Rojo" placeholder="'+formatMoney(val.mar1,0)+'" value="'+formatMoney(val.mar1,0)+'"/></td>'+
+                    '<td class="margen2Class"><input type="text" class="form-control inputransparent bmar2Rojo" placeholder="'+formatMoney(val.mar2,0)+'" value="'+formatMoney(val.mar2,0)+'"/></td>'+
+                    '<td class="margen2Class"><input type="text" class="form-control inputransparent bmar3Rojo" placeholder="'+formatMoney(val.mar3,0)+'" value="'+formatMoney(val.mar3,0)+'"/></td>'+
+                    '</tr>';
+        }
+    })
+
+    oldsB += '</tbody></table></div>';
+    $(".otrosShowsB").prepend(oldsB)                                                 
+}
+
+function BcomparaPrecios(idrojo){
+    for(var i=1;i<=3;i++){
+        if(brojosArray[idrojo]["bpre"+i] < brojosArray[idrojo]["bpre"+(i+1)]){
+            $(".brojoTr"+idrojo).find(".bpre"+i+"Rojo").css({"color":"red","border-color":"red"});
+        }else{
+            $(".brojoTr"+idrojo).find(".bpre"+i+"Rojo").css({"color":"black","border-color":"#E4E6EF"})
+        }
+        $(".brojoTr"+idrojo).find(".bdifP"+i).html( formatMoney(brojosArray[idrojo]["bpre"+i] - brojosArray[idrojo].costo) )
+    }
+    if (brojosArray[idrojo]["pre3"] < brojosArray[idrojo]["costo"]){
+        $(".brojoTr"+idrojo).find(".bpre3Rojo").css({"color":"red","border-color":"red"});
+    }else{
+        $(".brojoTr"+idrojo).find(".bpre3Rojo").css({"color":"black","border-color":"#E4E6EF"})
+    }
+    $(".brojoTr"+idrojo).find(".bdifP3").html( formatMoney(brojosArray[idrojo]["bpre3"] - brojosArray[idrojo].costo) )
+}
+function BcomparaPreciosPz(idrojo){
+    for(var i=1;i<=3;i++){
+        if(brojosArray[idrojo]["bpre"+i+""+i] < brojosArray[idrojo]["bpre"+(i+1)+""+(i+1)]){
+            $(".brojoTr"+idrojo).find(".bpre"+i+""+i+"Rojo").css({"color":"red","border-color":"red"});
+        }else{
+            $(".brojoTr"+idrojo).find(".bpre"+i+""+i+"Rojo").css({"color":"black","border-color":"#E4E6EF"})
+        }
+        $(".brojoTr"+idrojo).find(".bdifP"+i+""+i).html( formatMoney(brojosArray[idrojo]["bpre"+i+""+i] - brojosArray[idrojo].costopz) )
+    }
+    if (brojosArray[idrojo]["pre33"] < brojosArray[idrojo]["costopz"]){
+        $(".brojoTr"+idrojo).find(".bpre33Rojo").css({"color":"red","border-color":"red"});
+    }else{
+        $(".brojoTr"+idrojo).find(".bpre33Rojo").css({"color":"black","border-color":"#E4E6EF"})
+    }
+    $(".brojoTr"+idrojo).find(".bdifP3").html( formatMoney(brojosArray[idrojo]["bpre4"] - brojosArray[idrojo].costopz) )
+}
+//SE CAMBIAN LOS MARGENES
+
+function BchangeMarginPz(mare,cual1,cual2,cual3){
+    var idrojo = mare.closest(".brojoTr").data("idRojo");
+    var mar1 = mare.val().replace(/,/g , '');
+    mare.attr("value",mar1);
+    brojosArray[idrojo][cual1] = mar1;
+    var pre1 = Math.ceil( ((brojosArray[idrojo].costopz * (mar1/100))+parseFloat(brojosArray[idrojo].costopz))*10 )/10;
+    brojosArray[idrojo][cual2] = pre1;
+    mare.closest(".brojoTr").find("."+cual3).val(formatMoney(pre1));
+    mare.closest(".brojoTr").find("."+cual3).attr("value",formatMoney(pre1));
+    BcomparaPreciosPz(idrojo)
+}
+
+$(document).off("change keyup",".bmar1Rojo").on("change keyup",".bmar1Rojo",function(event){
+    event.preventDefault();
+    BchangeMargin($(this),"bmar1","bpre1","bpre1Rojo")
+})
+$(document).off("change keyup",".bmar2Rojo").on("change keyup",".bmar2Rojo",function(event){
+    event.preventDefault();
+    BchangeMargin($(this),"bmar2","bpre2","bpre2Rojo")
+})
+$(document).off("change keyup",".bmar3Rojo").on("change keyup",".bmar3Rojo",function(event){
+    event.preventDefault();
+    changeMargin($(this),"bmar3","bpre3","bpre3Rojo")
+})
+//SE CAMBIAN LOS MARGENES DE LAS PIEZAS
+$(document).off("change keyup",".bmar11Rojo").on("change keyup",".bmar11Rojo",function(event){
+    event.preventDefault();
+    BchangeMarginPz($(this),"bmar11","bpre11","bpre11Rojo")
+})
+$(document).off("change keyup",".bmar22Rojo").on("change keyup",".bmar22Rojo",function(event){
+    event.preventDefault();
+    BchangeMarginPz($(this),"bmar22","bpre22","bpre22Rojo")
+})
+$(document).off("change keyup",".bmar33Rojo").on("change keyup",".bmar33Rojo",function(event){
+    event.preventDefault();
+    BchangeMarginPz($(this),"bmar33","bpre33","bpre33Rojo")
+})
+
+
+//SI CAMBIA EL PRECIO MANUALMENTE NO SE MODIFICAN LOS MARGENES NI LOS DEMAS PRECIOS
+$(document).off("change keyup",".bpre1Rojo").on("change keyup",".bpre1Rojo",function(event){
+    event.preventDefault();
+    BcambioPrecios($(this),"bpre1")
+    BadjMar($(this),"bmar1")    
+})
+$(document).off("change keyup",".bpre11Rojo").on("change keyup",".bpre11Rojo",function(event){
+    event.preventDefault();
+    BcambioPrecios($(this),"bpre11")
+    BadjMarPz($(this),"bmar11")
+})
+$(document).off("change keyup",".bpre2Rojo").on("change keyup",".bpre2Rojo",function(event){
+    event.preventDefault();
+    BcambioPrecios($(this),"bpre2")
+    BadjMar($(this),"bmar2")
+})
+$(document).off("change keyup",".bpre22Rojo").on("change keyup",".bpre22Rojo",function(event){
+    event.preventDefault();
+    BcambioPrecios($(this),"bpre22")
+    BadjMarPz($(this),"bmar22")
+})
+$(document).off("change keyup",".bpre3Rojo").on("change keyup",".bpre3Rojo",function(event){
+    event.preventDefault();
+    BcambioPrecios($(this),"bpre3")
+    BadjMar($(this),"bmar3")
+})
+$(document).off("change keyup",".bpre33Rojo").on("change keyup",".bpre33Rojo",function(event){
+    event.preventDefault();
+    BcambioPrecios($(this),"bpre33")
+    BadjMarPz($(this),"bmar33")
+})
+
+function BadjMarPz(dis,cual){
+    var idrojo = dis.closest(".brojoTr").data("idRojo");
+    var pcio = dis.val().replace(/,/g , '');
+    var pre1 =   ((pcio - parseFloat(brojosArray[idrojo].costopz)) / brojosArray[idrojo].costopz)*100 ;
+    brojosArray[idrojo][cual] = pre1;
+    dis.closest(".brojoTr").find("."+cual+"Rojo").val(pre1);
+    dis.closest(".brojoTr").find("."+cual+"Rojo").attr("value",pre1);
+}
+function BadjMar(dis,cual){
+    var idrojo = dis.closest(".brojoTr").data("idRojo");
+    var pcio = dis.val().replace(/,/g , '');
+    var pre1 =   ((pcio - parseFloat(brojosArray[idrojo].costo)) / brojosArray[idrojo].costo)*100 ;
+    brojosArray[idrojo][cual] = pre1;
+    dis.closest(".brojoTr").find("."+cual+"Rojo").val(pre1);
+    dis.closest(".brojoTr").find("."+cual+"Rojo").attr("value",pre1);
+}
+
+function BcambioPrecios(precio,cual){
+    var idrojo = precio.closest(".brojoTr").data("idRojo");
+    precio.attr("value",formatMoney(precio.val()));
+    brojosArray[idrojo][cual] = precio.val().replace(/,/g , '');
+    BcomparaPrecios(idrojo)
+    BcomparaPreciosPz(idrojo)
+}
+
+//SE CAMBIAN LOS MARGENES
+function BchangeMargin(mare,cual1,cual2,cual3){
+    var idrojo = mare.closest(".brojoTr").data("idRojo");
+    var mar1 = mare.val().replace(/,/g , '');
+    mare.attr("value",mar1);
+    brojosArray[idrojo][cual1] = mar1;
+    var pre1 = Math.ceil( ((brojosArray[idrojo].costo * (mar1/100))+parseFloat(brojosArray[idrojo].costo))*10 )/10;
+    brojosArray[idrojo][cual2] = pre1;
+    mare.closest(".brojoTr").find("."+cual3).val(formatMoney(pre1));
+    mare.closest(".brojoTr").find("."+cual3).attr("value",formatMoney(pre1));
+    BcomparaPrecios(idrojo)
+}
+
+function BchangeMargin2(mare,cual1,cual2,cual3){
+    var idrojo = mare.closest(".brojoTr").data("idRojo");
+    var mar1 = mare.val().replace(/,/g , '');
+    mare.attr("value",mar1);
+    brojosArray[idrojo][cual1] = mar1;
+    var pre1 = Math.ceil( ((brojosArray[idrojo].costo * (mar1/100))+parseFloat(brojosArray[idrojo].costo))*10 )/10;
+    brojosArray[idrojo][cual2] = pre1;
+    mare.closest(".brojoTr").find("."+cual3).val(formatMoney(pre1));
+    mare.closest(".brojoTr").find("."+cual3).attr("value",formatMoney(pre1));
+}
+
+
+function BchangeMarginPz2(mare,cual1,cual2,cual3){
+    var idrojo = mare.closest(".brojoTr").data("idRojo");
+    var mar1 = mare.val().replace(/,/g , '');
+    mare.attr("value",mar1);
+    brojosArray[idrojo][cual1] = mar1;
+    var pre1 = Math.ceil( ((brojosArray[idrojo].costopz * (mar1/100))+parseFloat(brojosArray[idrojo].costopz))*10 )/10;
+    brojosArray[idrojo][cual2] = pre1;
+    mare.closest(".brojoTr").find("."+cual3).val(formatMoney(pre1));
+    mare.closest(".brojoTr").find("."+cual3).attr("value",formatMoney(pre1));
+}
+
+$(document).off("change keyup",".bmar1Rojo").on("change keyup",".bmar1Rojo",function(event){
+    event.preventDefault();
+    BchangeMargin($(this),"bmar1","bpre1","bpre1Rojo")
+})
+$(document).off("change keyup",".bmar2Rojo").on("change keyup",".bmar2Rojo",function(event){
+    event.preventDefault();
+    BchangeMargin($(this),"bmar2","bpre2","bpre2Rojo")
+})
+$(document).off("change keyup",".bmar3Rojo").on("change keyup",".bmar3Rojo",function(event){
+    event.preventDefault();
+    BchangeMargin($(this),"bmar3","bpre3","bpre3Rojo")
+})
+//SE CAMBIAN LOS MARGENES DE LAS PIEZAS
+$(document).off("change keyup",".bmar11Rojo").on("change keyup",".bmar11Rojo",function(event){
+    event.preventDefault();
+    BchangeMarginPz($(this),"bmar11","bpre11","bpre11Rojo")
+})
+$(document).off("change keyup",".bmar22Rojo").on("change keyup",".bmar22Rojo",function(event){
+    event.preventDefault();
+    BchangeMarginPz($(this),"bmar22","bpre22","bpre22Rojo")
+})
+$(document).off("change keyup",".bmar33Rojo").on("change keyup",".bmar33Rojo",function(event){
+    event.preventDefault();
+    BchangeMarginPz($(this),"bmar33","bpre33","bpre33Rojo")
+})
+
+//CAMBIO PRECIO PAQUETE
+$(document).off("change keyup",".bcostoRojo").on("change keyup",".bcostoRojo",function(event){
+    event.preventDefault();
+    BchangeCosto($(this));
+})
+function BchangeCosto(costoRojo){
+    var costo = costoRojo.val().replace(/,/g , '');
+    costoRojo.attr("value",costo)
+    var idrojo = costoRojo.closest(".brojoTr").data("idRojo");
+
+    var pre5 = costo/brojosArray[idrojo].cantidad + 0.01;
+
+    $(".brojoTr"+idrojo).find(".bpre4").html( formatMoney( pre5 ) )
+    
+    brojosArray[idrojo].costo = costo;
+    brojosArray[idrojo].costopz = costo / brojosArray[idrojo].cantidad;
+    BchangeMarginPrice(idrojo);
+}
+
+function BchangeMarginPrice(idrojo){
+    for (var i = 1; i <= 3; i++) {
+        BchangeMargin2($(".brojoTr"+idrojo).find(".bmar"+i+"Rojo"),"bmar"+i,"bpre"+i,"bpre"+i+"Rojo");
+        BchangeMarginPz2($(".brojoTr"+idrojo).find(".bmar"+i+""+i+"Rojo"),"bmar"+i+""+i,"bpre"+i+""+i,"bpre"+i+""+i+"Rojo");
+    }
+    BcomparaPrecios(idrojo)
+    BcomparaPreciosPz(idrojo)
+}
+
+function oldResultsBDone(value){
+
     var oldsB = '<div class="row" style="overflow-x:scroll;padding-bottom: 50px;"><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="4" style="padding:0">'+
                                 setZeros2(value.id_nuevo)+'</th>'+
                                 '<th><a class="nav-link" target="_blank" href="Uploads/excelB/'+value.id_nuevo+'"><img src="assets/img/excel.svg" style="height:45px"></a></th>'+
@@ -996,28 +1293,67 @@ function oldResultsB(value){
                                 '<th style="width:100px" >PAQUETE</th><th style="background:#bdd7ee" colspan="3">PRECIOS DEL 1 AL 3</th><th style="width:100px" colspan="3" class="margen2Class">MARGENES</th></tr></thead><tbody>';
 
     $.each(value.detalles,function(inx,val){
-        var renglon10 = ( val.pre4/val.cantidad ) / ( 1+(val.iva/100) );
-        var pre5 = val.pre4/val.cantidad + 0.01;
-        var pre55 = parseFloat(val.pre4) + 0.01;
+        if(val.estatusb != "0"){
+            var renglon10 = ( val.pre4/val.cantidad ) / ( 1+(val.iva/100) );
 
-        //PRECIOS CAJA*
-        var pre1 = Math.ceil( ((val.pre4 * (val.mar1/100))+parseFloat(val.pre4))*10 )/10;
-        var pre2 = Math.ceil( ((val.pre4 * (val.mar2/100))+parseFloat(val.pre4))*10 )/10;
-        var pre3 = Math.ceil( ((val.pre4 * (val.mar3/100))+parseFloat(val.pre4))*10 )/10;
-
-        //POR PIEZA
-        var costopz = val.pre4 / val.cantidad;
-        var pre11 = Math.ceil( ((costopz * (val.mar11/100))+parseFloat(costopz))*10 )/10;
-        var pre22 = Math.ceil( ((costopz * (val.mar22/100))+parseFloat(costopz))*10 )/10;
-        var pre33 = Math.ceil( ((costopz * (val.mar33/100))+parseFloat(costopz))*10 )/10;
-
-        oldsB +=    '<tr><td>'+val.code1+'</td><td>'+val.code2+'</td><td>'+val.linea+'</td><td>'+val.desc1+'</td><td>'+val.unidad+'</td><td>'+val.cantidad+'</td><td>'+formatMoney(costopz)+'</td>'+
-                    '<td class="ivaClass">'+val.iva+'</td><td class="renglon10Class">'+formatMoney(renglon10)+'</td><td class="precioB">'+formatMoney(pre11)+'</td><td class="precioB">'+formatMoney(pre22)+
-                    '</td><td class="precioB">'+formatMoney(pre33)+'</td><td class="margen1Class">'+formatMoney(val.mar11,0)+'</td><td class="margen1Class">'+formatMoney(val.mar22,0)+'</td>'+
-                    '<td class="margen1Class">'+formatMoney(val.mar33,0)+'</td><td>'+val.code3+'</td><td>'+val.desc2+'</td><td>'+formatMoney(val.pre4)+'</td><td class="precioB">'+formatMoney(pre1)+'</td><td class="precioB">'+
-                    formatMoney(pre2)+'</td><td class="precioB">'+pre3+'</td><td class="margen2Class">'+formatMoney(val.mar1,0)+'</td><td class="margen2Class">'+formatMoney(val.mar2,0)+'</td><td class="margen2Class">'+formatMoney(val.mar3,0)+'</td></tr>';
+            oldsB +=    '<tr><td>'+val.code1b+'</td><td>'+val.code2b+'</td><td>'+val.lineab+'</td><td>'+val.desc1b+'</td><td>'+val.unidadb+'</td><td>'+val.cantidadb+'</td><td>'+formatMoney(val.costob)+'</td>'+
+                        '<td class="ivaClass">'+val.ivab+'</td><td class="renglon10Class">'+formatMoney(renglon10)+'</td><td class="precioB">'+formatMoney(val.pre11b)+'</td><td class="precioB">'+formatMoney(val.pre22b)+
+                        '</td><td class="precioB">'+formatMoney(val.pre33b)+'</td><td class="margen1Class">'+formatMoney(val.mar11b,0)+'</td><td class="margen1Class">'+formatMoney(val.mar22b,0)+'</td>'+
+                        '<td class="margen1Class">'+formatMoney(val.mar33b,0)+'</td><td>'+val.code3b+'</td><td>'+val.desc2b+'</td><td>'+formatMoney(val.costopzb)+'</td><td class="precioB">'+formatMoney(val.pre1b)+'</td><td class="precioB">'+
+                        formatMoney(val.pre2b)+'</td><td class="precioB">'+formatMoney(val.pre3b)+'</td><td class="margen2Class">'+formatMoney(val.mar1b,0)+'</td><td class="margen2Class">'+formatMoney(val.mar2b,0)+'</td><td class="margen2Class">'+formatMoney(val.mar3b,0)+'</td></tr>';
+        }                        
     })
 
     oldsB += '</tbody></table></div>';
     $(".otrosShowsB").prepend(oldsB)                                                     
+}
+
+$(document).off("click",".guardaBes").on("click",".guardaBes",function(event){
+    event.preventDefault();
+    var ides = $(this).data("idRojo");
+    $.each(brojosArray,function(index,value){
+        if(value){
+            if(value.id_nuevo == ides){
+                saveDetalle(JSON.stringify(value)).done(function(resp){
+                    
+                });
+            }
+        }
+    })
+    toastr.success("Se actualizará la tabla","En proceso");
+    getMeNews()
+})
+
+$(document).off("click",".detBDel").on("click",".detBDel",function(event){
+    event.preventDefault();
+    var ides = $(this).data("idRojo");
+    $(this).css("display","none");
+    $(".detSure"+ides).css("display","block")
+})
+$(document).off("click",".detSure").on("click",".detSure",function(event){
+    event.preventDefault();
+    var ides = $(this).data("idRojo");
+    brojosArray[ides]["estatus"] = 0;
+    brojosArray[ides]["mostrar"] = 0;
+    detalleRemove(ides).done(function(resp){
+        $(".brojoTr"+ides).remove();
+    })
+})
+function detalleRemove(valo){
+    return $.ajax({
+        url: site_url+"Uploads/detalleRemove/"+valo,
+        type: "GET",
+        dataType: "JSON",
+    });
+}
+
+function saveDetalle(values,folio){
+    return $.ajax({
+        url: site_url+"Uploads/saveDetalle",
+        type: "POST",
+        dataType: "JSON",
+        data:{
+            value : values
+        }
+    });
 }

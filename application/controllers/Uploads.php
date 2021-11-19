@@ -21,6 +21,7 @@ class Uploads extends MY_Controller {
 		$this->load->model("Nuevodetail_model", "det_md");
 		$this->load->model("Listos_model", "listo_md");
 		$this->load->model("Paquetes_model", "pack_md");
+		$this->load->model("Nuevob_model", "newb_md");
 		$this->load->library("form_validation");
 	}
 
@@ -738,10 +739,9 @@ class Uploads extends MY_Controller {
 		$excel_Writer = PHPExcel_IOFactory::createWriter($this->excelfile, "Excel2007");
 		$excel_Writer->save("php://output");
 	}
-	
 
 	public function excelB($valo){
-		$rojos = $this->new_md->getRojo($valo);
+		$rojos = $this->new_md->getRojoB($valo);
 		ini_set("memory_limit", "-1");
 		ini_set("max_execution_time", "-1");
 		$this->load->library("excelfile");
@@ -928,5 +928,50 @@ class Uploads extends MY_Controller {
 		header("Cache-Control: max-age=0");
 		$excel_Writer = PHPExcel_IOFactory::createWriter($this->excelfile, "Excel2007");
 		$excel_Writer->save("php://output");
+	}
+
+	public function detalleRemove($detalle){
+		$this->det_md->update(["estatusb"=>0],["id_detail"=>$detalle]);
+		$this->jsonResponse("Done");
+	}
+
+	public function saveDetalle(){
+		$value = json_decode($this->input->post("value"));
+		$user = $this->session->userdata();
+		$nuevo = $this->new_md->update(["sucb"=>1],["id_nuevo"=>$value->id_nuevo]);
+
+		$new_nuevo = [
+			"detalle"	=> $value->id_rojo,
+			"code1"		=> $value->codigo1,
+			"code2"		=> $value->codigo2,
+			"code3"		=> $value->code3,
+			"linea"		=> $value->lin,
+			"desc1"		=> $value->desc1,
+			"unidad"	=> $value->um,
+			"desc2"		=> $value->desc2,
+			"cantidad"	=> $value->cantidad,
+			"costo"		=> $value->costo,
+			"iva"		=> $value->iva,
+			"mar1"		=> $value->bmar1,
+			"mar2"		=> $value->bmar2,
+			"mar3"		=> $value->bmar3,
+			"mar11"		=> $value->bmar11,
+			"mar22"		=> $value->bmar22,
+			"mar33"		=> $value->bmar33,
+			"pre1"		=> $value->bpre1,
+			"pre2"		=> $value->bpre2,
+			"pre3"		=> $value->bpre3,
+			"pre11"		=> $value->bpre11,
+			"pre22"		=> $value->bpre22,
+			"pre33"		=> $value->bpre33,
+			"costopz"	=> $value->costopz,
+			"matriz"	=> $value->matriz,
+			"estatus"	=> $value->estatus,
+			"id_nuevo"	=> $value->id_nuevo
+		];
+		$this->newb_md->update(["estatus"=>0],["id_nuevo"=>$value->id_nuevo,"detalle"=> $value->id_rojo]);
+		$nuevob = $this->newb_md->insert($new_nuevo);
+		
+		$this->jsonResponse($new_nuevo);
 	}
 }

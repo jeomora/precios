@@ -38,13 +38,17 @@
     input.form-control.cantRojo,input.form-control.inputransparent.ivaRojo,input.form-control.pre44Rojo,input.form-control.mar11Rojo,input.form-control.mar22Rojo,input.form-control.mar33Rojo,input.form-control.mar44Rojo,input.form-control.mar1Rojo,input.form-control.mar2Rojo,input.form-control.mar3Rojo,input.form-control.mar4Rojo{width: 70px;}
     textarea.form-control.inputransparent.descoUno,textarea.form-control.inputransparent.descoDos,input.form-control.inputransparent.codeDos{width:150px;}
     textarea.form-control.inputransparent.descoUno,textarea.form-control.inputransparent.descoDos{height:100px;}
+
+input.form-control.bcostoRojo,input.form-control.bpre11Rojo,input.form-control.bpre22Rojo,input.form-control.bpre33Rojo,input.form-control.bpre1Rojo,input.form-control.bpre2Rojo,input.form-control.bpre3Rojo{width:100px;}
+input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bmar22Rojo,input.form-control.bmar33Rojo,input.form-control.bmar1Rojo,input.form-control.bmar2Rojo,input.form-control.bmar3Rojo{width:70px;}
     .thAsoc{width: 170px;}
     @media (min-width: 992px){
         .content{padding:0px 0;}
     }
     tr.rojoTr:hover{background:#fbf6d4;}
-    .rojoSure{display:none;}
-    .rojoDel,.rojoSure{margin-top:10px;}
+    .rojoSure,.detSure{display:none;}
+    .rojoDel,.rojoSure,.detSure{margin-top:10px;}
+    .guardaBes{cursor:pointer;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -438,7 +442,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php foreach ($value["detalles"] as $key2 => $val): $renglon10 = ( $val["costo"]/$val["cantidad"] ) / ( 1+($val["iva"]/100) ); ?>
+                                                    <?php foreach ($value["detalles"] as $key2 => $val):if($val["estatus"]<>0): $renglon10 = ( $val["costo"]/$val["cantidad"] ) / ( 1+($val["iva"]/100) ); ?>
                                                         <tr>
                                                             <td><?php echo $val["code1"] ?></td>
                                                             <td><?php echo $val["code2"] ?></td>
@@ -470,7 +474,7 @@
                                                             <td class="margen2Class"><?php echo $val["mar3"] ?></td>
                                                             <td class="margen2Class"><?php echo $val["mar4"] ?></td>
                                                         </tr>
-                                                    <?php endforeach; ?>
+                                                    <?php endif;endforeach; ?>
                                                 </tbody>
                                             </table>
                                         </div>
