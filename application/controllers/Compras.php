@@ -94,7 +94,7 @@ class Compras extends MY_Controller {
 
 
 					$mensaje = "Archivo valido 1";
-				}elseif( $this->getOldVal($sheet,$i,"D") <> ""){///ALTA DE PRODUCTO
+				}elseif( $this->getOldVal($sheet,$i,"E") <> ""){///ALTA DE PRODUCTO
 					$new_rojo=[
 						"codigo"		=>	$this->getOldVal($sheet,$i,"A"),
 						"descripcion"	=>	$this->getOldVal($sheet,$i,"B"),

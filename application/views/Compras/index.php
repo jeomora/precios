@@ -30,6 +30,7 @@
     .thE2{background:#04a30450;}
     .spandif2{color:#747474;font-size:12px;}
     .descos{font-size:16px;}
+    
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">

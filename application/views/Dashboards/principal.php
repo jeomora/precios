@@ -16,7 +16,7 @@
     }
     .codDes { position: sticky; left: 0; z-index: 10;background:#dfdfdf;border:1px solid !important;}
     .ivaClass{background: rgb(255,204,102,0.5);}
-    .pre5{background: rgb(204,153,255,0.5);}
+    .pre5,.pre55{background: rgb(204,153,255,0.5);}
     .renglon10Class{background: rgb(196,215,155,0.5);}
     .margen1Class{background: rgb(255,117,173,0.5);width:100px;}
     .margen2Class{background: rgb(255,192,0,0.5);width:100px;}
@@ -34,13 +34,13 @@
     .rowScroll::-webkit-scrollbar-thumb {border-radius: 4px;background-color: rgba(255, 0, 24, .5);-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5)} 
     .footer{display:none !important;}
     .rowLinea:hover{background:#ffc7c7;cursor:pointer;}
-    input.form-control.costoRojo,input.form-control.pre11Rojo,input.form-control.pre22Rojo,input.form-control.pre33Rojo,input.form-control.pre1Rojo,input.form-control.pre2Rojo,input.form-control.pre3Rojo,input.form-control.pre4Rojo {width: 100px;}
-    input.form-control.cantRojo,input.form-control.inputransparent.ivaRojo,input.form-control.pre44Rojo,input.form-control.mar11Rojo,input.form-control.mar22Rojo,input.form-control.mar33Rojo,input.form-control.mar44Rojo,input.form-control.mar1Rojo,input.form-control.mar2Rojo,input.form-control.mar3Rojo,input.form-control.mar4Rojo{width: 70px;}
+    input.form-control.costoRojo,input.form-control.pre11Rojo,input.form-control.pre22Rojo,input.form-control.pre33Rojo,input.form-control.pre1Rojo,input.form-control.pre2Rojo,input.form-control.pre3Rojo,input.form-control.pre4Rojo {width:80px;padding:5px;}
+    input.form-control.cantRojo,input.form-control.inputransparent.ivaRojo,input.form-control.pre44Rojo,input.form-control.mar11Rojo,input.form-control.mar22Rojo,input.form-control.mar33Rojo,input.form-control.mar44Rojo,input.form-control.mar1Rojo,input.form-control.mar2Rojo,input.form-control.mar3Rojo,input.form-control.mar4Rojo{width:60px;padding:5px;}
     textarea.form-control.inputransparent.descoUno,textarea.form-control.inputransparent.descoDos,input.form-control.inputransparent.codeDos{width:150px;}
     textarea.form-control.inputransparent.descoUno,textarea.form-control.inputransparent.descoDos{height:100px;}
 
-input.form-control.bcostoRojo,input.form-control.bpre11Rojo,input.form-control.bpre22Rojo,input.form-control.bpre33Rojo,input.form-control.bpre1Rojo,input.form-control.bpre2Rojo,input.form-control.bpre3Rojo{width:100px;}
-input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bmar22Rojo,input.form-control.bmar33Rojo,input.form-control.bmar1Rojo,input.form-control.bmar2Rojo,input.form-control.bmar3Rojo{width:70px;}
+input.form-control.bcostoRojo,input.form-control.bpre11Rojo,input.form-control.bpre22Rojo,input.form-control.bpre33Rojo,input.form-control.bpre1Rojo,input.form-control.bpre2Rojo,input.form-control.bpre3Rojo{width:80px;padding:5px;}
+input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bmar22Rojo,input.form-control.bmar33Rojo,input.form-control.bmar1Rojo,input.form-control.bmar2Rojo,input.form-control.bmar3Rojo{width:60px;padding:5px;}
     .thAsoc{width: 170px;}
     @media (min-width: 992px){
         .content{padding:0px 0;}
@@ -49,6 +49,9 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
     .rojoSure,.detSure{display:none;}
     .rojoDel,.rojoSure,.detSure{margin-top:10px;}
     .guardaBes{cursor:pointer;}
+    td{padding:8px !important;}
+    .form-control{border-radius: 3px;}
+    .pzxum{background:#0002;font-weight:bold;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -146,6 +149,15 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-content" id="myTabContent1" style="overflow-x:hidden;">
                             <div class="tab-pane fade active show rowScroll" id="store-excel" role="tabpanel" aria-labelledby="store-tab-excel"  ><!-- MATRICIAL -->
+                                <h1 style="">DESCARGAR AJUSTES DE PRECIOS</h1>
+                                <!--begin::Row-->
+                                <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
+                                    <div class="col-xl-2">
+                                        <a href="Uploads/rojosCalc" class="btn btn-text-info btn-icon-info font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #8950FC;border:1px solid #8950FC;padding:20px;">
+                                            <i class="flaticon2-file"></i> EXCEL CON LOS <br>PRECIOS A AJUSTAR
+                                        </a>
+                                    </div>
+                                </div>
                                 <h1 style="">SUBIR EXCEL CON PRECIOS</h1>
                                 <!--begin::Row-->
                                 <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
@@ -194,17 +206,16 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                                 <th style="width:50px;background: #C9F7F5 !important;">UM</th>
                                                 <th style="width:100px;background: #C9F7F5 !important;">C</th>
                                                 <th style="width:150px;background: #C9F7F5 !important;">PAQUETE</th>
-                                                <th style="width:100px;background: #C9F7F5 !important;">MATRICIAL</th>
-                                                <th style="width:100px;background: #C9F7F5 !important;">DIF</th>
                                                 <th style="width:100px" class="ivaClass">IVA</th>
                                                 <th style="width:100px" class="renglon10Class">RENGLON 10</th>
-                                                <th colspan="5" style="background: #C9F7F5 !important;">PRECIOS DEL 1 AL 5</th>
                                                 <th style="width:100px" colspan="4" class="margen1Class">MARGENES</th>
+                                                <th colspan="5" style="background: #C9F7F5 !important;">PRECIOS DEL 1 AL 5</th>
+                                                <th style="width:100px" colspan="4" class="margen2Class">MARGENES</th>
+                                                <th colspan="5" style="background: #C9F7F5 !important;">PRECIOS DEL 1 AL 5</th>
+                                                <th style="width:100px;background:#000 !important;color:#FFF !important;">UM * 4 PZ</th>
                                                 <th style="width:100px;background: #C9F7F5 !important;">CÓDIGO</th>
                                                 <th style="width:70px;background: #C9F7F5 !important;">LIN</th>
                                                 <th style="width:350px;background: #C9F7F5 !important;">DESCRIPCIÓN</th>
-                                                <th colspan="5" style="background: #C9F7F5 !important;">PRECIOS DEL 1 AL 5</th>
-                                                <th style="width:100px" colspan="4" class="margen2Class">MARGENES</th>
                                             </tr>
                                         </thead>
                                         <tbody id="bodySucA">

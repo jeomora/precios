@@ -19,9 +19,9 @@ jQuery(document).ready(function() {
         }
     })
     
-    //getMeDesc();
-    //getMeRojos();
-    //getMeAltas();
+    getMeDesc();
+    getMeRojos();
+    getMeAltas();
     getMeNews();
 });
 
@@ -480,9 +480,12 @@ function initializeTable(value,val = []){
         '<td>'+val.cods+'</td><td>'+value.ides+'</td><td class="codDes">'+val.descripcion+'</td><td>'+value.uni+'</td>'+
         '<td><input type="text" class="form-control cantRojo" placeholder="'+formatMoney(val.cantidad,0)+'" value="'+formatMoney(val.cantidad,0)+'"/></td>'+
         '<td><input type="text" class="form-control costoRojo" placeholder="'+formatMoney(value.costo)+'" value="'+formatMoney(value.costo)+'"/></td>'+
-        '<td class="cincoRojo" data-id-costo="'+value.preciocinco+'">$ '+formatMoney(value.preciocinco)+'</td><td class="difes">$ '+formatMoney(dif1)+'</td>'+
         '<td class="ivaClass"><input type="text" class="form-control inputransparent ivaRojo" placeholder="'+formatMoney(value.iva,0)+'" value="'+formatMoney(value.iva,0)+'"/></td>'+
         '<td class="renglon10Class">'+formatMoney(renglon10,5)+'</td>'+
+        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar11Rojo" placeholder="'+mar11+'" value="'+mar11+'"/></td>'+
+        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar22Rojo" placeholder="'+mar22+'" value="'+mar22+'"/></td>'+
+        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar33Rojo" placeholder="'+mar33+'" value="'+mar33+'"/></td>'+
+        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar44Rojo" placeholder="'+mar44+'" value="'+mar44+'"/></td>'+
         '<td class="preciososRojos"><input type="text" class="form-control pre11Rojo" placeholder="'+formatMoney(pre11)+'" value="'+formatMoney(pre11)+'"/>'+
         '<span class="difPrecios difP11">'+formatMoney(difp11)+'</span></td>'+
         '<td class="preciososRojos"><input type="text" class="form-control pre22Rojo" placeholder="'+formatMoney(pre22)+'" value="'+formatMoney(pre22)+'"/>'+
@@ -492,11 +495,10 @@ function initializeTable(value,val = []){
         '<td class="preciososRojos"><input type="text" class="form-control pre44Rojo" placeholder="'+formatMoney(pre44)+'" value="'+formatMoney(pre44)+'"/>'+
         '<span class="difPrecios difP44">'+formatMoney(difp44)+'</span></td>'+
         '<td class="pre5">'+formatMoney(pre5)+'</td>'+
-        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar11Rojo" placeholder="'+mar11+'" value="'+mar11+'"/></td>'+
-        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar22Rojo" placeholder="'+mar22+'" value="'+mar22+'"/></td>'+
-        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar33Rojo" placeholder="'+mar33+'" value="'+mar33+'"/></td>'+
-        '<td class="margen1Class"><input type="text" class="form-control inputransparent mar44Rojo" placeholder="'+mar44+'" value="'+mar44+'"/></td>'+
-        '<td>'+value.code1+'</td><td>'+value.ides+'</td><td>'+value.descripcion+'</td>'+
+        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar1Rojo" placeholder="'+mar1+'" value="'+mar1+'"/></td>'+
+        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar2Rojo" placeholder="'+mar2+'" value="'+mar2+'"/></td>'+
+        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar3Rojo" placeholder="'+mar3+'" value="'+mar3+'"/></td>'+
+        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar4Rojo" placeholder="'+mar4+'" value="'+mar4+'"/></td>'+
         '<td class="preciososRojos"><input type="text" class="form-control pre1Rojo" placeholder="'+formatMoney(pre1)+'" value="'+formatMoney(pre1)+'"/>'+
         '<span class="difPrecios difP1">'+formatMoney(difp1)+'</span></td>'+
         '<td class="preciososRojos"><input type="text" class="form-control pre2Rojo" placeholder="'+formatMoney(pre2)+'" value="'+formatMoney(pre2)+'"/>'+
@@ -506,10 +508,8 @@ function initializeTable(value,val = []){
         '<td class="preciososRojos"><input type="text" class="form-control pre4Rojo" placeholder="'+formatMoney(pre4)+'" value="'+formatMoney(pre4)+'"/>'+
         '<span class="difPrecios difP4">'+formatMoney(difp4)+'</span></td>'+
         '</td><td class="pre55">'+formatMoney(pre55)+'</td>'+
-        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar1Rojo" placeholder="'+mar1+'" value="'+mar1+'"/></td>'+
-        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar2Rojo" placeholder="'+mar2+'" value="'+mar2+'"/></td>'+
-        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar3Rojo" placeholder="'+mar3+'" value="'+mar3+'"/></td>'+
-        '<td class="margen2Class"><input type="text" class="form-control inputransparent mar4Rojo" placeholder="'+mar4+'" value="'+mar4+'"/></td>'+
+        '</td><td class="pzxum">'+formatMoney( pre44 * val.cantidad )+'</td>'+
+        '<td>'+value.code1+'</td><td>'+value.ides+'</td><td>'+value.descripcion+'</td>'+
         '</tr>')
 }
 
@@ -780,7 +780,7 @@ function changeCosto(costoRojo){
 
 
     var difes = costo - rojosArray[idrojo].matriz;
-    $(".rojoTr"+idrojo).find(".difes").html( "$ "+ formatMoney( difes ) )
+    
 
     $(".rojoTr"+idrojo).find(".pre5").html( formatMoney( pre5 ) )
     $(".rojoTr"+idrojo).find(".pre55").html( formatMoney( pre55 ) )
@@ -1028,7 +1028,7 @@ function oldResultsB(value){
                     brojosArray[val.detalle] = arreid_rojo;
 
             oldsB +=    '<tr class="brojoTr brojoTr'+val.detalle+' bgensuc'+val.id_nuevo+'" data-id-rojo="'+val.detalle+'">'+
-                    '<td><button type="button" class="btn btn-outline-danger detBDel" data-id-rojo="'+val.detalle+'">Eliminar</button>'+
+                    '<td><button type="button" class="btn btn-outline-danger detBDel" data-id-rojo="'+val.detalle+'">NO MOSTRAR SUC. B´s</button>'+
                     '<button type="button" class="btn btn-danger detSure detSure'+val.detalle+'" data-id-rojo="'+val.detalle+'">¿Segur@?</button></td>'+
                     '<td>'+val.code1+'</td><td>'+val.code2+'</td><td>'+val.linea+'</td><td>'+val.desc1+'</td><td>'+val.unidad+'</td><td>'+
                     val.cantidad+'</td><td class="bpre4">'+formatMoney(costopz)+'</td>'+
