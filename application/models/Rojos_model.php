@@ -231,7 +231,7 @@ class Rojos_model extends MY_Model {
 
 
 	public function getRojos2($where = []){
-		$this->db->select("r.id_rojo,r.codigo,r.descripcion,p.nombre,p.id_producto,r.costo,r.fecha_registro,p.codigo as code1,p.code as code2,pr.preciocinco,l.ides,u.ides as uni,l.iva,preciouno,preciodos,preciotres,preciocuatro, usr.nombre as usu")
+		$this->db->select("r.id_rojo,r.codigo,r.descripcion,p.nombre,p.id_producto,r.costo,r.fecha_registro,p.codigo as code1,p.code as code2,pr.preciocinco,l.ides,u.ides as uni,l.iva,preciouno,preciodos,preciotres,preciocuatro, usr.nombre as usu,r.estatus")
 			->from("rojos r")
 			->join("productos p","r.codigo = p.codigo","left")
 			->join("precios pr","p.id_producto = pr.id_producto AND pr.estatus = 1" ,"left")
@@ -273,6 +273,7 @@ class Rojos_model extends MY_Model {
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["preciocuatro"]=	$comparativa[$i]->preciocuatro;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["preciocinco"]=	$comparativa[$i]->preciocinco;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["ides"]=	$comparativa[$i]->ides;
+				$comparativaIndexada[$comparativa[$i]->id_rojo]["estatus"]=	$comparativa[$i]->estatus;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["uni"]=	$comparativa[$i]->uni;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["iva"]=	$comparativa[$i]->iva;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["usu"]=	$comparativa[$i]->usu;

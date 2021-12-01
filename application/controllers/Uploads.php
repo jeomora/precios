@@ -983,7 +983,9 @@ class Uploads extends MY_Controller {
 		$hoja = $this->excelfile->setActiveSheetIndex(0);
 		$this->excelfile->setActiveSheetIndex(0)->setTitle("AJUSTES");
         $this->excelfile->setActiveSheetIndex(0);
-
+        $this->excelfile->createSheet();
+        $hoja1 = $this->excelfile->setActiveSheetIndex(1)->setTitle("SUC B");
+        $this->excelfile->setActiveSheetIndex(0);
 		$styleArray = array(
 		  'borders' => array(
 		    'allborders' => array(
@@ -1019,227 +1021,449 @@ class Uploads extends MY_Controller {
 		$this->cellStyle('A1', "FFFFFF", "000000", FALSE, 31, "Arial Narrow");
 		$this->excelfile->getActiveSheet()->getStyle('A1:CC1')->applyFromArray($styleArrayNone);
 		if ($rojos){
-			$hoja->mergeCells('A'.$rws.':D'.$rws);
-			$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->applyFromArray($styleArray2);
-			$this->cellStyle('A'.$rws, "E26505", "000000", TRUE, 36, "Arial Narrow");
-			$hoja->setCellValue("A{$rws}", "NUEVOS PRECIOS");
-			$hoja->mergeCells('E'.$rws.':K'.$rws);
-			$this->cellStyle('E'.$rws.':K'.$rws, "FFFFFF", "000000", TRUE, 24, "Arial Narrow");
-			$hoja->setCellValue("E{$rws}", $fecha);
-			$hoja->mergeCells('L'.$rws.':AF'.$rws);
-			$this->cellStyle('L'.$rws.':AF'.$rws, "DF9406", "000000", FALSE, 36, "Arial Narrow");
-			$hoja->setCellValue("L{$rws}", "ALTAS Y AJUSTES");
-			$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(40);
-			$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-			$rws++;
-			$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->applyFromArray($styleArray2);
-			$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(40);
-			$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-			$this->cellStyle('A'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-			$hoja->setCellValue("A{$rws}", "CÓDIGO PRINCIPAL")->getColumnDimension('A')->setWidth(35);
-			$this->cellStyle('B'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-			$hoja->setCellValue("B{$rws}", "RENGLON 18")->getColumnDimension('B')->setWidth(35);
-			$this->cellStyle('C'.$rws, "FFFFFF", "000000", TRUE, 16, "Arial Narrow");
-			$hoja->setCellValue("C{$rws}", "LIN")->getColumnDimension('C')->setWidth(8);
-			$this->cellStyle('D'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-			$hoja->setCellValue("D{$rws}", "DESCRIPCIÓN")->getColumnDimension('D')->setWidth(65);
-			$this->cellStyle('E'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-			$hoja->setCellValue("E{$rws}", "UM")->getColumnDimension('E')->setWidth(8);
-			$this->cellStyle('F'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-			$hoja->setCellValue("F{$rws}", "C")->getColumnDimension('F')->setWidth(8);
-			$this->cellStyle('G'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-			$hoja->setCellValue("G{$rws}", "PAQUETE")->getColumnDimension('G')->setWidth(15);
-			$this->cellStyle('H'.$rws, "FFCC66", "000000", TRUE, 18, "Arial Narrow");
-			$hoja->setCellValue("H{$rws}", "IVA")->getColumnDimension('H')->setWidth(8);
-			$this->cellStyle('I'.$rws, "FFA887", "000000", TRUE, 18, "Arial Narrow");
-			$hoja->setCellValue("I{$rws}", "Renglon 10")->getColumnDimension('I')->setWidth(25);
+			if (1==1) { //SUCURSALES A
+				$hoja->mergeCells('A'.$rws.':D'.$rws);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->applyFromArray($styleArray2);
+				$this->cellStyle('A'.$rws, "E26505", "000000", TRUE, 36, "Arial Narrow");
+				$hoja->setCellValue("A{$rws}", "NUEVOS PRECIOS");
+				$hoja->mergeCells('E'.$rws.':K'.$rws);
+				$this->cellStyle('E'.$rws.':K'.$rws, "FFFFFF", "000000", TRUE, 24, "Arial Narrow");
+				$hoja->setCellValue("E{$rws}", $fecha);
+				$hoja->mergeCells('L'.$rws.':AF'.$rws);
+				$this->cellStyle('L'.$rws.':AF'.$rws, "DF9406", "000000", FALSE, 36, "Arial Narrow");
+				$hoja->setCellValue("L{$rws}", "ALTAS Y AJUSTES");
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(40);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+				$rws++;
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->applyFromArray($styleArray2);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(40);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+				$this->cellStyle('A'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+				$hoja->setCellValue("A{$rws}", "CÓDIGO PRINCIPAL")->getColumnDimension('A')->setWidth(35);
+				$this->cellStyle('B'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+				$hoja->setCellValue("B{$rws}", "RENGLON 18")->getColumnDimension('B')->setWidth(35);
+				$this->cellStyle('C'.$rws, "FFFFFF", "000000", TRUE, 16, "Arial Narrow");
+				$hoja->setCellValue("C{$rws}", "LIN")->getColumnDimension('C')->setWidth(8);
+				$this->cellStyle('D'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+				$hoja->setCellValue("D{$rws}", "DESCRIPCIÓN")->getColumnDimension('D')->setWidth(65);
+				$this->cellStyle('E'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+				$hoja->setCellValue("E{$rws}", "UM")->getColumnDimension('E')->setWidth(8);
+				$this->cellStyle('F'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+				$hoja->setCellValue("F{$rws}", "C")->getColumnDimension('F')->setWidth(8);
+				$this->cellStyle('G'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+				$hoja->setCellValue("G{$rws}", "PAQUETE")->getColumnDimension('G')->setWidth(15);
+				$this->cellStyle('H'.$rws, "FFCC66", "000000", TRUE, 18, "Arial Narrow");
+				$hoja->setCellValue("H{$rws}", "IVA")->getColumnDimension('H')->setWidth(8);
+				$this->cellStyle('I'.$rws, "FFA887", "000000", TRUE, 18, "Arial Narrow");
+				$hoja->setCellValue("I{$rws}", "Renglon 10")->getColumnDimension('I')->setWidth(25);
 
-			$hoja->mergeCells('J'.$rws.':N'.$rws);
-			$this->cellStyle('J'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-			$hoja->setCellValue("J{$rws}", "PRECIOS DEL 1 AL 5")->getColumnDimension('J')->setWidth(15);
-			$hoja->setCellValue("K{$rws}", "")->getColumnDimension('K')->setWidth(15);
-			$hoja->setCellValue("L{$rws}", "")->getColumnDimension('L')->setWidth(15);
-			$hoja->setCellValue("M{$rws}", "")->getColumnDimension('M')->setWidth(15);
-			$hoja->setCellValue("N{$rws}", "")->getColumnDimension('N')->setWidth(15);
+				$hoja->mergeCells('J'.$rws.':N'.$rws);
+				$this->cellStyle('J'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+				$hoja->setCellValue("J{$rws}", "PRECIOS DEL 1 AL 5")->getColumnDimension('J')->setWidth(15);
+				$hoja->setCellValue("K{$rws}", "")->getColumnDimension('K')->setWidth(15);
+				$hoja->setCellValue("L{$rws}", "")->getColumnDimension('L')->setWidth(15);
+				$hoja->setCellValue("M{$rws}", "")->getColumnDimension('M')->setWidth(15);
+				$hoja->setCellValue("N{$rws}", "")->getColumnDimension('N')->setWidth(15);
 
-			$hoja->mergeCells('O'.$rws.':R'.$rws);
-			$this->cellStyle('O'.$rws, "DAEEF3", "000000", TRUE, 18, "Arial Narrow");
-			$hoja->setCellValue("O{$rws}", "MARGENES")->getColumnDimension('O')->setWidth(10);
-			$hoja->setCellValue("P{$rws}", "")->getColumnDimension('P')->setWidth(10);
-			$hoja->setCellValue("Q{$rws}", "")->getColumnDimension('Q')->setWidth(10);
-			$hoja->setCellValue("R{$rws}", "")->getColumnDimension('R')->setWidth(10);
+				$hoja->mergeCells('O'.$rws.':R'.$rws);
+				$this->cellStyle('O'.$rws, "DAEEF3", "000000", TRUE, 18, "Arial Narrow");
+				$hoja->setCellValue("O{$rws}", "MARGENES")->getColumnDimension('O')->setWidth(10);
+				$hoja->setCellValue("P{$rws}", "")->getColumnDimension('P')->setWidth(10);
+				$hoja->setCellValue("Q{$rws}", "")->getColumnDimension('Q')->setWidth(10);
+				$hoja->setCellValue("R{$rws}", "")->getColumnDimension('R')->setWidth(10);
 
-			$this->cellStyle('AC'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-			$hoja->setCellValue("AC{$rws}", "CÓDIGO PRINC CJA")->getColumnDimension('AC')->setWidth(35);
-			$this->cellStyle('AD'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-			$hoja->setCellValue("AD{$rws}", "LIN")->getColumnDimension('AD')->setWidth(8);
-			$this->cellStyle('AE'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-			$hoja->setCellValue("AE{$rws}", "DESCRIPCIÓN")->getColumnDimension('AE')->setWidth(65);
-			$this->cellStyle('AF'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-			$hoja->setCellValue("AF{$rws}", "UM")->getColumnDimension('AF')->setWidth(8);
+				$this->cellStyle('AC'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+				$hoja->setCellValue("AC{$rws}", "CÓDIGO PRINC CJA")->getColumnDimension('AC')->setWidth(35);
+				$this->cellStyle('AD'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+				$hoja->setCellValue("AD{$rws}", "LIN")->getColumnDimension('AD')->setWidth(8);
+				$this->cellStyle('AE'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+				$hoja->setCellValue("AE{$rws}", "DESCRIPCIÓN")->getColumnDimension('AE')->setWidth(65);
+				$this->cellStyle('AF'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+				$hoja->setCellValue("AF{$rws}", "UM")->getColumnDimension('AF')->setWidth(8);
 
-			$hoja->mergeCells('S'.$rws.':W'.$rws);
-			$this->cellStyle('S'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-			$hoja->setCellValue("S{$rws}", "PRECIOS DEL 1 AL 5")->getColumnDimension('S')->setWidth(15);
-			$hoja->setCellValue("T{$rws}", "")->getColumnDimension('T')->setWidth(15);
-			$hoja->setCellValue("U{$rws}", "")->getColumnDimension('U')->setWidth(15);
-			$hoja->setCellValue("V{$rws}", "")->getColumnDimension('V')->setWidth(15);
-			$hoja->setCellValue("W{$rws}", "")->getColumnDimension('W')->setWidth(15);
+				$hoja->mergeCells('S'.$rws.':W'.$rws);
+				$this->cellStyle('S'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+				$hoja->setCellValue("S{$rws}", "PRECIOS DEL 1 AL 5")->getColumnDimension('S')->setWidth(15);
+				$hoja->setCellValue("T{$rws}", "")->getColumnDimension('T')->setWidth(15);
+				$hoja->setCellValue("U{$rws}", "")->getColumnDimension('U')->setWidth(15);
+				$hoja->setCellValue("V{$rws}", "")->getColumnDimension('V')->setWidth(15);
+				$hoja->setCellValue("W{$rws}", "")->getColumnDimension('W')->setWidth(15);
 
-			$hoja->mergeCells('X'.$rws.':AA'.$rws);
-			$this->cellStyle('X'.$rws, "DAEEF3", "000000", TRUE, 18, "Arial Narrow");
-			$hoja->setCellValue("X{$rws}", "MARGENES")->getColumnDimension('X')->setWidth(10);
-			$hoja->setCellValue("Y{$rws}", "")->getColumnDimension('Y')->setWidth(10);
-			$hoja->setCellValue("Z{$rws}", "")->getColumnDimension('Z')->setWidth(10);
-			$hoja->setCellValue("AA{$rws}", "")->getColumnDimension('AA')->setWidth(10);
+				$hoja->mergeCells('X'.$rws.':AA'.$rws);
+				$this->cellStyle('X'.$rws, "DAEEF3", "000000", TRUE, 18, "Arial Narrow");
+				$hoja->setCellValue("X{$rws}", "MARGENES")->getColumnDimension('X')->setWidth(10);
+				$hoja->setCellValue("Y{$rws}", "")->getColumnDimension('Y')->setWidth(10);
+				$hoja->setCellValue("Z{$rws}", "")->getColumnDimension('Z')->setWidth(10);
+				$hoja->setCellValue("AA{$rws}", "")->getColumnDimension('AA')->setWidth(10);
 
-			$this->cellStyle('AB'.$rws, "8DB4E2", "000000", TRUE, 18, "Arial Narrow");
-			$hoja->setCellValue("AB{$rws}", "PZ * CAJA")->getColumnDimension('AB')->setWidth(20);
+				$this->cellStyle('AB'.$rws, "8DB4E2", "000000", TRUE, 18, "Arial Narrow");
+				$hoja->setCellValue("AB{$rws}", "PZ * CAJA")->getColumnDimension('AB')->setWidth(20);
+			}
+			
 
+			$rws=1;
+			$this->excelfile->setActiveSheetIndex(1);
+			if(2==2){
+				$hoja1->mergeCells('A'.$rws.':D'.$rws);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->applyFromArray($styleArray2);
+				$this->cellStyle('A'.$rws, "00B0F0", "000000", TRUE, 24, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("A{$rws}", "SUCURSALES B");
+				$hoja1->mergeCells('E'.$rws.':Z'.$rws);
+				$this->cellStyle('E'.$rws.':Z'.$rws, "FBBDFB", "000000", TRUE, 24, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("E{$rws}", $fecha);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+				$rws++;
+				$hoja1->mergeCells('A'.$rws.':O'.$rws);
+				$hoja1->mergeCells('P'.$rws.':Z'.$rws);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->applyFromArray($styleArray2);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+				$this->cellStyle('A'.$rws, "D9FFF2", "000000", FALSE, 24, "Bahnschrift Light SemiCondensed");
+				$this->cellStyle('M'.$rws, "FCE4D6", "000000", FALSE, 24, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("P{$rws}", "PAQUETES");
+				$rws++;
+
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->applyFromArray($styleArray2);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+				$this->cellStyle('A'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("A{$rws}", "CÓDIGO PRINCIPAL")->getColumnDimension('A')->setWidth(30);
+				$this->cellStyle('B'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("B{$rws}", "RENGLON 18")->getColumnDimension('B')->setWidth(30);
+				$this->cellStyle('C'.$rws, "FFFFFF", "000000", TRUE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("C{$rws}", "LIN")->getColumnDimension('C')->setWidth(8);
+				$this->cellStyle('D'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("D{$rws}", "DESCRIPCIÓN")->getColumnDimension('D')->setWidth(65);
+				$this->cellStyle('E'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("E{$rws}", "UM")->getColumnDimension('E')->setWidth(8);
+				$this->cellStyle('F'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("F{$rws}", "C")->getColumnDimension('F')->setWidth(8);
+
+				$this->cellStyle('G'.$rws, "00B0F0", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("G{$rws}", "IVA")->getColumnDimension('G')->setWidth(8);
+				$this->cellStyle('H'.$rws, "FFCC66", "000000", TRUE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("H{$rws}", "PAQUETE")->getColumnDimension('H')->setWidth(18);
+				$this->cellStyle('I'.$rws, "C6D6B4", "000000", TRUE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("I{$rws}", "RENGLON 10")->getColumnDimension('I')->setWidth(18);
+
+				$this->cellStyle('J'.$rws, "BDD7EE", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("J{$rws}", "PREC 1")->getColumnDimension('J')->setWidth(18);
+				$this->cellStyle('K'.$rws, "BDD7EE", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("K{$rws}", "PREC 2")->getColumnDimension('K')->setWidth(18);
+				$this->cellStyle('L'.$rws, "BDD7EE", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("L{$rws}", "PREC 3")->getColumnDimension('L')->setWidth(18);
+
+				$this->cellStyle('M'.$rws.':O'.$rws, "FBBDFB", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->mergeCells('M'.$rws.':O'.$rws);
+				$hoja1->setCellValue("M{$rws}", "MARGENES")->getColumnDimension('M')->setWidth(18);
+				$hoja1->setCellValue("N{$rws}", "")->getColumnDimension('N')->setWidth(18);
+				$hoja1->setCellValue("O{$rws}", "")->getColumnDimension('O')->setWidth(18);
+
+				$this->cellStyle('W'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("W{$rws}", "CÓDIGO PRINC CJA")->getColumnDimension('W')->setWidth(30);
+				$this->cellStyle('X'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("X{$rws}", "LIN")->getColumnDimension('X')->setWidth(8);
+				$this->cellStyle('Y'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("Y{$rws}", "DESCRIPCIÓN")->getColumnDimension('Y')->setWidth(65);
+				$this->cellStyle('Z'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("Z{$rws}", "UM")->getColumnDimension('Z')->setWidth(8);
+
+				$this->cellStyle('P'.$rws, "BDD7EE", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("P{$rws}", "PREC 1")->getColumnDimension('P')->setWidth(18);
+				$this->cellStyle('Q'.$rws, "BDD7EE", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");//fbbdfb
+				$hoja1->setCellValue("Q{$rws}", "PREC 2")->getColumnDimension('Q')->setWidth(18);
+				$this->cellStyle('R'.$rws, "BDD7EE", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->setCellValue("R{$rws}", "PREC 3")->getColumnDimension('R')->setWidth(18);
+
+				$this->cellStyle('S'.$rws.':U'.$rws, "FBBDFB", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
+				$hoja1->mergeCells('S'.$rws.':U'.$rws);
+				$hoja1->setCellValue("S{$rws}", "MARGENES")->getColumnDimension('S')->setWidth(18);
+				$hoja1->setCellValue("T{$rws}", "")->getColumnDimension('T')->setWidth(18);
+				$hoja1->setCellValue("U{$rws}", "")->getColumnDimension('U')->setWidth(18);
+				$this->cellStyle('V'.$rws, "8DB4E2", "000000", TRUE, 18, "Arial Narrow");
+				$hoja->setCellValue("V{$rws}", "PZ * CAJA")->getColumnDimension('V')->setWidth(20);
+			}
+			$this->excelfile->setActiveSheetIndex(0);
 			$rws++;
 			foreach ($rojos as $key => $value) {
-				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->applyFromArray($styleArray);
-				$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setIndent(1);
-				$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':AF'.$rws)->getAlignment()->setIndent(1);
-				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
-				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':B'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-				$this->excelfile->getActiveSheet()->getStyle('AB'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-				$this->excelfile->getActiveSheet()->getStyle('G'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-				$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-				$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':W'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-				$this->excelfile->getActiveSheet()->getStyle('D'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-				$this->excelfile->getActiveSheet()->getStyle('AE'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+				if( 1 == 1){
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->applyFromArray($styleArray);
+					$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setIndent(1);
+					$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':AF'.$rws)->getAlignment()->setIndent(1);
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':B'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+					$this->excelfile->getActiveSheet()->getStyle('AB'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+					$this->excelfile->getActiveSheet()->getStyle('G'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+					$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+					$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':W'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+					$this->excelfile->getActiveSheet()->getStyle('D'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+					$this->excelfile->getActiveSheet()->getStyle('AE'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
-				$this->cellStyle('A'.$rws.':AF'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-				$hoja->setCellValue("A{$rws}", $value["code1"])->getStyle('A'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
-				$hoja->setCellValue("B{$rws}", $value["code2"])->getStyle('B'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
-				$this->cellStyle('C'.$rws, "FFFFFF", "000000", TRUE, 16, "Arial Narrow");
-				$hoja->setCellValue("C{$rws}", $value["ides"]);
-				$this->cellStyle('D'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-				$hoja->setCellValue("D{$rws}", $value["descripcion"]);
-				$this->cellStyle('E'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-				$hoja->setCellValue("E{$rws}", $value["uni"]);
-				$hoja->setCellValue("F{$rws}", 1);//$value["cantidad"]
-				$hoja->setCellValue("G{$rws}", $value["costo"])->getStyle("G{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-				$this->cellStyle('H'.$rws, "FFCC66", "000000", TRUE, 18, "Arial Narrow");
-				$hoja->setCellValue("H{$rws}", $value["iva"]);
-				$this->cellStyle('I'.$rws, "FFA887", "000000", TRUE, 18, "Arial Narrow");
-				$hoja->setCellValue("I{$rws}", "=(G{$rws}/F{$rws})/(1+(H{$rws}/100))")->getStyle("I{$rws}")->getNumberFormat()->setFormatCode('#,##0.0000_-');
-				$this->cellStyle('J'.$rws.':M'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+					$this->cellStyle('A'.$rws.':AF'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+					$hoja->setCellValue("A{$rws}", $value["code1"])->getStyle('A'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
+					$hoja->setCellValue("B{$rws}", $value["code2"])->getStyle('B'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
+					$this->cellStyle('C'.$rws, "FFFFFF", "000000", TRUE, 16, "Arial Narrow");
+					$hoja->setCellValue("C{$rws}", $value["ides"]);
+					$this->cellStyle('D'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+					$hoja->setCellValue("D{$rws}", $value["descripcion"]);
+					$this->cellStyle('E'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+					$hoja->setCellValue("E{$rws}", $value["uni"]);
+					$hoja->setCellValue("F{$rws}", 1);//$value["cantidad"]
+					$hoja->setCellValue("G{$rws}", $value["costo"])->getStyle("G{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+					$this->cellStyle('H'.$rws, "FFCC66", "000000", TRUE, 18, "Arial Narrow");
+					$hoja->setCellValue("H{$rws}", $value["iva"]);
+					$this->cellStyle('I'.$rws, "FFA887", "000000", TRUE, 18, "Arial Narrow");
+					$hoja->setCellValue("I{$rws}", "=(G{$rws}/F{$rws})/(1+(H{$rws}/100))")->getStyle("I{$rws}")->getNumberFormat()->setFormatCode('#,##0.0000_-');
+					$this->cellStyle('J'.$rws.':M'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
 
-				$mar1 = round( ( ($value["preciouno"]*100)/($value["preciocinco"]-0.01) )-100 );
-			    $mar2 = round( ( ($value["preciodos"]*100)/($value["preciocinco"]-0.01) )-100 );
-			    $mar3 = round( ( ($value["preciotres"]*100)/($value["preciocinco"]-0.01) )-100 );
-			    $mar4 = round( ( ($value["preciocuatro"]*100)/($value["preciocinco"]-0.01) )-100 );
+					$mar1 = round( ( ($value["preciouno"]*100)/($value["preciocinco"]-0.01) )-100 );
+				    $mar2 = round( ( ($value["preciodos"]*100)/($value["preciocinco"]-0.01) )-100 );
+				    $mar3 = round( ( ($value["preciotres"]*100)/($value["preciocinco"]-0.01) )-100 );
+				    $mar4 = round( ( ($value["preciocuatro"]*100)/($value["preciocinco"]-0.01) )-100 );
 
-			    $this->cellStyle('O'.$rws.":R".$rws, "DAEEF3", "000000", FALSE, 18, "Arial Narrow");
-			    $this->cellStyle('X'.$rws.":AA".$rws, "DAEEF3", "000000", FALSE, 18, "Arial Narrow");
+				    $this->cellStyle('O'.$rws.":R".$rws, "DAEEF3", "000000", FALSE, 18, "Arial Narrow");
+				    $this->cellStyle('X'.$rws.":AA".$rws, "DAEEF3", "000000", FALSE, 18, "Arial Narrow");
 
-			    $hoja->setCellValue("O{$rws}", $mar1)->getStyle("O{$rws}");
-				$hoja->setCellValue("P{$rws}", $mar2)->getStyle("P{$rws}");
-				$hoja->setCellValue("Q{$rws}", $mar3)->getStyle("Q{$rws}");
-				$hoja->setCellValue("R{$rws}", $mar4)->getStyle("R{$rws}");
+				    $hoja->setCellValue("O{$rws}", $mar1);
+					$hoja->setCellValue("P{$rws}", $mar2);
+					$hoja->setCellValue("Q{$rws}", $mar3);
+					$hoja->setCellValue("R{$rws}", $mar4);
 
-				$hoja->setCellValue("J{$rws}", "=ROUND((G{$rws}/F{$rws})+((O{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("J{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-				$hoja->setCellValue("K{$rws}", "=ROUND((G{$rws}/F{$rws})+((P{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("K{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-				$hoja->setCellValue("L{$rws}", "=ROUND((G{$rws}/F{$rws})+((Q{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("L{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-				$hoja->setCellValue("M{$rws}", "=ROUND((G{$rws}/F{$rws})+((R{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("M{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-				$this->cellStyle('N'.$rws, "CC99FF", "000000", FALSE, 18, "Arial Narrow");
-				$hoja->setCellValue("N{$rws}", "=+(G{$rws}/F{$rws})+0.01")->getStyle("N{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+					$hoja->setCellValue("J{$rws}", "=ROUND((G{$rws}/F{$rws})+((O{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("J{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+					$hoja->setCellValue("K{$rws}", "=ROUND((G{$rws}/F{$rws})+((P{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("K{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+					$hoja->setCellValue("L{$rws}", "=ROUND((G{$rws}/F{$rws})+((Q{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("L{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+					$hoja->setCellValue("M{$rws}", "=ROUND((G{$rws}/F{$rws})+((R{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("M{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+					$this->cellStyle('N'.$rws, "CC99FF", "000000", FALSE, 18, "Arial Narrow");
+					$hoja->setCellValue("N{$rws}", "=+(G{$rws}/F{$rws})+0.01")->getStyle("N{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
 
-				$hoja->setCellValue("AB{$rws}", "=N{$rws}*F{$rws}")->getStyle("AB{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-				$this->cellStyle('AB'.$rws, "8DB4E2", "000000", TRUE, 18, "Arial Narrow");
+					$hoja->setCellValue("AB{$rws}", "=N{$rws}*F{$rws}")->getStyle("AB{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+					$this->cellStyle('AB'.$rws, "8DB4E2", "000000", TRUE, 18, "Arial Narrow");
+				}
 
+				if( 2 == 2){
+					//SUCURSALES B
+					$this->excelfile->setActiveSheetIndex(1);
+					$hoja1->setCellValue("A{$rws}", "=AJUSTES!A".$rws)->getStyle('A'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
+					$hoja1->setCellValue("B{$rws}", "=AJUSTES!B".$rws)->getStyle('B'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
+					$hoja1->setCellValue("C{$rws}", "=AJUSTES!C".$rws);
+					$hoja1->setCellValue("D{$rws}", "=AJUSTES!D".$rws);
+					$hoja1->setCellValue("E{$rws}", "=AJUSTES!E".$rws);
+					$hoja1->setCellValue("F{$rws}", "=AJUSTES!F".$rws);
+					$hoja1->setCellValue("G{$rws}", "=AJUSTES!H".$rws);
+					$hoja1->setCellValue("H{$rws}", "=AJUSTES!M".$rws)->getStyle("H{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");//PRECIO 4 CAJA
+					$hoja1->setCellValue("W{$rws}", "=AJUSTES!AC".$rws);
+					$hoja1->setCellValue("X{$rws}", "=AJUSTES!AD".$rws);
+					$hoja1->setCellValue("Y{$rws}", "=AJUSTES!AE".$rws);
+					$hoja1->setCellValue("Z{$rws}", "=AJUSTES!AF".$rws);
+
+					$hoja1->setCellValue("M{$rws}", "=AJUSTES!P".$rws);//MARGENES
+					$hoja1->setCellValue("N{$rws}", "=AJUSTES!Q".$rws);
+					$hoja1->setCellValue("O{$rws}", "=AJUSTES!R".$rws);
+					$hoja1->setCellValue("S{$rws}", "=AJUSTES!Y".$rws);
+					$hoja1->setCellValue("T{$rws}", "=AJUSTES!Z".$rws);
+					$hoja1->setCellValue("U{$rws}", "=AJUSTES!AA".$rws);
+					$this->cellStyle('V'.$rws, "8DB4E2", "000000", FALSE, 18, "Arial Narrow");
+					$hoja1->setCellValue("V{$rws}", "=L".$rws."*H".$rws);
+
+					$hoja1->setCellValue("J{$rws}", "=ROUND((H{$rws}/F{$rws})+((M{$rws}*(H{$rws}/F{$rws}))/100),1)")->getStyle("J{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+					$hoja1->setCellValue("K{$rws}", "=ROUND((H{$rws}/F{$rws})+((N{$rws}*(H{$rws}/F{$rws}))/100),1)")->getStyle("K{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+					$hoja1->setCellValue("L{$rws}", "=ROUND((H{$rws}/F{$rws})+((O{$rws}*(H{$rws}/F{$rws}))/100),1)")->getStyle("L{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+
+					$hoja1->setCellValue("I{$rws}", "=(H{$rws}/F{$rws})/(1+(G{$rws}/100))")->getStyle("I{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.0000_);_(* \(#,##0.0000\);_(* \"-\"??_);_(@_)");
+
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->applyFromArray($styleArray);
+					$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':L'.$rws)->getAlignment()->setIndent(1);
+					$this->excelfile->getActiveSheet()->getStyle('P'.$rws.':R'.$rws)->getAlignment()->setIndent(1);
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
+
+					$this->cellStyle('A'.$rws.':Z'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+					$this->cellStyle('C'.$rws, "FFFFFF", "000000", TRUE, 18, "Arial Narrow");
+					$this->cellStyle('W'.$rws, "FFFFFF", "000000", TRUE, 18, "Arial Narrow");
+
+					$this->cellStyle('H'.$rws, "FFCC66", "000000", TRUE, 18, "Arial Narrow");
+					$this->cellStyle('I'.$rws, "C6D6B4", "000000", TRUE, 18, "Arial Narrow");//00B0F0
+					$this->cellStyle('G'.$rws, "00B0F0", "000000", TRUE, 18, "Arial Narrow");
+					$this->cellStyle('J'.$rws.':L'.$rws, "BDD7EE", "000000", FALSE, 18, "Arial Narrow");
+					$this->cellStyle('M'.$rws.':O'.$rws, "FBBDFB", "000000", FALSE, 18, "Arial Narrow");
+
+					$this->cellStyle('P'.$rws, "FFFFFF", "000000", TRUE, 18, "Arial Narrow");
+					$this->cellStyle('Q'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+					$this->cellStyle('R'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+
+					$this->cellStyle('S'.$rws.':U'.$rws, "BDD7EE", "000000", FALSE, 18, "Arial Narrow");
+					$this->cellStyle('S'.$rws.':U'.$rws, "FBBDFB", "000000", FALSE, 18, "Arial Narrow");
+
+
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+					$this->excelfile->setActiveSheetIndex(0);
+				}
+				$this->excelfile->setActiveSheetIndex(0);
 				if(!empty($value["relaciones"])){
 					foreach ($value["relaciones"] as $key => $val){
-						$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->applyFromArray($styleArray);
-						$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setIndent(1);
-						$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':AF'.$rws)->getAlignment()->setIndent(1);
-						$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
-						$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-						$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':B'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-						$this->excelfile->getActiveSheet()->getStyle('AB'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-						$this->excelfile->getActiveSheet()->getStyle('G'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-						$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-						$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':W'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-						$this->excelfile->getActiveSheet()->getStyle('D'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-						$this->excelfile->getActiveSheet()->getStyle('AE'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+						if(1 == 1){
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->applyFromArray($styleArray);
+							$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setIndent(1);
+							$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':AF'.$rws)->getAlignment()->setIndent(1);
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':B'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+							$this->excelfile->getActiveSheet()->getStyle('AB'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+							$this->excelfile->getActiveSheet()->getStyle('G'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+							$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+							$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':W'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+							$this->excelfile->getActiveSheet()->getStyle('D'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+							$this->excelfile->getActiveSheet()->getStyle('AE'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
-						$this->cellStyle('A'.$rws.':AF'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-						$this->cellStyle('C'.$rws, "FFFFFF", "000000", TRUE, 16, "Arial Narrow");
-						$this->cellStyle('D'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-						$this->cellStyle('E'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+							$this->cellStyle('A'.$rws.':AF'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+							$this->cellStyle('C'.$rws, "FFFFFF", "000000", TRUE, 16, "Arial Narrow");
+							$this->cellStyle('D'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+							$this->cellStyle('E'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
 
-						$hoja->setCellValue("G{$rws}", $value["costo"])->getStyle("G{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-						$this->cellStyle('H'.$rws, "FFCC66", "000000", TRUE, 18, "Arial Narrow");
-						$hoja->setCellValue("H{$rws}", $value["iva"]);
-						$this->cellStyle('I'.$rws, "FFA887", "000000", TRUE, 18, "Arial Narrow");
-						$hoja->setCellValue("I{$rws}", "=(G{$rws}/F{$rws})/(1+(H{$rws}/100))")->getStyle("I{$rws}")->getNumberFormat()->setFormatCode('#,##0.0000_-');
-						$this->cellStyle('J'.$rws.':M'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-						$this->cellStyle('S'.$rws.':V'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+							$hoja->setCellValue("G{$rws}", $value["costo"])->getStyle("G{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$this->cellStyle('H'.$rws, "FFCC66", "000000", TRUE, 18, "Arial Narrow");
+							$hoja->setCellValue("H{$rws}", $value["iva"]);
+							$this->cellStyle('I'.$rws, "FFA887", "000000", TRUE, 18, "Arial Narrow");
+							$hoja->setCellValue("I{$rws}", "=(G{$rws}/F{$rws})/(1+(H{$rws}/100))")->getStyle("I{$rws}")->getNumberFormat()->setFormatCode('#,##0.0000_-');
+							$this->cellStyle('J'.$rws.':M'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+							$this->cellStyle('S'.$rws.':V'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
 
-						$mar1 = round( ( ($value["preciouno"]*100)/($value["preciocinco"]-0.01) )-100 );
-					    $mar2 = round( ( ($value["preciodos"]*100)/($value["preciocinco"]-0.01) )-100 );
-					    $mar3 = round( ( ($value["preciotres"]*100)/($value["preciocinco"]-0.01) )-100 );
-					    $mar4 = round( ( ($value["preciocuatro"]*100)/($value["preciocinco"]-0.01) )-100 );
+							$mar1 = round( ( ($value["preciouno"]*100)/($value["preciocinco"]-0.01) )-100 );
+						    $mar2 = round( ( ($value["preciodos"]*100)/($value["preciocinco"]-0.01) )-100 );
+						    $mar3 = round( ( ($value["preciotres"]*100)/($value["preciocinco"]-0.01) )-100 );
+						    $mar4 = round( ( ($value["preciocuatro"]*100)/($value["preciocinco"]-0.01) )-100 );
 
-					    $this->cellStyle('O'.$rws.":R".$rws, "DAEEF3", "000000", FALSE, 18, "Arial Narrow");
-					    $this->cellStyle('X'.$rws.":AA".$rws, "DAEEF3", "000000", FALSE, 18, "Arial Narrow");
+						    $this->cellStyle('O'.$rws.":R".$rws, "DAEEF3", "000000", FALSE, 18, "Arial Narrow");
+						    $this->cellStyle('X'.$rws.":AA".$rws, "DAEEF3", "000000", FALSE, 18, "Arial Narrow");
 
-						$hoja->setCellValue("J{$rws}", "=ROUND((G{$rws}/F{$rws})+((O{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("J{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-						$hoja->setCellValue("K{$rws}", "=ROUND((G{$rws}/F{$rws})+((P{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("K{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-						$hoja->setCellValue("L{$rws}", "=ROUND((G{$rws}/F{$rws})+((Q{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("L{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-						$hoja->setCellValue("M{$rws}", "=ROUND((G{$rws}/F{$rws})+((R{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("M{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-						$this->cellStyle('N'.$rws, "CC99FF", "000000", FALSE, 18, "Arial Narrow");
-						$hoja->setCellValue("N{$rws}", "=+(G{$rws}/F{$rws})+0.01")->getStyle("N{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$hoja->setCellValue("J{$rws}", "=ROUND((G{$rws}/F{$rws})+((O{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("J{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$hoja->setCellValue("K{$rws}", "=ROUND((G{$rws}/F{$rws})+((P{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("K{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$hoja->setCellValue("L{$rws}", "=ROUND((G{$rws}/F{$rws})+((Q{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("L{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$hoja->setCellValue("M{$rws}", "=ROUND((G{$rws}/F{$rws})+((R{$rws}*(G{$rws}/F{$rws}))/100),1)")->getStyle("M{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$this->cellStyle('N'.$rws, "CC99FF", "000000", FALSE, 18, "Arial Narrow");
+							$hoja->setCellValue("N{$rws}", "=+(G{$rws}/F{$rws})+0.01")->getStyle("N{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
 
-						$hoja->setCellValue("AB{$rws}", "=N{$rws}*F{$rws}")->getStyle("AB{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$hoja->setCellValue("AB{$rws}", "=N{$rws}*F{$rws}")->getStyle("AB{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
 
 
-						if($val["cantidad"] == "" || $val["cantidad"] == 0){
-							$val["cantidad"] = 1;
+							if($val["cantidad"] == "" || $val["cantidad"] == 0){
+								$val["cantidad"] = 1;
+							}
+							$hoja->setCellValue("F{$rws}", $val["cantidad"]);//$value["cantidad"]
+
+							$mar11 = round((($val["preciouno"]*100)/($val["preciocinco"]-0.01))-100);
+						    $mar22 = round((($val["preciodos"]*100)/($val["preciocinco"]-0.01))-100);
+						    $mar33 = round((($val["preciotres"]*100)/($val["preciocinco"]-0.01))-100);
+						    $mar44 = round((($val["preciocuatro"]*100)/($val["preciocinco"]-0.01))-100);
+
+						    $hoja->setCellValue("A{$rws}", $val["codigo"])->getStyle('A'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
+							$hoja->setCellValue("B{$rws}", $val["cods"])->getStyle('B'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
+							$hoja->setCellValue("C{$rws}", $value["ides"]);
+							$hoja->setCellValue("D{$rws}", $val["descripcion"]);
+							$hoja->setCellValue("E{$rws}", $value["uni"]);
+
+						    $hoja->setCellValue("O{$rws}", $mar11)->getStyle("O{$rws}");
+							$hoja->setCellValue("P{$rws}", $mar22)->getStyle("P{$rws}");
+							$hoja->setCellValue("Q{$rws}", $mar33)->getStyle("Q{$rws}");
+							$hoja->setCellValue("R{$rws}", $mar44)->getStyle("R{$rws}");
+
+						    $hoja->setCellValue("X{$rws}", $mar1)->getStyle("X{$rws}");
+							$hoja->setCellValue("Y{$rws}", $mar2)->getStyle("Y{$rws}");
+							$hoja->setCellValue("Z{$rws}", $mar3)->getStyle("Z{$rws}");
+							$hoja->setCellValue("AA{$rws}", $mar4)->getStyle("AA{$rws}");
+
+						    $hoja->setCellValue("S{$rws}", "=ROUND(G{$rws}+((X{$rws}*G{$rws})/100),1)")->getStyle("S{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$hoja->setCellValue("T{$rws}", "=ROUND(G{$rws}+((Y{$rws}*G{$rws})/100),1)")->getStyle("T{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$hoja->setCellValue("U{$rws}", "=ROUND(G{$rws}+((Z{$rws}*G{$rws})/100),1)")->getStyle("U{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$hoja->setCellValue("V{$rws}", "=ROUND(G{$rws}+((AA{$rws}*G{$rws})/100),1)")->getStyle("V{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							
+							$this->cellStyle('W'.$rws, "CC99FF", "000000", FALSE, 18, "Arial Narrow");
+							$hoja->setCellValue("W{$rws}", "=G{$rws}+0.01")->getStyle("W{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+
+							$hoja->setCellValue("AC{$rws}", $value["code1"])->getStyle('AC'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
+							$this->cellStyle('AD'.$rws, "FFFFFF", "000000", TRUE, 16, "Arial Narrow");
+							$hoja->setCellValue("AD{$rws}", $value["ides"]);
+							$this->cellStyle('AE'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+							$hoja->setCellValue("AE{$rws}", $value["descripcion"]);
+							$this->cellStyle('AF'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+							$hoja->setCellValue("AF{$rws}", $value["uni"]);
+							$this->cellStyle('AB'.$rws, "8DB4E2", "000000", TRUE, 18, "Arial Narrow");
 						}
-						$hoja->setCellValue("F{$rws}", $val["cantidad"]);//$value["cantidad"]
-
-						$mar11 = round((($val["preciouno"]*100)/($val["preciocinco"]-0.01))-100);
-					    $mar22 = round((($val["preciodos"]*100)/($val["preciocinco"]-0.01))-100);
-					    $mar33 = round((($val["preciotres"]*100)/($val["preciocinco"]-0.01))-100);
-					    $mar44 = round((($val["preciocuatro"]*100)/($val["preciocinco"]-0.01))-100);
-
-					    $hoja->setCellValue("A{$rws}", $val["codigo"])->getStyle('A'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
-						$hoja->setCellValue("B{$rws}", $val["cods"])->getStyle('B'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
-						$hoja->setCellValue("C{$rws}", $value["ides"]);
-						$hoja->setCellValue("D{$rws}", $val["descripcion"]);
-						$hoja->setCellValue("E{$rws}", $value["uni"]);
-
-					    $hoja->setCellValue("O{$rws}", $mar11)->getStyle("O{$rws}");
-						$hoja->setCellValue("P{$rws}", $mar22)->getStyle("P{$rws}");
-						$hoja->setCellValue("Q{$rws}", $mar33)->getStyle("Q{$rws}");
-						$hoja->setCellValue("R{$rws}", $mar44)->getStyle("R{$rws}");
-
-					    $hoja->setCellValue("X{$rws}", $mar1)->getStyle("X{$rws}");
-						$hoja->setCellValue("Y{$rws}", $mar2)->getStyle("Y{$rws}");
-						$hoja->setCellValue("Z{$rws}", $mar3)->getStyle("Z{$rws}");
-						$hoja->setCellValue("AA{$rws}", $mar4)->getStyle("AA{$rws}");
-
-					    $hoja->setCellValue("S{$rws}", "=ROUND(G{$rws}+((X{$rws}*G{$rws})/100),1)")->getStyle("S{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-						$hoja->setCellValue("T{$rws}", "=ROUND(G{$rws}+((Y{$rws}*G{$rws})/100),1)")->getStyle("T{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-						$hoja->setCellValue("U{$rws}", "=ROUND(G{$rws}+((Z{$rws}*G{$rws})/100),1)")->getStyle("U{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-						$hoja->setCellValue("V{$rws}", "=ROUND(G{$rws}+((AA{$rws}*G{$rws})/100),1)")->getStyle("V{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
 						
-						$this->cellStyle('W'.$rws, "CC99FF", "000000", FALSE, 18, "Arial Narrow");
-						$hoja->setCellValue("W{$rws}", "=G{$rws}+0.01")->getStyle("W{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
-						$this->cellStyle('AG'.$rws.':CC'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
 
-						$hoja->setCellValue("AC{$rws}", $value["code1"])->getStyle('AC'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
-						$this->cellStyle('AD'.$rws, "FFFFFF", "000000", TRUE, 16, "Arial Narrow");
-						$hoja->setCellValue("AD{$rws}", $value["ides"]);
-						$this->cellStyle('AE'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-						$hoja->setCellValue("AE{$rws}", $value["descripcion"]);
-						$this->cellStyle('AF'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-						$hoja->setCellValue("AF{$rws}", $value["uni"]);
-						$this->cellStyle('AB'.$rws, "8DB4E2", "000000", TRUE, 18, "Arial Narrow");
+						if(2 == 2){
+							//SUCURSALES B
+							$this->excelfile->setActiveSheetIndex(1);
+
+							$hoja1->setCellValue("A{$rws}", "=AJUSTES!A".$rws)->getStyle('A'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
+							$hoja1->setCellValue("B{$rws}", "=AJUSTES!B".$rws)->getStyle('B'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
+							$hoja1->setCellValue("C{$rws}", "=AJUSTES!C".$rws);
+							$hoja1->setCellValue("D{$rws}", "=AJUSTES!D".$rws);
+							$hoja1->setCellValue("E{$rws}", "=AJUSTES!E".$rws);
+							$hoja1->setCellValue("F{$rws}", "=AJUSTES!F".$rws);
+							$hoja1->setCellValue("G{$rws}", "=AJUSTES!H".$rws);
+							$hoja1->setCellValue("H{$rws}", "=AJUSTES!V".$rws)->getStyle("H{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");//PRECIO 4 CAJA
+							$hoja1->setCellValue("W{$rws}", "=AJUSTES!AC".$rws);
+							$hoja1->setCellValue("X{$rws}", "=AJUSTES!AD".$rws);
+							$hoja1->setCellValue("Y{$rws}", "=AJUSTES!AE".$rws);
+							$hoja1->setCellValue("Z{$rws}", "=AJUSTES!AF".$rws);
+
+							$hoja1->setCellValue("M{$rws}", "=AJUSTES!P".$rws);//MARGENES
+							$hoja1->setCellValue("N{$rws}", "=AJUSTES!Q".$rws);
+							$hoja1->setCellValue("O{$rws}", "=AJUSTES!R".$rws);
+							$hoja1->setCellValue("S{$rws}", "=AJUSTES!Y".$rws);
+							$hoja1->setCellValue("T{$rws}", "=AJUSTES!Z".$rws);
+							$hoja1->setCellValue("U{$rws}", "=AJUSTES!AA".$rws);
+							$this->cellStyle('V'.$rws, "8DB4E2", "000000", FALSE, 18, "Arial Narrow");
+							$hoja1->setCellValue("V{$rws}", "=L".$rws."*H".$rws);
+
+							$hoja1->setCellValue("J{$rws}", "=ROUND((H{$rws}/F{$rws})+((M{$rws}*(H{$rws}/F{$rws}))/100),1)")->getStyle("J{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$hoja1->setCellValue("K{$rws}", "=ROUND((H{$rws}/F{$rws})+((N{$rws}*(H{$rws}/F{$rws}))/100),1)")->getStyle("K{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$hoja1->setCellValue("L{$rws}", "=ROUND((H{$rws}/F{$rws})+((O{$rws}*(H{$rws}/F{$rws}))/100),1)")->getStyle("L{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+
+							$hoja1->setCellValue("I{$rws}", "=(H{$rws}/F{$rws})/(1+(G{$rws}/100))")->getStyle("I{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.0000_);_(* \(#,##0.0000\);_(* \"-\"??_);_(@_)");
+
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->applyFromArray($styleArray);
+							$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':L'.$rws)->getAlignment()->setIndent(1);
+							$this->excelfile->getActiveSheet()->getStyle('P'.$rws.':R'.$rws)->getAlignment()->setIndent(1);
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
+
+							$hoja1->setCellValue("P{$rws}", "=ROUND(H{$rws}+((S{$rws}*H{$rws})/100),1)")->getStyle("P{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$hoja1->setCellValue("Q{$rws}", "=ROUND(H{$rws}+((T{$rws}*H{$rws})/100),1)")->getStyle("Q{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+							$hoja1->setCellValue("R{$rws}", "=ROUND(H{$rws}+((U{$rws}*H{$rws})/100),1)")->getStyle("R{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+
+							$this->cellStyle('A'.$rws.':Z'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+							$this->cellStyle('C'.$rws, "FFFFFF", "000000", TRUE, 18, "Arial Narrow");
+							$this->cellStyle('X'.$rws, "FFFFFF", "000000", TRUE, 18, "Arial Narrow");
+
+							$this->cellStyle('H'.$rws, "FFCC66", "000000", TRUE, 18, "Arial Narrow");
+							$this->cellStyle('I'.$rws, "C6D6B4", "000000", TRUE, 18, "Arial Narrow");//00B0F0
+							$this->cellStyle('G'.$rws, "00B0F0", "000000", TRUE, 18, "Arial Narrow");
+							$this->cellStyle('J'.$rws.':L'.$rws, "BDD7EE", "000000", FALSE, 18, "Arial Narrow");
+							$this->cellStyle('M'.$rws.':O'.$rws, "FBBDFB", "000000", FALSE, 18, "Arial Narrow");
+
+							$this->cellStyle('P'.$rws, "FFFFFF", "000000", TRUE, 18, "Arial Narrow");
+							$this->cellStyle('Q'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+							$this->cellStyle('R'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+
+							$this->cellStyle('P'.$rws.':R'.$rws, "BDD7EE", "000000", FALSE, 18, "Arial Narrow");
+							$this->cellStyle('S'.$rws.':U'.$rws, "FBBDFB", "000000", FALSE, 18, "Arial Narrow");
+
+
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':B'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+							$this->excelfile->getActiveSheet()->getStyle('W'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+							$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':L'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+							$this->excelfile->getActiveSheet()->getStyle('P'.$rws.':R'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+							$this->excelfile->getActiveSheet()->getStyle('D'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+							$this->excelfile->getActiveSheet()->getStyle('Y'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+						}
+
+						$this->excelfile->setActiveSheetIndex(0);
 						$rws++;
 					}
 				}else{
@@ -1247,9 +1471,7 @@ class Uploads extends MY_Controller {
 				}
 			}
 		}
-		$this->cellStyle('A'.$rws.':CC'.($rws+150), "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-		$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':CC'.($rws+150))->applyFromArray($styleArrayNone);
-
+		
 		$dias = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
 		$meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
 		$fecha =  $dias[date('w')]." ".date('d')." DE ".$meses[date('n')-1]. " DEL ".date('Y') ;
