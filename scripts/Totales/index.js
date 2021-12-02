@@ -19,9 +19,6 @@ jQuery(document).ready(function() {
         }
     })
     
-    getMeDesc();
-    //getMeRojos();
-    //getMeAltas();
     getMeNews();
 });
 
@@ -31,6 +28,11 @@ $(document).off("click",".loadCambio").on("click",".loadCambio",function(event){
     toastr.success("SE ESTÁN CARGANDO LOS DATOS, POR FAVOR ESPERE","BUSCANDO...");
 });
 
+$(document).off("click",".loadDesco").on("click",".loadDesco",function(event){
+    event.preventDefault();
+    getMeDesc()
+    toastr.success("SE ESTÁN CARGANDO LOS DATOS, POR FAVOR ESPERE","BUSCANDO...");
+});
 $(document).off("click",".loadAlta").on("click",".loadAlta",function(event){
     event.preventDefault();
     getMeAltas()

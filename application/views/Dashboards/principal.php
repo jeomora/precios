@@ -83,16 +83,6 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                             </a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a class="nav-link" id="sucursal-tab-edit" data-toggle="tab" href="#store-edit">
-                                <span class="nav-text">
-                                    EDITAR <br>PRODUCTOS
-                                </span>
-                                <span>
-                                    
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item mb-2">
                             <a class="nav-link" id="sucursal-tab-oferta" data-toggle="tab" href="#store-oferta">
                                 <span class="nav-text">
                                     AGREGAR <br>OFERTAS
@@ -149,21 +139,23 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-content" id="myTabContent1" style="overflow-x:hidden;">
                             <div class="tab-pane fade active show rowScroll" id="store-excel" role="tabpanel" aria-labelledby="store-tab-excel"  ><!-- MATRICIAL -->
-                                <h1 style="">DESCARGAR AJUSTES DE PRECIOS</h1>
                                 <!--begin::Row-->
-                                <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
-                                    <div class="col-xl-2">
-                                        <a href="Uploads/rojosCalc" class="btn btn-text-info btn-icon-info font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #8950FC;border:1px solid #8950FC;padding:20px;">
-                                            <i class="flaticon2-file"></i> EXCEL CON LOS <br>PRECIOS A AJUSTAR
-                                        </a>
-                                    </div>
-                                </div>
                                 <h1 style="">SUBIR EXCEL CON PRECIOS</h1>
                                 <!--begin::Row-->
                                 <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
                                     <div class="col-xl-2">
+                                        <a href="assets/uploads/templates/edicion.xlsx" class="btn btn-text-warning btn-icon-warning font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #FFA800;border:1px solid #FFA800;padding:20px;">
+                                            <i class="flaticon2-file"></i> PLANTILLA <br>CAMBIO DE DESCRIPCIÓN
+                                        </a>
+                                    </div>
+                                    <div class="col-xl-2">
                                         <a href="Compras/plantillaSin" class="btn btn-text-primary btn-icon-primary font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #F64E60;border:1px solid #F64E60;padding:20px;">
                                             <i class="flaticon2-file"></i> PLANTILLA <br>AJUSTE DE PRECIOS
+                                        </a>
+                                    </div>
+                                    <div class="col-xl-2">
+                                        <a href="assets/uploads/templates/altas.xlsx" class="btn btn-text-success btn-icon-success font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #1BC5BD;border:1px solid #1BC5BD;padding:20px;">
+                                            <i class="flaticon2-file"></i> PLANTILLA <br>ALTA DE PRODUCTOS
                                         </a>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
@@ -178,6 +170,19 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                 <!--end::Row-->
                             </div>
                             <div class="tab-pane fade rowScroll" id="store-uno" role="tabpanel" aria-labelledby="store-tab-uno"  ><!-- MATRICIAL -->
+                                <h1 style="">DESCARGAR AJUSTES DE PRECIOS</h1>
+                                <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
+                                    <div class="col-xl-3">
+                                        <a href="Uploads/rojosCalc/1" class="btn btn-text-success btn-icon-success font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #1BC5BD;border:1px solid #1BC5BD;padding:20px;">
+                                            <i class="flaticon2-file"></i> EXCEL AJUSTES VERO
+                                        </a>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <a href="Uploads/rojosCalc/0" class="btn btn-text-info btn-icon-info font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #8950FC;border:1px solid #8950FC;padding:20px;">
+                                            <i class="flaticon2-file"></i> EXCEL AJUSTES TODOS
+                                        </a>
+                                    </div>
+                                </div>
                                 <h1 style="margin-top:30px;">AJUSTE DE PRECIOS</h1>
                                 <button class="btn btn-icon btn-success btn-lg mr-4 loadCambio">
                                     <i class="flaticon-refresh"></i>
@@ -290,11 +295,11 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="store-edit" role="tabpanel" aria-labelledby="store-tab-edit"><!-- MATRICIAL -->
 
                                 <h1 style="margin-top:30px;">EDITAR DESCRIPCIONES</h1>
+                                <button class="btn btn-icon btn-success btn-lg mr-4 loadDesco">
+                                    <i class="flaticon-refresh"></i>
+                                </button>
                                 <div class="row col-xl-1"></div>
                                 <div class="row col-xl-10 descos">
                                     <table class="table table-bordered" style="text-align:center;">
@@ -308,15 +313,16 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                             </tr>
                                         </thead>
                                         <tbody class="descosBody">
-                                            <tr>
+                                            <!--<tr>
                                                 <td colspan="4" style="font-size:24px;padding:0">
                                                     <img src="assets/img/loading1.gif" style="width:90px">CARGANDO NUEVAS DESCRIPCIONES <img src="assets/img/loading1.gif" style="width:90px">
                                                 </td>
-                                            </tr>
+                                            </tr>-->
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+
 
                             <div class="tab-pane fade" id="store-mat" role="tabpanel" aria-labelledby="store-tab-mat"><!-- DESCRIPCIONES -->
 

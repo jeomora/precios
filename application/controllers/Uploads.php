@@ -975,8 +975,12 @@ class Uploads extends MY_Controller {
 		$this->jsonResponse($new_nuevo);
 	}
 
-	public function rojosCalc(){
-		$rojos = $this->rojo_md->getRojos2();
+	public function rojosCalc($vero){
+		if ($vero == 1 || $vero == "1") {
+			$rojos = $this->rojo_md->getRojos3();
+		}else{
+			$rojos = $this->rojo_md->getRojos2();
+		}
 		ini_set("memory_limit", "-1");
 		ini_set("max_execution_time", "-1");
 		$this->load->library("excelfile");
@@ -1019,7 +1023,7 @@ class Uploads extends MY_Controller {
 		$lin = "";
 		//$this->jsonResponse($rojos);
 		$this->cellStyle('A1', "FFFFFF", "000000", FALSE, 31, "Arial Narrow");
-		$this->excelfile->getActiveSheet()->getStyle('A1:CC1')->applyFromArray($styleArrayNone);
+		$this->excelfile->getActiveSheet()->getStyle('A1:AF1')->applyFromArray($styleArrayNone);
 		if ($rojos){
 			if (1==1) { //SUCURSALES A
 				$hoja->mergeCells('A'.$rws.':D'.$rws);
@@ -1557,6 +1561,11 @@ class Uploads extends MY_Controller {
 		header("Cache-Control: max-age=0");
 		$excel_Writer = PHPExcel_IOFactory::createWriter($this->excelfile, "Excel2007");
 		$excel_Writer->save("php://output");
+	}
+
+	public function vero(){
+		$rojos = $this->rojo_md->getRojos3();
+		$this->jsonResponse($rojos);
 	}
 }
 
