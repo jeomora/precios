@@ -20,9 +20,21 @@ jQuery(document).ready(function() {
     })
     
     getMeDesc();
-    getMeRojos();
-    getMeAltas();
+    //getMeRojos();
+    //getMeAltas();
     getMeNews();
+});
+
+$(document).off("click",".loadCambio").on("click",".loadCambio",function(event){
+    event.preventDefault();
+    getMeRojos()
+    toastr.success("SE ESTÁN CARGANDO LOS DATOS, POR FAVOR ESPERE","BUSCANDO...");
+});
+
+$(document).off("click",".loadAlta").on("click",".loadAlta",function(event){
+    event.preventDefault();
+    getMeAltas()
+    toastr.success("SE ESTÁN CARGANDO LOS DATOS, POR FAVOR ESPERE","BUSCANDO...");
 });
 
 var theDate = new Date().getTime();

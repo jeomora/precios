@@ -40,7 +40,7 @@ class Rojos_model extends MY_Model {
 			->join("lineas l ","p.linea = l.id_linea","left")
 			->join("unidades u","p.ums = u.id_unidad","left") 
 			->join("usuarios usr","r.agrego = usr.id_usuario","left")
-			->where("r.estatus <> 0")
+			->where("r.estatus",1)
 			->group_by("r.id_rojo")
 			->order_by("r.id_rojo","DESC");
 
@@ -231,14 +231,17 @@ class Rojos_model extends MY_Model {
 
 
 	public function getRojos2($where = []){
-		$this->db->select("r.id_rojo,r.codigo,r.descripcion,p.nombre,p.id_producto,r.costo,r.fecha_registro,p.codigo as code1,p.code as code2,pr.preciocinco,l.ides,u.ides as uni,l.iva,preciouno,preciodos,preciotres,preciocuatro, usr.nombre as usu,r.estatus")
+		$this->db->select("r.id_rojo,r.codigo,r.descripcion,p.nombre,p.id_producto,r.costo,r.fecha_registro,p.codigo as code1,p.code as code2,pr.preciocinco,l.ides,u.ides as uni,l.iva,pr.preciouno,pr.preciodos,pr.preciotres,pr.preciocuatro, usr.nombre as usu,r.estatus,r.descripcion as rdes,r.um_nuevo,l2.ides as ides2,l2.iva as iva2,pr2.preciocinco as p5,pr2.preciouno as p1,pr2.preciodos as p2,pr2.preciotres as p3,pr2.preciocuatro as p4")
 			->from("rojos r")
 			->join("productos p","r.codigo = p.codigo","left")
 			->join("precios pr","p.id_producto = pr.id_producto AND pr.estatus = 1" ,"left")
 			->join("lineas l ","p.linea = l.id_linea","left")
 			->join("unidades u","p.ums = u.id_unidad","left") 
 			->join("usuarios usr","r.agrego = usr.id_usuario","left")
-			->where("r.estatus <> 0")
+			->join("productos p2","r.code_relacion = p2.codigo","left")
+			->join("lineas l2","p2.linea = l2.id_linea","left")
+			->join("precios pr2","p2.id_producto = pr2.id_producto AND pr2.estatus = 1" ,"left")
+			->where("r.estatus = 5 OR r.estatus = 1 OR r.estatus = 4")
 			->group_by("r.id_rojo")
 			->order_by("r.descripcion","ASC");
 
@@ -272,11 +275,20 @@ class Rojos_model extends MY_Model {
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["preciotres"]=	$comparativa[$i]->preciotres;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["preciocuatro"]=	$comparativa[$i]->preciocuatro;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["preciocinco"]=	$comparativa[$i]->preciocinco;
+				$comparativaIndexada[$comparativa[$i]->id_rojo]["p1"]=	$comparativa[$i]->p1;
+				$comparativaIndexada[$comparativa[$i]->id_rojo]["p2"]=	$comparativa[$i]->p2;
+				$comparativaIndexada[$comparativa[$i]->id_rojo]["p3"]=	$comparativa[$i]->p3;
+				$comparativaIndexada[$comparativa[$i]->id_rojo]["p4"]=	$comparativa[$i]->p4;
+				$comparativaIndexada[$comparativa[$i]->id_rojo]["p5"]=	$comparativa[$i]->p5;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["ides"]=	$comparativa[$i]->ides;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["estatus"]=	$comparativa[$i]->estatus;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["uni"]=	$comparativa[$i]->uni;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["iva"]=	$comparativa[$i]->iva;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["usu"]=	$comparativa[$i]->usu;
+				$comparativaIndexada[$comparativa[$i]->id_rojo]["rdes"]=	$comparativa[$i]->rdes;
+				$comparativaIndexada[$comparativa[$i]->id_rojo]["um_nuevo"]=	$comparativa[$i]->um_nuevo;
+				$comparativaIndexada[$comparativa[$i]->id_rojo]["ides2"]=	$comparativa[$i]->ides2;
+				$comparativaIndexada[$comparativa[$i]->id_rojo]["iva2"]=	$comparativa[$i]->iva2;
 				$comparativaIndexada[$comparativa[$i]->id_rojo]["relaciones"]=	[];
 				$flag++;
 			}

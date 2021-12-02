@@ -1120,7 +1120,7 @@ class Uploads extends MY_Controller {
 				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
 				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 				$this->cellStyle('A'.$rws, "D9FFF2", "000000", FALSE, 24, "Bahnschrift Light SemiCondensed");
-				$this->cellStyle('M'.$rws, "FCE4D6", "000000", FALSE, 24, "Bahnschrift Light SemiCondensed");
+				$this->cellStyle('P'.$rws, "FCE4D6", "000000", FALSE, 24, "Bahnschrift Light SemiCondensed");
 				$hoja1->setCellValue("P{$rws}", "PAQUETES");
 				$rws++;
 
@@ -1128,9 +1128,9 @@ class Uploads extends MY_Controller {
 				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
 				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 				$this->cellStyle('A'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
-				$hoja1->setCellValue("A{$rws}", "CÓDIGO PRINCIPAL")->getColumnDimension('A')->setWidth(30);
+				$hoja1->setCellValue("A{$rws}", "CÓDIGO PRINCIPAL")->getColumnDimension('A')->setWidth(34);
 				$this->cellStyle('B'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
-				$hoja1->setCellValue("B{$rws}", "RENGLON 18")->getColumnDimension('B')->setWidth(30);
+				$hoja1->setCellValue("B{$rws}", "RENGLON 18")->getColumnDimension('B')->setWidth(34);
 				$this->cellStyle('C'.$rws, "FFFFFF", "000000", TRUE, 18, "Bahnschrift Light SemiCondensed");
 				$hoja1->setCellValue("C{$rws}", "LIN")->getColumnDimension('C')->setWidth(8);
 				$this->cellStyle('D'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
@@ -1161,7 +1161,7 @@ class Uploads extends MY_Controller {
 				$hoja1->setCellValue("O{$rws}", "")->getColumnDimension('O')->setWidth(18);
 
 				$this->cellStyle('W'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
-				$hoja1->setCellValue("W{$rws}", "CÓDIGO PRINC CJA")->getColumnDimension('W')->setWidth(30);
+				$hoja1->setCellValue("W{$rws}", "CÓDIGO PRINC CJA")->getColumnDimension('W')->setWidth(34);
 				$this->cellStyle('X'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
 				$hoja1->setCellValue("X{$rws}", "LIN")->getColumnDimension('X')->setWidth(8);
 				$this->cellStyle('Y'.$rws, "FFFFFF", "000000", FALSE, 18, "Bahnschrift Light SemiCondensed");
@@ -1182,25 +1182,12 @@ class Uploads extends MY_Controller {
 				$hoja1->setCellValue("T{$rws}", "")->getColumnDimension('T')->setWidth(18);
 				$hoja1->setCellValue("U{$rws}", "")->getColumnDimension('U')->setWidth(18);
 				$this->cellStyle('V'.$rws, "8DB4E2", "000000", TRUE, 18, "Arial Narrow");
-				$hoja->setCellValue("V{$rws}", "PZ * CAJA")->getColumnDimension('V')->setWidth(20);
+				$hoja1->setCellValue("V{$rws}", "PZ * CAJA")->getColumnDimension('V')->setWidth(20);
 			}
 			$this->excelfile->setActiveSheetIndex(0);
 			$rws++;
 			foreach ($rojos as $key => $value) {
 				if( 1 == 1){
-					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->applyFromArray($styleArray);
-					$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setIndent(1);
-					$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':AF'.$rws)->getAlignment()->setIndent(1);
-					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
-					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':B'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-					$this->excelfile->getActiveSheet()->getStyle('AB'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-					$this->excelfile->getActiveSheet()->getStyle('G'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-					$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-					$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':W'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-					$this->excelfile->getActiveSheet()->getStyle('D'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-					$this->excelfile->getActiveSheet()->getStyle('AE'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-
 					$this->cellStyle('A'.$rws.':AF'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
 					$hoja->setCellValue("A{$rws}", $value["code1"])->getStyle('A'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
 					$hoja->setCellValue("B{$rws}", $value["code2"])->getStyle('B'.$rws)->getNumberFormat()->setFormatCode('# ???/???');
@@ -1211,7 +1198,14 @@ class Uploads extends MY_Controller {
 					$this->cellStyle('E'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
 					$hoja->setCellValue("E{$rws}", $value["uni"]);
 					$hoja->setCellValue("F{$rws}", 1);//$value["cantidad"]
-					$hoja->setCellValue("G{$rws}", $value["costo"])->getStyle("G{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+					if ($value["estatus"] == 5){
+						$hoja->setCellValue("G{$rws}", ($value["preciocinco"] - 0.01))->getStyle("G{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+					}else{
+						$hoja->setCellValue("G{$rws}", $value["costo"])->getStyle("G{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+					}
+
+					
+
 					$this->cellStyle('H'.$rws, "FFCC66", "000000", TRUE, 18, "Arial Narrow");
 					$hoja->setCellValue("H{$rws}", $value["iva"]);
 					$this->cellStyle('I'.$rws, "FFA887", "000000", TRUE, 18, "Arial Narrow");
@@ -1240,6 +1234,71 @@ class Uploads extends MY_Controller {
 
 					$hoja->setCellValue("AB{$rws}", "=N{$rws}*F{$rws}")->getStyle("AB{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
 					$this->cellStyle('AB'.$rws, "8DB4E2", "000000", TRUE, 18, "Arial Narrow");
+					if ($value["estatus"] == 5){
+						$this->cellStyle('A'.$rws.':D'.$rws, "FFFF00", "000000", FALSE, 16, "Arial Narrow");
+					}elseif($value["estatus"] == 4){
+						$this->cellStyle('A'.$rws.':D'.$rws, "92D050", "000000", FALSE, 16, "Arial Narrow");
+						$this->cellStyle('C'.$rws, "92D050", "000000", TRUE, 16, "Arial Narrow");
+						$hoja->setCellValue("A{$rws}", $value["codigo"]);
+						$hoja->setCellValue("B{$rws}", $value["codigo"]);
+						$hoja->setCellValue("D{$rws}", $value["rdes"]);
+						$hoja->setCellValue("F{$rws}", $value["um_nuevo"]);
+						$hoja->setCellValue("C{$rws}", $value["ides2"]);
+						$hoja->setCellValue("H{$rws}", $value["iva2"]);
+						
+						$mar1 = round( ( ($value["p1"]*100)/($value["p5"]-0.01) )-100 );
+					    $mar2 = round( ( ($value["p2"]*100)/($value["p5"]-0.01) )-100 );
+					    $mar3 = round( ( ($value["p3"]*100)/($value["p5"]-0.01) )-100 );
+					    $mar4 = round( ( ($value["p4"]*100)/($value["p5"]-0.01) )-100 );
+						$hoja->setCellValue("O{$rws}", $mar1);
+						$hoja->setCellValue("P{$rws}", $mar2);
+						$hoja->setCellValue("Q{$rws}", $mar3);
+						$hoja->setCellValue("R{$rws}", $mar4);
+
+						if (is_numeric($value["um_nuevo"])){
+							if (intval($value["um_nuevo"]) > 1) {
+								$hoja->setCellValue("X{$rws}", 0);
+								$hoja->setCellValue("Y{$rws}", 0);
+								$hoja->setCellValue("Z{$rws}", 0);
+								$hoja->setCellValue("AA{$rws}", 0);
+								$hoja->setCellValue("AD{$rws}", $value["ides2"]);
+								$hoja->setCellValue("S{$rws}", "=ROUND(G{$rws}+((X{$rws}*G{$rws})/100),1)")->getStyle("S{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+								$hoja->setCellValue("T{$rws}", "=ROUND(G{$rws}+((Y{$rws}*G{$rws})/100),1)")->getStyle("T{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+								$hoja->setCellValue("U{$rws}", "=ROUND(G{$rws}+((Z{$rws}*G{$rws})/100),1)")->getStyle("U{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+								$hoja->setCellValue("V{$rws}", "=ROUND(G{$rws}+((AA{$rws}*G{$rws})/100),1)")->getStyle("V{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+								$this->cellStyle('W'.$rws, "CC99FF", "000000", FALSE, 18, "Arial Narrow");
+								$this->cellStyle('S'.$rws.":V".$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+								$hoja->setCellValue("W{$rws}", "=G{$rws}+0.01")->getStyle("W{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+
+								$hoja->setCellValue("X{$rws}", $mar1);
+								$hoja->setCellValue("Y{$rws}", $mar2);
+								$hoja->setCellValue("Z{$rws}", $mar3);
+								$hoja->setCellValue("AA{$rws}", $mar4);
+
+								$this->excelfile->setActiveSheetIndex(1);
+								$this->cellStyle('P'.$rws.':R'.$rws, "BDD7EE", "000000", FALSE, 18, "Arial Narrow");
+								$hoja1->setCellValue("P{$rws}", "=ROUND(H{$rws}+((S{$rws}*H{$rws})/100),1)")->getStyle("P{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+								$hoja1->setCellValue("Q{$rws}", "=ROUND(H{$rws}+((T{$rws}*H{$rws})/100),1)")->getStyle("Q{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+								$hoja1->setCellValue("R{$rws}", "=ROUND(H{$rws}+((U{$rws}*H{$rws})/100),1)")->getStyle("R{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
+								$this->excelfile->setActiveSheetIndex(0);
+							}
+						}else{
+							$hoja->setCellValue("F{$rws}", 1);
+						}
+							
+					}
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->applyFromArray($styleArray);
+					$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setIndent(1);
+					$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':AF'.$rws)->getAlignment()->setIndent(1);
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':B'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+					$this->excelfile->getActiveSheet()->getStyle('AB'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+					$this->excelfile->getActiveSheet()->getStyle('G'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+					$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+					$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':W'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+					$this->excelfile->getActiveSheet()->getStyle('D'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+					$this->excelfile->getActiveSheet()->getStyle('AE'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 				}
 
 				if( 2 == 2){
@@ -1264,8 +1323,8 @@ class Uploads extends MY_Controller {
 					$hoja1->setCellValue("S{$rws}", "=AJUSTES!Y".$rws);
 					$hoja1->setCellValue("T{$rws}", "=AJUSTES!Z".$rws);
 					$hoja1->setCellValue("U{$rws}", "=AJUSTES!AA".$rws);
-					$this->cellStyle('V'.$rws, "8DB4E2", "000000", FALSE, 18, "Arial Narrow");
-					$hoja1->setCellValue("V{$rws}", "=L".$rws."*H".$rws);
+					
+					$hoja1->setCellValue("V{$rws}", "=L".$rws."*H".$rws)->getStyle("V{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
 
 					$hoja1->setCellValue("J{$rws}", "=ROUND((H{$rws}/F{$rws})+((M{$rws}*(H{$rws}/F{$rws}))/100),1)")->getStyle("J{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
 					$hoja1->setCellValue("K{$rws}", "=ROUND((H{$rws}/F{$rws})+((N{$rws}*(H{$rws}/F{$rws}))/100),1)")->getStyle("K{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
@@ -1288,16 +1347,21 @@ class Uploads extends MY_Controller {
 					$this->cellStyle('J'.$rws.':L'.$rws, "BDD7EE", "000000", FALSE, 18, "Arial Narrow");
 					$this->cellStyle('M'.$rws.':O'.$rws, "FBBDFB", "000000", FALSE, 18, "Arial Narrow");
 
-					$this->cellStyle('P'.$rws, "FFFFFF", "000000", TRUE, 18, "Arial Narrow");
-					$this->cellStyle('Q'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-					$this->cellStyle('R'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+					$this->cellStyle('P'.$rws.':R'.$rws, "BDD7EE", "000000", FALSE, 18, "Arial Narrow");
 
 					$this->cellStyle('S'.$rws.':U'.$rws, "BDD7EE", "000000", FALSE, 18, "Arial Narrow");
 					$this->cellStyle('S'.$rws.':U'.$rws, "FBBDFB", "000000", FALSE, 18, "Arial Narrow");
+					$this->cellStyle('V'.$rws, "8DB4E2", "000000", FALSE, 18, "Arial Narrow");
 
 
 					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 					$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+					if ($value["estatus"] == 5){
+						$this->cellStyle('A'.$rws.':D'.$rws, "FFFF00", "000000", FALSE, 18, "Arial Narrow");
+					}elseif($value["estatus"] == 4){
+						$this->cellStyle('A'.$rws.':D'.$rws, "92D050", "000000", FALSE, 18, "Arial Narrow");
+					}
 
 					$this->excelfile->setActiveSheetIndex(0);
 				}
@@ -1305,19 +1369,6 @@ class Uploads extends MY_Controller {
 				if(!empty($value["relaciones"])){
 					foreach ($value["relaciones"] as $key => $val){
 						if(1 == 1){
-							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->applyFromArray($styleArray);
-							$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setIndent(1);
-							$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':AF'.$rws)->getAlignment()->setIndent(1);
-							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
-							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':B'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-							$this->excelfile->getActiveSheet()->getStyle('AB'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-							$this->excelfile->getActiveSheet()->getStyle('G'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-							$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-							$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':W'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-							$this->excelfile->getActiveSheet()->getStyle('D'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-							$this->excelfile->getActiveSheet()->getStyle('AE'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-
 							$this->cellStyle('A'.$rws.':AF'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
 							$this->cellStyle('C'.$rws, "FFFFFF", "000000", TRUE, 16, "Arial Narrow");
 							$this->cellStyle('D'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
@@ -1391,6 +1442,26 @@ class Uploads extends MY_Controller {
 							$this->cellStyle('AF'.$rws, "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
 							$hoja->setCellValue("AF{$rws}", $value["uni"]);
 							$this->cellStyle('AB'.$rws, "8DB4E2", "000000", TRUE, 18, "Arial Narrow");
+							if ($value["estatus"] == 5){
+								$this->cellStyle('A'.$rws.':D'.$rws, "FFFF00", "000000", FALSE, 16, "Arial Narrow");
+								$this->cellStyle('AC'.$rws.':AF'.$rws, "FFFF00", "000000", FALSE, 16, "Arial Narrow");
+							}elseif($value["estatus"] == 4){
+								$this->cellStyle('A'.$rws.':D'.$rws, "92D050", "000000", FALSE, 16, "Arial Narrow");
+								$this->cellStyle('AC'.$rws.':AF'.$rws, "92D050", "000000", FALSE, 16, "Arial Narrow");
+							}
+
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->applyFromArray($styleArray);
+							$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setIndent(1);
+							$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':AF'.$rws)->getAlignment()->setIndent(1);
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':AF'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':B'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+							$this->excelfile->getActiveSheet()->getStyle('AB'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+							$this->excelfile->getActiveSheet()->getStyle('G'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+							$this->excelfile->getActiveSheet()->getStyle('J'.$rws.':N'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+							$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':W'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+							$this->excelfile->getActiveSheet()->getStyle('D'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+							$this->excelfile->getActiveSheet()->getStyle('AE'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 						}
 						
 
@@ -1417,8 +1488,8 @@ class Uploads extends MY_Controller {
 							$hoja1->setCellValue("S{$rws}", "=AJUSTES!Y".$rws);
 							$hoja1->setCellValue("T{$rws}", "=AJUSTES!Z".$rws);
 							$hoja1->setCellValue("U{$rws}", "=AJUSTES!AA".$rws);
-							$this->cellStyle('V'.$rws, "8DB4E2", "000000", FALSE, 18, "Arial Narrow");
-							$hoja1->setCellValue("V{$rws}", "=L".$rws."*H".$rws);
+							
+							$hoja1->setCellValue("V{$rws}", "=L".$rws."*H".$rws)->getStyle("V{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
 
 							$hoja1->setCellValue("J{$rws}", "=ROUND((H{$rws}/F{$rws})+((M{$rws}*(H{$rws}/F{$rws}))/100),1)")->getStyle("J{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
 							$hoja1->setCellValue("K{$rws}", "=ROUND((H{$rws}/F{$rws})+((N{$rws}*(H{$rws}/F{$rws}))/100),1)")->getStyle("K{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");
@@ -1445,12 +1516,9 @@ class Uploads extends MY_Controller {
 							$this->cellStyle('J'.$rws.':L'.$rws, "BDD7EE", "000000", FALSE, 18, "Arial Narrow");
 							$this->cellStyle('M'.$rws.':O'.$rws, "FBBDFB", "000000", FALSE, 18, "Arial Narrow");
 
-							$this->cellStyle('P'.$rws, "FFFFFF", "000000", TRUE, 18, "Arial Narrow");
-							$this->cellStyle('Q'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-							$this->cellStyle('R'.$rws, "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-
 							$this->cellStyle('P'.$rws.':R'.$rws, "BDD7EE", "000000", FALSE, 18, "Arial Narrow");
 							$this->cellStyle('S'.$rws.':U'.$rws, "FBBDFB", "000000", FALSE, 18, "Arial Narrow");
+							$this->cellStyle('V'.$rws, "8DB4E2", "000000", FALSE, 18, "Arial Narrow");
 
 
 							$this->excelfile->getActiveSheet()->getStyle('A'.$rws.':Z'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
@@ -1461,6 +1529,14 @@ class Uploads extends MY_Controller {
 							$this->excelfile->getActiveSheet()->getStyle('P'.$rws.':R'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 							$this->excelfile->getActiveSheet()->getStyle('D'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 							$this->excelfile->getActiveSheet()->getStyle('Y'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+
+							if ($value["estatus"] == 5){
+								$this->cellStyle('A'.$rws.':D'.$rws, "FFFF00", "000000", FALSE, 18, "Arial Narrow");
+								$this->cellStyle('W'.$rws.':Z'.$rws, "FFFF00", "000000", FALSE, 18, "Arial Narrow");
+							}elseif($value["estatus"] == 4){
+								$this->cellStyle('A'.$rws.':D'.$rws, "92D050", "000000", FALSE, 18, "Arial Narrow");
+								$this->cellStyle('W'.$rws.':Z'.$rws, "92D050", "000000", FALSE, 18, "Arial Narrow");
+							}
 						}
 
 						$this->excelfile->setActiveSheetIndex(0);
@@ -1483,3 +1559,29 @@ class Uploads extends MY_Controller {
 		$excel_Writer->save("php://output");
 	}
 }
+
+
+/*$this->excelfile->setActiveSheetIndex(0);
+$this->excelfile->getActiveSheet()->getStyle('A4'.':AF'.($rws-1))->applyFromArray($styleArray);
+$this->excelfile->getActiveSheet()->getStyle('J4'.':N'.($rws-1))->getAlignment()->setIndent(1);
+$this->excelfile->getActiveSheet()->getStyle('S4'.':AF'.($rws-1))->getAlignment()->setIndent(1);
+$this->excelfile->getActiveSheet()->getStyle('A4'.':AF'.($rws-1))->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
+$this->excelfile->getActiveSheet()->getStyle('A4'.':AF'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$this->excelfile->getActiveSheet()->getStyle('A4'.':B'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$this->excelfile->getActiveSheet()->getStyle('AB4:AB'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$this->excelfile->getActiveSheet()->getStyle('G4:G'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$this->excelfile->getActiveSheet()->getStyle('J4'.':N'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$this->excelfile->getActiveSheet()->getStyle('S4'.':W'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$this->excelfile->getActiveSheet()->getStyle('D4:D'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+$this->excelfile->getActiveSheet()->getStyle('AE4:AE'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+$this->cellStyle('C4:C'.($rws-1), "FFFFFF", "000000", TRUE, 16, "Arial Narrow");
+$this->cellStyle('D4:D'.($rws-1), "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
+$this->cellStyle('E4:E'.($rws-1), "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+$this->cellStyle('H4:H'.($rws-1), "FFCC66", "000000", TRUE, 18, "Arial Narrow");
+$this->cellStyle('I4:I'.($rws-1), "FFA887", "000000", TRUE, 18, "Arial Narrow");
+$this->cellStyle('J4'.':M'.($rws-1), "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
+$this->cellStyle('O4'.":R".($rws-1), "DAEEF3", "000000", FALSE, 18, "Arial Narrow");
+$this->cellStyle('X4'.":AA".($rws-1), "DAEEF3", "000000", FALSE, 18, "Arial Narrow");
+$this->cellStyle('N4:N'.($rws-1), "CC99FF", "000000", FALSE, 18, "Arial Narrow");
+$this->cellStyle('AB4:AB'.($rws-1), "8DB4E2", "000000", TRUE, 18, "Arial Narrow");
+$this->cellStyle('A4:AF'.($rws-1), "FFFFFF", "000000", FALSE, 16, "Arial Narrow");*/

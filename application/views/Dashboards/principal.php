@@ -179,6 +179,9 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                             </div>
                             <div class="tab-pane fade rowScroll" id="store-uno" role="tabpanel" aria-labelledby="store-tab-uno"  ><!-- MATRICIAL -->
                                 <h1 style="margin-top:30px;">AJUSTE DE PRECIOS</h1>
+                                <button class="btn btn-icon btn-success btn-lg mr-4 loadCambio">
+                                    <i class="flaticon-refresh"></i>
+                                </button>
                                 <!--begin::Row-->
                                 <div class="row col-xl-12 tableFixHead" style="padding-bottom:20px;height:50rem;">
                                     <table class="table table-bordered" style="text-align:center;">
@@ -219,7 +222,7 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                             </tr>
                                         </thead>
                                         <tbody id="bodySucA">
-                                            <tr style="height:200px">
+                                            <!--<tr style="height:200px">
                                                 <td colspan="17" style="padding:0;height:200px;border-top:0 !important;">
                                                     <img src="assets/img/loading<?php echo rand(2, 6); ?>.gif" style="height:100%">
                                                 </td>
@@ -228,12 +231,15 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                                 <td colspan="17" style="height:200px;font-size:30px;line-height:200px;font-weight:bold;border-bottom:0 !important;">
                                                     CARGANDO, POR FAVOR ESPERE.
                                                 </td>
-                                            </tr>
+                                            </tr>-->
                                         </tbody>
                                     </table>
                                 </div>
 
                                 <h1 style="margin-top:30px;">ALTA DE PRODUCTOS</h1>
+                                <button class="btn btn-icon btn-success btn-lg mr-4 loadAlta">
+                                    <i class="flaticon-refresh"></i>
+                                </button>
 
                                 <div class="row col-xl-12 altes tableFixHead">
                                     <table class="table table-bordered" style="text-align:center;">
@@ -276,11 +282,11 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                             </tr>
                                         </thead>
                                         <tbody class="altasBody">
-                                            <tr>
+                                            <!--<tr>
                                                 <td colspan="15" style="font-size:24px;padding:0">
                                                     <img src="assets/img/loading5.gif" style="width:90px">CARGANDO ALTAS DE PRODICTOS <img src="assets/img/loading5.gif" style="width:90px">
                                                 </td>
-                                            </tr>
+                                            </tr>-->
                                         </tbody>
                                     </table>
                                 </div>
