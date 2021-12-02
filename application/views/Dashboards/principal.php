@@ -185,7 +185,10 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                 </div>
                                 <h1 style="margin-top:30px;">AJUSTE DE PRECIOS</h1>
                                 <button class="btn btn-icon btn-success btn-lg mr-4 loadCambio">
-                                    <i class="flaticon-refresh"></i>
+                                    <i class="flaticon2-arrow-1"></i>
+                                </button>
+                                <button class="btn btn-icon btn-danger btn-lg mr-4 hideCambio">
+                                    <i class="flaticon2-size"></i>
                                 </button>
                                 <!--begin::Row-->
                                 <div class="row col-xl-12 tableFixHead" style="padding-bottom:20px;height:50rem;">
@@ -243,7 +246,10 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
 
                                 <h1 style="margin-top:30px;">ALTA DE PRODUCTOS</h1>
                                 <button class="btn btn-icon btn-success btn-lg mr-4 loadAlta">
-                                    <i class="flaticon-refresh"></i>
+                                    <i class="flaticon2-arrow-1"></i>
+                                </button>
+                                <button class="btn btn-icon btn-danger btn-lg mr-4 hideAlta">
+                                    <i class="flaticon2-size"></i>
                                 </button>
 
                                 <div class="row col-xl-12 altes tableFixHead">
@@ -298,7 +304,10 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
 
                                 <h1 style="margin-top:30px;">EDITAR DESCRIPCIONES</h1>
                                 <button class="btn btn-icon btn-success btn-lg mr-4 loadDesco">
-                                    <i class="flaticon-refresh"></i>
+                                    <i class="flaticon2-arrow-1"></i>
+                                </button>
+                                <button class="btn btn-icon btn-danger btn-lg mr-4 hideDesco">
+                                    <i class="flaticon2-size"></i>
                                 </button>
                                 <div class="row col-xl-1"></div>
                                 <div class="row col-xl-10 descos">

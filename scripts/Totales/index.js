@@ -39,6 +39,20 @@ $(document).off("click",".loadAlta").on("click",".loadAlta",function(event){
     toastr.success("SE ESTÁN CARGANDO LOS DATOS, POR FAVOR ESPERE","BUSCANDO...");
 });
 
+$(document).off("click",".hideCambio").on("click",".hideCambio",function(event){
+    event.preventDefault();
+    $("#bodySucA").html("");
+});
+
+$(document).off("click",".hideDesco").on("click",".hideDesco",function(event){
+    event.preventDefault();
+    $(".descosBody").html("");
+});
+$(document).off("click",".hideAlta").on("click",".hideAlta",function(event){
+    event.preventDefault();
+    $(".altasBody").html("");
+});
+
 var theDate = new Date().getTime();
 Dropzone.autoDiscover = false;
 
