@@ -1606,7 +1606,7 @@ class Uploads extends MY_Controller {
 			if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  "){
 				if ($flag == 1) {
 					$flag++;
-					$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"] ]);//GET NEW ID
+					$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"suca"=>1,"sucb"=>1 ]);//GET NEW ID
 				}
 				
 				$id_rojo = $this->rojo_md->get(NULL, ["id_rojo"=>$this->getOldVal($sheet,$i,"AG")] );
@@ -1671,7 +1671,7 @@ class Uploads extends MY_Controller {
 				if($id_nuevo == 0){
 					if ($flag == 1) {
 						$flag++;
-						$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"] ]);//GET NEW ID
+						$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"suca"=>1,"sucb"=>1 ]);//GET NEW ID
 					}
 				}
 				$id_rojo = $this->rojo_md->get(NULL, ["id_rojo"=>$this->getOldVal($sheet,$i,"AA")] );
