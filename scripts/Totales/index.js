@@ -180,6 +180,47 @@ var myDropzoneExcel = new Dropzone("div#kt_dropzone_tres", {
     }
 });
 
+var myDropzoneCambios  = new Dropzone("div#kt_dropzone_cuatro", {
+    paramName: "file_excel",
+    maxFiles: 1,
+    maxFilesize: 200, // MB
+    timeout: 1800000,
+    renameFilename: function (filename) {
+        return filename;
+    },
+    url: site_url+"Uploads/upload_cambios",
+    autoProcessQueue: true,
+    queuecomplete: function (resp) {
+        toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": false,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "1000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+        };
+    },
+    success: function(file, response){
+        var dt = new Date();
+        var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+        myDropzoneCambios.removeAllFiles();
+        if(response === "Archivo invalido"){
+            toastr.error("Por favor revise el archivo que se subió a la plataforma","Archivo invalido o vacio");
+        }else{
+            toastr.success("Se cargarón correctamente los datos","Listo");
+        }
+        getMeNews();
+    }
+});
+
 /******** DESCRIPCIONES DE PRODUCTOS ********
  * *********************************
  * *********************************
@@ -440,6 +481,8 @@ function getMeRojos(){
                     initializeTable(value)
                 }
             })
+        }else{
+            $("#bodySucA").html("<tr><td colspan='27'><h1>No se han solicitado ajustes</h1></td></tr>");
         }
     })
 }
@@ -1024,7 +1067,7 @@ function oldResultsB(value){
                                 setZeros2(value.id_nuevo)+'</th>'+
                                 '<th class="bg-light-danger"><a class="nav-link guardaBes" data-id-rojo="'+value.id_nuevo+'"><img src="assets/img/send.svg" style="height:50px"></a></th>'+
                                 '<th class="bg-light-danger" colspan="7">'+formatDate2(value.fecha_registro)+'</th><th colspan="18" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr>'+
-                                '<th></th><th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th><th style="width:350px" >DESCRIPCIÓN</th><th style="width:70px" >UM</th>'+
+                                '<th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th><th style="width:350px" >DESCRIPCIÓN</th><th style="width:70px" >UM</th>'+
                                 '<th style="width:100px" >C</th><th style="width:150px" >COSTO<br>PZA</th><th style="width:100px" class="ivaClass">IVA</th><th style="width:100px" class="renglon10Class">RENGLON 10</th>'+
                                 '<th colspan="3" style="background:#bdd7ee">PRECIOS DEL 1 AL 3</th><th style="width:100px" colspan="3" class="margen1Class">MARGENES</th><th style="width:100px" >CÓDIGO</th><th style="width:350px" >DESCRIPCIÓN</th>'+
                                 '<th style="width:100px" >PAQUETE</th><th style="background:#bdd7ee" colspan="3">PRECIOS DEL 1 AL 3</th><th style="width:100px" colspan="3" class="margen2Class">MARGENES</th></tr></thead><tbody>';
@@ -1056,7 +1099,7 @@ function oldResultsB(value){
                     brojosArray[val.detalle] = arreid_rojo;
 
             oldsB +=    '<tr class="brojoTr brojoTr'+val.detalle+' bgensuc'+val.id_nuevo+'" data-id-rojo="'+val.detalle+'">'+
-                    '<td><button type="button" class="btn btn-outline-danger detBDel" data-id-rojo="'+val.detalle+'">NO MOSTRAR SUC. B´s</button>'+
+                    //'<td><button type="button" class="btn btn-outline-danger detBDel" data-id-rojo="'+val.detalle+'">NO MOSTRAR SUC. B´s</button>'+
                     '<button type="button" class="btn btn-danger detSure detSure'+val.detalle+'" data-id-rojo="'+val.detalle+'">¿Segur@?</button></td>'+
                     '<td>'+val.code1+'</td><td>'+val.code2+'</td><td>'+val.linea+'</td><td>'+val.desc1+'</td><td>'+val.unidad+'</td><td>'+
                     val.cantidad+'</td><td class="bpre4">'+formatMoney(costopz)+'</td>'+

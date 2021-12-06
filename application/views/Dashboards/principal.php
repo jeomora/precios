@@ -182,6 +182,14 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                             <i class="flaticon2-file"></i> EXCEL AJUSTES TODOS
                                         </a>
                                     </div>
+                                    <div class="col-xl-6">
+                                        <div class="dropzone dropzone-default dropzone-success" id="kt_dropzone_cuatro">
+                                            <div class="dropzone-msg dz-message needsclick">
+                                                <h3 class="dropzone-msg-title">SUBIR CAMBIOS</h3>
+                                                <span class="dropzone-msg-desc">Clic para seleccionar arhivo y/o arrastre el archivo excel.</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <h1 style="margin-top:30px;">AJUSTE DE PRECIOS</h1>
                                 <button class="btn btn-icon btn-success btn-lg mr-4 loadCambio">

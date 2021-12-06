@@ -1303,6 +1303,7 @@ class Uploads extends MY_Controller {
 					$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':W'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 					$this->excelfile->getActiveSheet()->getStyle('D'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 					$this->excelfile->getActiveSheet()->getStyle('AE'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+					$hoja->setCellValue("AG{$rws}", $value["id_rojo"]);
 				}
 
 				if( 2 == 2){
@@ -1365,8 +1366,9 @@ class Uploads extends MY_Controller {
 						$this->cellStyle('A'.$rws.':D'.$rws, "FFFF00", "000000", FALSE, 18, "Arial Narrow");
 					}elseif($value["estatus"] == 4){
 						$this->cellStyle('A'.$rws.':D'.$rws, "92D050", "000000", FALSE, 18, "Arial Narrow");
+						$hoja1->setCellValue("H{$rws}", "=AJUSTES!V".$rws)->getStyle("H{$rws}")->getNumberFormat()->setFormatCode("_(* #,##0.00_);_(* \(#,##0.00\);_(* \"-\"??_);_(@_)");//PRECIO 4 CAJA
 					}
-
+					$hoja1->setCellValue("AA{$rws}", "=AJUSTES!AG".$rws);
 					$this->excelfile->setActiveSheetIndex(0);
 				}
 				$this->excelfile->setActiveSheetIndex(0);
@@ -1466,6 +1468,7 @@ class Uploads extends MY_Controller {
 							$this->excelfile->getActiveSheet()->getStyle('S'.$rws.':W'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 							$this->excelfile->getActiveSheet()->getStyle('D'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 							$this->excelfile->getActiveSheet()->getStyle('AE'.$rws)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+							$hoja->setCellValue("AG{$rws}", $value["id_rojo"]);
 						}
 						
 
@@ -1541,6 +1544,7 @@ class Uploads extends MY_Controller {
 								$this->cellStyle('A'.$rws.':D'.$rws, "92D050", "000000", FALSE, 18, "Arial Narrow");
 								$this->cellStyle('W'.$rws.':Z'.$rws, "92D050", "000000", FALSE, 18, "Arial Narrow");
 							}
+							$hoja1->setCellValue("AA{$rws}", "=AJUSTES!AG".$rws);
 						}
 
 						$this->excelfile->setActiveSheetIndex(0);
@@ -1567,30 +1571,163 @@ class Uploads extends MY_Controller {
 		$rojos = $this->rojo_md->getRojos3();
 		$this->jsonResponse($rojos);
 	}
+
+	public function upload_cambios(){
+		$user = $this->session->userdata();
+		$this->load->library("excelfile");
+		ini_set("memory_limit", -1);
+		$file = $_FILES["file_excel"]["tmp_name"];
+		
+		$objExcel = PHPExcel_IOFactory::load($file);
+		$sheet = $objExcel->getSheet(0);
+		$num_rows = $sheet->getHighestDataRow();
+
+		$filen = "cambios".$user["id_usuario"]."x".date("dmyHis")."".rand(1000,9999);
+		$config['upload_path']          = './assets/uploads/cambios/';
+        $config['allowed_types']        = 'xlsx|xls';
+        $config['max_size']             = 10000;
+        $config['max_width']            = 10024;
+        $config['max_height']           = 7608;
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        $new_existencias = FALSE;
+        $this->upload->do_upload('file_excel',$filen);
+
+        $new_cambio = [
+			"accion" => "Sube Cambios",
+			"antes" => "".$filen,
+			"id_usuario" => $user["id_usuario"]
+		];
+		$cambio = $this->cambio_md->insert($new_cambio);
+		$mensaje = "Archivo invalido";
+		$id_nuevo = 0;
+		$flag = 1;
+		for ($i=4; $i<=$num_rows; $i++) {
+			if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  "){
+				if ($flag == 1) {
+					$flag++;
+					$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"] ]);//GET NEW ID
+				}
+				
+				$id_rojo = $this->rojo_md->get(NULL, ["id_rojo"=>$this->getOldVal($sheet,$i,"AG")] );
+				$rojo = 1;
+				if($id_rojo){
+					$rojo = $id_rojo[0]->id_rojo;
+					if($id_rojo[0]->estatus == 1){
+						$this->rojo_md->update(["estatus"=>2],["id_rojo"=>$id_rojo[0]->id_rojo]);
+					}elseif($id_rojo[0]->estatus == 4){
+						$this->rojo_md->update(["estatus"=>7],["id_rojo"=>$id_rojo[0]->id_rojo]);
+					}elseif($id_rojo[0]->estatus == 5){
+						$this->rojo_md->update(["estatus"=>8],["id_rojo"=>$id_rojo[0]->id_rojo]);
+					}
+				}
+
+
+				$new_rojo=[
+					"id_nuevo"		=>	$id_nuevo,
+					"id_rojo"		=>	$rojo,
+					"code1"			=>	$this->getOldVal($sheet,$i,"A"),
+					"code2"			=>	$this->getOldVal($sheet,$i,"B"),
+					"linea"			=>	$this->getOldVal($sheet,$i,"C"),
+					"desc1"			=>	$this->getOldVal($sheet,$i,"D"),
+					"unidad"		=>	$this->getOldVal($sheet,$i,"E"),
+					"code3"			=>	$this->getOldVal($sheet,$i,"AC"),
+					"desc2"			=>	$this->getOldVal($sheet,$i,"AE"),
+					"cantidad"		=>	$this->getOldVal($sheet,$i,"F"),
+					"costo"			=>	$this->getOldVal($sheet,$i,"G"),
+					"iva"			=>	$this->getOldVal($sheet,$i,"H"),
+					"mar1"			=>	$this->getOldVal($sheet,$i,"Z"),
+					"mar2"			=>	$this->getOldVal($sheet,$i,"Y"),
+					"mar3"			=>	$this->getOldVal($sheet,$i,"Z"),
+					"mar4"			=>	$this->getOldVal($sheet,$i,"AA"),
+					"mar11"			=>	$this->getOldVal($sheet,$i,"O"),
+					"mar22"			=>	$this->getOldVal($sheet,$i,"P"),
+					"mar33"			=>	$this->getOldVal($sheet,$i,"Q"),
+					"mar44"			=>	$this->getOldVal($sheet,$i,"R"),
+					"pre1"			=>	$this->getOldVal($sheet,$i,"S"),
+					"pre2"			=>	$this->getOldVal($sheet,$i,"T"),
+					"pre3"			=>	$this->getOldVal($sheet,$i,"U"),
+					"pre4"			=>	$this->getOldVal($sheet,$i,"V"),
+					"pre5"			=>	$this->getOldVal($sheet,$i,"W"),
+					"pre11"			=>	$this->getOldVal($sheet,$i,"J"),
+					"pre22"			=>	$this->getOldVal($sheet,$i,"K"),
+					"pre33"			=>	$this->getOldVal($sheet,$i,"L"),
+					"pre44"			=>	$this->getOldVal($sheet,$i,"M"),
+					"pre55"			=>	$this->getOldVal($sheet,$i,"N"),
+					"costopz"		=>	($this->getOldVal($sheet,$i,"N")-0.01),
+				];
+
+				$this->det_md->insert($new_rojo);
+				
+				$mensaje = "NO SE REGISTRARON SUC B";
+			}
+		}
+
+		$sheet = $objExcel->getSheet(1);
+		$num_rows = $sheet->getHighestDataRow();
+
+		for ($i=4; $i<=$num_rows; $i++) {
+			if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  "){
+				if($id_nuevo == 0){
+					if ($flag == 1) {
+						$flag++;
+						$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"] ]);//GET NEW ID
+					}
+				}
+				$id_rojo = $this->rojo_md->get(NULL, ["id_rojo"=>$this->getOldVal($sheet,$i,"AA")] );
+				$rojo = 1;
+				if($id_rojo){
+					$rojo = $id_rojo[0]->id_rojo;
+					if($id_rojo[0]->estatus == 1){
+						$this->rojo_md->update(["estatus"=>2],["id_rojo"=>$id_rojo[0]->id_rojo]);
+					}elseif($id_rojo[0]->estatus == 4){
+						$this->rojo_md->update(["estatus"=>7],["id_rojo"=>$id_rojo[0]->id_rojo]);
+					}elseif($id_rojo[0]->estatus == 5){
+						$this->rojo_md->update(["estatus"=>8],["id_rojo"=>$id_rojo[0]->id_rojo]);
+					}
+				}
+
+
+				$new_rojo=[
+					"id_nuevo"		=>	$id_nuevo,
+					"id_rojo"		=>	$rojo,
+					"code1"			=>	$this->getOldVal($sheet,$i,"A"),
+					"code2"			=>	$this->getOldVal($sheet,$i,"B"),
+					"linea"			=>	$this->getOldVal($sheet,$i,"C"),
+					"desc1"			=>	$this->getOldVal($sheet,$i,"D"),
+					"unidad"		=>	$this->getOldVal($sheet,$i,"E"),
+					"code3"			=>	$this->getOldVal($sheet,$i,"W"),
+					"desc2"			=>	$this->getOldVal($sheet,$i,"Y"),
+					"cantidad"		=>	$this->getOldVal($sheet,$i,"F"),
+					"costo"			=>	$this->getOldVal($sheet,$i,"H"),
+					"iva"			=>	$this->getOldVal($sheet,$i,"G"),
+					"mar1"			=>	$this->getOldVal($sheet,$i,"S"),
+					"mar2"			=>	$this->getOldVal($sheet,$i,"T"),
+					"mar3"			=>	$this->getOldVal($sheet,$i,"U"),
+					
+					"mar11"			=>	$this->getOldVal($sheet,$i,"M"),
+					"mar22"			=>	$this->getOldVal($sheet,$i,"N"),
+					"mar33"			=>	$this->getOldVal($sheet,$i,"O"),
+					
+					"pre1"			=>	$this->getOldVal($sheet,$i,"P"),
+					"pre2"			=>	$this->getOldVal($sheet,$i,"Q"),
+					"pre3"			=>	$this->getOldVal($sheet,$i,"R"),
+					
+					"pre11"			=>	$this->getOldVal($sheet,$i,"J"),
+					"pre22"			=>	$this->getOldVal($sheet,$i,"K"),
+					"pre33"			=>	$this->getOldVal($sheet,$i,"L"),
+					
+					"costopz"		=>	($this->getOldVal($sheet,$i,"L")-0.01),
+				];
+
+				$this->newb_md->insert($new_rojo);
+				
+				$mensaje = "DATOS REGISTRADOS";
+			}
+		}
+
+		
+		$this->jsonResponse($mensaje);
+	}
 }
 
-
-/*$this->excelfile->setActiveSheetIndex(0);
-$this->excelfile->getActiveSheet()->getStyle('A4'.':AF'.($rws-1))->applyFromArray($styleArray);
-$this->excelfile->getActiveSheet()->getStyle('J4'.':N'.($rws-1))->getAlignment()->setIndent(1);
-$this->excelfile->getActiveSheet()->getStyle('S4'.':AF'.($rws-1))->getAlignment()->setIndent(1);
-$this->excelfile->getActiveSheet()->getStyle('A4'.':AF'.($rws-1))->getActiveSheet()->getRowDimension('1')->setRowHeight(60);
-$this->excelfile->getActiveSheet()->getStyle('A4'.':AF'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-$this->excelfile->getActiveSheet()->getStyle('A4'.':B'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-$this->excelfile->getActiveSheet()->getStyle('AB4:AB'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-$this->excelfile->getActiveSheet()->getStyle('G4:G'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-$this->excelfile->getActiveSheet()->getStyle('J4'.':N'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-$this->excelfile->getActiveSheet()->getStyle('S4'.':W'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-$this->excelfile->getActiveSheet()->getStyle('D4:D'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-$this->excelfile->getActiveSheet()->getStyle('AE4:AE'.($rws-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-$this->cellStyle('C4:C'.($rws-1), "FFFFFF", "000000", TRUE, 16, "Arial Narrow");
-$this->cellStyle('D4:D'.($rws-1), "FFFFFF", "000000", FALSE, 16, "Arial Narrow");
-$this->cellStyle('E4:E'.($rws-1), "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-$this->cellStyle('H4:H'.($rws-1), "FFCC66", "000000", TRUE, 18, "Arial Narrow");
-$this->cellStyle('I4:I'.($rws-1), "FFA887", "000000", TRUE, 18, "Arial Narrow");
-$this->cellStyle('J4'.':M'.($rws-1), "FFFFFF", "000000", FALSE, 18, "Arial Narrow");
-$this->cellStyle('O4'.":R".($rws-1), "DAEEF3", "000000", FALSE, 18, "Arial Narrow");
-$this->cellStyle('X4'.":AA".($rws-1), "DAEEF3", "000000", FALSE, 18, "Arial Narrow");
-$this->cellStyle('N4:N'.($rws-1), "CC99FF", "000000", FALSE, 18, "Arial Narrow");
-$this->cellStyle('AB4:AB'.($rws-1), "8DB4E2", "000000", TRUE, 18, "Arial Narrow");
-$this->cellStyle('A4:AF'.($rws-1), "FFFFFF", "000000", FALSE, 16, "Arial Narrow");*/
