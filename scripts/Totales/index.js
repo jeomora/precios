@@ -217,7 +217,7 @@ var myDropzoneCambios  = new Dropzone("div#kt_dropzone_cuatro", {
         }else{
             toastr.success("Se cargarón correctamente los datos","Listo");
         }
-        getMeNews();
+        location.reload();
     }
 });
 

@@ -38,7 +38,7 @@ class Nuevos_model extends MY_Model {
 			,nd.mar2,nd.mar3,nd.mar4,nd.mar11,nd.mar22,nd.mar33,nd.mar44,nd.pre1,nd.pre2,nd.pre3,nd.pre4,nd.pre5,nd.pre11,nd.pre22,nd.pre33,nd.pre44,nd.pre55,nd.costopz,nd.matriz,u.nombre,l.estatus as listo,nb.code1 as code1b,nb.code2 as code2b,nb.code3 as code3b,nb.desc1 as desc1b,nb.desc2 as desc2b,nb.unidad as unidadb,nb.cantidad as cantidadb,nb.costo as costob,nb.iva as ivab,nb.mar1 as mar1b,nb.mar2 as mar2b,nb.mar3 as mar3b,nb.mar11 as mar11b,nb.mar22 as mar22b,nb.mar33 as mar33b,nb.pre1 as pre1b,nb.pre2 as pre2b,nb.pre3 as pre3b,nb.pre11 as pre11b,nb.pre22 as pre22b,nb.pre33 as pre33b,nb.costo as costopzb,nb.matriz as matrizb,nb.linea as lineab,nd.estatus as estatusa,nd.estatusb,n.suca, n.sucb")
 			->from("nuevos n")
 			->join("nuevo_detail nd","n.id_nuevo = nd.id_nuevo","left")
-			->join("nuevo_b nb","nd.id_detail = nb.detalle and nb.estatus <> 0","left")
+			->join("nuevo_b nb","n.id_nuevo= nb.id_nuevo and nb.estatus <> 0","left")
 			->join("usuarios u","n.agrego = u.id_usuario" ,"left") 
 			->join("listos l","nd.id_detail = l.id_detalle AND l.estatus = 1 AND l.id_sucursal = ".$user["id_sucursal"]."" ,"left") 
 			->where("n.estatus = 1")
