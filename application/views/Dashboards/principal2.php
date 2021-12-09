@@ -67,8 +67,15 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                 <div class="col-xl-12">
                     <ul class="nav nav-pills"  role="tablist">
                         <li class="nav-item mb-2">
-                            <a class="nav-link active" id="sucursal-tab-uno" data-toggle="tab" href="#store-uno">
-                                <span class="nav-text">AJUSTE DE <br>PRECIOS
+                            <a class="nav-link active" id="sucursal-tab-excel" data-toggle="tab" href="#store-excel">
+                                <span class="nav-text">EXCEL <br>PRECIOS
+
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a class="nav-link" id="sucursal-tab-uno" data-toggle="tab" href="#store-uno">
+                                <span class="nav-text">CALCULAR <br>PRECIOS
                                     <span class="fechaUpload">
                                         
                                     </span>
@@ -78,7 +85,7 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                         <li class="nav-item mb-2">
                             <a class="nav-link" id="sucursal-tab-oferta" data-toggle="tab" href="#store-oferta">
                                 <span class="nav-text">
-                                    AGREGAR <br> OFERTAS
+                                    AGREGAR <br>OFERTAS
                                 </span>
                                 <span>
                                     
@@ -109,16 +116,6 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                             </a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a class="nav-link" id="sucursal-tab-oferta" data-toggle="tab" href="#store-oferta">
-                                <span class="nav-text">
-                                    COMPARACIÓN <br> PRECIOS
-                                </span>
-                                <span>
-                                    
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item mb-2">
                             <a class="nav-link" id="sucursal-tab-4" data-toggle="tab" href="#store-sua" aria-controls="sucursal">
                                 <span class="nav-text">SUCURSALES <br>A   <br>
                                     <span class="fechaUpload">
@@ -141,12 +138,49 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                 <div class="col-xl-12">
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-content" id="myTabContent1" style="overflow-x:hidden;">
-                            <div class="tab-pane fade active show rowScroll" id="store-uno" role="tabpanel" aria-labelledby="store-tab-uno"  ><!-- MATRICIAL -->
-                                <h1 style="margin-top:30px;">AJUSTE DE PRECIOS</h1>
-                                <h6 style="margin-top:30px;" class="lastAjuste">ÚLTIMO AJUSTE : </h6>
-                                <div class="row col-xl-12 dropRow" style="padding-bottom:20px;height:50rem;">
+                            <div class="tab-pane fade active show rowScroll" id="store-excel" role="tabpanel" aria-labelledby="store-tab-excel"  ><!-- MATRICIAL -->
+                                <!--begin::Row-->
+                                <h1 style="">SUBIR EXCEL CON PRECIOS</h1>
+                                <!--begin::Row-->
+                                <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
+                                    <div class="col-xl-2">
+                                        <a href="assets/uploads/templates/edicion.xlsx" class="btn btn-text-warning btn-icon-warning font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #FFA800;border:1px solid #FFA800;padding:20px;">
+                                            <i class="flaticon2-file"></i> PLANTILLA <br>CAMBIO DE DESCRIPCIÓN
+                                        </a>
+                                    </div>
+                                    <div class="col-xl-2">
+                                        <a href="Compras/plantillaSin" class="btn btn-text-primary btn-icon-primary font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #F64E60;border:1px solid #F64E60;padding:20px;">
+                                            <i class="flaticon2-file"></i> PLANTILLA <br>AJUSTE DE PRECIOS
+                                        </a>
+                                    </div>
+                                    <div class="col-xl-2">
+                                        <a href="assets/uploads/templates/altas.xlsx" class="btn btn-text-success btn-icon-success font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #1BC5BD;border:1px solid #1BC5BD;padding:20px;">
+                                            <i class="flaticon2-file"></i> PLANTILLA <br>ALTA DE PRODUCTOS
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="dropzone dropzone-default dropzone-success" id="kt_dropzone_tres">
+                                            <div class="dropzone-msg dz-message needsclick">
+                                                <h3 class="dropzone-msg-title">SUBIR ARCHIVO EXCEL</h3>
+                                                <span class="dropzone-msg-desc">Clic para seleccionar arhivo y/o arrastre el archivo excel.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Row-->
+                            </div>
+                            <div class="tab-pane fade rowScroll" id="store-uno" role="tabpanel" aria-labelledby="store-tab-uno"  ><!-- MATRICIAL -->
+                                <h1 style="">DESCARGAR AJUSTES DE PRECIOS</h1>
+                                <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
                                     <div class="col-xl-3">
-                                        
+                                        <a href="Uploads/rojosCalc/1" class="btn btn-text-success btn-icon-success font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #1BC5BD;border:1px solid #1BC5BD;padding:20px;">
+                                            <i class="flaticon2-file"></i> EXCEL AJUSTES VERO
+                                        </a>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <a href="Uploads/rojosCalc/0" class="btn btn-text-info btn-icon-info font-weight-bold btn-hover-bg-light mr-3" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #8950FC;border:1px solid #8950FC;padding:20px;">
+                                            <i class="flaticon2-file"></i> EXCEL AJUSTES TODOS
+                                        </a>
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="dropzone dropzone-default dropzone-success" id="kt_dropzone_cuatro">
@@ -157,7 +191,153 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                         </div>
                                     </div>
                                 </div>
+                                <h1 style="margin-top:30px;">AJUSTE DE PRECIOS</h1>
+                                <button class="btn btn-icon btn-success btn-lg mr-4 loadCambio">
+                                    <i class="flaticon2-arrow-1"></i>
+                                </button>
+                                <button class="btn btn-icon btn-danger btn-lg mr-4 hideCambio">
+                                    <i class="flaticon2-size"></i>
+                                </button>
+                                <!--begin::Row-->
+                                <div class="row col-xl-12 tableFixHead" style="padding-bottom:20px;height:50rem;">
+                                    <table class="table table-bordered" style="text-align:center;">
+                                        <thead>
+                                            <tr class="bg-light-success">
+                                                <th colspan="6" style="padding:0;background:white">
+                                                    <button type="button" class="btn btn-outline-success btn-lg btn-block btn-show-rojos" style="border-radius:0;">
+                                                        
+                                                    </button>
+                                                </th>
+                                                <th colspan="5">
+                                                    <?php echo $fecha ?>
+                                                </th>
+                                                <th colspan="23" style="background:rgb(255,51,51);color:#FFF;text-align:left;">
+                                                    AJUSTES
+                                                </th>
+                                            </tr>
+                                            <tr class="bg-light-success">
+                                                <th style="width:70px;background: #C9F7F5 !important;">MOSTRAR</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">COMPRAS</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">CÓDIGO</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">RENGLON 18</th>
+                                                <th style="width:50px;background: #C9F7F5 !important;">LIN</th>
+                                                <th style="width:350px;background: #C9F7F5 !important;">DESCRIPCIÓN</th>
+                                                <th style="width:50px;background: #C9F7F5 !important;">UM</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">C</th>
+                                                <th style="width:150px;background: #C9F7F5 !important;">PAQUETE</th>
+                                                <th style="width:100px" class="ivaClass">IVA</th>
+                                                <th style="width:100px" class="renglon10Class">RENGLON 10</th>
+                                                <th style="width:100px" colspan="4" class="margen1Class">MARGENES</th>
+                                                <th colspan="5" style="background: #C9F7F5 !important;">PRECIOS DEL 1 AL 5</th>
+                                                <th style="width:100px" colspan="4" class="margen2Class">MARGENES</th>
+                                                <th colspan="5" style="background: #C9F7F5 !important;">PRECIOS DEL 1 AL 5</th>
+                                                <th style="width:100px;background:#000 !important;color:#FFF !important;">UM * 4 PZ</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">CÓDIGO</th>
+                                                <th style="width:70px;background: #C9F7F5 !important;">LIN</th>
+                                                <th style="width:350px;background: #C9F7F5 !important;">DESCRIPCIÓN</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="bodySucA">
+                                            <!--<tr style="height:200px">
+                                                <td colspan="17" style="padding:0;height:200px;border-top:0 !important;">
+                                                    <img src="assets/img/loading<?php echo rand(2, 6); ?>.gif" style="height:100%">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="17" style="height:200px;font-size:30px;line-height:200px;font-weight:bold;border-bottom:0 !important;">
+                                                    CARGANDO, POR FAVOR ESPERE.
+                                                </td>
+                                            </tr>-->
+                                        </tbody>
+                                    </table>
+                                </div>
 
+                                <h1 style="margin-top:30px;">ALTA DE PRODUCTOS</h1>
+                                <button class="btn btn-icon btn-success btn-lg mr-4 loadAlta">
+                                    <i class="flaticon2-arrow-1"></i>
+                                </button>
+                                <button class="btn btn-icon btn-danger btn-lg mr-4 hideAlta">
+                                    <i class="flaticon2-size"></i>
+                                </button>
+
+                                <div class="row col-xl-12 altes tableFixHead">
+                                    <table class="table table-bordered" style="text-align:center;">
+                                        <thead>
+                                            <tr class="bg-light-info" >
+                                                <th colspan="4" style="padding:0;background:white">
+                                                    <button type="button" class="btn btn-outline-info btn-lg btn-block btn-show-rojos" style="border-radius:0;">
+                                                        
+                                                    </button>
+                                                </th>
+                                                <th colspan="3">
+                                                    <?php echo $fecha ?>
+                                                </th>
+                                                <th colspan="3" class="thAsoc">
+                                                    PRODUCTO ASOCIADO
+                                                </th>
+                                                <th colspan="22" class="bg-info text-white" style="text-align:left">
+                                                    ALTA DE PRODUCTO
+                                                </th>
+                                            </tr>
+                                            <tr class="bg-light-info" >
+                                                <th style="width:70px;background: #C9F7F5 !important;">MOSTRAR</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">COMPRAS</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">CÓDIGO</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">LIN</th>
+                                                <th style="width:350px;background: #C9F7F5 !important;">DESCRIPCIÓN</th>
+                                                <th style="width:100px;background: #C9F7F5 !important;">CANT</th>
+                                                <th style="width:150px;background: #C9F7F5 !important;">PAQUETE</th>
+                                                <th style="width:90px;background: #C9F7F5 !important;" class="thAsoc">LINEA</th>
+                                                <th style="width:90px;background: #C9F7F5 !important;" class="thAsoc">CÓD</th>
+                                                <th style="width:350px;background: #C9F7F5 !important;" class="thAsoc">DESCR</th>
+                                                <th style="width:100px" class="ivaClass">IVA</th>
+                                                <th style="width:100px" class="renglon10Class">RENGLON 10</th>
+                                                <th colspan="5" style="background: #C9F7F5 !important;">PRECIOS DEL 1 AL 5</th>
+                                                <th style="width:100px" colspan="4" class="margen1Class">MARGENES</th>
+                                                <th style="width:180px">CÓDIGO</th>
+                                                <th style="width:350px">DESCRIPCIÓN</th>
+                                                <th style="" colspan="5">PRECIOS DEL 1 AL 5</th>
+                                                <th style="width:100px" colspan="4" class="margen2Class">MARGENES</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="altasBody">
+                                            <!--<tr>
+                                                <td colspan="15" style="font-size:24px;padding:0">
+                                                    <img src="assets/img/loading5.gif" style="width:90px">CARGANDO ALTAS DE PRODICTOS <img src="assets/img/loading5.gif" style="width:90px">
+                                                </td>
+                                            </tr>-->
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h1 style="margin-top:30px;">EDITAR DESCRIPCIONES</h1>
+                                <button class="btn btn-icon btn-success btn-lg mr-4 loadDesco">
+                                    <i class="flaticon2-arrow-1"></i>
+                                </button>
+                                <button class="btn btn-icon btn-danger btn-lg mr-4 hideDesco">
+                                    <i class="flaticon2-size"></i>
+                                </button>
+                                <div class="row col-xl-1"></div>
+                                <div class="row col-xl-10 descos">
+                                    <table class="table table-bordered" style="text-align:center;">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th width="10%">CAMBIAR</th>
+                                                <th width="15%">COMPRAS</th>
+                                                <th width="25%">CÓDIGO</th>
+                                                <th width="25%">NUEVA DESCRIPCIÓN</th>
+                                                <th width="25%">DESCRIPCIÓN ANTERIOR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="descosBody">
+                                            <!--<tr>
+                                                <td colspan="4" style="font-size:24px;padding:0">
+                                                    <img src="assets/img/loading1.gif" style="width:90px">CARGANDO NUEVAS DESCRIPCIONES <img src="assets/img/loading1.gif" style="width:90px">
+                                                </td>
+                                            </tr>-->
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
 
@@ -197,6 +377,7 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                     <!--<button type="button" class="btn btn-success btn-shadow-hover font-weight-bold mr-2"  data-toggle="modal" data-target="#kt_modal_oferta">
                                         AGREGAR OFERTA
                                     </button>-->
+
                                     <a href="assets/uploads/ofertas frutas.xlsx" class="btn btn-warning btn-shadow-hover font-weight-bold mr-2">
                                         PLANTILLA FRUTAS
                                     </a>
@@ -293,9 +474,11 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                                         <th style="width:100px" class="ivaClass">IVA</th>
                                                         <th style="width:100px" class="renglon10Class">RENGLON 10</th>
                                                         <th colspan="5">PRECIOS DEL 1 AL 5</th>
+                                                        <th style="width:100px" colspan="4" class="margen1Class">MARGENES</th>
                                                         <th style="width:100px" >CÓDIGO</th>
                                                         <th style="width:350px" >DESCRIPCIÓN</th>
                                                         <th style="" colspan="5">PRECIOS DEL 1 AL 5</th>
+                                                        <th style="width:100px" colspan="4" class="margen2Class">MARGENES</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -315,6 +498,10 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                                             <td><?php echo number_format($val["pre33"],2,".",",") ?></td>
                                                             <td><?php echo number_format($val["pre44"],2,".",",") ?></td>
                                                             <td><?php echo number_format(($val["costo"]+0.01),2,".",",") ?></td>
+                                                            <td class="margen1Class"><?php echo $val["mar11"] ?></td>
+                                                            <td class="margen1Class"><?php echo $val["mar22"] ?></td>
+                                                            <td class="margen1Class"><?php echo $val["mar33"] ?></td>
+                                                            <td class="margen1Class"><?php echo $val["mar44"] ?></td>
                                                             <td><?php echo $val["code3"] ?></td>
                                                             <td><?php echo $val["desc2"] ?></td>
                                                             <td><?php echo number_format($val["pre1"],2,".",",") ?></td>
@@ -322,6 +509,10 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                                             <td><?php echo number_format($val["pre3"],2,".",",") ?></td>
                                                             <td><?php echo number_format($val["pre4"],2,".",",") ?></td>
                                                             <td><?php echo number_format($val["costopz"],2,".",",") ?></td>
+                                                            <td class="margen2Class"><?php echo $val["mar1"] ?></td>
+                                                            <td class="margen2Class"><?php echo $val["mar2"] ?></td>
+                                                            <td class="margen2Class"><?php echo $val["mar3"] ?></td>
+                                                            <td class="margen2Class"><?php echo $val["mar4"] ?></td>
                                                         </tr>
                                                     <?php endif;endforeach; ?>
                                                 </tbody>
@@ -426,3 +617,77 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
     </div>
 </div>
 <!--end::Modal-->
+
+<!--begin::Modal AGREGAR OFERTAS  
+<div class="modal fade" id="kt_modal_oferta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">AGREGAR OFERTAS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row col-xl-12">
+                    <div class="form-group col-xl-12">
+                        <label class="col-xl-1 col-form-label"></label>
+                        <div class="col-xl-10 col-form-label">
+                            <div class="radio-inline">
+                                <label class="radio">
+                                    <input type="radio" name="radios1"/>
+                                    <span></span>MIÉRCOLES
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="radios1"/>
+                                    <span></span>JUEVES
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="radios1"/>
+                                    <span></span>FIN DE SEMANA
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="radios1"/>
+                                    <span></span>JUEVES A MIÉRCOLES
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="radios1"/>
+                                    <span></span>SELECCIONAR RANGO DE FECHAS
+                                </label>
+                            </div>
+                            <span class="form-text text-muted">SELECCIONE UNA DE LAS OPCIONES</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="form-group col-6">
+                        <label>PRODUCTO <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control"  placeholder="Buscar producto" name="ofproducto" />
+                        <span class="form-text text-muted">La lista de productos se empezara a mostrar a partir de la tercer letra</span>
+                    </div>
+                    <div class="form-group col-2">
+                        <label>OFERTA <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control"  placeholder="$" name="ofoferta" />
+                        <span class="form-text text-muted">Precio de la oferta</span>
+                    </div>
+                    <div class="form-group col-2">
+                        <label>MAXIMO <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control"  placeholder="MAX" name="ofmaximo" />
+                        <span class="form-text text-muted">Restricción de la oferta</span>
+                    </div>
+                    <div class="form-group col-2" style="padding-top:20px;">                        
+                        <button class="btn btn-icon btn-success btn-lg mr-4">
+                            <i class="icon-2x text-white flaticon2-add-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success change_row">EDITAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+end::Modal-->

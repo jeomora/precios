@@ -299,6 +299,7 @@ class Uploads extends MY_Controller {
 								if($pieza) {
 									$this->pack_md->update(["estatus"=>0],["estatus"=>1,"id_caja"=>$hayCaja[0]->id_producto,"id_pieza"=>$pieza[0]->id_producto]);
 									$this->pack_md->insert([ "estatus"=>1,"id_caja"=>$hayCaja[0]->id_producto,"id_pieza"=>$pieza[0]->id_producto,"cantidad"=>$canpz ]);
+									$this->prod_md->update(["unidad"=>$canpz],["id_producto"=>$pieza[0]->id_producto]);
 								}
 							}
 						}
@@ -516,6 +517,16 @@ class Uploads extends MY_Controller {
 
 	public function getNuevos(){
 		$rojos = $this->new_md->getRojos(NULL);
+		$this->jsonResponse($rojos);
+	}
+
+	public function getNuevosA(){
+		$rojos = $this->new_md->getRojos(NULL);
+		$this->jsonResponse($rojos);
+	}
+
+	public function getNuevosB(){
+		$rojos = $this->new_md->getRojosB(NULL);
 		$this->jsonResponse($rojos);
 	}
 
@@ -1593,141 +1604,169 @@ class Uploads extends MY_Controller {
         $new_existencias = FALSE;
         $this->upload->do_upload('file_excel',$filen);
 
-        $new_cambio = [
-			"accion" => "Sube Cambios",
-			"antes" => "".$filen,
-			"id_usuario" => $user["id_usuario"]
-		];
-		$cambio = $this->cambio_md->insert($new_cambio);
+        
 		$mensaje = "Archivo invalido";
 		$id_nuevo = 0;
 		$flag = 1;
-		for ($i=4; $i<=$num_rows; $i++) {
-			if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  "){
-				if ($flag == 1) {
-					$flag++;
-					$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"suca"=>1,"sucb"=>1 ]);//GET NEW ID
-				}
-				
-				$id_rojo = $this->rojo_md->get(NULL, ["id_rojo"=>$this->getOldVal($sheet,$i,"AG")] );
-				$rojo = 1;
-				if($id_rojo){
-					$rojo = $id_rojo[0]->id_rojo;
-					if($id_rojo[0]->estatus == 1){
-						$this->rojo_md->update(["estatus"=>2],["id_rojo"=>$id_rojo[0]->id_rojo]);
-					}elseif($id_rojo[0]->estatus == 4){
-						$this->rojo_md->update(["estatus"=>7],["id_rojo"=>$id_rojo[0]->id_rojo]);
-					}elseif($id_rojo[0]->estatus == 5){
-						$this->rojo_md->update(["estatus"=>8],["id_rojo"=>$id_rojo[0]->id_rojo]);
-					}
-				}
-
-
-				$new_rojo=[
-					"id_nuevo"		=>	$id_nuevo,
-					"id_rojo"		=>	$rojo,
-					"code1"			=>	$this->getOldVal($sheet,$i,"A"),
-					"code2"			=>	$this->getOldVal($sheet,$i,"B"),
-					"linea"			=>	$this->getOldVal($sheet,$i,"C"),
-					"desc1"			=>	$this->getOldVal($sheet,$i,"D"),
-					"unidad"		=>	$this->getOldVal($sheet,$i,"E"),
-					"code3"			=>	$this->getOldVal($sheet,$i,"AC"),
-					"desc2"			=>	$this->getOldVal($sheet,$i,"AE"),
-					"cantidad"		=>	$this->getOldVal($sheet,$i,"F"),
-					"costo"			=>	$this->getOldVal($sheet,$i,"G"),
-					"iva"			=>	$this->getOldVal($sheet,$i,"H"),
-					"mar1"			=>	$this->getOldVal($sheet,$i,"Z"),
-					"mar2"			=>	$this->getOldVal($sheet,$i,"Y"),
-					"mar3"			=>	$this->getOldVal($sheet,$i,"Z"),
-					"mar4"			=>	$this->getOldVal($sheet,$i,"AA"),
-					"mar11"			=>	$this->getOldVal($sheet,$i,"O"),
-					"mar22"			=>	$this->getOldVal($sheet,$i,"P"),
-					"mar33"			=>	$this->getOldVal($sheet,$i,"Q"),
-					"mar44"			=>	$this->getOldVal($sheet,$i,"R"),
-					"pre1"			=>	$this->getOldVal($sheet,$i,"S"),
-					"pre2"			=>	$this->getOldVal($sheet,$i,"T"),
-					"pre3"			=>	$this->getOldVal($sheet,$i,"U"),
-					"pre4"			=>	$this->getOldVal($sheet,$i,"V"),
-					"pre5"			=>	$this->getOldVal($sheet,$i,"W"),
-					"pre11"			=>	$this->getOldVal($sheet,$i,"J"),
-					"pre22"			=>	$this->getOldVal($sheet,$i,"K"),
-					"pre33"			=>	$this->getOldVal($sheet,$i,"L"),
-					"pre44"			=>	$this->getOldVal($sheet,$i,"M"),
-					"pre55"			=>	$this->getOldVal($sheet,$i,"N"),
-					"costopz"		=>	($this->getOldVal($sheet,$i,"N")-0.01),
-				];
-
-				$this->det_md->insert($new_rojo);
-				
-				$mensaje = "NO SE REGISTRARON SUC B";
-			}
-		}
-
-		$sheet = $objExcel->getSheet(1);
-		$num_rows = $sheet->getHighestDataRow();
-
-		for ($i=4; $i<=$num_rows; $i++) {
-			if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  "){
-				if($id_nuevo == 0){
+		/*if ( $this->getOldVal($sheet,4,"J") == "PRECIOS DEL 1 AL 5" || $this->getOldVal($sheet,5,"J") == "PRECIOS DEL 1 AL 5") {
+			for ($i=4; $i<=$num_rows; $i++) {
+				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO PRINCIPAL"){
 					if ($flag == 1) {
 						$flag++;
-						$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"suca"=>1,"sucb"=>1 ]);//GET NEW ID
+						$nuevoid = $this->new_md->get(NULL,["suca"=>0]);
+						if($nuevoid){
+							$this->new_md->update(["suca"=>1 ],["id_nuevo"=>$nuevoid[0]->id_nuevo]);//GET NEW ID
+							$id_nuevo = $nuevoid[0]->id_nuevo;
+						}else{
+							$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"suca"=>1 ]);//GET NEW ID
+						}
 					}
-				}
-				$id_rojo = $this->rojo_md->get(NULL, ["id_rojo"=>$this->getOldVal($sheet,$i,"AA")] );
-				$rojo = 1;
-				if($id_rojo){
-					$rojo = $id_rojo[0]->id_rojo;
-					if($id_rojo[0]->estatus == 1){
-						$this->rojo_md->update(["estatus"=>2],["id_rojo"=>$id_rojo[0]->id_rojo]);
-					}elseif($id_rojo[0]->estatus == 4){
-						$this->rojo_md->update(["estatus"=>7],["id_rojo"=>$id_rojo[0]->id_rojo]);
-					}elseif($id_rojo[0]->estatus == 5){
-						$this->rojo_md->update(["estatus"=>8],["id_rojo"=>$id_rojo[0]->id_rojo]);
+					
+					$id_rojo = $this->rojo_md->get(NULL, ["codigo"=>$this->getOldVal($sheet,$i,"A")] );
+					if (!$id_rojo) {
+						$id_rojo = $this->rojo_md->get(NULL, ["codigo"=>$this->getOldVal($sheet,$i,"O")] );
 					}
+					$rojo = 1;
+					if($id_rojo){
+						$rojo = $id_rojo[0]->id_rojo;
+						if($id_rojo[0]->estatus == 1){
+							$this->rojo_md->update(["estatus"=>2],["id_rojo"=>$id_rojo[0]->id_rojo]);
+						}elseif($id_rojo[0]->estatus == 4){
+							$this->rojo_md->update(["estatus"=>7],["id_rojo"=>$id_rojo[0]->id_rojo]);
+						}elseif($id_rojo[0]->estatus == 5){
+							$this->rojo_md->update(["estatus"=>8],["id_rojo"=>$id_rojo[0]->id_rojo]);
+						}
+					}
+
+					$prodo = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"A"),"estatus"=>1]);
+					if ($prodo){
+						$prodo = $prodo[0]->codigo;
+					}else{
+						$this->getOldVal($sheet,$i,"A");
+					}
+					$prodo2 = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"O"),"estatus"=>1]);
+					if ($prodo2){
+						$prodo2 = $prodo2[0]->codigo;
+					}else{
+						$this->getOldVal($sheet,$i,"O");
+					}
+					$new_rojo[$i]=[
+						"id_nuevo"		=>	$id_nuevo,
+						"id_rojo"		=>	$rojo,
+						"code1"			=>	$prodo,
+						"code2"			=>	$this->getOldVal($sheet,$i,"B"),
+						"linea"			=>	$this->getOldVal($sheet,$i,"C"),
+						"desc1"			=>	$this->getOldVal($sheet,$i,"D"),
+						"unidad"		=>	$this->getOldVal($sheet,$i,"E"),
+						"code3"			=>	$prodo,
+						"desc2"			=>	$this->getOldVal($sheet,$i,"Q"),
+						"cantidad"		=>	$this->getOldVal($sheet,$i,"F"),
+						"costo"			=>	$this->getOldVal($sheet,$i,"G"),
+						"iva"			=>	$this->getOldVal($sheet,$i,"H"),
+						"pre1"			=>	$this->getOldVal($sheet,$i,"S"),
+						"pre2"			=>	$this->getOldVal($sheet,$i,"T"),
+						"pre3"			=>	$this->getOldVal($sheet,$i,"U"),
+						"pre4"			=>	$this->getOldVal($sheet,$i,"V"),
+						"pre5"			=>	$this->getOldVal($sheet,$i,"W"),
+						"pre11"			=>	$this->getOldVal($sheet,$i,"J"),
+						"pre22"			=>	$this->getOldVal($sheet,$i,"K"),
+						"pre33"			=>	$this->getOldVal($sheet,$i,"L"),
+						"pre44"			=>	$this->getOldVal($sheet,$i,"M"),
+						"pre55"			=>	$this->getOldVal($sheet,$i,"N"),
+						"rdiez"			=>	$this->getOldVal($sheet,$i,"I"),
+						"costopz"		=>	($this->getOldVal($sheet,$i,"N")-0.01),
+					];
+
+					$this->det_md->insert($new_rojo[$i]);
+					
+					$mensaje = "SE REGISTRARON SUC A";
 				}
+			}
+			$new_cambio = [
+				"accion" => "Sube Cambios A",
+				"antes" => "".$filen,
+				"id_usuario" => $user["id_usuario"]
+			];
+			$cambio = $this->cambio_md->insert($new_cambio);
+		}else{
+			for ($i=4; $i<=$num_rows; $i++) {
+				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO PRINCIPAL"){
+					if ($flag == 1) {
+						$flag++;
+						$nuevoid = $this->new_md->get(NULL,["sucb"=>0]);
+						if($nuevoid){
+							$this->new_md->update(["sucb"=>1 ],["id_nuevo"=>$nuevoid[0]->id_nuevo]);//GET NEW ID
+							$id_nuevo = $nuevoid[0]->id_nuevo;
+						}else{
+							$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"sucb"=>1 ]);//GET NEW ID
+						}
+					}
+					
+					$rojo = 1;
 
+					$prodo = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"A"),"estatus"=>1]);
+					if ($prodo){
+						$prodo = $prodo[0]->codigo;
+					}else{
+						$this->getOldVal($sheet,$i,"A");
+					}
+					$prodo2 = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"AD"),"estatus"=>1]);
+					if ($prodo2){
+						$prodo2 = $prodo2[0]->codigo;
+					}else{
+						$this->getOldVal($sheet,$i,"AD");
+					}
+					$new_rojo[$i]=[
+						"id_nuevo"		=>	$id_nuevo,
+						"id_rojo"		=>	$rojo,
+						"code1"			=>	$prodo,
+						"code2"			=>	$this->getOldVal($sheet,$i,"B"),
+						"linea"			=>	$this->getOldVal($sheet,$i,"C"),
+						"desc1"			=>	$this->getOldVal($sheet,$i,"D"),
+						"unidad"		=>	$this->getOldVal($sheet,$i,"E"),
+						"code3"			=>	$prodo2,
+						"desc2"			=>	$this->getOldVal($sheet,$i,"AF"),
+						"cantidad"		=>	$this->getOldVal($sheet,$i,"F"),
+						"costo"			=>	$this->getOldVal($sheet,$i,"H"),
+						"iva"			=>	$this->getOldVal($sheet,$i,"G"),
+						"pre11"			=>	$this->getOldVal($sheet,$i,"P"),
+						"pre22"			=>	$this->getOldVal($sheet,$i,"Q"),
+						"pre33"			=>	$this->getOldVal($sheet,$i,"R"),
+						"pre1"			=>	$this->getOldVal($sheet,$i,"AI"),
+						"pre2"			=>	$this->getOldVal($sheet,$i,"AJ"),
+						"pre3"			=>	$this->getOldVal($sheet,$i,"AK"),
+						"rdiez"			=>	$this->getOldVal($sheet,$i,"I"),
+						"costopz"		=>	$this->getOldVal($sheet,$i,"AH"),
+					];
 
-				$new_rojo=[
-					"id_nuevo"		=>	$id_nuevo,
-					"id_rojo"		=>	$rojo,
-					"code1"			=>	$this->getOldVal($sheet,$i,"A"),
-					"code2"			=>	$this->getOldVal($sheet,$i,"B"),
-					"linea"			=>	$this->getOldVal($sheet,$i,"C"),
-					"desc1"			=>	$this->getOldVal($sheet,$i,"D"),
-					"unidad"		=>	$this->getOldVal($sheet,$i,"E"),
-					"code3"			=>	$this->getOldVal($sheet,$i,"W"),
-					"desc2"			=>	$this->getOldVal($sheet,$i,"Y"),
-					"cantidad"		=>	$this->getOldVal($sheet,$i,"F"),
-					"costo"			=>	$this->getOldVal($sheet,$i,"H"),
-					"iva"			=>	$this->getOldVal($sheet,$i,"G"),
-					"mar1"			=>	$this->getOldVal($sheet,$i,"S"),
-					"mar2"			=>	$this->getOldVal($sheet,$i,"T"),
-					"mar3"			=>	$this->getOldVal($sheet,$i,"U"),
+					$this->newb_md->insert($new_rojo[$i]);
 					
-					"mar11"			=>	$this->getOldVal($sheet,$i,"M"),
-					"mar22"			=>	$this->getOldVal($sheet,$i,"N"),
-					"mar33"			=>	$this->getOldVal($sheet,$i,"O"),
-					
-					"pre1"			=>	$this->getOldVal($sheet,$i,"P"),
-					"pre2"			=>	$this->getOldVal($sheet,$i,"Q"),
-					"pre3"			=>	$this->getOldVal($sheet,$i,"R"),
-					
-					"pre11"			=>	$this->getOldVal($sheet,$i,"J"),
-					"pre22"			=>	$this->getOldVal($sheet,$i,"K"),
-					"pre33"			=>	$this->getOldVal($sheet,$i,"L"),
-					
-					"costopz"		=>	($this->getOldVal($sheet,$i,"L")-0.01),
-				];
-
-				$this->newb_md->insert($new_rojo);
-				
-				$mensaje = "DATOS REGISTRADOS";
+					$mensaje = "SE REGISTRARON SUC B";
+				}
+			}
+			$new_cambio = [
+				"accion" => "Sube Cambios B",
+				"antes" => "".$filen,
+				"id_usuario" => $user["id_usuario"]
+			];
+			$cambio = $this->cambio_md->insert($new_cambio);
+		}*/
+		$colores = [];
+		for ($i=1; $i<=$num_rows; $i++){
+			
+			$color = $sheet->getStyle('A'.$i)->getFill()->getStartColor()->getRGB();
+			$uno = substr($color,0,2);
+			$dos = substr($color,2,2);
+			$tre = substr($color,4,2);
+			if(hexdec($dos) > hexdec($uno) && hexdec($uno) < 200){
+				$colores[$i]["verde"] = 1;
+			}elseif(hexdec($uno) > 190 && hexdec($dos) > 190 && hexdec($tre) < 160){
+				$colores[$i]["amarillo"] = 1;
+			}elseif((hexdec($uno) > 150 && hexdec($dos) < 100 && hexdec($tre) < 100) || ( hexdec($uno) > hexdec($dos) && hexdec($uno) > hexdec($tre) && hexdec($uno) > 150) && hexdec($dos) < 200 && hexdec($tre) < 200){
+				$colores[$i]["rojo"]=1;
 			}
 		}
-
-		
-		$this->jsonResponse($mensaje);
+		$this->jsonResponse($colores);
 	}
 }
 
