@@ -1608,17 +1608,18 @@ class Uploads extends MY_Controller {
 		$mensaje = "Archivo invalido";
 		$id_nuevo = 0;
 		$flag = 1;
-		/*if ( $this->getOldVal($sheet,4,"J") == "PRECIOS DEL 1 AL 5" || $this->getOldVal($sheet,5,"J") == "PRECIOS DEL 1 AL 5") {
+		$colores = [];
+		if ( $this->getOldVal($sheet,4,"J") == "PRECIOS DEL 1 AL 5" || $this->getOldVal($sheet,5,"J") == "PRECIOS DEL 1 AL 5") {
 			for ($i=4; $i<=$num_rows; $i++) {
 				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO PRINCIPAL"){
 					if ($flag == 1) {
 						$flag++;
 						$nuevoid = $this->new_md->get(NULL,["suca"=>0]);
 						if($nuevoid){
-							$this->new_md->update(["suca"=>1 ],["id_nuevo"=>$nuevoid[0]->id_nuevo]);//GET NEW ID
+							//$this->new_md->update(["suca"=>1 ],["id_nuevo"=>$nuevoid[0]->id_nuevo]);//GET NEW ID
 							$id_nuevo = $nuevoid[0]->id_nuevo;
 						}else{
-							$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"suca"=>1 ]);//GET NEW ID
+							//$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"suca"=>1 ]);//GET NEW ID
 						}
 					}
 					
@@ -1630,11 +1631,11 @@ class Uploads extends MY_Controller {
 					if($id_rojo){
 						$rojo = $id_rojo[0]->id_rojo;
 						if($id_rojo[0]->estatus == 1){
-							$this->rojo_md->update(["estatus"=>2],["id_rojo"=>$id_rojo[0]->id_rojo]);
+							//$this->rojo_md->update(["estatus"=>2],["id_rojo"=>$id_rojo[0]->id_rojo]);
 						}elseif($id_rojo[0]->estatus == 4){
-							$this->rojo_md->update(["estatus"=>7],["id_rojo"=>$id_rojo[0]->id_rojo]);
+							//$this->rojo_md->update(["estatus"=>7],["id_rojo"=>$id_rojo[0]->id_rojo]);
 						}elseif($id_rojo[0]->estatus == 5){
-							$this->rojo_md->update(["estatus"=>8],["id_rojo"=>$id_rojo[0]->id_rojo]);
+							//$this->rojo_md->update(["estatus"=>8],["id_rojo"=>$id_rojo[0]->id_rojo]);
 						}
 					}
 
@@ -1650,6 +1651,7 @@ class Uploads extends MY_Controller {
 					}else{
 						$this->getOldVal($sheet,$i,"O");
 					}
+					$colore = $this->getMeColor($sheet,$i);
 					$new_rojo[$i]=[
 						"id_nuevo"		=>	$id_nuevo,
 						"id_rojo"		=>	$rojo,
@@ -1675,9 +1677,13 @@ class Uploads extends MY_Controller {
 						"pre55"			=>	$this->getOldVal($sheet,$i,"N"),
 						"rdiez"			=>	$this->getOldVal($sheet,$i,"I"),
 						"costopz"		=>	($this->getOldVal($sheet,$i,"N")-0.01),
+						"estatus"		=>	$colore,
 					];
 
-					$this->det_md->insert($new_rojo[$i]);
+					$colores[$i] = $this->actualizaBase($colore,$new_rojo[$i]);
+
+
+					//$this->det_md->insert($new_rojo[$i]);
 					
 					$mensaje = "SE REGISTRARON SUC A";
 				}
@@ -1687,7 +1693,7 @@ class Uploads extends MY_Controller {
 				"antes" => "".$filen,
 				"id_usuario" => $user["id_usuario"]
 			];
-			$cambio = $this->cambio_md->insert($new_cambio);
+			//$cambio = $this->cambio_md->insert($new_cambio);
 		}else{
 			for ($i=4; $i<=$num_rows; $i++) {
 				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO PRINCIPAL"){
@@ -1695,10 +1701,10 @@ class Uploads extends MY_Controller {
 						$flag++;
 						$nuevoid = $this->new_md->get(NULL,["sucb"=>0]);
 						if($nuevoid){
-							$this->new_md->update(["sucb"=>1 ],["id_nuevo"=>$nuevoid[0]->id_nuevo]);//GET NEW ID
+							//$this->new_md->update(["sucb"=>1 ],["id_nuevo"=>$nuevoid[0]->id_nuevo]);//GET NEW ID
 							$id_nuevo = $nuevoid[0]->id_nuevo;
 						}else{
-							$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"sucb"=>1 ]);//GET NEW ID
+							//$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"sucb"=>1 ]);//GET NEW ID
 						}
 					}
 					
@@ -1739,8 +1745,7 @@ class Uploads extends MY_Controller {
 						"costopz"		=>	$this->getOldVal($sheet,$i,"AH"),
 					];
 
-					$this->newb_md->insert($new_rojo[$i]);
-					
+					//$this->newb_md->insert($new_rojo[$i]);
 					$mensaje = "SE REGISTRARON SUC B";
 				}
 			}
@@ -1749,24 +1754,210 @@ class Uploads extends MY_Controller {
 				"antes" => "".$filen,
 				"id_usuario" => $user["id_usuario"]
 			];
-			$cambio = $this->cambio_md->insert($new_cambio);
-		}*/
-		$colores = [];
-		for ($i=1; $i<=$num_rows; $i++){
-			
-			$color = $sheet->getStyle('A'.$i)->getFill()->getStartColor()->getRGB();
-			$uno = substr($color,0,2);
-			$dos = substr($color,2,2);
-			$tre = substr($color,4,2);
-			if(hexdec($dos) > hexdec($uno) && hexdec($uno) < 200){
-				$colores[$i]["verde"] = 1;
-			}elseif(hexdec($uno) > 190 && hexdec($dos) > 190 && hexdec($tre) < 160){
-				$colores[$i]["amarillo"] = 1;
-			}elseif((hexdec($uno) > 150 && hexdec($dos) < 100 && hexdec($tre) < 100) || ( hexdec($uno) > hexdec($dos) && hexdec($uno) > hexdec($tre) && hexdec($uno) > 150) && hexdec($dos) < 200 && hexdec($tre) < 200){
-				$colores[$i]["rojo"]=1;
-			}
+			//$cambio = $this->cambio_md->insert($new_cambio);
 		}
+
+
 		$this->jsonResponse($colores);
 	}
+
+	private function getHex($color){
+		$uno = substr($color,0,2);
+		$dos = substr($color,2,2);
+		$tre = substr($color,4,2);
+		if(hexdec($dos) > hexdec($uno) && hexdec($uno) < 200){
+			$color = 1;//verde ALTA
+		}elseif(hexdec($uno) > 190 && hexdec($dos) > 190 && hexdec($tre) < 160){
+			$color = 2; //amarillo EDICIÓN
+		}elseif((hexdec($uno) > 150 && hexdec($dos) < 100 && hexdec($tre) < 100) || ( hexdec($uno) > hexdec($dos) && hexdec($uno) > hexdec($tre) && hexdec($uno) > 150) && hexdec($dos) < 200 && hexdec($tre) < 200){
+			$color = 3;//rojo ELIMINAR
+		}else{
+			$color = 0;
+		}
+		return $color;
+	}
+
+	private function getMeColor($sheet,$i){
+		$color = $sheet->getStyle('B'.$i)->getFill()->getStartColor()->getRGB();
+		$color = $this->getHex($color);
+		if($color == 0){
+			$color = $sheet->getStyle('C'.$i)->getFill()->getStartColor()->getRGB();
+			$color = $this->getHex($color);
+			if($color == 0){
+				$color = $sheet->getStyle('D'.$i)->getFill()->getStartColor()->getRGB();
+				$color = $this->getHex($color);
+			}
+		}
+
+		$color2 = $sheet->getStyle('P'.$i)->getFill()->getStartColor()->getRGB();
+		$color2 = $this->getHex($color2);
+		if($color2 == 0){
+			$color2 = $sheet->getStyle('Q'.$i)->getFill()->getStartColor()->getRGB();
+			$color2 = $this->getHex($color2);
+			if($color2 == 0){
+				$color2 = $sheet->getStyle('R'.$i)->getFill()->getStartColor()->getRGB();
+				$color2 = $this->getHex($color2);
+			}
+		}
+
+		$canto = $sheet->getStyle('F'.$i)->getFill()->getStartColor()->getRGB();
+		$canto = $this->getHex($canto);
+		if ($canto <> 0){
+			$canto = 0.1;
+		}
+
+
+		switch ([$color,$color2]) {
+			case [2,0]:
+				$colores = 2; //2 EDITAR PZ 
+				break;
+			case [0,2]:
+				$colores = 3; //3 EDITAR CAJA 
+				break;
+			case [2,2]:
+				$colores = 4; //4 EDITAR PZ Y CAJA 
+				break;
+			case [2,3]:
+				$colores = 5; //5 EDITAR PZ Y ELIM CAJA 
+				break;
+			case [3,2]:
+				$colores = 6; //6 EDITAR CAJA Y ELIM PZA 
+				break;
+			case [2,1]:
+				$colores = 7; //7 EDITAR PZ Y ADD CAJA 
+				break;
+			case [1,2]:
+				$colores = 8; //8 EDITAR CAJA Y ADD  PZA 
+				break;
+			case [1,0]:
+				$colores = 9; //9 ADD PZA 
+				break;
+			case [0,1]:
+				$colores = 10; //10 ADD CJA 
+				break;
+			case [1,1]:
+				$colores = 11; //11 ADD PZA Y ADD CAJA 
+				break;
+			case [1,3]:
+				$colores = 12; //12 ADD PZA Y ELIM CJA 
+				break;
+			case [3,1]:
+				$colores = 13; //13 ADD CJA Y ELIM PZA 
+				break;
+			case [3,0]:
+				$colores = 14; //14 ELIM PZA 
+				break;
+			case [0,3]:
+				$colores = 15; //15 ELIM CJA 
+				break;
+			case [3,3]:
+				$colores = 16; //16 ELIM PZA Y ELIM CJA 
+				break;
+			default:
+				$colores = 1; //SI TIENE 0.1 SE CAMBÍA LA CANTIDAD	
+				break;
+		}
+
+		return $colores+$canto;
+	}
+
+	private function actualizaBase($caso,$nuevo){
+		$new_rojo[$i]=[
+			"id_nuevo"		=>	$id_nuevo,
+			"id_rojo"		=>	$rojo,
+			"code1"			=>	$prodo,
+			"code2"			=>	$this->getOldVal($sheet,$i,"B"),
+			"linea"			=>	$this->getOldVal($sheet,$i,"C"),
+			"desc1"			=>	$this->getOldVal($sheet,$i,"D"),
+			"unidad"		=>	$this->getOldVal($sheet,$i,"E"),
+			"code3"			=>	$prodo,
+			"desc2"			=>	$this->getOldVal($sheet,$i,"Q"),
+			"cantidad"		=>	$this->getOldVal($sheet,$i,"F"),
+			"costo"			=>	$this->getOldVal($sheet,$i,"G"),
+			"iva"			=>	$this->getOldVal($sheet,$i,"H"),
+			"pre1"			=>	$this->getOldVal($sheet,$i,"S"),
+			"pre2"			=>	$this->getOldVal($sheet,$i,"T"),
+			"pre3"			=>	$this->getOldVal($sheet,$i,"U"),
+			"pre4"			=>	$this->getOldVal($sheet,$i,"V"),
+			"pre5"			=>	$this->getOldVal($sheet,$i,"W"),
+			"pre11"			=>	$this->getOldVal($sheet,$i,"J"),
+			"pre22"			=>	$this->getOldVal($sheet,$i,"K"),
+			"pre33"			=>	$this->getOldVal($sheet,$i,"L"),
+			"pre44"			=>	$this->getOldVal($sheet,$i,"M"),
+			"pre55"			=>	$this->getOldVal($sheet,$i,"N"),
+			"rdiez"			=>	$this->getOldVal($sheet,$i,"I"),
+			"costopz"		=>	($this->getOldVal($sheet,$i,"N")-0.01),
+			"estatus"		=>	$colore,
+		];
+		$linea = $this->line_md->get(NULL,["ides"=>$nuevo["linea"]]);
+		if($linea){
+			$linea = $linea[0]->id_linea;
+		}else{
+			$linea = $this->prod_md->get(NULL,["codigo"=>$nuevo["code1"]]);
+			if($linea){
+				$linea = 1;
+			}
+		}
+		switch ($caso) {
+			case 2://2 EDITAR PZ 
+				$this->prod_md->update( ["code"=>$nuevo["code2"],"nombre"=>$nuevo["desc1"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"]], ["codigo"=>$nuevo["code1"]] );
+				break;
+			case 3://3 EDITAR CAJA 
+				$this->prod_md->update( ["nombre"=>$nuevo["desc1"]], ["codigo"=>$nuevo["code3"]] );
+				break;
+			case 4://4 EDITAR PZ Y CAJA 
+				$this->prod_md->update( ["code"=>$nuevo["code2"],"nombre"=>$nuevo["desc1"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"]], ["codigo"=>$nuevo["code1"]] );
+				$this->prod_md->update( ["nombre"=>$nuevo["desc1"]], ["codigo"=>$nuevo["code3"]] );
+				break;
+			case 5://5 EDITAR PZ Y ELIM CAJA 
+				$this->prod_md->update( ["code"=>$nuevo["code2"],"nombre"=>$nuevo["desc1"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"]], ["codigo"=>$nuevo["code1"]] );
+				$this->prod_md->update( ["estatus"=>0,"codigo"=>"ELIMINADO".$nuevo["code3"]], ["codigo"=>$nuevo["code3"]] );
+				break;
+			case 6://6 EDITAR CAJA Y ELIM PZA 
+				$this->prod_md->update( ["estatus"=>0,"codigo"=>"ELIMINADO".$nuevo["code1"]], ["codigo"=>$nuevo["code1"]] );
+				$this->prod_md->update( ["nombre"=>$nuevo["desc1"]], ["codigo"=>$nuevo["code3"]] );
+				break;
+			case 7://7 EDITAR PZ Y ADD CAJA 
+				$this->prod_md->update( ["code"=>$nuevo["code2"],"nombre"=>$nuevo["desc1"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"]], ["codigo"=>$nuevo["code1"]] );
+				$this->prod_md->insert( [ "codigo"=> ] )
+				break;
+			case 8://8 EDITAR CAJA Y ADD  PZA 
+				
+				break;
+			case 9://9 ADD PZA 
+				
+				break;
+			case 10://10 ADD CJA 
+
+				break;
+			case 11://11 ADD PZA Y ADD CAJA 
+
+				break;
+			case 12://12 ADD PZA Y ELIM CJA 
+
+				break;
+			case 13://13 ADD CJA Y ELIM PZA 
+
+				break;
+			case 14://14 ELIM PZA 
+
+				break;
+			case 15://15 ELIM CJA 
+
+				break;
+			case 16://16 ELIM PZA Y ELIM CJA 
+
+				break;
+			default:
+
+				break;
+		}
+
+		return true;
+	}
+
+
+
 }
+
 

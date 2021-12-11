@@ -98,7 +98,7 @@ class Nuevos_model extends MY_Model {
 	public function getRojosB($where = []){
 		$user = $this->session->userdata();
 		$this->db->select("n.id_nuevo,n.fecha_registro,n.agrego,n.estatus,nd.id_detail,nd.id_rojo,nd.code1,nd.code2,nd.code3,nd.linea,nd.desc1,nd.unidad,nd.desc2,nd.cantidad,nd.costo,nd.iva,n.sucb
-			,nd.pre1,nd.pre2,nd.pre3,nd.pre11,nd.pre22,nd.pre33,nd.rdiez,nd.costopz,nd.matriz,u.nombre,nd.estatus,n.suca, n.sucb")
+			,nd.pre1,nd.pre2,nd.pre3,nd.pre11,nd.pre22,nd.pre33,nd.rdiez,nd.costopz,nd.matriz,u.nombre,nd.estatus as estato,n.suca, n.sucb")
 			->from("nuevos n")
 			->join("nuevo_b nd","n.id_nuevo= nd.id_nuevo and nd.estatus <> 0","left")
 			->join("usuarios u","n.agrego = u.id_usuario" ,"left") 
@@ -141,6 +141,7 @@ class Nuevos_model extends MY_Model {
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre22"]	=	$comparativa[$i]->pre22;
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre33"]	=	$comparativa[$i]->pre33;
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["rdiez"]	=	$comparativa[$i]->rdiez;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["estato"]	=	$comparativa[$i]->estato;
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["estatus"]	=	$comparativa[$i]->estatus;
 
 		}
