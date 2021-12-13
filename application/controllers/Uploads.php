@@ -184,7 +184,7 @@ class Uploads extends MY_Controller {
 							$precio = $this->prize_md->get(NULL,["id_producto"=>$id_producto,"estatus"=>1])[0];
 
 							if($precio){
-								$id_producto = $this->prize_md->update(["estatus"=>0],["id_producto"=>$producto->id_producto]);
+								$id_producto = $this->prize_md->update(["estatus"=>0],["id_producto"=>$id_producto]);
 							}
 							$id_precio = $this->prize_md->insert($new_precios);
 							
@@ -1616,10 +1616,10 @@ class Uploads extends MY_Controller {
 						$flag++;
 						$nuevoid = $this->new_md->get(NULL,["suca"=>0]);
 						if($nuevoid){
-							//$this->new_md->update(["suca"=>1 ],["id_nuevo"=>$nuevoid[0]->id_nuevo]);//GET NEW ID
+							$this->new_md->update(["suca"=>1 ],["id_nuevo"=>$nuevoid[0]->id_nuevo]);//GET NEW ID
 							$id_nuevo = $nuevoid[0]->id_nuevo;
 						}else{
-							//$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"suca"=>1 ]);//GET NEW ID
+							$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"suca"=>1 ]);//GET NEW ID
 						}
 					}
 					
@@ -1631,25 +1631,25 @@ class Uploads extends MY_Controller {
 					if($id_rojo){
 						$rojo = $id_rojo[0]->id_rojo;
 						if($id_rojo[0]->estatus == 1){
-							//$this->rojo_md->update(["estatus"=>2],["id_rojo"=>$id_rojo[0]->id_rojo]);
+							$this->rojo_md->update(["estatus"=>2],["id_rojo"=>$id_rojo[0]->id_rojo]);
 						}elseif($id_rojo[0]->estatus == 4){
-							//$this->rojo_md->update(["estatus"=>7],["id_rojo"=>$id_rojo[0]->id_rojo]);
+							$this->rojo_md->update(["estatus"=>7],["id_rojo"=>$id_rojo[0]->id_rojo]);
 						}elseif($id_rojo[0]->estatus == 5){
-							//$this->rojo_md->update(["estatus"=>8],["id_rojo"=>$id_rojo[0]->id_rojo]);
+							$this->rojo_md->update(["estatus"=>8],["id_rojo"=>$id_rojo[0]->id_rojo]);
 						}
 					}
-
+					//OBTENER CEROS INICIALES
 					$prodo = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"A"),"estatus"=>1]);
 					if ($prodo){
 						$prodo = $prodo[0]->codigo;
 					}else{
-						$this->getOldVal($sheet,$i,"A");
+						$prodo = $this->getOldVal($sheet,$i,"A");
 					}
 					$prodo2 = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"O"),"estatus"=>1]);
 					if ($prodo2){
 						$prodo2 = $prodo2[0]->codigo;
 					}else{
-						$this->getOldVal($sheet,$i,"O");
+						$prodo2 = $this->getOldVal($sheet,$i,"O");
 					}
 					$colore = $this->getMeColor($sheet,$i);
 					$new_rojo[$i]=[
@@ -1660,7 +1660,7 @@ class Uploads extends MY_Controller {
 						"linea"			=>	$this->getOldVal($sheet,$i,"C"),
 						"desc1"			=>	$this->getOldVal($sheet,$i,"D"),
 						"unidad"		=>	$this->getOldVal($sheet,$i,"E"),
-						"code3"			=>	$prodo,
+						"code3"			=>	$prodo2,
 						"desc2"			=>	$this->getOldVal($sheet,$i,"Q"),
 						"cantidad"		=>	$this->getOldVal($sheet,$i,"F"),
 						"costo"			=>	$this->getOldVal($sheet,$i,"G"),
@@ -1682,8 +1682,17 @@ class Uploads extends MY_Controller {
 
 					$colores[$i] = $this->actualizaBase($colore,$new_rojo[$i]);
 
-
-					//$this->det_md->insert($new_rojo[$i]);
+					$pr1 = $this->prod_md->get(NULL,["codigo" => $prodo]);
+	    			$pr2 = $this->prod_md->get(NULL,["codigo" => $prodo2]);
+	    			if ($pr1){
+	    				$this->prize_md->update( ["estatus"=>0],["id_producto"=>$pr1[0]->id_producto] );
+	    				$this->prize_md->insert([ "id_producto"=>$pr1[0]->id_producto,"preciouno"=>$this->getOldVal($sheet,$i,"J"),"preciodos"=>$this->getOldVal($sheet,$i,"K"),"preciotres"=>$this->getOldVal($sheet,$i,"L"),"preciocuatro"=>$this->getOldVal($sheet,$i,"M"),"preciocinco"=>$this->getOldVal($sheet,$i,"N"),"registro"=>$user["id_usuario"] ]);
+	    			}
+	    			if ($pr2){
+	    				$this->prize_md->update( ["estatus"=>0],["id_producto"=>$pr2[0]->id_producto] );
+	    				$this->prize_md->insert([ "id_producto"=>$pr2[0]->id_producto,"preciouno"=>$this->getOldVal($sheet,$i,"S"),"preciodos"=>$this->getOldVal($sheet,$i,"T"),"preciotres"=>$this->getOldVal($sheet,$i,"U"),"preciocuatro"=>$this->getOldVal($sheet,$i,"V"),"preciocinco"=>$this->getOldVal($sheet,$i,"W"),"registro"=>$user["id_usuario"] ]);
+	    			}
+					$this->det_md->insert($new_rojo[$i]);
 					
 					$mensaje = "SE REGISTRARON SUC A";
 				}
@@ -1693,7 +1702,7 @@ class Uploads extends MY_Controller {
 				"antes" => "".$filen,
 				"id_usuario" => $user["id_usuario"]
 			];
-			//$cambio = $this->cambio_md->insert($new_cambio);
+			$cambio = $this->cambio_md->insert($new_cambio);
 		}else{
 			for ($i=4; $i<=$num_rows; $i++) {
 				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO PRINCIPAL"){
@@ -1862,33 +1871,6 @@ class Uploads extends MY_Controller {
 	}
 
 	private function actualizaBase($caso,$nuevo){
-		$new_rojo[$i]=[
-			"id_nuevo"		=>	$id_nuevo,
-			"id_rojo"		=>	$rojo,
-			"code1"			=>	$prodo,
-			"code2"			=>	$this->getOldVal($sheet,$i,"B"),
-			"linea"			=>	$this->getOldVal($sheet,$i,"C"),
-			"desc1"			=>	$this->getOldVal($sheet,$i,"D"),
-			"unidad"		=>	$this->getOldVal($sheet,$i,"E"),
-			"code3"			=>	$prodo,
-			"desc2"			=>	$this->getOldVal($sheet,$i,"Q"),
-			"cantidad"		=>	$this->getOldVal($sheet,$i,"F"),
-			"costo"			=>	$this->getOldVal($sheet,$i,"G"),
-			"iva"			=>	$this->getOldVal($sheet,$i,"H"),
-			"pre1"			=>	$this->getOldVal($sheet,$i,"S"),
-			"pre2"			=>	$this->getOldVal($sheet,$i,"T"),
-			"pre3"			=>	$this->getOldVal($sheet,$i,"U"),
-			"pre4"			=>	$this->getOldVal($sheet,$i,"V"),
-			"pre5"			=>	$this->getOldVal($sheet,$i,"W"),
-			"pre11"			=>	$this->getOldVal($sheet,$i,"J"),
-			"pre22"			=>	$this->getOldVal($sheet,$i,"K"),
-			"pre33"			=>	$this->getOldVal($sheet,$i,"L"),
-			"pre44"			=>	$this->getOldVal($sheet,$i,"M"),
-			"pre55"			=>	$this->getOldVal($sheet,$i,"N"),
-			"rdiez"			=>	$this->getOldVal($sheet,$i,"I"),
-			"costopz"		=>	($this->getOldVal($sheet,$i,"N")-0.01),
-			"estatus"		=>	$colore,
-		];
 		$linea = $this->line_md->get(NULL,["ides"=>$nuevo["linea"]]);
 		if($linea){
 			$linea = $linea[0]->id_linea;
@@ -1898,16 +1880,20 @@ class Uploads extends MY_Controller {
 				$linea = 1;
 			}
 		}
+		if(fmod($caso, 1) !== 0.00){
+		    $caso = $caso - 0.1;
+		}
+		$user = $this->session->userdata();
 		switch ($caso) {
 			case 2://2 EDITAR PZ 
 				$this->prod_md->update( ["code"=>$nuevo["code2"],"nombre"=>$nuevo["desc1"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"]], ["codigo"=>$nuevo["code1"]] );
 				break;
 			case 3://3 EDITAR CAJA 
-				$this->prod_md->update( ["nombre"=>$nuevo["desc1"]], ["codigo"=>$nuevo["code3"]] );
+				$this->prod_md->update( ["nombre"=>$nuevo["desc2"]], ["codigo"=>$nuevo["code3"]] );
 				break;
 			case 4://4 EDITAR PZ Y CAJA 
 				$this->prod_md->update( ["code"=>$nuevo["code2"],"nombre"=>$nuevo["desc1"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"]], ["codigo"=>$nuevo["code1"]] );
-				$this->prod_md->update( ["nombre"=>$nuevo["desc1"]], ["codigo"=>$nuevo["code3"]] );
+				$this->prod_md->update( ["nombre"=>$nuevo["desc2"]], ["codigo"=>$nuevo["code3"]] );
 				break;
 			case 5://5 EDITAR PZ Y ELIM CAJA 
 				$this->prod_md->update( ["code"=>$nuevo["code2"],"nombre"=>$nuevo["desc1"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"]], ["codigo"=>$nuevo["code1"]] );
@@ -1915,45 +1901,68 @@ class Uploads extends MY_Controller {
 				break;
 			case 6://6 EDITAR CAJA Y ELIM PZA 
 				$this->prod_md->update( ["estatus"=>0,"codigo"=>"ELIMINADO".$nuevo["code1"]], ["codigo"=>$nuevo["code1"]] );
-				$this->prod_md->update( ["nombre"=>$nuevo["desc1"]], ["codigo"=>$nuevo["code3"]] );
+				$this->prod_md->update( ["nombre"=>$nuevo["desc2"]], ["codigo"=>$nuevo["code3"]] );
 				break;
 			case 7://7 EDITAR PZ Y ADD CAJA 
 				$this->prod_md->update( ["code"=>$nuevo["code2"],"nombre"=>$nuevo["desc1"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"]], ["codigo"=>$nuevo["code1"]] );
-				$this->prod_md->insert( [ "codigo"=> ] )
+				$this->altaPz( ["codigo"=> $nuevo["code3"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"],"ums"=>2,"nombre"=>$nuevo["desc2"],"registro"=>$user["id_usuario"],"code"=>$nuevo["code3"]] );
 				break;
 			case 8://8 EDITAR CAJA Y ADD  PZA 
-				
+				$this->prod_md->update( ["nombre"=>$nuevo["desc2"]], ["codigo"=>$nuevo["code3"]] );
+				$this->altaPz( ["codigo"=> $nuevo["code1"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"],"ums"=>1,"nombre"=>$nuevo["desc1"],"registro"=>$user["id_usuario"],"code"=>$nuevo["code2"]] );
 				break;
 			case 9://9 ADD PZA 
-				
+				$this->altaPz( ["codigo"=> $nuevo["code1"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"],"ums"=>1,"nombre"=>$nuevo["desc1"],"registro"=>$user["id_usuario"],"code"=>$nuevo["code2"]] );
 				break;
 			case 10://10 ADD CJA 
-
+				$this->altaPz( ["codigo"=> $nuevo["code3"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"],"ums"=>2,"nombre"=>$nuevo["desc2"],"registro"=>$user["id_usuario"],"code"=>$nuevo["code3"]] );
 				break;
 			case 11://11 ADD PZA Y ADD CAJA 
-
+				$this->altaPz( ["codigo"=> $nuevo["code3"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"],"ums"=>2,"nombre"=>$nuevo["desc2"],"registro"=>$user["id_usuario"],"code"=>$nuevo["code3"]] );
+				$this->altaPz( ["codigo"=> $nuevo["code1"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"],"ums"=>1,"nombre"=>$nuevo["desc1"],"registro"=>$user["id_usuario"],"code"=>$nuevo["code2"]] );
 				break;
 			case 12://12 ADD PZA Y ELIM CJA 
-
+				$this->altaPz( ["codigo"=> $nuevo["code1"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"],"ums"=>1,"nombre"=>$nuevo["desc1"],"registro"=>$user["id_usuario"],"code"=>$nuevo["code2"]] );
+				$this->prod_md->update( ["estatus"=>0,"codigo"=>"ELIMINADO".$nuevo["code3"]], ["codigo"=>$nuevo["code3"]] );
 				break;
 			case 13://13 ADD CJA Y ELIM PZA 
-
+				$this->altaPz( ["codigo"=> $nuevo["code3"],"linea"=>$linea,"unidad"=>$nuevo["cantidad"],"ums"=>2,"nombre"=>$nuevo["desc2"],"registro"=>$user["id_usuario"],"code"=>$nuevo["code3"]] );
+				$this->prod_md->update( ["estatus"=>0,"codigo"=>"ELIMINADO".$nuevo["code1"]], ["codigo"=>$nuevo["code1"]] );
 				break;
 			case 14://14 ELIM PZA 
-
+				$this->prod_md->update( ["estatus"=>0,"codigo"=>"ELIMINADO".$nuevo["code1"]], ["codigo"=>$nuevo["code1"]] );
 				break;
 			case 15://15 ELIM CJA 
-
+				$this->prod_md->update( ["estatus"=>0,"codigo"=>"ELIMINADO".$nuevo["code3"]], ["codigo"=>$nuevo["code3"]] );
 				break;
 			case 16://16 ELIM PZA Y ELIM CJA 
-
+				$this->prod_md->update( ["estatus"=>0,"codigo"=>"ELIMINADO".$nuevo["code1"]], ["codigo"=>$nuevo["code1"]] );
+				$this->prod_md->update( ["estatus"=>0,"codigo"=>"ELIMINADO".$nuevo["code3"]], ["codigo"=>$nuevo["code3"]] );
 				break;
 			default:
-
+				//
 				break;
 		}
+		$pr1 = $this->prod_md->get(NULL,["codigo" => $nuevo["code1"]]);
+	    $pr2 = $this->prod_md->get(NULL,["codigo" => $nuevo["code3"]]);
+	    if ($pr1 && $pr2){
+	    	$paq = $this->pack_md->get( NULL, ["id_caja"=>$pr2[0]->id_producto,"id_pieza"=>$pr1[0]->id_producto]);
+	    	if($paq0){
+	    		$this->pack_md->update(["estatus"=>0],["id_caja"=>$pr2[0]->id_producto,"id_pieza"=>$pr1[0]->id_producto]);
+	    		$this->pack_md->insert( ["id_caja"=>$pr2[0]->id_producto,"id_pieza"=>$pr1[0]->id_producto,"cantidad"=>$nuevo["cantidad"]] );
+	    	}
+	    }
+		return $caso;
+	}
 
-		return true;
+
+	private function altaPz($arr){
+		$prod = $this->prod_md->get(NULL, ["codigo"=>$arr["codigo"]]);
+		if($prod){
+			$prod = $this->prod_md->update( $arr,["codigo"=>$arr["codigo"]] );
+		}else{
+			$prod = $this->prod_md->insert( $arr );	
+		}
 	}
 
 

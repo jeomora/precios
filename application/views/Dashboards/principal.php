@@ -52,6 +52,10 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
     td{padding:8px !important;}
     .form-control{border-radius: 3px;}
     .pzxum{background:#0002;font-weight:bold;}
+
+    .cambioDe{background: #FFFF00;}
+    .eliminDe{background: #FF8484;}
+    .agregaDe{background: rgb(146,208,80);}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">

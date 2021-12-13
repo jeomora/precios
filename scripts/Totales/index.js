@@ -51,18 +51,23 @@ function oldResultsA(respo){
             var new_table = '<div class=row><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="5" style="padding:0">'+setZeros2(val.id_nuevo)+'</th>'+
                 '<th><a class="nav-link" target="_blank" href="Codigos/qrme/'+val.id_nuevo+'"><img src="assets/img/codigo-qr.png" style="height:45px"></a></th><th>'+
                 '<a class="nav-link" target="_blank" href="Uploads/excelA/'+val.id_nuevo+'"><img src="assets/img/excel.svg" style="height:45px"></a></th><th colspan="7">'+
-                formatDate2(getDate())+'</th><th colspan="17" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr><th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th>'+
+                formatDate2(val.fecha_registro)+'</th><th colspan="17" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr><th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th>'+
                 '<th style="width:350px" >DESCRIPCIÓN</th><th style="width:70px" >UM</th><th style="width:100px" >C</th><th style="width:150px" >PAQUETE</th>'+
                 '<th style="width:100px" class="ivaClass">IVA</th><th style="width:100px" class="renglon10Class">RENGLON 10</th><th colspan="5">PRECIOS DEL 1 AL 5</th>'+
                 '<th style="width:100px" >CÓDIGO</th><th style="width:350px" >DESCRIPCIÓN</th>'+
                 '<th style="" colspan="5">PRECIOS DEL 1 AL 5</th></tr></thead><tbody>';
             $.each(val.detalles,function(index,value){
+                console.log(giveMeColor(value.estatus))
+                console.log(value.estatus)
+
+                var colos = giveMeColor(value.estatus);
+                var des1 = colos[0];var des2 =colos[1];
                 if (value){
                     var renglon10 = ( value.costo/value.cantidad ) / ( 1+(value.iva/100) );
-                    new_table += '<tr><td>'+value.code1+'</td><td>'+value.code2+'</td><td>'+value.linea+'</td><td>'+value.desc1+'</td><td>'+value.unidad+'</td><td>'+value.cantidad+'</td><td>'+value.costo+'</td>'+
+                    new_table += '<tr><td class="'+des1+'">'+value.code1+'</td><td class="'+des1+'">'+value.code2+'</td><td class="'+des1+'">'+value.linea+'</td><td class="'+des1+'">'+value.desc1+'</td><td class="'+des1+'">'+value.unidad+'</td><td class="'+des1+'">'+value.cantidad+'</td><td>'+value.costo+'</td>'+
                         '<td class="ivaClass">'+formatMoney(value.iva,0)+'</td><td class="renglon10Class">'+value.rdiez+'</td><td>'+formatMoney(value.pre11)+'</td><td>'+formatMoney(value.pre22)+
                         '</td><td>'+formatMoney(value.pre33)+'</td><td>'+formatMoney(value.pre44)+'</td><td>'+formatMoney(value.pre55)+'</td>'+
-                        '<td>'+isnulo(value.code3)+'</td><td>'+isnulo(value.desc2)+'</td>'+
+                        '<td class="'+des2+'">'+isnulo(value.code3)+'</td><td class="'+des2+'">'+isnulo(value.desc2)+'</td>'+
                         '<td>'+isnuloF(value.pre1)+'</td><td>'+isnuloF(value.pre2)+'</td><td>'+isnuloF(value.pre3)+'</td><td>'+isnuloF(value.pre4)+'</td><td>'+isnuloF(value.pre5)+'</td></tr>'
                 }
             })
@@ -102,6 +107,61 @@ function oldResultsB(respo){
     })
 }
 
+
+function giveMeColor(estatus){
+    var reso = ["",""];
+    switch( parseInt(estatus) ){
+        case 2:
+            reso = ["cambioDe",""]; //2 EDITAR PZ 
+            break;
+        case 3:
+            reso = ["","cambioDe"];//3 EDITAR CAJA 
+            break;
+        case 4:
+            reso = ["cambioDe","cambioDe"];//4 EDITAR PZ Y CAJA 
+            break;
+        case 5:
+            reso = ["cambioDe","eliminDe"];//5 EDITAR PZ Y ELIM CAJA 
+            break;
+        case 6:
+            reso = ["eliminDe","cambioDe"];//6 EDITAR CAJA Y ELIM PZA 
+            break;
+        case 7:
+            reso = ["cambioDe","agregaDe"];//7 EDITAR PZ Y ADD CAJA 
+            break;
+        case 8:
+            reso = ["agregaDe","cambioDe"];//8 EDITAR CAJA Y ADD  PZA 
+            break;
+        case 9:
+            reso = ["agregaDe",""];//9 ADD PZA 
+            break;
+        case 10:
+            reso = ["","agregaDe"]; //10 ADD CJA 
+            break;
+        case 11:
+            reso = ["agregaDe","agregaDe"]; //11 ADD PZA Y ADD CAJA 
+            break;
+        case 12:
+            reso = ["agregaDe","eliminDe"]; //12 ADD PZA Y ELIM CJA 
+            break;
+        case 13:
+            reso = ["eliminDe","agregaDe"]; //13 ADD CJA Y ELIM PZA 
+            break;
+        case 14:
+            reso = ["eliminDe",""]; //14 ELIM PZA 
+            break;
+        case 15:
+            reso = ["","eliminDe"]; //15 ELIM CJA 
+            break;
+        case 16:
+            reso = ["eliminDe","eliminDe"]; //16 ELIM PZA Y ELIM CJA 
+            break;
+        default:
+            return reso;
+        break;
+    }
+    return reso;
+}
 
 var theDate = new Date().getTime();
 Dropzone.autoDiscover = false;
