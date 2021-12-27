@@ -63,7 +63,7 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
 	<!--begin::Entry-->
 	<div class="d-flex flex-column-fluid">
 		<!--begin::Container-->
-		<div class=" container" style="min-width:95vw;">
+		<div class=" container" style="min-width:95vw;overflow-x:scroll;">
 			<!--begin::Dashboard-->
 
 
@@ -144,7 +144,7 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                 </div>
                 <div class="col-xl-12">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-content" id="myTabContent1" style="overflow-x:hidden;">
+                        <div class="tab-content" id="myTabContent1">
                             <div class="tab-pane fade active show rowScroll" id="store-uno" role="tabpanel" aria-labelledby="store-tab-uno"  ><!-- MATRICIAL -->
                                 <h1 style="margin-top:30px;">AJUSTE DE PRECIOS</h1>
                                 <h6 style="margin-top:30px;" class="lastAjuste">ÚLTIMO AJUSTE : </h6>
@@ -256,83 +256,14 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                 <!--end::Row-->
                             </div>
                             
-                            <div class="tab-pane fade" id="store-sua" role="tabpanel" aria-labelledby="store-tab-sua" style="padding:30px"><!-- SUCURSALES A -->
+                            <div class="tab-pane fade" id="store-sua" role="tabpanel" aria-labelledby="store-tab-sua"><!-- SUCURSALES A -->
 
                                 <h1>SUCURSALES A</h1>
 
 
                                 <!--begin::Row-->
                                 <div class="row col-xl-12 otrosShows" style="padding-bottom:20px;padding-top:30px;">
-                                    <?php if($rojosHoy):foreach($rojosHoy as $key => $value):if($value["detalles"] <> null): ?>
-                                        <div class="row" style="overflow-x:scroll;padding-bottom: 50px;">
-                                            <table class="table table-bordered" style="text-align:center;">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="gensuca" colspan="5" style="padding:0">
-                                                            <?php echo "GEN SUCA21-0".$value["id_nuevo"] ?>
-                                                        </th>
-                                                        <th>
-                                                            <a class="nav-link" target="_blank" href="Codigos/qrme/<?php echo $value['id_nuevo'] ?>">
-                                                                <img src="assets/img/codigo-qr.png" style="height:45px">
-                                                            </a>
-                                                        </th>
-                                                        <th>
-                                                            <a class="nav-link" target="_blank" href="Uploads/excelA/<?php echo $value['id_nuevo'] ?>">
-                                                                <img src="assets/img/excel.svg" style="height:45px">
-                                                            </a>
-                                                        </th>
-                                                        <th colspan="6">
-                                                            <?php echo $fecha ?>
-                                                        </th>
-                                                        <th colspan="17" style="background:rgb(255,51,51)">AJUSTES</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="width:100px" >CÓDIGO</th>
-                                                        <th style="width:100px" >RENGLON 18</th>
-                                                        <th style="width:70px" >LIN</th>
-                                                        <th style="width:350px" >DESCRIPCIÓN</th>
-                                                        <th style="width:70px" >UM</th>
-                                                        <th style="width:100px" >C</th>
-                                                        <th style="width:150px" >PAQUETE</th>
-                                                        <th style="width:100px" class="ivaClass">IVA</th>
-                                                        <th style="width:100px" class="renglon10Class">RENGLON 10</th>
-                                                        <th colspan="5">PRECIOS DEL 1 AL 5</th>
-                                                        <th style="width:100px" >CÓDIGO</th>
-                                                        <th style="width:350px" >DESCRIPCIÓN</th>
-                                                        <th style="" colspan="5">PRECIOS DEL 1 AL 5</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php foreach ($value["detalles"] as $key2 => $val):if($val["estatus"]<>0): $renglon10 = ( $val["costo"]/$val["cantidad"] ) / ( 1+($val["iva"]/100) ); ?>
-                                                        <tr>
-                                                            <td><?php echo $val["code1"] ?></td>
-                                                            <td><?php echo $val["code2"] ?></td>
-                                                            <td><?php echo $val["linea"] ?></td>
-                                                            <td><?php echo $val["desc1"] ?></td>
-                                                            <td><?php echo $val["unidad"] ?></td>
-                                                            <td><?php echo $val["cantidad"] ?></td>
-                                                            <td><?php echo $val["costo"] ?></td>
-                                                            <td class="ivaClass"><?php echo $val["iva"] ?></td>
-                                                            <td class="renglon10Class"><?php echo number_format($renglon10,2,".",",") ?></td>
-                                                            <td><?php echo number_format($val["pre11"],2,".",",") ?></td>
-                                                            <td><?php echo number_format($val["pre22"],2,".",",") ?></td>
-                                                            <td><?php echo number_format($val["pre33"],2,".",",") ?></td>
-                                                            <td><?php echo number_format($val["pre44"],2,".",",") ?></td>
-                                                            <td><?php echo number_format(($val["costo"]+0.01),2,".",",") ?></td>
-                                                            <td><?php echo $val["code3"] ?></td>
-                                                            <td><?php echo $val["desc2"] ?></td>
-                                                            <td><?php echo number_format($val["pre1"],2,".",",") ?></td>
-                                                            <td><?php echo number_format($val["pre2"],2,".",",") ?></td>
-                                                            <td><?php echo number_format($val["pre3"],2,".",",") ?></td>
-                                                            <td><?php echo number_format($val["pre4"],2,".",",") ?></td>
-                                                            <td><?php echo number_format($val["costopz"],2,".",",") ?></td>
-                                                        </tr>
-                                                    <?php endif;endforeach; ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <?php endif;endforeach; ?>
-                                    <?php endif; ?>
+                                    
 
                                 </div>
                             </div>

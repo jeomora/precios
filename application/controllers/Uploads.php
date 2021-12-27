@@ -1710,10 +1710,10 @@ class Uploads extends MY_Controller {
 						$flag++;
 						$nuevoid = $this->new_md->get(NULL,["sucb"=>0]);
 						if($nuevoid){
-							//$this->new_md->update(["sucb"=>1 ],["id_nuevo"=>$nuevoid[0]->id_nuevo]);//GET NEW ID
+							$this->new_md->update(["sucb"=>1 ],["id_nuevo"=>$nuevoid[0]->id_nuevo]);//GET NEW ID
 							$id_nuevo = $nuevoid[0]->id_nuevo;
 						}else{
-							//$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"sucb"=>1 ]);//GET NEW ID
+							$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"sucb"=>1 ]);//GET NEW ID
 						}
 					}
 					
@@ -1754,7 +1754,7 @@ class Uploads extends MY_Controller {
 						"costopz"		=>	$this->getOldVal($sheet,$i,"AH"),
 					];
 
-					//$this->newb_md->insert($new_rojo[$i]);
+					$this->newb_md->insert($new_rojo[$i]);
 					$mensaje = "SE REGISTRARON SUC B";
 				}
 			}
@@ -1763,7 +1763,7 @@ class Uploads extends MY_Controller {
 				"antes" => "".$filen,
 				"id_usuario" => $user["id_usuario"]
 			];
-			//$cambio = $this->cambio_md->insert($new_cambio);
+			$cambio = $this->cambio_md->insert($new_cambio);
 		}
 
 

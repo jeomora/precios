@@ -57,16 +57,18 @@ function oldResultsA(respo){
                 '<th style="width:100px" >CÓDIGO</th><th style="width:350px" >DESCRIPCIÓN</th>'+
                 '<th style="" colspan="5">PRECIOS DEL 1 AL 5</th></tr></thead><tbody>';
             $.each(val.detalles,function(index,value){
-                console.log(giveMeColor(value.estatus))
-                console.log(value.estatus)
 
                 var colos = giveMeColor(value.estatus);
                 var des1 = colos[0];var des2 =colos[1];
                 if (value){
                     var renglon10 = ( value.costo/value.cantidad ) / ( 1+(value.iva/100) );
                     new_table += '<tr><td class="'+des1+'">'+value.code1+'</td><td class="'+des1+'">'+value.code2+'</td><td class="'+des1+'">'+value.linea+'</td><td class="'+des1+'">'+value.desc1+'</td><td class="'+des1+'">'+value.unidad+'</td><td class="'+des1+'">'+value.cantidad+'</td><td>'+value.costo+'</td>'+
-                        '<td class="ivaClass">'+formatMoney(value.iva,0)+'</td><td class="renglon10Class">'+value.rdiez+'</td><td>'+formatMoney(value.pre11)+'</td><td>'+formatMoney(value.pre22)+
-                        '</td><td>'+formatMoney(value.pre33)+'</td><td>'+formatMoney(value.pre44)+'</td><td>'+formatMoney(value.pre55)+'</td>'+
+                        '<td class="ivaClass">'+formatMoney(value.iva,0)+'</td><td class="renglon10Class">'+value.rdiez+'</td>'+
+                        '<td>'+formatMoney(value.pre11)+'<br><span '+isMayor(value.pre11,value.preciouno)+'>'+formatMoney(value.preciouno)+'</span></td>'+
+                        '<td>'+formatMoney(value.pre22)+'<br><span '+isMayor(value.pre22,value.preciosdos)+'>'+formatMoney(value.preciosdos)+'</span></td>'+
+                        '<td>'+formatMoney(value.pre33)+'<br><span '+isMayor(value.pre33,value.preciotres)+'>'+formatMoney(value.preciotres)+'</span></td>'+
+                        '<td>'+formatMoney(value.pre44)+'<br><span '+isMayor(value.pre44,value.preciocuatro)+'>'+formatMoney(value.preciocuatro)+'</span></td>'+
+                        '<td>'+formatMoney(value.pre55)+'<br><span '+isMayor(value.pre55,value.preciocinco)+'>'+formatMoney(value.preciocinco)+'</span></td>'+
                         '<td class="'+des2+'">'+isnulo(value.code3)+'</td><td class="'+des2+'">'+isnulo(value.desc2)+'</td>'+
                         '<td>'+isnuloF(value.pre1)+'</td><td>'+isnuloF(value.pre2)+'</td><td>'+isnuloF(value.pre3)+'</td><td>'+isnuloF(value.pre4)+'</td><td>'+isnuloF(value.pre5)+'</td></tr>'
                 }
@@ -78,10 +80,20 @@ function oldResultsA(respo){
     })
 }
 
+
+function isMayor(uno,dos){
+    var color = "style='color:black;font-weight:bold'"
+    if(uno > dos){
+        color = "style='color:red;font-weight:bold'"
+    }else if(uno < dos){
+        color = "style='color:#00e900;font-weight:bold'"
+    }
+    return color;
+}
 function oldResultsB(respo){
     $.each(respo,function(indx,value){
         if (value.sucb != 0){
-            var oldsB = '<div class="row" style="overflow-x:scroll;padding-bottom: 50px;"><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="4" style="padding:0">'+
+            var oldsB = '<div class="row"><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="4" style="padding:0">'+
                                 setZeros2(value.id_nuevo)+'</th>'+
                                 '<th><a class="nav-link" target="_blank" href="Uploads/excelB/'+value.id_nuevo+'"><img src="assets/img/excel.svg" style="height:45px"></a></th>'+
                                 '<th colspan="7">'+formatDate2(value.fecha_registro)+'</th><th colspan="18" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr>'+
