@@ -104,7 +104,7 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                         </li>
                         <li class="nav-item mb-2">
                             <a class="nav-link" id="sucursal-tab-2" data-toggle="tab" href="#store-cat" aria-controls="sucursal">
-                                <span class="nav-text">CATÁLOGOS  <br>
+                                <span class="nav-text">PAQUETES  <br>
                                     <span class="fechaUpload">
                                         Hace <?php echo $hcatalo ?>
                                     </span>
@@ -115,7 +115,7 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                         <li class="nav-item mb-2">
                             <a class="nav-link" id="sucursal-tab-oferta" data-toggle="tab" href="#store-oferta">
                                 <span class="nav-text">
-                                    COMPARACIÓN <br> PRECIOS
+                                    CATÁLOGO DE<br> ARTICULOS
                                 </span>
                                 <span>
                                     
@@ -196,58 +196,32 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
 
                             <div class="tab-pane fade" id="store-oferta" role="tabpanel" aria-labelledby="store-tab-oferta"><!-- OFERTAS -->
 
-                                <h1 style="margin-top:30px;">AGREGAR OFERTAS</h1>
-                                <div class="col-xl-12" style="padding:20px">
-                                    <!--<button type="button" class="btn btn-success btn-shadow-hover font-weight-bold mr-2"  data-toggle="modal" data-target="#kt_modal_oferta">
-                                        AGREGAR OFERTA
-                                    </button>-->
-                                    <a href="assets/uploads/ofertas frutas.xlsx" class="btn btn-warning btn-shadow-hover font-weight-bold mr-2">
-                                        PLANTILLA FRUTAS
-                                    </a>
-                                    <a href="assets/uploads/ofertas verduras.xlsx" class="btn btn-success btn-shadow-hover font-weight-bold mr-2">
-                                        PLANTILLA VERDURAS
-                                    </a>
-                                    <a href="assets/uploads/ofertas varios.xlsx" class="btn btn-info btn-shadow-hover font-weight-bold mr-2">
-                                        PLANTILLA PROMOCIONES
-                                    </a>
+                                <h1>SUBIR ARCHIVO CATÁLOGOS</h1>
+                                <!--begin::Row-->
+                                <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4"></div>         
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="dropzone dropzone-default dropzone-info" id="kt_dropzone_cata">
+                                            <div class="dropzone-msg dz-message needsclick">
+                                                <h3 class="dropzone-msg-title">SUBIR ARCHIVO TXT CATÁLOGO DE ARTICULOS</h3>
+                                                <span class="dropzone-msg-desc">Clic para seleccionar arhivo y/o arrastre el archivo txt.</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                
-                                <div class="row col-xl-12"></div>
-                                <div class="row col-xl-1"></div>
-                                <div class="row col-xl-12 descos">
-                                    <table class="table" style="text-align:center;">
-                                        <thead class="bg-info text-white">
-                                            <tr>
-                                                <th width="12%">CAMBIAR/ELIMINAR</th>
-                                                <th width="12%">CÓDIGO</th>
-                                                <th width="40%">DESCRIPCIÓN</th>
-                                                <th width="6%">UM</th>
-                                                <th width="15%">OFERTA</th>
-                                                <th width="15%">MÁXIMO</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="promoBody">
-                                            <tr>
-                                                <td colspan="6" style="font-size:24px;padding:0">
-                                                    <img src="assets/img/loading1.gif" style="width:90px">CARGANDO LAS OFERTAS <img src="assets/img/loading1.gif" style="width:90px">
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <!--end::Row-->
                             </div>
                         
                             <div class="tab-pane fade" id="store-cat" role="tabpanel" aria-labelledby="store-tab-cat"><!-- CATÁLOGOS -->
 
-                                <h1>SUBIR ARCHIVO CATÁLOGOS</h1>
+                                <h1>SUBIR ARCHIVO PAQUETES</h1>
                                 <!--begin::Row-->
                                 <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
                                     <div class="col-lg-4 col-md-4 col-sm-4"></div>         
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="dropzone dropzone-default dropzone-info" id="kt_dropzone_dos">
                                             <div class="dropzone-msg dz-message needsclick">
-                                                <h3 class="dropzone-msg-title">SUBIR ARCHIVO TXT CATÁLOGOS</h3>
+                                                <h3 class="dropzone-msg-title">SUBIR ARCHIVO TXT PAQUETES</h3>
                                                 <span class="dropzone-msg-desc">Clic para seleccionar arhivo y/o arrastre el archivo txt.</span>
                                             </div>
                                         </div>

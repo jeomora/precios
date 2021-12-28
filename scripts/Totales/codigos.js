@@ -86,7 +86,9 @@ function givePZ(value,index){
 
     var iva = "\r\n";var cajas = true;
     if(value.iva == "0.00" || value.iva == "0"){
-        iva = "\r\nn\r";
+        value.iva = "\r\rN";
+    }else{
+        value.iva = value.iva+"\r";
     }
     if (value.code3 == "0" || value.code3 == null || value.code3 == 0){
         value.desc2 = value.desc1;
@@ -143,7 +145,7 @@ function givePZ(value,index){
             break;
         case 8:
             reso = ["agregaDe","cambioDe"];//8 EDITAR CAJA Y ADD  PZA 
-            codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+"\r"+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+
+            codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+
             "\r\n\n\n"+value.pre44+"\r\n\n\n"+value.pre55+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0Ft"
             codeqr2 += "3\r\x09"+value.desc2+"\r\n\rt"
             codeqr+=codeqr2;
@@ -151,7 +153,7 @@ function givePZ(value,index){
         case 9:
             reso = ["agregaDe",""];//9 ADD PZA 
             codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+
-            value.rdiez+"\r\n\r\n"+value.iva+"\r"+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+
+            value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+
             "\r\n\n\n"+value.pre44+"\r\n\n\n"+value.pre55+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0Ft"
             codeqr+=codeqr2;
             break;
@@ -163,7 +165,7 @@ function givePZ(value,index){
             break;
         case 11:
             reso = ["agregaDe","agregaDe"]; //11 ADD PZA Y ADD CAJA 
-            codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+"\r"+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+
+            codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+
             "\r\n\n\n"+value.pre44+"\r\n\n\n"+value.pre55+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0Ft"
             codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
             "\r\n\n\n"+value.pre5+"\r\r\x0Ft"
@@ -171,7 +173,7 @@ function givePZ(value,index){
             break;
         case 12:
             reso = ["agregaDe","eliminDe"]; //12 ADD PZA Y ELIM CJA 
-            codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+"\r"+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+
+            codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+
             "\r\n\n\n"+value.pre44+"\r\n\n\n"+value.pre55+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0Ft"
             codeqr2 = "\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
             codeqr+=codeqr2
@@ -200,7 +202,12 @@ function givePZ(value,index){
             codeqr = codeqr+"..."+codeqr2;
             break;
         default:
-            //codeqr += "t";
+            codeqr = "\x05A\x06b"+value.code1+"\r\nc10\r"+value.rdiez+"\r\r17\r\n"+iva+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r\n\n\n"+value.pre44+"\r\n\n\n"+value.pre55+"\r\n\r\nT";
+            if(cajas){
+                codeqr2 = "\x05B\x06b"+value.code3+"\r\nc1\r\n\x1911\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+"\r\n\n\n"+value.pre5+"\r\r\nT"
+                codeqr += codeqr2;
+            }
+            
         break;
     }
     //return codeqr+codeqr2;
