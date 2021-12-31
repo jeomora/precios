@@ -524,6 +524,10 @@ class Uploads extends MY_Controller {
 		$rojos = $this->new_md->getRojos(NULL);
 		$this->jsonResponse($rojos);
 	}
+	public function getNuevosASucu(){
+		$rojos = $this->new_md->getRojosSucu(NULL);
+		$this->jsonResponse($rojos);
+	}
 
 	public function getNuevosB(){
 		$rojos = $this->new_md->getRojosB(NULL);

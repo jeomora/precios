@@ -314,11 +314,11 @@ class Compara extends MY_Controller {
 								"fecha_registro"=>	date("Y-m-d H:i:s")
 							];
 
-							$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"estatus"=>1,"id_sucursal"=>$user["id_sucursal"]])[0];
+							$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
 
 							if($producto){
-								$id_producto = $this->sprod_md->update($new_producto,$producto->id_producto);
-								$id_producto = $producto->id_producto;
+								$id_producto = $this->sprod_md->update($new_producto,$producto[0]->id_producto);
+								$id_producto = $producto[0]->id_producto;
 							}else{
 								$id_producto = $this->sprod_md->insert($new_producto);
 							}
@@ -336,10 +336,10 @@ class Compara extends MY_Controller {
 							];
 
 
-							$precio = $this->sprize_md->get(NULL,["id_producto"=>$id_producto,"estatus"=>1])[0];
+							$precio = $this->sprize_md->get(NULL,["id_producto"=>$id_producto,"estatus"=>1]);
 
 							if($precio){
-								$id_producto = $this->sprize_md->update($new_precios,$producto->id_producto);
+								$id_producto = $this->sprize_md->update($new_precios,$id_producto);
 							}else{
 								$id_precio = $this->sprize_md->insert($new_precios);
 							}

@@ -219,7 +219,7 @@ var myDropzoneMatriz = new Dropzone("div#kt_dropzone_uno", {
         }else{
             toastr.success("Se cargarón correctamente los datos","Listo");
         }
-        
+        getMeNews();
     }
 });
 
@@ -260,7 +260,7 @@ var myDropzoneCatalogo = new Dropzone("div#kt_dropzone_dos", {
         }else{
             toastr.success("Se cargarón correctamente los datos","Listo");
         }
-        
+        getMeNews();
     }
 });
 

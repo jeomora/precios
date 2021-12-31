@@ -28,6 +28,9 @@
     .gensuca{background:aquamarine;padding:0;font-size:20px;}
     .precioB{background:#bdd7ee;}
     th{background:antiquewhite;}
+    .cambioDe{background: #FFFF00;}
+    .eliminDe{background: #FF8484;}
+    .agregaDe{background: rgb(146,208,80);}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -35,8 +38,9 @@
 	<!--begin::Entry-->
 	<div class="d-flex flex-column-fluid">
 		<!--begin::Container-->
-		<div class=" container" style="min-width:96vw;">
+		<div class=" container" style="min-width:96vw;overflow-x:scroll;">
 			<!--begin::Dashboard-->
+
             <!--begin::Row-->
             <div class="row">
                 <div class="col-xl-12">
@@ -64,10 +68,23 @@
                 </div>
             </div>
             <!--end::Row-->	
+            <!--begin::Row-->
+            <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
+                <div class="col-lg-4 col-md-4 col-sm-4"></div>         
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="dropzone dropzone-default dropzone-warning" id="kt_dropzone_uno">
+                        <div class="dropzone-msg dz-message needsclick">
+                            <h3 class="dropzone-msg-title">SUBIR ARCHIVO TXT MATRICIAL</h3>
+                            <span class="dropzone-msg-desc">Clic para seleccionar arhivo y/o arrastre el archivo txt.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Row-->
 
             <div class="row">
             	<div class="col-xl-12">
-            		<div class="row col-xl-12 otrosShowsB" style="padding-bottom:20px;padding-top:30px;">
+            		<div class="row col-xl-12 otrosShows" style="padding-bottom:20px;padding-top:30px;">
             			
             		</div>
             	</div>
