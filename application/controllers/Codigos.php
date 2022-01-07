@@ -30,7 +30,7 @@ class Codigos extends MY_Controller {
 	}
 
 	public function qrmeup($val){
-		$values = $this->det_md->get(NULL,["id_nuevo"=>$val]);
+		$values = $this->det_md->getNuevos(NULL,$val);
 		$this->jsonResponse($values);
 	}
 

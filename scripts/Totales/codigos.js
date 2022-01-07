@@ -20,14 +20,23 @@ jQuery(document).ready(function() {
                     value.desc2 = value.desc1;
                     cajas = false;
                 }
+                value.desc1 = value.desc1.replace(/\//g,"&")
+                value.desc2 = value.desc2.replace(/\//g,"&")
                 var precinco = parseFloat((value.costo / value.cantidad),2);
                 precinco += 0.01; 
                 var renglon10 = value.costopz / ( 1+(value.iva/100) );
                 var codeqr = givePZ(value,index);
                 //codeqr += "\x05A\x06b"+value.code1+"\r\nc10\r"+renglon10+"\r\r17\r\n"+iva+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r\n\n\n"+value.pre44+"\r\n\n\n"+value.costopz+"\r\n\r\n";
                 //codeqr+="c4\r"
+                var liston = "MARCAR HECHO";var cliston = "btnlistos btn btn-outline-success";var fore = "#3F47CC"
+                if(value.liston != null && value.liston != 0){
+                    liston = "HECHO";
+                    cliston = "btnlistos2 btn btn-success"
+                    fore = "#1BC5BD"
+                }
                 $('#outtxt'+index).html("<h3 class='font-weight-bolder mb-1'><a class='text-primary' style='font-size:55px'>"
-                    +value.desc1+"</a></h3><div class='text-primary mb-9' style='font-size:50px'>"+value.code1+"</div>")
+                    +value.desc1+"</a></h3><div class='text-primary mb-9' style='font-size:50px'>"+value.code1+"</div><div class='col-md-12' style='text-align:center'><button type='button' data-id-rojo='"+value.id_detail+
+                    "' class='"+cliston+"'>"+liston+"</button></div>")
                 if (codeqr.indexOf("...") >= 0){
                     $('#outtxt'+index).css("color","red")
                     var code1 = codeqr.substr(0, codeqr.indexOf('...')); 
@@ -37,7 +46,7 @@ jQuery(document).ready(function() {
                         width: 720,
                         height: 720,
                         background: "#FFFFFF",
-                        foreground: "#3F47CC",
+                        foreground: ""+fore,
                     })
                     var code2 = codeqr.substr(codeqr.indexOf('...')+3); 
                     $('#outputs'+index).qrcode({
@@ -46,7 +55,7 @@ jQuery(document).ready(function() {
                         width: 720,
                         height: 720,
                         background: "#FFFFFF",
-                        foreground: "#3F47CC",
+                        foreground: ""+fore,
                     })
                 }else{
                     $('#outtxt'+index).css("color","blue")
@@ -56,7 +65,7 @@ jQuery(document).ready(function() {
                         width: 720,
                         height: 720,
                         background: "#FFFFFF",
-                        foreground: "#3F47CC",
+                        foreground: ""+fore,
 
                     })
                 }
@@ -71,6 +80,18 @@ jQuery(document).ready(function() {
     
     
 });
+
+$(document).off("click",".btnlistos").on("click",".btnlistos",function(event){
+    event.preventDefault();
+    var dis = $(this)
+    var idrojo = dis.data("idRojo");
+    dis.closest(".card.card-custom").css("background","#1BC5BD")
+    if(dis.html() == "MARCAR HECHO"){
+        dis.html("HECHO");
+        setListo(1,idrojo)
+        dis.attr("class","btnlistos2 btn btn-success");
+    }
+})
 
 function qrmeup() {
     return $.ajax({
@@ -139,7 +160,7 @@ function givePZ(value,index){
         case 7:
             reso = ["cambioDe","agregaDe"];//7 EDITAR PZ Y ADD CAJA 
             codeqr+="c4\r\x09"+value.desc1+"\r18\r"+value.code2+"\r\n\rt"
-            codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
+            codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcaja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
             "\r\n\n\n"+value.pre5+"\r\r\x0Ft"
             codeqr+=codeqr2;
             break;
@@ -159,7 +180,7 @@ function givePZ(value,index){
             break;
         case 10:
             reso = ["","agregaDe"]; //10 ADD CJA 
-            codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
+            codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcaja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
             "\r\n\n\n"+value.pre5+"\r\r\x0Ft"
             codeqr+=codeqr2;
             break;
@@ -167,7 +188,7 @@ function givePZ(value,index){
             reso = ["agregaDe","agregaDe"]; //11 ADD PZA Y ADD CAJA 
             codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+
             "\r\n\n\n"+value.pre44+"\r\n\n\n"+value.pre55+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0Ft"
-            codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
+            codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcaja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
             "\r\n\n\n"+value.pre5+"\r\r\x0Ft"
             codeqr+=codeqr2;
             break;
@@ -181,7 +202,7 @@ function givePZ(value,index){
         case 13:
             reso = ["eliminDe","agregaDe"]; //13 ADD CJA Y ELIM PZA 
             codeqr = "\x05D\x0600\r"+value.linea+"\r"+value.code1+"\r00\r"+value.linea+"\r"+value.code1+"\r"
-            codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
+            codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcaja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
             "\r\n\n\n"+value.pre5+"\r\r\x0Ft"
             codeqr = codeqr2+codeqr;
             break;
@@ -212,4 +233,12 @@ function givePZ(value,index){
     }
     //return codeqr+codeqr2;
     return codeqr;
+}
+
+function setListo(val1,val2) {
+    return $.ajax({
+        url: site_url+"Uploads/setListo/"+val1+"/"+val2,
+        type: "POST",
+        cache: false,
+    });
 }

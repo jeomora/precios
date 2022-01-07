@@ -339,7 +339,7 @@ class Compara extends MY_Controller {
 							$precio = $this->sprize_md->get(NULL,["id_producto"=>$id_producto,"estatus"=>1]);
 
 							if($precio){
-								$id_producto = $this->sprize_md->update($new_precios,$id_producto);
+								$id_producto = $this->sprize_md->update($new_precios,$precio[0]->id_precio);
 							}else{
 								$id_precio = $this->sprize_md->insert($new_precios);
 							}

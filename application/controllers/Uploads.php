@@ -327,9 +327,9 @@ class Uploads extends MY_Controller {
 		$filen = "excel".date("dmyHis")."".rand(1000,9999);
 		$config['upload_path']          = './assets/uploads/excel/';
         $config['allowed_types']        = 'xlsx|xls';
-        $config['max_size']             = 10000;
-        $config['max_width']            = 10024;
-        $config['max_height']           = 7608;
+        $config['max_size']             = 80000;
+        $config['max_width']            = 80024;
+        $config['max_height']           = 87608;
         $this->load->library('upload', $config);
         $this->upload->initialize($config);
         $new_existencias = FALSE;
@@ -1613,7 +1613,7 @@ class Uploads extends MY_Controller {
 		$id_nuevo = 0;
 		$flag = 1;
 		$colores = [];
-		if ( $this->getOldVal($sheet,4,"J") == "PRECIOS DEL 1 AL 5" || $this->getOldVal($sheet,5,"J") == "PRECIOS DEL 1 AL 5") {
+		if ( $this->getOldVal($sheet,4,"J") == "PRECIOS DEL 1 AL 5" || $this->getOldVal($sheet,5,"J") == "PRECIOS DEL 1 AL 5" || $this->getOldVal($sheet,4,"J") == "PRECIOS  ARTICULOS DEL 1 AL 5" || $this->getOldVal($sheet,5,"J") == "PRECIOS  ARTICULOS DEL 1 AL 5") {
 			for ($i=4; $i<=$num_rows; $i++) {
 				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO PRINCIPAL"){
 					if ($flag == 1) {
@@ -1689,12 +1689,12 @@ class Uploads extends MY_Controller {
 					$pr1 = $this->prod_md->get(NULL,["codigo" => $prodo]);
 	    			$pr2 = $this->prod_md->get(NULL,["codigo" => $prodo2]);
 	    			if ($pr1){
-	    				$this->prize_md->update( ["estatus"=>0],["id_producto"=>$pr1[0]->id_producto] );
-	    				$this->prize_md->insert([ "id_producto"=>$pr1[0]->id_producto,"preciouno"=>$this->getOldVal($sheet,$i,"J"),"preciodos"=>$this->getOldVal($sheet,$i,"K"),"preciotres"=>$this->getOldVal($sheet,$i,"L"),"preciocuatro"=>$this->getOldVal($sheet,$i,"M"),"preciocinco"=>$this->getOldVal($sheet,$i,"N"),"registro"=>$user["id_usuario"] ]);
+	    				//$this->prize_md->update( ["estatus"=>0],["id_producto"=>$pr1[0]->id_producto] );
+	    				//$this->prize_md->insert([ "id_producto"=>$pr1[0]->id_producto,"preciouno"=>$this->getOldVal($sheet,$i,"J"),"preciodos"=>$this->getOldVal($sheet,$i,"K"),"preciotres"=>$this->getOldVal($sheet,$i,"L"),"preciocuatro"=>$this->getOldVal($sheet,$i,"M"),"preciocinco"=>$this->getOldVal($sheet,$i,"N"),"registro"=>$user["id_usuario"] ]);
 	    			}
 	    			if ($pr2){
-	    				$this->prize_md->update( ["estatus"=>0],["id_producto"=>$pr2[0]->id_producto] );
-	    				$this->prize_md->insert([ "id_producto"=>$pr2[0]->id_producto,"preciouno"=>$this->getOldVal($sheet,$i,"S"),"preciodos"=>$this->getOldVal($sheet,$i,"T"),"preciotres"=>$this->getOldVal($sheet,$i,"U"),"preciocuatro"=>$this->getOldVal($sheet,$i,"V"),"preciocinco"=>$this->getOldVal($sheet,$i,"W"),"registro"=>$user["id_usuario"] ]);
+	    				//$this->prize_md->update( ["estatus"=>0],["id_producto"=>$pr2[0]->id_producto] );
+	    				//$this->prize_md->insert([ "id_producto"=>$pr2[0]->id_producto,"preciouno"=>$this->getOldVal($sheet,$i,"S"),"preciodos"=>$this->getOldVal($sheet,$i,"T"),"preciotres"=>$this->getOldVal($sheet,$i,"U"),"preciocuatro"=>$this->getOldVal($sheet,$i,"V"),"preciocinco"=>$this->getOldVal($sheet,$i,"W"),"registro"=>$user["id_usuario"] ]);
 	    			}
 					$this->det_md->insert($new_rojo[$i]);
 					
