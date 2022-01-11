@@ -1612,7 +1612,7 @@ class Uploads extends MY_Controller {
 		$mensaje = "Archivo invalido";
 		$id_nuevo = 0;
 		$flag = 1;
-		$colores = [];
+		$colores = [];$pack = [];
 		if ( $this->getOldVal($sheet,4,"J") == "PRECIOS DEL 1 AL 5" || $this->getOldVal($sheet,5,"J") == "PRECIOS DEL 1 AL 5" || $this->getOldVal($sheet,4,"J") == "PRECIOS  ARTICULOS DEL 1 AL 5" || $this->getOldVal($sheet,5,"J") == "PRECIOS  ARTICULOS DEL 1 AL 5") {
 			for ($i=4; $i<=$num_rows; $i++) {
 				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO PRINCIPAL"){
@@ -1697,6 +1697,7 @@ class Uploads extends MY_Controller {
 	    				//$this->prize_md->insert([ "id_producto"=>$pr2[0]->id_producto,"preciouno"=>$this->getOldVal($sheet,$i,"S"),"preciodos"=>$this->getOldVal($sheet,$i,"T"),"preciotres"=>$this->getOldVal($sheet,$i,"U"),"preciocuatro"=>$this->getOldVal($sheet,$i,"V"),"preciocinco"=>$this->getOldVal($sheet,$i,"W"),"registro"=>$user["id_usuario"] ]);
 	    			}
 					$this->det_md->insert($new_rojo[$i]);
+					
 					
 					$mensaje = "SE REGISTRARON SUC A";
 				}
@@ -1786,6 +1787,18 @@ class Uploads extends MY_Controller {
 			$color = 3;//rojo ELIMINAR
 		}else{
 			$color = 0;
+		}
+		return $color;
+	}
+
+	private function getHexBlue($color){
+		$uno = substr($color,0,2);
+		$dos = substr($color,2,2);
+		$tre = substr($color,4,2);
+		if((hexdec($tre) >= 100 && hexdec($dos) < 100 && hexdec($uno) < 100) || ( hexdec($tre) > hexdec($dos) && hexdec($tre) > hexdec($uno) && hexdec($tre) > 150) && hexdec($dos) < 200 && hexdec($uno) < 200){
+			$color = true;//rojo azul
+		}else{
+			$color = false;
 		}
 		return $color;
 	}

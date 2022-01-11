@@ -20,8 +20,12 @@ jQuery(document).ready(function() {
                     value.desc2 = value.desc1;
                     cajas = false;
                 }
-                value.desc1 = value.desc1.replace(/\//g,"&")
-                value.desc2 = value.desc2.replace(/\//g,"&")
+                //value.desc1 = value.desc1.replace(/\//g,"&")
+                //value.desc2 = value.desc2.replace(/\//g,"&")
+                var deco1  = value.desc1;var deco2 = value.desc2;
+                value.desc1 = diccionario(value.desc1);
+                value.desc2 = diccionario(value.desc2);
+                
                 var precinco = parseFloat((value.costo / value.cantidad),2);
                 precinco += 0.01; 
                 var renglon10 = value.costopz / ( 1+(value.iva/100) );
@@ -35,7 +39,7 @@ jQuery(document).ready(function() {
                     fore = "#1BC5BD"
                 }
                 $('#outtxt'+index).html("<h3 class='font-weight-bolder mb-1'><a class='text-primary' style='font-size:55px'>"
-                    +value.desc1+"</a></h3><div class='text-primary mb-9' style='font-size:50px'>"+value.code1+"</div><div class='col-md-12' style='text-align:center'><button type='button' data-id-rojo='"+value.id_detail+
+                    +deco1+"</a></h3><div class='text-primary mb-9' style='font-size:50px'>"+value.code1+"</div><div class='col-md-12' style='text-align:center'><button type='button' data-id-rojo='"+value.id_detail+
                     "' class='"+cliston+"'>"+liston+"</button></div>")
                 if (codeqr.indexOf("...") >= 0){
                     $('#outtxt'+index).css("color","red")
@@ -242,3 +246,61 @@ function setListo(val1,val2) {
         cache: false,
     });
 }
+
+
+function diccionario(vals){
+    
+    var valo = "";
+    for (var i = 0; i <= vals.length-1; i++) {
+        switch(vals[i]){
+            case "#":
+                valo += "#";//"\x0335\x04";
+            break;
+            case "-":
+                valo += "/"
+            break;
+            case "'":
+                valo += "-"
+            break;
+            case ";":
+                valo += "<"
+            break;
+            case "ñ":
+                valo += ";"
+            break;
+            case ")":
+                valo += "("
+            break;
+            case "=":
+                valo += ")"
+            break;
+            case "(":
+                valo += "*"
+            break;
+            case "&":
+                valo += "^"
+            break;
+            case ":":
+                valo += ">"
+            break;
+            case "?":
+                valo += "_"
+            break;
+            case "_":
+                valo += "?"
+            break;
+            case "+":
+                valo += "]"
+            break;
+            case "/":
+                valo += "&"
+            break;
+            default:
+                valo += vals[i];
+            break;
+        }
+        console.log(valo)
+    }
+    return valo;
+}
+    
