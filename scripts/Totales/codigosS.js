@@ -30,9 +30,13 @@ function startQr(){
                     value.desc2 = value.desc1;
                     cajas = false;
                 }
+                var deco1  = value.desc1;var deco2 = value.desc2;
+                value.desc1 = diccionario(value.desc1);
+                value.desc2 = diccionario(value.desc2);
                 var precinco = parseFloat((value.costo / value.cantidad),2);
                 precinco += 0.01; 
                 var renglon10 = value.costopz / ( 1+(value.iva/100) );
+
                 var codeqr = givePZ(value,index);
                 //codeqr += "\x05A\x06b"+value.code1+"\r\nc10\r"+renglon10+"\r\r17\r\n"+iva+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r\n\n\n"+value.pre44+"\r\n\n\n"+value.costopz+"\r\n\r\n";
                 //codeqr+="c4\r"
@@ -42,9 +46,7 @@ function startQr(){
                     cliston = "btnlistos2 btn btn-success"
                     fore = "#1BC5BD"
                 }
-                var deco1  = value.desc1;var deco2 = value.desc2;
-                value.desc1 = diccionario(value.desc1);
-                value.desc2 = diccionario(value.desc2);
+                
                 $('#outtxt'+index).html("<h3 class='font-weight-bolder mb-1'><a class='text-primary' style='font-size:55px'>"
                     +deco1+"</a></h3><div class='text-primary mb-9' style='font-size:50px'>"+value.code1+"</div><div class='col-md-12' style='text-align:center'><button type='button' data-id-rojo='"+value.id_detail+
                     "' class='"+cliston+"'>"+liston+"</button></div>")
