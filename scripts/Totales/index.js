@@ -48,6 +48,7 @@ function getNuevosB() {
 function oldResultsA(respo){
     $.each(respo,function(inx,val){
         if (val.suca != 0){
+
             var new_table = '<div class=row><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="5" style="padding:0">'+setZeros2(val.id_nuevo)+'</th>'+
                 '<th><a class="nav-link" target="_blank" href="Codigos/qrme/'+val.id_nuevo+'"><img src="assets/img/codigo-qr.png" style="height:45px"></a></th><th>'+
                 '<a class="nav-link" target="_blank" href="Uploads/excelA/'+val.id_nuevo+'"><img src="assets/img/excel.svg" style="height:45px"></a></th><th colspan="7">'+
@@ -60,9 +61,15 @@ function oldResultsA(respo){
 
                 var colos = giveMeColor(value.estatus);
                 var des1 = colos[0];var des2 =colos[1];
+                var blues = "";
+                console.log(value)
+                if(value.blues != 0){
+                    console.log("iojijioj")
+                    blues = "style='background:#00b0f0 !important'";
+                }
                 if (value){
                     var renglon10 = ( value.costo/value.cantidad ) / ( 1+(value.iva/100) );
-                    new_table += '<tr><td class="'+des1+'">'+value.code1+'</td><td class="'+des1+'">'+value.code2+'</td><td class="'+des1+'">'+value.linea+'</td><td class="'+des1+'">'+value.desc1+'</td><td class="'+des1+'">'+value.unidad+'</td><td class="'+des1+'">'+value.cantidad+'</td><td>'+value.costo+'</td>'+
+                    new_table += '<tr><td class="'+des1+'" '+blues+'>'+value.code1+'</td><td class="'+des1+'">'+value.code2+'</td><td class="'+des1+'">'+value.linea+'</td><td class="'+des1+'">'+value.desc1+'</td><td class="'+des1+'">'+value.unidad+'</td><td class="'+des1+'">'+value.cantidad+'</td><td>'+value.costo+'</td>'+
                         '<td class="ivaClass">'+formatMoney(value.iva,0)+'</td><td class="renglon10Class">'+value.rdiez+'</td>'+
                         '<td>'+formatMoney(value.pre11)+'<br><span '+isMayor(value.pre11,value.preciouno)+'>'+formatMoney(value.preciouno)+'</span></td>'+
                         '<td>'+formatMoney(value.pre22)+'<br><span '+isMayor(value.pre22,value.preciodos)+'>'+formatMoney(value.preciodos)+'</span></td>'+

@@ -1613,6 +1613,7 @@ class Uploads extends MY_Controller {
 		$id_nuevo = 0;
 		$flag = 1;
 		$colores = [];$pack = [];
+		$blues = $this->new_md->getMaxBlue(NULL)[0];
 		if ( $this->getOldVal($sheet,4,"J") == "PRECIOS DEL 1 AL 5" || $this->getOldVal($sheet,5,"J") == "PRECIOS DEL 1 AL 5" || $this->getOldVal($sheet,4,"J") == "PRECIOS  ARTICULOS DEL 1 AL 5" || $this->getOldVal($sheet,5,"J") == "PRECIOS  ARTICULOS DEL 1 AL 5") {
 			for ($i=4; $i<=$num_rows; $i++) {
 				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO PRINCIPAL"){
@@ -1655,6 +1656,16 @@ class Uploads extends MY_Controller {
 					}else{
 						$prodo2 = $this->getOldVal($sheet,$i,"O");
 					}
+					$blue = $this->getHexBlue($sheet,$i);
+					//$reds = $sheet->getStyle('O'.$i)->getFill()->getStartColor()->getRGB();
+					//$reds = $this->getHex($reds);
+					$bl = 0;
+					if($blue){
+						$bl = $blues->blues;
+					}
+					if($bl === 0){
+						$blues = $this->new_md->getMaxBlue(NULL)[0];
+					}
 					$colore = $this->getMeColor($sheet,$i);
 					$new_rojo[$i]=[
 						"id_nuevo"		=>	$id_nuevo,
@@ -1682,6 +1693,7 @@ class Uploads extends MY_Controller {
 						"rdiez"			=>	$this->getOldVal($sheet,$i,"I"),
 						"costopz"		=>	($this->getOldVal($sheet,$i,"N")-0.01),
 						"estatus"		=>	$colore,
+						"blues"			=>	$bl
 					];
 
 					$colores[$i] = $this->actualizaBase($colore,$new_rojo[$i]);
@@ -1689,15 +1701,15 @@ class Uploads extends MY_Controller {
 					$pr1 = $this->prod_md->get(NULL,["codigo" => $prodo]);
 	    			$pr2 = $this->prod_md->get(NULL,["codigo" => $prodo2]);
 	    			if ($pr1){
-	    				//$this->prize_md->update( ["estatus"=>0],["id_producto"=>$pr1[0]->id_producto] );
-	    				//$this->prize_md->insert([ "id_producto"=>$pr1[0]->id_producto,"preciouno"=>$this->getOldVal($sheet,$i,"J"),"preciodos"=>$this->getOldVal($sheet,$i,"K"),"preciotres"=>$this->getOldVal($sheet,$i,"L"),"preciocuatro"=>$this->getOldVal($sheet,$i,"M"),"preciocinco"=>$this->getOldVal($sheet,$i,"N"),"registro"=>$user["id_usuario"] ]);
+	    				$this->prize_md->update( ["estatus"=>0],["id_producto"=>$pr1[0]->id_producto] );
+	    				$this->prize_md->insert([ "id_producto"=>$pr1[0]->id_producto,"preciouno"=>$this->getOldVal($sheet,$i,"J"),"preciodos"=>$this->getOldVal($sheet,$i,"K"),"preciotres"=>$this->getOldVal($sheet,$i,"L"),"preciocuatro"=>$this->getOldVal($sheet,$i,"M"),"preciocinco"=>$this->getOldVal($sheet,$i,"N"),"registro"=>$user["id_usuario"] ]);
 	    			}
 	    			if ($pr2){
-	    				//$this->prize_md->update( ["estatus"=>0],["id_producto"=>$pr2[0]->id_producto] );
-	    				//$this->prize_md->insert([ "id_producto"=>$pr2[0]->id_producto,"preciouno"=>$this->getOldVal($sheet,$i,"S"),"preciodos"=>$this->getOldVal($sheet,$i,"T"),"preciotres"=>$this->getOldVal($sheet,$i,"U"),"preciocuatro"=>$this->getOldVal($sheet,$i,"V"),"preciocinco"=>$this->getOldVal($sheet,$i,"W"),"registro"=>$user["id_usuario"] ]);
+	    				$this->prize_md->update( ["estatus"=>0],["id_producto"=>$pr2[0]->id_producto] );
+	    				$this->prize_md->insert([ "id_producto"=>$pr2[0]->id_producto,"preciouno"=>$this->getOldVal($sheet,$i,"S"),"preciodos"=>$this->getOldVal($sheet,$i,"T"),"preciotres"=>$this->getOldVal($sheet,$i,"U"),"preciocuatro"=>$this->getOldVal($sheet,$i,"V"),"preciocinco"=>$this->getOldVal($sheet,$i,"W"),"registro"=>$user["id_usuario"] ]);
 	    			}
 					$this->det_md->insert($new_rojo[$i]);
-					
+
 					
 					$mensaje = "SE REGISTRARON SUC A";
 				}
@@ -1791,11 +1803,13 @@ class Uploads extends MY_Controller {
 		return $color;
 	}
 
-	private function getHexBlue($color){
+	private function getHexBlue($sheet,$i){
+		$color = $sheet->getStyle('A'.$i)->getFill()->getStartColor()->getRGB();
 		$uno = substr($color,0,2);
 		$dos = substr($color,2,2);
 		$tre = substr($color,4,2);
-		if((hexdec($tre) >= 100 && hexdec($dos) < 100 && hexdec($uno) < 100) || ( hexdec($tre) > hexdec($dos) && hexdec($tre) > hexdec($uno) && hexdec($tre) > 150) && hexdec($dos) < 200 && hexdec($uno) < 200){
+		//$this->jsonResponse($color);
+		if((hexdec($tre) >= 100 && hexdec($dos) < 100 && hexdec($uno) < 100) || (( hexdec($tre) > hexdec($dos) && hexdec($tre) > hexdec($uno) && hexdec($tre) > 150) && hexdec($dos) < 200 && hexdec($uno) < 200)){
 			$color = true;//rojo azul
 		}else{
 			$color = false;
@@ -1964,7 +1978,7 @@ class Uploads extends MY_Controller {
 	    $pr2 = $this->prod_md->get(NULL,["codigo" => $nuevo["code3"]]);
 	    if ($pr1 && $pr2){
 	    	$paq = $this->pack_md->get( NULL, ["id_caja"=>$pr2[0]->id_producto,"id_pieza"=>$pr1[0]->id_producto]);
-	    	if($paq0){
+	    	if($paq){
 	    		$this->pack_md->update(["estatus"=>0],["id_caja"=>$pr2[0]->id_producto,"id_pieza"=>$pr1[0]->id_producto]);
 	    		$this->pack_md->insert( ["id_caja"=>$pr2[0]->id_producto,"id_pieza"=>$pr1[0]->id_producto,"cantidad"=>$nuevo["cantidad"]] );
 	    	}

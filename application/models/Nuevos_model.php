@@ -32,10 +32,33 @@ class Nuevos_model extends MY_Model {
 		}
 	}
 
+	public function getMaxBlue($where=[]){
+		$this->db->select("MAX(blues)+1 as blues from nuevo_detail");
+		if($where !== NULL){
+			if(is_array($where)){
+				foreach ($where as $field => $value) {
+					$this->db->where($field, $value);
+				}
+			}else{
+				$this->db->where($this->PRI_INDEX, $where);
+			}
+		}
+		$result = $this->db->get()->result();
+		if($result){
+			if(is_array($where)){
+				return $result;
+			}else{
+				return $result;
+			}
+		}else{
+			return false;
+		}
+	}
+
 	public function getRojos($where = []){
 		$user = $this->session->userdata();
 		$this->db->select("n.id_nuevo,n.fecha_registro,n.agrego,n.estatus,nd.id_detail,nd.id_rojo,nd.code1,nd.code2,nd.code3,nd.linea,nd.desc1,nd.unidad,nd.desc2,nd.cantidad,nd.costo,nd.iva,nd.mar1,n.sucb
-			,nd.mar2,nd.mar3,nd.mar4,nd.mar11,nd.mar22,nd.mar33,nd.rdiez,nd.mar44,nd.pre1,nd.pre2,nd.pre3,nd.pre4,nd.pre5,nd.pre11,nd.pre22,nd.pre33,nd.pre44,nd.pre55,nd.costopz,nd.matriz,u.nombre,l.estatus as listo,nd.estatus as estatusa,nd.estatusb,n.suca, n.sucb,pz.preciocuatro,pz.preciotres,pz.preciodos,pz.preciouno,pz.preciocinco,pz2.preciocuatro as preciocuatro2,pz2.preciotres as preciotres2,pz2.preciodos as preciodos2,pz2.preciouno as preciouno2,pz2.preciocinco as preciocinco2")
+			,nd.mar2,nd.mar3,nd.mar4,nd.mar11,nd.mar22,nd.mar33,nd.rdiez,nd.mar44,nd.pre1,nd.pre2,nd.pre3,nd.pre4,nd.pre5,nd.pre11,nd.pre22,nd.pre33,nd.pre44,nd.pre55,nd.costopz,nd.matriz,u.nombre,l.estatus as listo,nd.estatus as estatusa,nd.estatusb,n.suca, n.sucb,pz.preciocuatro,pz.preciotres,pz.preciodos,pz.preciouno,pz.preciocinco,pz2.preciocuatro as preciocuatro2,pz2.preciotres as preciotres2,pz2.preciodos as preciodos2,pz2.preciouno as preciouno2,pz2.preciocinco as preciocinco2,nd.blues")
 			->from("nuevos n")
 			->join("nuevo_detail nd","n.id_nuevo = nd.id_nuevo","left")
 			->join("usuarios u","n.agrego = u.id_usuario" ,"left") 
@@ -45,7 +68,7 @@ class Nuevos_model extends MY_Model {
 			->join("productos p2","nd.code3 = p2.codigo AND p2.estatus <> 0 " ,"left") 
 			->join("precios pz2","p2.id_producto = pz2.id_producto AND pz2.estatus <> 0 " ,"left") 
 			->where("n.estatus = 1")
-			->where("n.fecha_registro BETWEEN DATE_SUB(CURDATE(), INTERVAL 21 DAY) AND DATE_ADD(CURDATE(), INTERVAL 3 DAY)")
+			->where("n.fecha_registro BETWEEN DATE_SUB(CURDATE(), INTERVAL 10 DAY) AND DATE_ADD(CURDATE(), INTERVAL 3 DAY)")
 			->order_by("nd.id_detail","ASC");
 
 		$comparativa = $this->db->get()->result();
@@ -85,6 +108,7 @@ class Nuevos_model extends MY_Model {
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre22"]	=	$comparativa[$i]->pre22;
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre33"]	=	$comparativa[$i]->pre33;
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre44"]	=	$comparativa[$i]->pre44;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["blues"]	=	$comparativa[$i]->blues;
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["pre55"]	=	$comparativa[$i]->costopz;
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["listo"]	=	$comparativa[$i]->listo;
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["rdiez"]	=	$comparativa[$i]->rdiez;
@@ -172,7 +196,7 @@ class Nuevos_model extends MY_Model {
 	public function getRojo($valo){
 		$user = $this->session->userdata();
 		$this->db->select("n.id_nuevo,n.fecha_registro,n.agrego,n.estatus,nd.id_detail,nd.id_rojo,nd.code1,nd.code2,nd.code3,linea,nd.desc1,nd.unidad,nd.desc2,nd.cantidad,nd.costo,nd.iva,nd.mar1,
-			,nd.mar2,nd.mar3,nd.mar4,nd.mar11,nd.mar22,nd.mar33,nd.mar44,nd.pre1,nd.pre2,nd.pre3,nd.pre4,nd.pre5,nd.pre11,nd.pre22,nd.pre33,nd.pre44,nd.pre55,nd.costopz,nd.matriz,u.nombre,l.estatus as listo")
+			,nd.mar2,nd.mar3,nd.mar4,nd.mar11,nd.mar22,nd.mar33,nd.mar44,nd.pre1,nd.pre2,nd.pre3,nd.pre4,nd.pre5,nd.pre11,nd.pre22,nd.pre33,nd.pre44,nd.pre55,nd.costopz,nd.matriz,u.nombre,l.estatus as listo,nd.blues")
 			->from("nuevos n")
 			->join("nuevo_detail nd","n.id_nuevo = nd.id_nuevo","left")
 			->join("usuarios u","n.agrego = u.id_usuario" ,"left") 
@@ -227,6 +251,7 @@ class Nuevos_model extends MY_Model {
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["mar33"]	=	$comparativa[$i]->mar33;
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["mar44"]	=	$comparativa[$i]->mar44;
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["listo"]	=	$comparativa[$i]->listo;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["blues"]	=	$comparativa[$i]->blues;
 		}
 		if ($comparativaIndexada) {
 			return $comparativaIndexada;

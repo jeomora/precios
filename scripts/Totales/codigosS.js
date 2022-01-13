@@ -158,7 +158,7 @@ function givePZ(value,index){
         case 5:
             reso = ["cambioDe","eliminDe"];//5 EDITAR PZ Y ELIM CAJA 
             codeqr+="c4\r\x09"+value.desc1+"\r18\r"+value.code2+"\r\n\ri1\rt"
-            codeqr2 = "\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
+            codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
             codeqr+=codeqr2;
             break;
         case 6:
@@ -206,7 +206,7 @@ function givePZ(value,index){
             reso = ["agregaDe","eliminDe"]; //12 ADD PZA Y ELIM CJA 
             codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+
             "\r\n\n\n"+value.pre44+"\r\n\n\n"+value.pre55+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0Fi1\rt"
-            codeqr2 = "\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
+            codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
             codeqr+=codeqr2
             break;
         case 13:
@@ -223,14 +223,14 @@ function givePZ(value,index){
             break;
         case 15:
             reso = ["","eliminDe"]; //15 ELIM CJA 
-            codeqr2 = "\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
+            codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
             codeqr += codeqr2;
             break;
         case 16:
             reso = ["eliminDe","eliminDe"]; //16 ELIM PZA Y ELIM CJA 
-            codeqr2 = "\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
+            codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
             codeqr = "\x05D\x0600\r"+value.linea+"\r"+value.code1+"\r00\r"+value.linea+"\r"+value.code1+"\r"
-            codeqr = codeqr+"..."+codeqr2;
+            codeqr = codeqr2+"..."+codeqr;
             break;
         default:
             codeqr = "\x05A\x06b"+value.code1+"\r\nc10\r"+value.rdiez+"\r\r17\r\n"+iva+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r\n\n\n"+value.pre44+"\r\n\n\n"+value.pre55+"\r\n\r\ni1\rT";
