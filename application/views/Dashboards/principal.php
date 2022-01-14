@@ -41,6 +41,7 @@
 
 input.form-control.bcostoRojo,input.form-control.bpre11Rojo,input.form-control.bpre22Rojo,input.form-control.bpre33Rojo,input.form-control.bpre1Rojo,input.form-control.bpre2Rojo,input.form-control.bpre3Rojo{width:80px;padding:5px;}
 input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bmar22Rojo,input.form-control.bmar33Rojo,input.form-control.bmar1Rojo,input.form-control.bmar2Rojo,input.form-control.bmar3Rojo{width:60px;padding:5px;}
+.showBody{cursor:pointer;background:aqua;font-size:18px;}
     .thAsoc{width: 170px;}
     @media (min-width: 992px){
         .content{padding:0px 0;}
@@ -104,12 +105,11 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                         </li>
                         <li class="nav-item mb-2">
                             <a class="nav-link" id="sucursal-tab-2" data-toggle="tab" href="#store-cat" aria-controls="sucursal">
-                                <span class="nav-text">PAQUETES  <br>
+                                <span class="nav-text">PAQUETES <br>
                                     <span class="fechaUpload">
                                         Hace <?php echo $hcatalo ?>
                                     </span>
                                 </span>
-                                
                             </a>
                         </li>
                         <li class="nav-item mb-2">
