@@ -7,7 +7,7 @@ jQuery(document).ready(function() {
     getMeClave().done(function(resp){
 
         if(resp){
-            clave = resp.access+"\r";
+            clave = diccionario(resp.access)+"\r";
             console.log(clave)
         }
         startQr()
@@ -136,7 +136,13 @@ function givePZ(value,index){
     if(cajas){
         codeqr2 = "\x05B\x06b"+value.code3+"\r\nc"+clave+"1\r\n\x1911\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+"\r\n\n\n"+value.pre5+"\r\n"
     }
-
+    if(typeof(almacena[value.blues]) == "undefined" && almacena[value.blues] == null){
+        almacena[value.blues] = "";
+    }
+    if(value.blues != 0){
+        almacena[value.blues] += ""+value.code1+"\r"+value.cantidad+"\r";
+    }
+    var cajaAlta = "";
 
     switch( parseInt(value.estatus) ){
         case 2:
@@ -158,7 +164,7 @@ function givePZ(value,index){
         case 5:
             reso = ["cambioDe","eliminDe"];//5 EDITAR PZ Y ELIM CAJA 
             codeqr+="c4\r\x09"+value.desc1+"\r18\r"+value.code2+"\r\n\ri1\rt"
-            codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
+            codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rtt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
             codeqr+=codeqr2;
             break;
         case 6:
@@ -170,8 +176,12 @@ function givePZ(value,index){
         case 7:
             reso = ["cambioDe","agregaDe"];//7 EDITAR PZ Y ADD CAJA 
             codeqr+="c4\r\x09"+value.desc1+"\r18\r"+value.code2+"\r\n\ri1\rt"
-            codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcaja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
-            "\r\n\n\n"+value.pre5+"\r\r\x0Ft"
+            cajaAlta = value.code1+"\r"+value.cantidad+"\r"
+            if(value.blues != 0){
+                cajaAlta = almacena[value.blues];
+            }
+            codeqr2 = "\x05B\x06A"+clave+"1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcaja+"\r"+cajaAlta+"\x19\r\r\n\n"+value.iva+""+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
+            "\r\n\n\n"+value.pre5+"\r\r"+clave+"1\x0Ftt"
             codeqr+=codeqr2;
             break;
         case 8:
@@ -189,31 +199,43 @@ function givePZ(value,index){
             codeqr+=codeqr2;
             break;
         case 10:
-            reso = ["","agregaDe"]; //10 ADD CJA 
-            codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcaja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
-            "\r\n\n\n"+value.pre5+"\r\r\x0Ft"
+            reso = ["","agregaDe"]; //10 ADD CAJA 
+            cajaAlta = value.code1+"\r"+value.cantidad+"\r"
+            if(value.blues != 0){
+                cajaAlta = almacena[value.blues];
+            }
+            codeqr2 = "\x05B\x06A"+clave+"1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcaja+"\r"+cajaAlta+"\x19\r\r\n\n"+value.iva+""+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
+            "\r\n\n\n"+value.pre5+"\r\r"+clave+"1\x0Ftt"
             codeqr+=codeqr2;
             break;
         case 11:
             reso = ["agregaDe","agregaDe"]; //11 ADD PZA Y ADD CAJA 
             codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+
             "\r\n\n\n"+value.pre44+"\r\n\n\n"+value.pre55+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0Fi1\rt"
-            codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcaja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
-            "\r\n\n\n"+value.pre5+"\r\r\x0Ft"
+            cajaAlta = value.code1+"\r"+value.cantidad+"\r"
+            if(value.blues != 0){
+                cajaAlta = almacena[value.blues];
+            }
+            codeqr2 = "\x05B\x06A"+clave+"1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcaja+"\r"+cajaAlta+"\x19\r\r\n\n"+value.iva+""+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
+            "\r\n\n\n"+value.pre5+"\r\r"+clave+"1\x0Ftt"
             codeqr+=codeqr2;
             break;
         case 12:
-            reso = ["agregaDe","eliminDe"]; //12 ADD PZA Y ELIM CJA 
+            reso = ["agregaDe","eliminDe"]; //12 ADD PZA Y ELIM CAJA 
             codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+
             "\r\n\n\n"+value.pre44+"\r\n\n\n"+value.pre55+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0Fi1\rt"
-            codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
+            codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rtt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
             codeqr+=codeqr2
             break;
         case 13:
-            reso = ["eliminDe","agregaDe"]; //13 ADD CJA Y ELIM PZA 
+            reso = ["eliminDe","agregaDe"]; //13 ADD CAJA Y ELIM PZA 
             codeqr = "\x05D\x0600\r"+value.linea+"\r"+value.code1+"\r00\r"+value.linea+"\r"+value.code1+"\r"
-            codeqr2 = "\x05B\x06A1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcaja+"\r"+value.code1+"\r"+value.cantidad+"\r\x19\r\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
-            "\r\n\n\n"+value.pre5+"\r\r\x0Ft"
+            cajaAlta = value.code1+"\r"+value.cantidad+"\r"
+            if(value.blues != 0){
+                cajaAlta = almacena[value.blues];
+            }
+            codeqr2 = "\x05B\x06A"+clave+"1\r"+value.linea+"\r"+value.code3+"\r"+value.desc2+"\r"+value.umcaja+"\r"+cajaAlta+"\x19\r\r\n\n"+value.iva+""+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\n\n\n"+value.pre4+
+            "\r\n\n\n"+value.pre5+"\r\r"+clave+"1\x0Ftt"
             codeqr = codeqr2+codeqr;
             break;
         case 14:
@@ -222,12 +244,12 @@ function givePZ(value,index){
             codeqr = codeqr2+codeqr;
             break;
         case 15:
-            reso = ["","eliminDe"]; //15 ELIM CJA 
-            codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
+            reso = ["","eliminDe"]; //15 ELIM CAJA 
+            codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rtt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
             codeqr += codeqr2;
             break;
         case 16:
-            reso = ["eliminDe","eliminDe"]; //16 ELIM PZA Y ELIM CJA 
+            reso = ["eliminDe","eliminDe"]; //16 ELIM PZA Y ELIM CAJA 
             codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
             codeqr = "\x05D\x0600\r"+value.linea+"\r"+value.code1+"\r00\r"+value.linea+"\r"+value.code1+"\r"
             codeqr = codeqr2+"..."+codeqr;
@@ -313,11 +335,22 @@ function diccionario(vals){
             case "/":
                 valo += "&"
             break;
+            case '^':
+                valo += "{"
+            break;
+            case '*':
+                valo += "}"
+            break;
+            case '`':
+                valo += "["
+            break;
+            case '"':
+                valo += "@"
+            break;
             default:
                 valo += vals[i];
             break;
         }
-        console.log(valo)
     }
     return valo;
 }

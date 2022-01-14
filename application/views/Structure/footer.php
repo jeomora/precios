@@ -518,7 +518,7 @@
         <!--end::Global Theme Bundle-->
 
         <!--begin::Page Vendors(used by this page)-->
-        <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=1.0"></script>
+        <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=3.0"></script>
         <!--end::Page Vendors-->
 
         <!--begin::Page Scripts(used by this page)-->

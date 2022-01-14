@@ -62,9 +62,7 @@ function oldResultsA(respo){
                 var colos = giveMeColor(value.estatus);
                 var des1 = colos[0];var des2 =colos[1];
                 var blues = "";
-                console.log(value)
                 if(value.blues != 0){
-                    console.log("iojijioj")
                     blues = "style='background:#00b0f0 !important'";
                 }
                 if (value){

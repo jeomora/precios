@@ -316,11 +316,22 @@ function diccionario(vals){
             case "/":
                 valo += "&"
             break;
+            case '^':
+                valo += "{"
+            break;
+            case '*':
+                valo += "}"
+            break;
+            case '`':
+                valo += "["
+            break;
+            case '"':
+                valo += "@"
+            break;
             default:
                 valo += vals[i];
             break;
         }
-
     }
     return valo;
 }
