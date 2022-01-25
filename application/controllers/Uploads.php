@@ -2035,9 +2035,13 @@ class Uploads extends MY_Controller {
 		$inicio = "";$termino="";
 		$conjunto = $this->getMaxOfes();
 		$conju = floatval($conjunto->fecha) +1;
-		if ( $this->getOldVal($sheet,3,"A") == "INICIA" || $this->getOldVal($sheet,3,"C") == "TERMINA" ) {//OFERTAS DE LA SEMANA
+		$conju2 = floatval($conjunto->fecha) +2;
+		if ( 1 == 1 ) {//OFERTAS DE LA SEMANA
 			$inicio = date('Y-m-d 07:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"B")));
 			$termino= date('Y-m-d 22:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"D")));
+
+			$inicio2 = date('Y-m-d 07:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"G")));
+			$termin2 = date('Y-m-d 22:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"I")));
 			for ($i=5; $i<=$num_rows; $i++) {
 				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO" && $this->getOldVal($sheet,$i,"A") <> "0" && $this->getOldVal($sheet,$i,"A") <> 0){
 					$produ = 0;$codo = $this->getOldVal($sheet,$i,"A");
@@ -2059,23 +2063,38 @@ class Uploads extends MY_Controller {
 						"id_producto"	=>	$produ,
 						"conjunto"		=>	$conju
 					];
-					$ofe = $this->ofe_md->getDobles(NULL,$this->getOldVal($sheet,$i,"A"));
-					if($ofe){
-						//$this->ofe_md->update(["estatus"=>0],$ofe[0]->id_oferta);
-					}
-					$this->ofe_md->insert($new_ofe);
 					
+					$this->ofe_md->insert($new_ofe);
 				}
+
+				if($this->getOldVal($sheet,$i,"F") <> "" && $this->getOldVal($sheet,$i,"F") <> "  " && $this->getOldVal($sheet,$i,"F") <> "CODIGO" && $this->getOldVal($sheet,$i,"F") <> "0" && $this->getOldVal($sheet,$i,"F") <> 0){
+					$produ = 0;$codo = $this->getOldVal($sheet,$i,"F");
+					$pro = $this->prod_md->get(NULL,["estatus"=>1,"codigo"=>$this->getOldVal($sheet,$i,"F")]);
+					if($pro){
+						$produ = $pro[0]->id_producto;
+						$codo = $pro[0]->codigo;
+					}
+					$new_ofe=[
+						"fecha_inicio"	=>	$inicio2,
+						"fecha_termino"	=>	$termin2,
+						"codigo"		=>	$codo,
+						"nombre"		=>	$this->getOldVal($sheet,$i,"G"),
+						"precio"		=>	$this->getOldVal($sheet,$i,"H"),
+						"normal"		=>	$this->getOldVal($sheet,$i,"I"),
+						"maximo"		=>	$this->getOldVal($sheet,$i,"J"),
+						"registro"		=>	$user["id_usuario"],
+						"tipo"			=>	1,
+						"id_producto"	=>	$produ,
+						"conjunto"		=>	$conju2
+					];
+					
+					$this->ofe_md->insert($new_ofe);
+				}
+
+
 			}
 			$new_cambio = [
 				"accion" => "Sube Ofertas SEMANALES",
-				"antes" => "".$filen,
-				"id_usuario" => $user["id_usuario"]
-			];
-			$cambio = $this->cambio_md->insert($new_cambio);
-		}else{
-			$new_cambio = [
-				"accion" => "Sube Ofertas MIÉRCOLES Y  JUEVES",
 				"antes" => "".$filen,
 				"id_usuario" => $user["id_usuario"]
 			];

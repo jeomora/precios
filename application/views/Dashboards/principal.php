@@ -64,6 +64,8 @@
     tr.bodyOfestr:hover{background: bisque;}
     .boldSpan{font-weight:bold;}
     .bodyModalOfes>tr:hover{background: bisque;}
+    .dmo1{font-weight: bold;}
+    .dmo2{color: red;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -494,6 +496,8 @@
                             <th class="modalOfeInicia" style="background:rgb(112,48,160);color:#FFF;"></th>
                             <th style="background:rgb(255,0,102);color:#000;">TERMINA</th>
                             <th colspan="2" class="modalOfeTermina" style="background:rgb(0,32,96);color:#FFF;"></th>
+                            <th colspan="2" style="background:rgb(255,0,102);"></th>
+
                         </tr>
                         <tr>
                             <th style="background:#FFF;color:#000;">CÓDIGO</th>
@@ -501,6 +505,8 @@
                             <th style="background:rgb(255,204,255);color:#000;">OFERTA</th>
                             <th style="background:rgb(244,176,132);color:#000;">NORMAL</th>
                             <th style="background:#FFF;color:#000;">MÁXIMO</th>
+                            <th style="background:#FFF;color:#000;">ANTERIOR</th>
+                            <th style="background:#FFF;color:#000;">PRECIO 5</th>
                         </tr>
                     </thead>
                     <tbody class="bodyModalOfes">

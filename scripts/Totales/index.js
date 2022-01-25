@@ -67,8 +67,11 @@ $(document).off("click",".modalOferta").on("click",".modalOferta",function(event
                     $(".modalOfeInicia").html(formatDate2Bold(val.fecha_inicio))
                     $(".modalOfeTermina").html(formatDate2Bold(val.fecha_termino))
                 }
+                var dif1 = val.precio - val.preciouno;var dif2 = val.precio - val.preciocinco;
+                var por1 = dif1 / val.preciouno * 100; var por2 = dif2 / val.preciocinco * 100;
                 $(".bodyModalOfes").append('<tr><td>'+val.codigo+'</td><td>'+val.nombre+'</td><td style="font-weight:bold;background:rgba(255,204,255,.60);">$'+formatMoney(val.precio)+'</td><td style="background:rgba(244,176,132,.60);">$ '+
-                    formatMoney(val.normal)+'</td><td>'+val.maximo+'</td></tr>')
+                    formatMoney(val.normal)+'</td><td>'+val.maximo+'</td><td>$'+formatMoney(val.preciouno)+'<br><span class="dmo1">$'+formatMoney(dif1)+' <br> % '+formatMoney(por1)+'</span></td><td>$ '+
+                    formatMoney(val.preciocinco)+'<br><span class="dmo1">$'+formatMoney(dif2)+' <br> % '+formatMoney(por2)+'</span></td></tr>')
             })
         }
     })
