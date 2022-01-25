@@ -15,6 +15,7 @@ class Inicio extends MY_Controller {
 		$this->load->model("Cajas_model", "caja_md");
 		$this->load->model("Lineas_model", "ln_md");
 		$this->load->model("Nuevos_model", "new_md");
+		$this->load->model("Ofertas_model", "ofe_md");
 		$this->load->library("form_validation");
 	}
 
@@ -37,6 +38,7 @@ class Inicio extends MY_Controller {
 					'/scripts/qrcode',
 					'/scripts/Totales/index',
 				];
+				$data["ofertones"] = $this->ofe_md->getActivas(NULL);
 				$this->estructura("Dashboards/principal", $data);
 			}elseif($user["id_grupo"] === "2" || $user["id_grupo"] === 2){ // SUCURSALES
 				$data['scripts'] = [

@@ -329,7 +329,7 @@ class Nuevos_model extends MY_Model {
 			->join("sucprecios pz2","p2.id_producto = pz2.id_producto AND pz2.estatus <> 0 " ,"left") 
 			->join("sucursales ss","ss.id_sucursal = ".$user["id_sucursal"]."" ,"left")
 			->where("n.estatus = 1")
-			->where("n.fecha_registro BETWEEN DATE_SUB(CURDATE(), INTERVAL 10 DAY) AND DATE_ADD(CURDATE(), INTERVAL 3 DAY)")
+			->where("n.fecha_registro BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE_ADD(CURDATE(), INTERVAL 3 DAY)")
 			->order_by("nd.id_detail","ASC");
 
 		$comparativa = $this->db->get()->result();

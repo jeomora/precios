@@ -24,14 +24,14 @@ function getNuevosA() {
 function oldResultsA(respo){
     $.each(respo,function(inx,val){
         if (val.suca != 0){
-            var new_table = '<div class=row><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="5" style="padding:0">'+setZeros2(val.id_nuevo)+'</th>'+
+            var new_table = '<div class=row><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="4" style="padding:0">'+setZeros2(val.id_nuevo)+'</th><th class="showBody" data-id-user="'+val.id_nuevo+'">MOSTRAR LISTA</th>'+
                 '<th><a class="nav-link" target="_blank" href="Codigos/qrmeS/'+val.id_nuevo+'"><img src="assets/img/codigo-qr.png" style="height:45px"></a></th><th>'+
                 '<a class="nav-link" target="_blank" href="Uploads/excelA/'+val.id_nuevo+'"><img src="assets/img/excel.svg" style="height:45px"></a></th><th colspan="7">'+
                 formatDate2(val.fecha_registro)+'</th><th colspan="17" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr><th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th>'+
                 '<th style="width:350px" >DESCRIPCIÓN</th><th style="width:70px" >UM</th><th style="width:100px" >C</th><th style="width:150px" >PAQUETE</th>'+
                 '<th style="width:100px" class="ivaClass">IVA</th><th style="width:100px" class="renglon10Class">RENGLON 10</th><th colspan="5">PRECIOS DEL 1 AL 5</th>'+
                 '<th style="width:100px" >CÓDIGO</th><th style="width:350px" >DESCRIPCIÓN</th>'+
-                '<th style="" colspan="5">PRECIOS DEL 1 AL 5</th></tr></thead><tbody>';
+                '<th style="" colspan="5">PRECIOS DEL 1 AL 5</th></tr></thead><tbody id="body'+val.id_nuevo+'" style="display:none">';
             $.each(val.detalles,function(index,value){
 
                 var colos = giveMeColor(value.estatus);
@@ -63,6 +63,13 @@ function oldResultsA(respo){
         }
     })
 }
+
+$(document).off("click",".showBody").on("click",".showBody",function(event){
+    event.preventDefault();
+    var dis = $(this).data("idUser");
+    //$("#body"+dis).css("display","block !important")
+    document.getElementById("body"+dis).style.display = "contents";
+})
 
 $(document).off("click",".nuevoBtn").on("click",".nuevoBtn",function(event){
     event.preventDefault();

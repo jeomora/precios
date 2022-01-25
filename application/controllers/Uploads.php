@@ -20,8 +20,10 @@ class Uploads extends MY_Controller {
 		$this->load->model("Nuevos_model", "new_md");
 		$this->load->model("Nuevodetail_model", "det_md");
 		$this->load->model("Listos_model", "listo_md");
+		$this->load->model("Listosof_model", "listof_md");
 		$this->load->model("Paquetes_model", "pack_md");
 		$this->load->model("Nuevob_model", "newb_md");
+		$this->load->model("Ofertas_model", "ofe_md");
 		$this->load->library("form_validation");
 	}
 
@@ -541,6 +543,16 @@ class Uploads extends MY_Controller {
 			$this->listo_md->update([ "estatus"=>$val1,"fecha_registro"=>date("Y-m-d H:i:s"),"agrego"=>$user["id_usuario"] ],["id_listo"=>$listo[0]->id_listo]);
 		}else{
 			$this->listo_md->insert([ "agrego"=>$user["id_usuario"],"id_sucursal"=>$user["id_sucursal"],"id_detalle"=>$val2 ]);
+		}
+	}
+
+	public function setListoOf($val1,$val2){
+		$user = $this->session->userdata();
+		$listo = $this->listof_md->get(NULL,["id_detalle"=>$val2,"id_sucursal"=>$user["id_sucursal"]]);
+		if($listo){
+			$this->listof_md->update([ "estatus"=>$val1,"fecha_registro"=>date("Y-m-d H:i:s"),"agrego"=>$user["id_usuario"] ],["id_listo"=>$listo[0]->id_listo]);
+		}else{
+			$this->listof_md->insert([ "agrego"=>$user["id_usuario"],"id_sucursal"=>$user["id_sucursal"],"id_detalle"=>$val2 ]);
 		}
 	}
 
@@ -1996,8 +2008,102 @@ class Uploads extends MY_Controller {
 		}
 	}
 
+	public function upload_ofertas(){
+		$user = $this->session->userdata();
+		$this->load->library("excelfile");
+		ini_set("memory_limit", -1);
+		$file = $_FILES["file_excel"]["tmp_name"];
+		
+		$objExcel = PHPExcel_IOFactory::load($file);
+		$sheet = $objExcel->getSheet(0);
+		$num_rows = $sheet->getHighestDataRow();
+
+		$filen = "ofertas".$user["id_usuario"]."x".date("dmyHis")."".rand(1000,9999);
+		$config['upload_path']          = './assets/uploads/ofertas/';
+        $config['allowed_types']        = 'xlsx|xls';
+        $config['max_size']             = 10000;
+        $config['max_width']            = 10024;
+        $config['max_height']           = 76080;
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        $this->upload->do_upload('file_excel',$filen);
+
+        
+		$mensaje = "Archivo invalido";
+		$id_nuevo = 0;
+		$flag = 1;
+		$inicio = "";$termino="";
+		$conjunto = $this->getMaxOfes();
+		$conju = floatval($conjunto->fecha) +1;
+		if ( $this->getOldVal($sheet,3,"A") == "INICIA" || $this->getOldVal($sheet,3,"C") == "TERMINA" ) {//OFERTAS DE LA SEMANA
+			$inicio = date('Y-m-d 07:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"B")));
+			$termino= date('Y-m-d 22:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"D")));
+			for ($i=5; $i<=$num_rows; $i++) {
+				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO" && $this->getOldVal($sheet,$i,"A") <> "0" && $this->getOldVal($sheet,$i,"A") <> 0){
+					$produ = 0;$codo = $this->getOldVal($sheet,$i,"A");
+					$pro = $this->prod_md->get(NULL,["estatus"=>1,"codigo"=>$this->getOldVal($sheet,$i,"A")]);
+					if($pro){
+						$produ = $pro[0]->id_producto;
+						$codo = $pro[0]->codigo;
+					}
+					$new_ofe=[
+						"fecha_inicio"	=>	$inicio,
+						"fecha_termino"	=>	$termino,
+						"codigo"		=>	$codo,
+						"nombre"		=>	$this->getOldVal($sheet,$i,"B"),
+						"precio"		=>	$this->getOldVal($sheet,$i,"C"),
+						"normal"		=>	$this->getOldVal($sheet,$i,"D"),
+						"maximo"		=>	$this->getOldVal($sheet,$i,"E"),
+						"registro"		=>	$user["id_usuario"],
+						"tipo"			=>	1,
+						"id_producto"	=>	$produ,
+						"conjunto"		=>	$conju
+					];
+					$ofe = $this->ofe_md->getDobles(NULL,$this->getOldVal($sheet,$i,"A"));
+					if($ofe){
+						//$this->ofe_md->update(["estatus"=>0],$ofe[0]->id_oferta);
+					}
+					$this->ofe_md->insert($new_ofe);
+					
+				}
+			}
+			$new_cambio = [
+				"accion" => "Sube Ofertas SEMANALES",
+				"antes" => "".$filen,
+				"id_usuario" => $user["id_usuario"]
+			];
+			$cambio = $this->cambio_md->insert($new_cambio);
+		}else{
+			$new_cambio = [
+				"accion" => "Sube Ofertas MIÉRCOLES Y  JUEVES",
+				"antes" => "".$filen,
+				"id_usuario" => $user["id_usuario"]
+			];
+			$cambio = $this->cambio_md->insert($new_cambio);
+		}
+
+
+		$this->jsonResponse( $conju );
+	}
+
+	public function excelDate($excel_date){
+		$unix_date = ($excel_date - 25569) * 86400;
+		$excel_date = 25569 + ($unix_date / 86400);
+		$unix_date = ($excel_date - 25569) * 86400;
+		return gmdate("Y-m-d", $unix_date);
+	}
+
+	public function getOfertas(){
+		$this->jsonResponse( $this->ofe_md->getActivas(NULL) );
+	}
+
+	public function getOferta($dis){
+		$this->jsonResponse( $this->ofe_md->getOferton(["o.conjunto"=>$dis]) );
+	}
+
+	public function getMaxOfes(){
+		return $this->ofe_md->getMaxReg(NULL)[0];
+	}
 
 
 }
-
-

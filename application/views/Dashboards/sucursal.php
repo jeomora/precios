@@ -31,6 +31,7 @@
     .cambioDe{background: #FFFF00;}
     .eliminDe{background: #FF8484;}
     .agregaDe{background: rgb(146,208,80);}
+    .showBody{cursor:pointer;background:aqua;font-size:18px;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -54,7 +55,7 @@
                                         <p class="text-dark font-weight-bold mt-3">
                                             A continuación podrá visualizar los precios para actualizar.<br>
                                             Cualquier duda o sugerencia le pedimos comunicarse con el personal responsable en el área de compras.<br>
-                                            <h1>SE MUESTRAN SÓLO LOS CAMBIOS DE LAS ÚLTIMAS 3 SEMANAS.</h1>
+                                            <h1>SE MUESTRAN SÓLO LOS CAMBIOS DE LOS ÚLTIMOS 7 DÍAS.</h1>
                                         </p>
                                     </div>
                                 </div>

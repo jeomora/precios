@@ -39,9 +39,9 @@
     textarea.form-control.inputransparent.descoUno,textarea.form-control.inputransparent.descoDos,input.form-control.inputransparent.codeDos{width:150px;}
     textarea.form-control.inputransparent.descoUno,textarea.form-control.inputransparent.descoDos{height:100px;}
 
-input.form-control.bcostoRojo,input.form-control.bpre11Rojo,input.form-control.bpre22Rojo,input.form-control.bpre33Rojo,input.form-control.bpre1Rojo,input.form-control.bpre2Rojo,input.form-control.bpre3Rojo{width:80px;padding:5px;}
-input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bmar22Rojo,input.form-control.bmar33Rojo,input.form-control.bmar1Rojo,input.form-control.bmar2Rojo,input.form-control.bmar3Rojo{width:60px;padding:5px;}
-.showBody{cursor:pointer;background:aqua;font-size:18px;}
+    input.form-control.bcostoRojo,input.form-control.bpre11Rojo,input.form-control.bpre22Rojo,input.form-control.bpre33Rojo,input.form-control.bpre1Rojo,input.form-control.bpre2Rojo,input.form-control.bpre3Rojo{width:80px;padding:5px;}
+    input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bmar22Rojo,input.form-control.bmar33Rojo,input.form-control.bmar1Rojo,input.form-control.bmar2Rojo,input.form-control.bmar3Rojo{width:60px;padding:5px;}
+    .showBody{cursor:pointer;background:aqua;font-size:18px;}
     .thAsoc{width: 170px;}
     @media (min-width: 992px){
         .content{padding:0px 0;}
@@ -57,6 +57,13 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
     .cambioDe{background: #FFFF00;}
     .eliminDe{background: #FF8484;}
     .agregaDe{background: rgb(146,208,80);}
+
+    .ofePz{background:rgb(255,204,255,.50);font-weight:bold;font-size:18px;padding-bottom:1px !important;}
+    .ofeIn{background:rgba(112,48,160,.17);}
+    .ofeTe{background:rgba(0,32,96,.17);}
+    tr.bodyOfestr:hover{background: bisque;}
+    .boldSpan{font-weight:bold;}
+    .bodyModalOfes>tr:hover{background: bisque;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -77,16 +84,6 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                     <span class="fechaUpload">
                                         
                                     </span>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" id="sucursal-tab-oferta" data-toggle="tab" href="#store-oferta">
-                                <span class="nav-text">
-                                    AGREGAR <br> OFERTAS
-                                </span>
-                                <span>
-                                    
                                 </span>
                             </a>
                         </li>
@@ -116,6 +113,16 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                             <a class="nav-link" id="sucursal-tab-oferta" data-toggle="tab" href="#store-oferta">
                                 <span class="nav-text">
                                     CATÁLOGO DE<br> ARTICULOS
+                                </span>
+                                <span>
+                                    
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a class="nav-link" id="sucursal-tab-subeoferta" data-toggle="tab" href="#store-subeoferta">
+                                <span class="nav-text">
+                                    AGREGAR <br> OFERTAS
                                 </span>
                                 <span>
                                     
@@ -161,7 +168,6 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
 
 
@@ -194,7 +200,7 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                 end::Row-->
                             </div>
 
-                            <div class="tab-pane fade" id="store-oferta" role="tabpanel" aria-labelledby="store-tab-oferta"><!-- OFERTAS -->
+                            <div class="tab-pane fade" id="store-oferta" role="tabpanel" aria-labelledby="store-tab-oferta"><!-- CATÁLOGOS -->
 
                                 <h1>SUBIR ARCHIVO CATÁLOGOS</h1>
                                 <!--begin::Row-->
@@ -212,7 +218,7 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                 <!--end::Row-->
                             </div>
                         
-                            <div class="tab-pane fade" id="store-cat" role="tabpanel" aria-labelledby="store-tab-cat"><!-- CATÁLOGOS -->
+                            <div class="tab-pane fade" id="store-cat" role="tabpanel" aria-labelledby="store-tab-cat"><!-- PAQUETES -->
 
                                 <h1>SUBIR ARCHIVO PAQUETES</h1>
                                 <!--begin::Row-->
@@ -228,6 +234,140 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                     </div>
                                 </div>
                                 <!--end::Row-->
+                            </div>
+
+                            <div class="tab-pane fade" id="store-subeoferta" role="tabpanel" aria-labelledby="store-tab-subeoferta"><!-- OFERTAS -->
+                                <div class="row col-xl-12 dropRow dropRowMargin" style="padding-bottom:20px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4"></div>         
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="dropzone dropzone-default dropzone-info" id="kt_dropzone_ofertas">
+                                            <div class="dropzone-msg dz-message needsclick">
+                                                <h3 class="dropzone-msg-title">SUBIR ARCHIVO EXCEL OFERTAS</h3>
+                                                <span class="dropzone-msg-desc">Clic para seleccionar arhivo y/o arrastre el archivo xlsx.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Row-->
+
+                                <h1 style="text-align:center;font-size:40px;">OFERTAS ACTIVAS</h1>
+                                <!--begin::Row
+                                <div class="row col-xl-12" style="padding-bottom:20px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <table class="table table-bordered" style="text-align:center;">
+                                                <thead>
+                                                    <tr class="bg-light-success">
+                                                        <th colspan="8">
+                                                            PROMOCIONES ACTIVAS
+                                                        </th>
+                                                    </tr>
+                                                    <tr class="bg-light-success">
+                                                        <th>
+                                                            CÓDIGO
+                                                        </th>
+                                                        <th>
+                                                            DESCRIPCIÓN
+                                                        </th>
+                                                        <th>
+                                                            OFERTA
+                                                        </th>
+                                                        <th>
+                                                            NORMAL
+                                                        </th>
+                                                        <th>
+                                                            MAXIMO
+                                                        </th>
+                                                        <th>
+                                                            TIPO
+                                                        </th>
+                                                        <th>
+                                                            INICIA
+                                                        </th>
+                                                        <th>
+                                                            TERMINA
+                                                        </th>
+                                                    </tr>
+                                                    <tr class="bg-light-success">
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="bodyOfes">
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>         
+                                </div>
+                                end::Row-->
+                                <div class="flex-row-lg-fluid ml-lg-8">
+                                    <div class="row bodyOfes">
+                                        <!--<?php if($ofertones):$ofert = 0;$flag = 0; ?>
+                                            <?php foreach ($ofertones as $key => $val): ?>
+
+                                                <?php if($ofert <> $val->conjunto):$ofert = $val->conjunto; ?>
+                                                    <?php if($flag <> 0):$flag=0; ?> 
+                                                                        </div> 
+                                                                    <a class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4">Ver lista completa</a>
+                                                                    <a class="btn btn-block btn-sm btn-light-warning font-weight-bolder text-uppercase py-4">
+                                                                        <img src="assets/img/codigo-qr.png" style="height:45px">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php endif; ?>  
+                                                    <div class="col-xl-3">
+                                                        <div class="card card-custom gutter-b card-stretch">
+                                                            <div class="card-body pt-4 d-flex flex-column justify-content-between">
+                                                                <div class="d-flex align-items-center mb-7">
+                                                                    <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
+                                                                        <div class="symbol symbol-lg-75">
+                                                                            <img alt="Pic" src="<?php echo base_url()?>assets/img/abarrotes.png">
+                                                                        </div>
+                                                                        <div class="symbol symbol-lg-75 symbol-primary d-none">
+                                                                            <span class="font-size-h3 font-weight-boldest">JM</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex flex-column">
+                                                                        <a href="#" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">OFERTA-<?php echo $val->conjunto; ?></a>
+                                                                        <span class="text-muted font-weight-bold">
+                                                                            <?php echo $dias[date('w',strtotime($val->fecha_registro))]." ".date('d',strtotime($val->fecha_registro))." DE ".$meses[date('n',strtotime($val->fecha_registro))-1]. " DEL ".date('Y',strtotime($val->fecha_registro)); ?>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="mb-7  font-weight-boldest">
+                                                                    Fecha Inicio <span class="text-primary pr-1"><?php echo $dias[date('w',strtotime($val->fecha_inicio))]." ".date('d',strtotime($val->fecha_inicio))." DE ".$meses[date('n',strtotime($val->fecha_inicio))-1]. " DEL ".date('Y',strtotime($val->fecha_inicio)); ?></span><br>
+                                                                    Fecha Termino <span class="text-primary pr-1"><?php echo $dias[date('w',strtotime($val->fecha_termino))]." ".date('d',strtotime($val->fecha_termino))." DE ".$meses[date('n',strtotime($val->fecha_termino))-1]. " DEL ".date('Y',strtotime($val->fecha_termino)); ?></span>
+                                                                </p>
+                                                                <div class="mb-7">                                                
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <span class="text-dark-75 font-weight-bolder mr-2"><?php echo $val->nombre; ?></span>
+                                                                        <span class="text-muted font-weight-bold">$ <?php echo number_format($val->precio,2,".",","); ?></span>
+                                                                    </div>
+                                                                <?php $flag++; ?>
+
+                                                                
+
+                                                <?php else: ?>
+                                                    <?php if($flag < 4):$flag++; ?>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <span class="text-dark-75 font-weight-bolder mr-2"><?php if(strlen($val->nombre) >= 40): echo substr($val->nombre,0,39)."...";else: echo $val->nombre;endif; ?></span>
+                                                            <span class="text-muted font-weight-bold">$ <?php echo number_format($val->precio,2,".",","); ?></span>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                <?php endif; ?> 
+                                            <?php endforeach ?>
+                                                            </div> 
+                                                        <a class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4">Ver lista completa</a>
+                                                        <a class="btn btn-block btn-sm btn-light-warning font-weight-bolder text-uppercase py-4">
+                                                            <img src="assets/img/codigo-qr.png" style="height:45px">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>-->
+                                    </div>
+                                </div>
+                                
                             </div>
                             
                             <div class="tab-pane fade" id="store-sua" role="tabpanel" aria-labelledby="store-tab-sua"><!-- SUCURSALES A -->
@@ -323,6 +463,48 @@ input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bm
                                 <td><?php echo number_format($value->iva,0) ?></td>
                             </tr>
                         <?php endforeach;?>
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+
+<!--begin::Modal EDITAR DESCRIPCIÓN  -->
+<div class="modal fade" id="kt_modal_oferta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">LISTA DE PRODUCTOS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered" style="text-align:center;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="background:rgb(255,0,102);color:#000;">INICIA</th>
+                            <th class="modalOfeInicia" style="background:rgb(112,48,160);color:#FFF;"></th>
+                            <th style="background:rgb(255,0,102);color:#000;">TERMINA</th>
+                            <th colspan="2" class="modalOfeTermina" style="background:rgb(0,32,96);color:#FFF;"></th>
+                        </tr>
+                        <tr>
+                            <th style="background:#FFF;color:#000;">CÓDIGO</th>
+                            <th style="background:#FFF;color:#000;">NOMBRE</th>
+                            <th style="background:rgb(255,204,255);color:#000;">OFERTA</th>
+                            <th style="background:rgb(244,176,132);color:#000;">NORMAL</th>
+                            <th style="background:#FFF;color:#000;">MÁXIMO</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bodyModalOfes">
+                        
                     </tbody>
                 </table>
                 
