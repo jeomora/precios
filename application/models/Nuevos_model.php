@@ -143,7 +143,7 @@ class Nuevos_model extends MY_Model {
 			->join("nuevo_b nd","n.id_nuevo= nd.id_nuevo and nd.estatus <> 0","left")
 			->join("usuarios u","n.agrego = u.id_usuario" ,"left") 
 			->where("n.estatus = 1")
-			->where("n.fecha_registro BETWEEN DATE_SUB(CURDATE(), INTERVAL 21 DAY) AND DATE_ADD(CURDATE(), INTERVAL 3 DAY)")
+			->where("n.fecha_registro BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE_ADD(CURDATE(), INTERVAL 3 DAY)")
 			->order_by("nd.id_detail","ASC");
 
 		$comparativa = $this->db->get()->result();
@@ -203,7 +203,7 @@ class Nuevos_model extends MY_Model {
 			->join("listos l","nd.id_detail = l.id_detalle AND l.estatus = 1 AND l.id_sucursal = ".$user["id_sucursal"]."" ,"left") 
 			->where("n.estatus = 1")
 			->where("n.id_nuevo",$valo)
-			->where("n.fecha_registro BETWEEN DATE_SUB(CURDATE(), INTERVAL 21 DAY) AND DATE_ADD(CURDATE(), INTERVAL 3 DAY)")
+			->where("n.fecha_registro BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE_ADD(CURDATE(), INTERVAL 3 DAY)")
 			->order_by("n.id_nuevo","DESC");
 
 		$comparativa = $this->db->get()->result();

@@ -2116,6 +2116,10 @@ class Uploads extends MY_Controller {
 		$this->jsonResponse( $this->ofe_md->getActivas(NULL) );
 	}
 
+	public function getORecientes(){
+		$this->jsonResponse( $this->ofe_md->getRecientes(NULL) );
+	}
+
 	public function getOferta($dis){
 		$this->jsonResponse( $this->ofe_md->getOferton(["o.conjunto"=>$dis]) );
 	}

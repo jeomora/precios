@@ -11,6 +11,7 @@ jQuery(document).ready(function() {
     
     getMeNews();
     getMeOfes();
+    getMeORec();
 });
 
 function getMeOfes(){
@@ -23,17 +24,17 @@ function getMeOfes(){
                     if(flag != 0){
                         flag=0;
                         echoes += '</div><a class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4 modalOferta" data-toggle="modal" data-target="#kt_modal_oferta" data-id-user="'+ofert+'">Ver lista completa</a>'+
-                        '<a href="Codigos/ofertas/'+ofert+'" target="_blank"  class="btn btn-block btn-sm btn-light-warning font-weight-bolder text-uppercase py-4">'+'<img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
+                        '<a href="Codigos/ofertas/'+ofert+'" target="_blank"  class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4">'+'<img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
                     }
                     var corto = val.nombre;
                     if(val.nombre.length >= 35){
                         corto = val.nombre.substring(0,35)+"...";
                     }
                     echoes += '<div class="col-xl-3"><div class="card card-custom gutter-b card-stretch"><div class="card-body pt-4 d-flex flex-column justify-content-between"><div class="d-flex align-items-center mb-7">'+
-                                '<div class="flex-shrink-0 mr-4 mt-lg-0 mt-3"><div class="symbol symbol-lg-75 symbol-primary"><span class="symbol-label font-size-h3 font-weight-boldest">'+val.conjunto+'</span>'+
+                                '<div class="flex-shrink-0 mr-4 mt-lg-0 mt-3"><div class="symbol symbol-lg-75 symbol-success"><span class="symbol-label font-size-h3 font-weight-boldest">'+val.conjunto+'</span>'+
                                 '</div></div><div class="d-flex flex-column"><a class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">OFERTA-'+
                                 val.conjunto+'</a><span class="text-muted font-weight-bold">'+formatDate(val.fecha_registro)+'</span></div></div><p class="mb-7  font-weight-boldest">Fecha Inicio <span class="text-dark pr-1">'+
-                                formatDate(val.fecha_inicio)+'</span><br>Fecha Termino <span class="text-primary pr-1">'+formatDate(val.fecha_termino)+'</span></p><div class="mb-7"><div class="d-flex justify-content-between align-items-center">'+
+                                formatDate(val.fecha_inicio)+'</span><br>Fecha Termino <span class="text-success pr-1">'+formatDate(val.fecha_termino)+'</span></p><div class="mb-7"><div class="d-flex justify-content-between align-items-center">'+
                                 '<span class="text-dark-75 font-weight-bolder mr-2">'+corto+'</span><span class="text-muted font-weight-bold">$ '+formatMoney(val.precio)+'</span></div>';
                     flag++;
                     ofert = val.conjunto;
@@ -49,8 +50,38 @@ function getMeOfes(){
                 }
             })
             echoes+='</div> <a class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4 modalOferta" data-toggle="modal" data-target="#kt_modal_oferta" data-id-user="'+ofert+'">Ver lista completa</a>'+
-            '<a href="Codigos/ofertas/'+ofert+'" target="_blank" class="btn btn-block btn-sm btn-light-warning font-weight-bolder text-uppercase py-4"><img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
+            '<a href="Codigos/ofertas/'+ofert+'" target="_blank" class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4"><img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
             $(".bodyOfes").html(echoes);
+        }
+    })
+}
+
+
+function getMeORec(){
+    $(".bodyORec").html("");
+    getORecientes().done(function(reso){
+        var ofert = 0;var flag = 0;var echoes = "";
+        if(reso){
+            $.each(reso,function(index,val){
+                if(ofert != val.conjunto){
+                    if(flag != 0){
+                        flag=0;
+                        echoes += '</div><a class="btn btn-block btn-sm btn-light-danger font-weight-bolder text-uppercase py-4 modalOferta" data-toggle="modal" data-target="#kt_modal_oferta" data-id-user="'+ofert+'">Ver productos</a>'+
+                        '<a href="Codigos/ofertasR/'+ofert+'" target="_blank"  class="btn btn-block btn-sm btn-light-primary font-weight-bolder text-uppercase py-4">'+'<img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
+                    }
+
+                    echoes += '<div class="col-xl-4"><div class="card card-custom gutter-b card-stretch"><div class="card-body pt-4 d-flex flex-column justify-content-between"><div class="d-flex align-items-center mb-7">'+
+                                '<div class="flex-shrink-0 mr-4 mt-lg-0 mt-3"><div class="symbol symbol-lg-75 symbol-primary"><span class="symbol-label font-size-h3 font-weight-boldest">'+val.conjunto+'</span>'+
+                                '</div></div><div class="d-flex flex-column"><a class="text-warning font-weight-bold text-hover-primary font-size-h4 mb-0">OFERTA-'+
+                                val.conjunto+'</a><span class="text-muted font-weight-bold">'+formatDate(val.fecha_registro)+'</span></div></div><p class="mb-7  font-weight-boldest">Fecha Termino <span class="text-primary pr-1">'+
+                                formatDate(val.fecha_termino)+'</span></p>';
+                    flag++;
+                    ofert = val.conjunto;
+                }
+            })
+            echoes+='</div> <a class="btn btn-block btn-sm btn-light-danger font-weight-bolder text-uppercase py-4 modalOferta" data-toggle="modal" data-target="#kt_modal_oferta" data-id-user="'+ofert+'">Ver lista completa</a>'+
+            '<a href="Codigos/ofertasR/'+ofert+'" target="_blank" class="btn btn-block btn-sm btn-light-primary font-weight-bolder text-uppercase py-4"><img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
+            $(".bodyORec").html(echoes);
         }
     })
 }
@@ -67,11 +98,18 @@ $(document).off("click",".modalOferta").on("click",".modalOferta",function(event
                     $(".modalOfeInicia").html(formatDate2Bold(val.fecha_inicio))
                     $(".modalOfeTermina").html(formatDate2Bold(val.fecha_termino))
                 }
+                var color = "text-dark";var color2 = "text-dark";
                 var dif1 = val.precio - val.preciouno;var dif2 = val.precio - val.preciocinco;
                 var por1 = dif1 / val.preciouno * 100; var por2 = dif2 / val.preciocinco * 100;
+                if(por1 >= 20 || por1 <= -20){
+                    color = "text-primary"
+                }
+                if(por2 >= 20 || por2 <= -20){
+                    color2 = "text-primary"
+                }
                 $(".bodyModalOfes").append('<tr><td>'+val.codigo+'</td><td>'+val.nombre+'</td><td style="font-weight:bold;background:rgba(255,204,255,.60);">$'+formatMoney(val.precio)+'</td><td style="background:rgba(244,176,132,.60);">$ '+
-                    formatMoney(val.normal)+'</td><td>'+val.maximo+'</td><td>$'+formatMoney(val.preciouno)+'<br><span class="dmo1">$'+formatMoney(dif1)+' <br> % '+formatMoney(por1)+'</span></td><td>$ '+
-                    formatMoney(val.preciocinco)+'<br><span class="dmo1">$'+formatMoney(dif2)+' <br> % '+formatMoney(por2)+'</span></td></tr>')
+                    formatMoney(val.normal)+'</td><td>'+val.maximo+'</td><td>$'+formatMoney(val.preciouno)+'<br><span class="dmo1 '+color+'">$'+formatMoney(dif1)+' <br> % '+formatMoney(por1)+'</span></td><td>$ '+
+                    formatMoney(val.preciocinco)+'<br><span class="dmo1 '+color2+'">$'+formatMoney(dif2)+' <br> % '+formatMoney(por2)+'</span></td></tr>')
             })
         }
     })
@@ -161,6 +199,13 @@ $(document).off("click",".showBody").on("click",".showBody",function(event){
     document.getElementById("body"+dis).style.display = "contents";
 })
 
+$(document).off("click",".showBodyB").on("click",".showBodyB",function(event){
+    event.preventDefault();
+    var dis = $(this).data("idUser");
+    //$("#body"+dis).css("display","block !important")
+    document.getElementById("bodyB"+dis).style.display = "contents";
+})
+
 
 function isMayor(uno,dos){
     var color = "style='color:black;font-weight:bold'"
@@ -175,13 +220,13 @@ function oldResultsB(respo){
     $.each(respo,function(indx,value){
         if (value.sucb != 0){
             var oldsB = '<div class="row"><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="4" style="padding:0">'+
-                                setZeros2(value.id_nuevo)+'</th>'+
+                                setZeros2(value.id_nuevo)+'</th><th class="showBodyB" data-id-user="'+value.id_nuevo+'">MOSTRAR LISTA</th>'+
                                 '<th><a class="nav-link" target="_blank" href="Uploads/excelB/'+value.id_nuevo+'"><img src="assets/img/excel.svg" style="height:45px"></a></th>'+
-                                '<th colspan="7">'+formatDate2(value.fecha_registro)+'</th><th colspan="18" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr>'+
+                                '<th colspan="6">'+formatDate2(value.fecha_registro)+'</th><th colspan="18" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr>'+
                                 '<th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th><th style="width:350px" >DESCRIPCIÓN</th><th style="width:70px" >UM</th>'+
                                 '<th style="width:100px" >C</th><th style="width:150px" >COSTO<br>PZA</th><th style="width:100px" class="ivaClass">IVA</th><th style="width:100px" class="renglon10Class">RENGLON 10</th>'+
                                 '<th colspan="3" style="background:#bdd7ee">PRECIOS DEL 1 AL 3</th><th style="width:100px" >CÓDIGO</th><th style="width:350px" >DESCRIPCIÓN</th>'+
-                                '<th style="width:100px" >PAQUETE</th><th style="background:#bdd7ee" colspan="3">PRECIOS DEL 1 AL 3</th></tr></thead><tbody>';
+                                '<th style="width:100px" >PAQUETE</th><th style="background:#bdd7ee" colspan="3">PRECIOS DEL 1 AL 3</th></tr></thead><tbody id="bodyB'+value.id_nuevo+'" style="display:none">';
 
             $.each(value.detalles,function(inx,val){
                 if(val.estatusb != "0"){
@@ -472,6 +517,14 @@ function formatDate2Bold(fecha){
 function getOferta(dis){
     return $.ajax({
         url: site_url+"Uploads/getOferta/"+dis,
+        type: "POST",
+        cache: false,
+    });
+}
+
+function getORecientes(){
+    return $.ajax({
+        url: site_url+"Uploads/getORecientes",
         type: "POST",
         cache: false,
     });

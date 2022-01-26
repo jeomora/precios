@@ -48,6 +48,24 @@ class Codigos extends MY_Controller {
 		$this->estructuraQr("Dashboards/ofertas", $data);
 	}
 
+	public function ofertasR($value){
+		$user = $this->session->userdata();//Trae los datos del usuario
+		$data["dias"] = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
+		$data["meses"] = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+		$data["fecha"] =  $data["dias"][date('w')]." ".date('d')." DE ".$data["meses"][date('n')-1]. " DEL ".date('Y') ;
+		$data['scripts'] = [
+			'/scripts/qrcode',
+			'/scripts/Totales/ofertasR',
+			'/scripts/Swiper/package/js/swiper.min',
+		];
+		$data['links'] = [
+			'/scripts/Swiper/package/css/swiper.min',
+		];
+		$values = $this->ofe_md->getOferton(["o.conjunto"=>$value]);
+		$data["siArr"] = sizeof($values);
+		$this->estructuraQr("Dashboards/ofertas", $data);
+	}
+
 	public function qrmeup($val){
 		$values = $this->det_md->getNuevos(NULL,$val);
 		$this->jsonResponse($values);

@@ -41,7 +41,8 @@
 
     input.form-control.bcostoRojo,input.form-control.bpre11Rojo,input.form-control.bpre22Rojo,input.form-control.bpre33Rojo,input.form-control.bpre1Rojo,input.form-control.bpre2Rojo,input.form-control.bpre3Rojo{width:80px;padding:5px;}
     input.form-control.bcantRojo,input.form-control.bmar11Rojo,input.form-control.bmar22Rojo,input.form-control.bmar33Rojo,input.form-control.bmar1Rojo,input.form-control.bmar2Rojo,input.form-control.bmar3Rojo{width:60px;padding:5px;}
-    .showBody{cursor:pointer;background:aqua;font-size:18px;}
+    .showBodyB,.showBody{cursor:pointer;background:aqua;font-size:18px;}
+
     .thAsoc{width: 170px;}
     @media (min-width: 992px){
         .content{padding:0px 0;}
@@ -239,9 +240,8 @@
                             </div>
 
                             <div class="tab-pane fade" id="store-subeoferta" role="tabpanel" aria-labelledby="store-tab-subeoferta"><!-- OFERTAS -->
-                                <div class="row col-xl-12 dropRow dropRowMargin" style="padding-bottom:20px;">
-                                    <div class="col-lg-4 col-md-4 col-sm-4"></div>         
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="row ml-lg-8 dropRow dropRowMargin" style="padding-bottom:20px;">        
+                                    <div class="col-xl-3">
                                         <div class="dropzone dropzone-default dropzone-info" id="kt_dropzone_ofertas">
                                             <div class="dropzone-msg dz-message needsclick">
                                                 <h3 class="dropzone-msg-title">SUBIR ARCHIVO EXCEL OFERTAS</h3>
@@ -249,124 +249,22 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="flex-row-lg-fluid col-xl-9">
+                                        <div class="row">
+                                            <h3 class="btn btn-sm btn-text btn-light-warning text-uppercase font-weight-bold" style="font-size:30px">
+                                                NO TE OLVIDES DE REGRESAR LOS PRECIOS DE LAS OFERTAS QUE HAN TERMINADO
+                                            </h3>
+                                        </div>
+                                        <div class="row bodyORec">
+                                        </div>
+                                    </div>
                                 </div>
                                 <!--end::Row-->
 
                                 <h1 style="text-align:center;font-size:40px;">OFERTAS ACTIVAS</h1>
-                                <!--begin::Row
-                                <div class="row col-xl-12" style="padding-bottom:20px;">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="col-lg-12 col-md-12 col-sm-12">
-                                            <table class="table table-bordered" style="text-align:center;">
-                                                <thead>
-                                                    <tr class="bg-light-success">
-                                                        <th colspan="8">
-                                                            PROMOCIONES ACTIVAS
-                                                        </th>
-                                                    </tr>
-                                                    <tr class="bg-light-success">
-                                                        <th>
-                                                            CÓDIGO
-                                                        </th>
-                                                        <th>
-                                                            DESCRIPCIÓN
-                                                        </th>
-                                                        <th>
-                                                            OFERTA
-                                                        </th>
-                                                        <th>
-                                                            NORMAL
-                                                        </th>
-                                                        <th>
-                                                            MAXIMO
-                                                        </th>
-                                                        <th>
-                                                            TIPO
-                                                        </th>
-                                                        <th>
-                                                            INICIA
-                                                        </th>
-                                                        <th>
-                                                            TERMINA
-                                                        </th>
-                                                    </tr>
-                                                    <tr class="bg-light-success">
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="bodyOfes">
-                                                    
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>         
-                                </div>
-                                end::Row-->
+                                
                                 <div class="flex-row-lg-fluid ml-lg-8">
                                     <div class="row bodyOfes">
-                                        <!--<?php if($ofertones):$ofert = 0;$flag = 0; ?>
-                                            <?php foreach ($ofertones as $key => $val): ?>
-
-                                                <?php if($ofert <> $val->conjunto):$ofert = $val->conjunto; ?>
-                                                    <?php if($flag <> 0):$flag=0; ?> 
-                                                                        </div> 
-                                                                    <a class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4">Ver lista completa</a>
-                                                                    <a class="btn btn-block btn-sm btn-light-warning font-weight-bolder text-uppercase py-4">
-                                                                        <img src="assets/img/codigo-qr.png" style="height:45px">
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    <?php endif; ?>  
-                                                    <div class="col-xl-3">
-                                                        <div class="card card-custom gutter-b card-stretch">
-                                                            <div class="card-body pt-4 d-flex flex-column justify-content-between">
-                                                                <div class="d-flex align-items-center mb-7">
-                                                                    <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
-                                                                        <div class="symbol symbol-lg-75">
-                                                                            <img alt="Pic" src="<?php echo base_url()?>assets/img/abarrotes.png">
-                                                                        </div>
-                                                                        <div class="symbol symbol-lg-75 symbol-primary d-none">
-                                                                            <span class="font-size-h3 font-weight-boldest">JM</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="d-flex flex-column">
-                                                                        <a href="#" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">OFERTA-<?php echo $val->conjunto; ?></a>
-                                                                        <span class="text-muted font-weight-bold">
-                                                                            <?php echo $dias[date('w',strtotime($val->fecha_registro))]." ".date('d',strtotime($val->fecha_registro))." DE ".$meses[date('n',strtotime($val->fecha_registro))-1]. " DEL ".date('Y',strtotime($val->fecha_registro)); ?>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                <p class="mb-7  font-weight-boldest">
-                                                                    Fecha Inicio <span class="text-primary pr-1"><?php echo $dias[date('w',strtotime($val->fecha_inicio))]." ".date('d',strtotime($val->fecha_inicio))." DE ".$meses[date('n',strtotime($val->fecha_inicio))-1]. " DEL ".date('Y',strtotime($val->fecha_inicio)); ?></span><br>
-                                                                    Fecha Termino <span class="text-primary pr-1"><?php echo $dias[date('w',strtotime($val->fecha_termino))]." ".date('d',strtotime($val->fecha_termino))." DE ".$meses[date('n',strtotime($val->fecha_termino))-1]. " DEL ".date('Y',strtotime($val->fecha_termino)); ?></span>
-                                                                </p>
-                                                                <div class="mb-7">                                                
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <span class="text-dark-75 font-weight-bolder mr-2"><?php echo $val->nombre; ?></span>
-                                                                        <span class="text-muted font-weight-bold">$ <?php echo number_format($val->precio,2,".",","); ?></span>
-                                                                    </div>
-                                                                <?php $flag++; ?>
-
-                                                                
-
-                                                <?php else: ?>
-                                                    <?php if($flag < 4):$flag++; ?>
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <span class="text-dark-75 font-weight-bolder mr-2"><?php if(strlen($val->nombre) >= 40): echo substr($val->nombre,0,39)."...";else: echo $val->nombre;endif; ?></span>
-                                                            <span class="text-muted font-weight-bold">$ <?php echo number_format($val->precio,2,".",","); ?></span>
-                                                        </div>
-                                                    <?php endif; ?>
-                                                <?php endif; ?> 
-                                            <?php endforeach ?>
-                                                            </div> 
-                                                        <a class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4">Ver lista completa</a>
-                                                        <a class="btn btn-block btn-sm btn-light-warning font-weight-bolder text-uppercase py-4">
-                                                            <img src="assets/img/codigo-qr.png" style="height:45px">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endif; ?>-->
                                     </div>
                                 </div>
                                 
