@@ -51,10 +51,10 @@
                                 <div class="d-flex align-items-start justify-content-start flex-grow-1 bg-light-info p-8 card-rounded flex-grow-1 position-relative">
                                     <div class="d-flex flex-column align-items-start flex-grow-1 h-100">
                                         <div class="p-1 flex-grow-1">
-                                            <h4 class="text-info font-weight-bolder">SUBIR ARCHIVO MATRICIAL    </h4>
+                                            <h4 class="text-info font-weight-bolder">COMPARACIÓN DE PRECIOS A CEDIS    </h4>
                                             <p class="text-dark font-weight-bold mt-3">
-                                                Al haber obtenido el archivo txt del sistema Compucaja, podrá seleccionarlo al clic en la parte del recuadro. <br>
-                                                Se realizará la comparación y se mostrarán los productos registrados de su archivo que no tienen relación a los registrados en CEDIS. <br>
+                                                SE MOSTRARÁN EN LA PARTE IZQUIERDA DE LA TABLA LOS PRECIOS DE LA SUCURSAL QUE SE HAYA SELECCINADO (PREDETERMINADO SUPER CD INDUSTRIAL),<br>
+                                                SELECCIONE LA SUCURSAL DESEE COMPARAR, RECUERDA QUE TUS PRECIOS SE IRAN ACTUALIZANDO CON LOS CAMBIOS EN EXCEL QUE SUBAS Y SOBRE TODO CUANDO SUBAS TU txt DE MATRICIAL
 
                                             </p>
                                         </div>
@@ -69,24 +69,27 @@
                     </div>
                 </div>
                 <!--end::Row-->
-                <!--begin::Row-->
-                <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
-                    <div class="col-lg-4 col-md-4 col-sm-4"></div>         
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <div class="dropzone dropzone-default dropzone-warning" id="kt_dropzone_uno">
-                            <div class="dropzone-msg dz-message needsclick">
-                                <h3 class="dropzone-msg-title">SUBIR ARCHIVO TXT MATRICIAL</h3>
-                                <span class="dropzone-msg-desc">Clic para seleccionar arhivo y/o arrastre el archivo txt.</span>
-                            </div>
-                        </div>
+
+                <div class="row col-xl-12">
+                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis8 btn-success" data-id-user="8">SUPER CD INDUSTRIAL</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis1" data-id-user="1">TIJERAS</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis2" data-id-user="2">TENENCIA</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis3" data-id-user="3">MERCADO</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis4" data-id-user="4">TRINCHERAS</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis5" data-id-user="5">ULTRAMARINOS</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis6" data-id-user="6">SOLIDARIDAD</button>
                     </div>
                 </div>
-                <!--end::Row-->
+
+                <div class="row col-xl-12" style="padding-bottom:50px">
+                    
+                </div>
 
 
                 <!--begin::Row-->
                 <div class="row col-xl-12 " style="padding-bottom:20px;">
-                    <a href="Compara/ExcelCompa" class="btn btn-text-dark-50 btn-icon-primary font-weight-bold btn-hover-bg-light mr-3" id="excelCompa" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #ccc;">
+                    <a href="Compara/ExcelCompaCedis/8" class="btn btn-text-dark-50 btn-icon-primary font-weight-bold btn-hover-bg-light mr-3" id="excelCompa" target="_blank" style="border-bottom:1px solid #ccc;box-shadow:5px 5px 8px #ccc;display:none;">
                         <i class="flaticon2-file"></i> DESCARGAR A UN EXCEL
                     </a>                    
                 </div>

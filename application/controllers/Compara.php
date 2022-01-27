@@ -187,6 +187,11 @@ class Compara extends MY_Controller {
 		$this->jsonResponse($comparativa);
 	}
 
+	public function getComparacionCedis($sucursal=8){
+		$comparativa = $this->sprod_md->getComparacionCedis(NULL,$sucursal);
+		$this->jsonResponse($comparativa);
+	}
+
 	public function upload_matriz(){
 		$user = $this->session->userdata();
 		ini_set("memory_limit", -1);	
@@ -388,6 +393,155 @@ class Compara extends MY_Controller {
 
 
 		$comparativa = $this->sprod_md->getComparacion(NULL);
+
+		//FECHA EN FORMATO COMPLETO PARA LOS TITULOS Y TABLAS
+		$dias = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
+		$meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+		$fecha =  $dias[date('w')]." ".date('d')." DE ".$meses[date('n')-1]. " DEL ".date('Y') ;
+		$day = date('w');
+		$week_start = date('d', strtotime('-'.($day).' days'));
+		$week_end = date('d', strtotime('+'.(6-$day).' days'));
+		$rws = 1;
+		$hoja->mergeCells('A'.$rws.':C'.$rws);
+		$hoja->mergeCells('D'.$rws.':H'.$rws);
+		$this->cellStyle("A".$rws.":H".$rws, "FAEBD7","000000", TRUE, 12, "Calibri");
+		$hoja->setCellValue("A".$rws, "SUCURSAL ".$sucursal->nombre)->getColumnDimension('A')->setWidth(20);
+		$hoja->setCellValue("D".$rws, "PRECIOS ".$sucursal->nombre)->getColumnDimension('D')->setWidth(14);
+
+		$hoja->mergeCells('I'.$rws.':K'.$rws);
+		$hoja->mergeCells('L'.$rws.':P'.$rws);
+		$this->cellStyle("I".$rws.":P".$rws, "7FFFD4","000000", TRUE, 12, "Calibri");
+		$hoja->setCellValue("I".$rws, "CEDIS")->getColumnDimension('I')->setWidth(20);
+		$hoja->setCellValue("L".$rws, "PRECIOS CEDIS")->getColumnDimension('L')->setWidth(14);
+		$rws++;
+		$this->cellStyle("A".$rws.":H".$rws, "FAEBD7","000000", TRUE, 12, "Calibri");
+		$this->cellStyle("I".$rws.":P".$rws, "7FFFD4","000000", TRUE, 12, "Calibri");
+		$hoja->setCellValue("A".$rws, "CÓDIGO");
+		$hoja->setCellValue("B".$rws, "DESCRIPCIÓN")->getColumnDimension('B')->setWidth(45);
+		$hoja->setCellValue("C".$rws, "UM")->getColumnDimension('C')->setWidth(10);
+		$hoja->setCellValue("D".$rws, "PRECIO 1");
+		$hoja->setCellValue("E".$rws, "PRECIO 2")->getColumnDimension('E')->setWidth(14);
+		$hoja->setCellValue("F".$rws, "PRECIO 3")->getColumnDimension('F')->setWidth(14);
+		$hoja->setCellValue("G".$rws, "PRECIO 4")->getColumnDimension('G')->setWidth(14);
+		$hoja->setCellValue("H".$rws, "PRECIO 5")->getColumnDimension('H')->setWidth(14);
+		$hoja->setCellValue("I".$rws, "CÓDIGO");
+		$hoja->setCellValue("J".$rws, "DESCRIPCIÓN")->getColumnDimension('J')->setWidth(45);
+		$hoja->setCellValue("K".$rws, "UM")->getColumnDimension('K')->setWidth(10);
+		$hoja->setCellValue("L".$rws, "PRECIO 1");
+		$hoja->setCellValue("M".$rws, "PRECIO 2")->getColumnDimension('M')->setWidth(14);
+		$hoja->setCellValue("N".$rws, "PRECIO 3")->getColumnDimension('N')->setWidth(14);
+		$hoja->setCellValue("O".$rws, "PRECIO 4")->getColumnDimension('O')->setWidth(14);
+		$hoja->setCellValue("P".$rws, "PRECIO 5")->getColumnDimension('P')->setWidth(14);
+		//baf3e0
+		$rws++;
+		if ($comparativa) {
+			foreach ($comparativa as $key => $value) {
+				//$this->cellStyle("I".$rws.":P".$rws, "BAF3E0", "000000", TRUE, 12, "Calibri");
+				$hoja->setCellValue("A".$rws, $value->codigo);
+				$hoja->setCellValue("B".$rws, $value->nombre);
+				$hoja->setCellValue("C".$rws, $value->ums);
+				$hoja->setCellValue("D".$rws, $value->preciouno)->getStyle("D{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+				$hoja->setCellValue("E".$rws, $value->preciodos)->getStyle("E{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+				$hoja->setCellValue("F".$rws, $value->preciotres)->getStyle("F{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+				$hoja->setCellValue("G".$rws, $value->preciocuatro)->getStyle("G{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+				$hoja->setCellValue("H".$rws, $value->preciocinco)->getStyle("H{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+
+				$hoja->setCellValue("I".$rws, $value->codigo);
+				$hoja->setCellValue("J".$rws, $value->nombre);
+				$hoja->setCellValue("K".$rws, $value->ums);
+				$hoja->setCellValue("L".$rws, $value->p1)->getStyle("L{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+				$hoja->setCellValue("M".$rws, $value->p2)->getStyle("M{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+				$hoja->setCellValue("N".$rws, $value->p3)->getStyle("N{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+				$hoja->setCellValue("O".$rws, $value->p4)->getStyle("O{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+				$hoja->setCellValue("P".$rws, $value->p5)->getStyle("P{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+
+				if($value->preciouno > $value->p1){
+					$this->cellStyle("D".$rws, "BAF3E0", "000000", FALSE, 12, "Calibri");
+				}elseif($value->preciouno < $value->p1){
+					$this->cellStyle("D".$rws, "F9BABA", "000000", FALSE, 12, "Calibri");
+				}
+				if($value->preciodos > $value->p2){
+					$this->cellStyle("E".$rws, "BAF3E0", "000000", FALSE, 12, "Calibri");
+				}elseif($value->preciodos < $value->p2){
+					$this->cellStyle("E".$rws, "F9BABA", "000000", FALSE, 12, "Calibri");
+				}
+				if($value->preciotres > $value->p3){
+					$this->cellStyle("F".$rws, "BAF3E0", "000000", FALSE, 12, "Calibri");
+				}elseif($value->preciotres < $value->p3){
+					$this->cellStyle("F".$rws, "F9BABA", "000000", FALSE, 12, "Calibri");
+				}
+				if($value->preciocuatro > $value->p4){
+					$this->cellStyle("G".$rws, "BAF3E0", "000000", FALSE, 12, "Calibri");
+				}elseif($value->preciocuatro < $value->p4){
+					$this->cellStyle("G".$rws, "F9BABA", "000000", FALSE, 12, "Calibri");
+				}
+				if($value->preciocinco > $value->p5){
+					$this->cellStyle("H".$rws, "BAF3E0", "000000", FALSE, 12, "Calibri");
+				}elseif($value->preciocinco < $value->p5){
+					$this->cellStyle("H".$rws, "F9BABA", "000000", FALSE, 12, "Calibri");
+				}
+
+				$this->excelfile->getActiveSheet()->getStyle('A'.$rws.":P".$rws)->applyFromArray($styleArray2);
+				$rws++;
+			}
+		}
+
+		$dias = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
+		$meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+		$fecha =  $dias[date('w')]." ".date('d')." DE ".$meses[date('n')-1]. " DEL ".date('Y') ;
+		$file_name = "COMPARACIÓN AL ".$fecha.".xlsx"; //Nombre del documento con extención
+		header("Content-Type: application/vnd.ms-excel; charset=utf-8");
+		header("Content-Disposition: attachment;filename=".$file_name);
+		header("Cache-Control: max-age=0");
+		$excel_Writer = PHPExcel_IOFactory::createWriter($this->excelfile, "Excel2007");
+		$excel_Writer->save("php://output");
+	}
+
+	public function cedis(){
+		if($this->session->userdata("username")){
+			$user = $this->session->userdata();//Trae los datos del usuario
+			$data["dias"] = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
+			$data["meses"] = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+			$data["fecha"] =  $data["dias"][date('w')]." ".date('d')." DE ".$data["meses"][date('n')-1]. " DEL ".date('Y') ;
+			$data['scripts'] = [
+				'/scripts/Compara/cedis',
+			];
+			$this->estructura("Compara/cedis", $data);
+		}else{
+			$this->data["message"] =NULL;
+			$this->estructura_login("Admin/login", $this->data, FALSE);
+		}
+	}
+
+	public function excelCompaCedis($cedis){
+		$user = $this->session->userdata();
+		ini_set("memory_limit", "-1");
+		ini_set("max_execution_time", "-1");
+		$this->load->library("excelfile");
+		$hoja = $this->excelfile->setActiveSheetIndex(0);
+		$this->excelfile->setActiveSheetIndex(0)->setTitle("COMPARACIÓN");
+        $this->excelfile->setActiveSheetIndex(0);
+
+        $sucursal = $this->sucursal_md->get(NULL,["id_sucursal"=>$cedis])[0];
+
+		$styleArray = array(
+		  'borders' => array(
+		    'allborders' => array(
+		      'style' => PHPExcel_Style_Border::BORDER_THIN
+		    )
+		  )
+		);
+		$styleArray2 = array(
+		  'borders' => array(
+		    'allborders' => array(
+		      'style' => PHPExcel_Style_Border::BORDER_MEDIUM
+		    )
+		  )
+		);
+		$hoja = $this->excelfile->getActiveSheet();
+
+
+		$comparativa = $this->sprod_md->getComparacionCedis(NULL,$cedis);
 
 		//FECHA EN FORMATO COMPLETO PARA LOS TITULOS Y TABLAS
 		$dias = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");

@@ -30,11 +30,11 @@ class Uploads extends MY_Controller {
 	public function upload_matriz(){
 		$user = $this->session->userdata();
 		ini_set("memory_limit", -1);	
-		$user = $this->session->userdata();
+		
 		$filena=$_FILES['file_matriz']['name'];
 		$filen = "matricial".date("dmyHis")."".rand(1000,9999);
 		$config['upload_path']          = './assets/uploads/matriciales/';
-        $config['allowed_types']        = 'jpg|jpeg|png|jfif|pdf';
+        $config['allowed_types']        = 'jpg|xls|xlsx|dat|txt';
         $config['max_size']             = 40000;
         $config['max_width']            = 40024;
         $config['max_height']           = 40024;

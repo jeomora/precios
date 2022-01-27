@@ -1,65 +1,19 @@
 jQuery(document).ready(function() {
     $("#titlePrincipal").html("COMPARACIÓN DE PRECIOS");
-    comparaciones();
+    comparaciones(8);
 });
 
-
-var theDate = new Date().getTime();
-Dropzone.autoDiscover = false;
-
-var myDropzoneMatriz = new Dropzone("div#kt_dropzone_uno", {
-    paramName: "file_matriz",
-    maxFiles: 1,
-    maxFilesize: 200, 
-    timeout: 1800000,
-    renameFilename: function (filename) {
-        return filename;
-    },
-    url: site_url+"Compara/upload_matriz",
-    autoProcessQueue: true,
-    queuecomplete: function (resp) {
-        toastr.options = {
-              "closeButton": true,
-              "debug": false,
-              "newestOnTop": false,
-              "progressBar": true,
-              "positionClass": "toast-top-right",
-              "preventDuplicates": false,
-              "showDuration": "300",
-              "hideDuration": "1000",
-              "timeOut": "1000",
-              "extendedTimeOut": "1000",
-              "showEasing": "swing",
-              "hideEasing": "linear",
-              "showMethod": "fadeIn",
-              "hideMethod": "fadeOut"
-        };
-    },
-    success: function(file, response){
-        var dt = new Date();
-        var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-        myDropzoneMatriz.removeAllFiles();
-        if(response === "Documento incorrecto"){
-            toastr.error("Por favor revise el txt que se subió a la plataforma","Archivo incorrecto");
-        }else{
-            toastr.success("Se cargarón correctamente los datos","Listo");
-        }
-        comparaciones()
-    }
-});
-
-
-function getComparacion() {
+function getComparacion(value) {
     return $.ajax({
-        url: site_url+"Compara/getComparacion",
+        url: site_url+"Compara/getComparacionCedis/"+value,
         type: "POST",
         cache: false,
     });
 }
 
-function comparaciones() {
+function comparaciones(vSucuCed) {
     
-    getComparacion().done(function(resp){
+    getComparacion(vSucuCed).done(function(resp){
         var p11 = 0;var p111 = 0;
         if(resp){
             var flagcien = 1;var clasecien="style='display:table-row'";
@@ -114,8 +68,9 @@ function comparaciones() {
             }
             rowload += '<button type="button" class="btn btn-outline-secondary font-weight-bold btnpagsuc btnpagsuc'+flagcien+'" data-id-rojo="'+flagcien+'">'+((flagcien-1) * 50)+' +</button>'
             $(".rowLoad").html(rowload+'</div><div><h4 style="font-size:16px"><br>Se encontrarón '+resp.length+' resultados</h4></div>');
+            $("#excelCompa").css("display","block");
         }else{
-            $(".rowLoad").html('<div class="col-xl-3"><h1 class="text-danger">NO SE ENCONTRARÓN DATOS, POR FAVOR ACTUALICE SU PAGINA PARA INTENTARLO NUEVAMENTE</h1></div><div class="col-xl-6"><img src="assets/img/loading4.gif" class="rowLoadImg"></div>');
+            $(".rowLoad").html('<div class="col-xl-3"><h1 class="text-danger">NO SE ENCONTRARÓN DATOS, POR FAVOR SELECCIONA OTRA SUCURSAL Y VUELVE A SELECCIONAR ESTA</h1></div><div class="col-xl-6"><img src="assets/img/loading4.gif" class="rowLoadImg"></div>');
         }
     })
 }
@@ -129,4 +84,19 @@ $(document).off("click",".btnpagsuc").on("click",".btnpagsuc",function(e){
 
     $(".btnpagsuc").removeClass("btn-dark")
     $(".btnpagsuc"+dis).addClass("btn-dark")
+})
+
+$(document).off("click",".btnSucuCedis").on("click",".btnSucuCedis",function(e){
+    e.preventDefault();
+    var dis = $(this).data("idUser");
+    $(".tbodyCompa").html("")
+    $(".countRojo").html("")
+    $(".countVerde").html("")
+    $("#excelCompa").css("display","none");
+    $("#excelCompa").attr("href","Compara/ExcelCompaCedis/"+dis);
+    $(".rowLoad").html('<div class="col-xl-3"><h1 class="text-warning">CARGANDO DATOS...</h1></div><div class="col-xl-6"><img src="assets/img/loading3.gif" class="rowLoadImg"></div>');
+    comparaciones(dis)
+
+    $(".btnSucuCedis").removeClass("btn-success")
+    $(".btnSucuCedis"+dis).addClass("btn-success")
 })

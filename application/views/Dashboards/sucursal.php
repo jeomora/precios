@@ -34,6 +34,7 @@
     .showBody{cursor:pointer;background:aqua;font-size:18px;}
     .dmo1{font-weight: bold;}
     .dmo2{color: red;}
+    .rowLoadImg{height: 150px;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -73,7 +74,16 @@
             <!--end::Row-->	
             <!--begin::Row-->
             <div class="row ml-lg-8 dropRow" style="padding-bottom:20px;">       
-                <div class="col-xl-4"></div>
+                <div class="col-xl-4">
+                    <div class="row col-xl-12 rowLoad" style="padding-bottom:20px;">
+                        <div class="col-xl-7">
+                            <h1 class="text-warning">CARGANDO DATOS</h1>
+                        </div>
+                        <div class="col-xl-5">
+                            <img src="assets/img/loading3.gif" class="rowLoadImg">
+                        </div>
+                    </div>
+                </div>
                 <div class="col-xl-4">
                     <div class="dropzone dropzone-default dropzone-warning" id="kt_dropzone_uno">
                         <div class="dropzone-msg dz-message needsclick">

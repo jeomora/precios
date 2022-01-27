@@ -12,7 +12,10 @@ function getMeNews(){
     getNuevosA().done(function(resp){
         $(".otrosShows").html("");
         if(resp){
+            $(".rowLoad").html("")
             oldResultsA(resp);
+        }else{
+            $(".rowLoad").html('<div class="col-xl-7"><h1 class="text-danger">NO SE ENCONTRARÓN DATOS, POR FAVOR ACTUALICE SU PAGINA PARA INTENTARLO NUEVAMENTE</h1></div><div class="col-xl-7"><img src="assets/img/loading4.gif" class="rowLoadImg"></div>');
         }
     })
 }

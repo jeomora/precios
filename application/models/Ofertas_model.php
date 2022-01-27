@@ -13,8 +13,8 @@ class Ofertas_model extends MY_Model {
 		$this->db->select("*")
 		->from("ofertas")
 		->where("estatus <> 0")
-		->where("CURDATE() > fecha_inicio")
-		->where("CURDATE() < fecha_termino")
+		->where("CURDATE() > DATE(fecha_inicio)")
+		->where("CURDATE() < DATE(fecha_termino)")
 		->where("codigo = '".$value."'");
 		if($where !== NULL){
 			if(is_array($where)){
@@ -68,8 +68,8 @@ class Ofertas_model extends MY_Model {
 		$this->db->select("*")
 		->from("ofertas")
 		->where("estatus <> 0")
-		->where("DATE_SUB(CURDATE(), INTERVAL 2 DAY) <= fecha_termino")
-		->where("CURDATE() > fecha_termino")
+		->where("DATE_SUB(CURDATE(), INTERVAL 2 DAY) <= DATE(fecha_termino)")
+		->where("CURDATE() > DATE(fecha_termino)")
 		->order_by("conjunto","DESC");
 		if($where !== NULL){
 			if(is_array($where)){
