@@ -2,6 +2,8 @@
 jQuery(document).ready(function() {
     $("#titlePrincipal").html("CAMBIOS DE PRECIOS");
     getMeNews();
+    getMeOfes();
+    getMeORec();
 });
 
    
@@ -227,3 +229,145 @@ var myDropzoneMatriz = new Dropzone("div#kt_dropzone_uno", {
         getMeNews()
     }
 });
+
+
+function getOfertas(){
+    return $.ajax({
+        url: site_url+"Uploads/getOfertas",
+        type: "POST",
+        cache: false,
+    });
+}
+
+function formatDate2Bold(fecha){
+    var f = new Date(fecha);
+    var d = f.getDate();
+    var dd = f.getDay();
+    var m =  f.getMonth();
+    var y = f.getFullYear();
+    var h = f.getHours();
+    var minutes = f.getMinutes();
+    var mm = ( minutes < 10 ? "0" : "" ) + minutes;
+    var seconds = f.getSeconds();
+    var s = ( seconds < 10 ? "0" : "" ) + seconds
+    var dias = new Array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
+    var meses = new Array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+    return ("<span class='boldSpan'>"+dias[dd]+" "+d+"</span> DE "+meses[m]);
+}
+
+function getOferta(dis){
+    return $.ajax({
+        url: site_url+"Uploads/getOferta/"+dis,
+        type: "POST",
+        cache: false,
+    });
+}
+
+function getORecientes(){
+    return $.ajax({
+        url: site_url+"Uploads/getORecientes",
+        type: "POST",
+        cache: false,
+    });
+}
+
+function getMeOfes(){
+    $(".bodyOfes").html("");
+    getOfertas().done(function(reso){
+        var ofert = 0;var flag = 0;var echoes = "";
+        if(reso){
+            $.each(reso,function(index,val){
+                if(ofert != val.conjunto){
+                    if(flag != 0){
+                        flag=0;
+                        echoes += '</div><a class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4 modalOferta" data-toggle="modal" data-target="#kt_modal_oferta" data-id-user="'+ofert+'">Ver lista completa</a>'+
+                        '<a href="Codigos/ofertasS/'+ofert+'" target="_blank"  class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4">'+'<img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
+                    }
+                    var corto = val.nombre;
+                    if(val.nombre.length >= 35){
+                        corto = val.nombre.substring(0,35)+"...";
+                    }
+                    echoes += '<div class="col-xl-3"><div class="card card-custom gutter-b card-stretch"><div class="card-body pt-4 d-flex flex-column justify-content-between"><div class="d-flex align-items-center mb-7">'+
+                                '<div class="flex-shrink-0 mr-4 mt-lg-0 mt-3"><div class="symbol symbol-lg-75 symbol-success"><span class="symbol-label font-size-h3 font-weight-boldest">'+val.conjunto+'</span>'+
+                                '</div></div><div class="d-flex flex-column"><a class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">OFERTA-'+
+                                val.conjunto+'</a><span class="text-muted font-weight-bold">'+formatDate(val.fecha_registro)+'</span></div></div><p class="mb-7  font-weight-boldest">Fecha Inicio <span class="text-dark pr-1">'+
+                                formatDate(val.fecha_inicio)+'</span><br>Fecha Termino <span class="text-success pr-1">'+formatDate(val.fecha_termino)+'</span></p><div class="mb-7"><div class="d-flex justify-content-between align-items-center">'+
+                                '<span class="text-dark-75 font-weight-bolder mr-2">'+corto+'</span><span class="text-muted font-weight-bold">$ '+formatMoney(val.precio)+'</span></div>';
+                    flag++;
+                    ofert = val.conjunto;
+                }else{
+                    if(flag < 4){
+                        flag++;var corto = val.nombre;
+                        if(val.nombre.length >= 35){
+                            corto = val.nombre.substring(0,35)+"...";
+                        }
+                        echoes += '<div class="d-flex justify-content-between align-items-center"><span class="text-dark-75 font-weight-bolder mr-2">'+corto+'</span><span class="text-muted font-weight-bold">$ '+
+                        formatMoney(val.precio)+'</span></div>'
+                    }
+                }
+            })
+            echoes+='</div> <a class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4 modalOferta" data-toggle="modal" data-target="#kt_modal_oferta" data-id-user="'+ofert+'">Ver lista completa</a>'+
+            '<a href="Codigos/ofertasS/'+ofert+'" target="_blank" class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4"><img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
+            $(".bodyOfes").html(echoes);
+        }
+    })
+}
+
+
+function getMeORec(){
+    $(".bodyORec").html("");
+    getORecientes().done(function(reso){
+        var ofert = 0;var flag = 0;var echoes = "";
+        if(reso){
+            $.each(reso,function(index,val){
+                if(ofert != val.conjunto){
+                    if(flag != 0){
+                        flag=0;
+                        echoes += '</div><a class="btn btn-block btn-sm btn-light-danger font-weight-bolder text-uppercase py-4 modalOferta" data-toggle="modal" data-target="#kt_modal_oferta" data-id-user="'+ofert+'">Ver productos</a>'+
+                        '<a href="Codigos/ofertasRS/'+ofert+'" target="_blank"  class="btn btn-block btn-sm btn-light-primary font-weight-bolder text-uppercase py-4">'+'<img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
+                    }
+
+                    echoes += '<div class="col-xl-2"><div class="card card-custom gutter-b card-stretch"><div class="card-body pt-4 d-flex flex-column justify-content-between"><div class="d-flex align-items-center mb-7">'+
+                                '<div class="flex-shrink-0 mr-4 mt-lg-0 mt-3"><div class="symbol symbol-lg-75 symbol-primary"><span class="symbol-label font-size-h3 font-weight-boldest">'+val.conjunto+'</span>'+
+                                '</div></div><div class="d-flex flex-column"><a class="text-warning font-weight-bold text-hover-primary font-size-h4 mb-0">OFERTA-'+
+                                val.conjunto+'</a><span class="text-muted font-weight-bold">'+formatDate(val.fecha_registro)+'</span></div></div><p class="mb-7  font-weight-boldest">Fecha Termino <span class="text-primary pr-1">'+
+                                formatDate(val.fecha_termino)+'</span></p>';
+                    flag++;
+                    ofert = val.conjunto;
+                }
+            })
+            echoes+='</div> <a class="btn btn-block btn-sm btn-light-danger font-weight-bolder text-uppercase py-4 modalOferta" data-toggle="modal" data-target="#kt_modal_oferta" data-id-user="'+ofert+'">Ver lista completa</a>'+
+            '<a href="Codigos/ofertasRS/'+ofert+'" target="_blank" class="btn btn-block btn-sm btn-light-primary font-weight-bolder text-uppercase py-4"><img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
+            $(".bodyORec").html(echoes);
+        }
+    })
+}
+
+
+$(document).off("click",".modalOferta").on("click",".modalOferta",function(event){
+    var dis = $(this).data("idUser");
+    $(".bodyModalOfes").html("")
+    getOferta(dis).done(function(resp){
+        if(resp){
+            console.log(resp)
+            $.each(resp,function(index,val){
+                if(index == 0){
+                    $(".modalOfeInicia").html(formatDate2Bold(val.fecha_inicio))
+                    $(".modalOfeTermina").html(formatDate2Bold(val.fecha_termino))
+                }
+                var color = "text-dark";var color2 = "text-dark";
+                var dif1 = val.precio - val.preciouno;var dif2 = val.precio - val.preciocinco;
+                var por1 = dif1 / val.preciouno * 100; var por2 = dif2 / val.preciocinco * 100;
+                if(por1 >= 20 || por1 <= -20){
+                    color = "text-primary"
+                }
+                if(por2 >= 20 || por2 <= -20){
+                    color2 = "text-primary"
+                }
+                $(".bodyModalOfes").append('<tr><td>'+val.codigo+'</td><td>'+val.nombre+'</td><td style="font-weight:bold;background:rgba(255,204,255,.60);">$'+formatMoney(val.precio)+'</td><td style="background:rgba(244,176,132,.60);">$ '+
+                    formatMoney(val.normal)+'</td><td>'+val.maximo+'</td><td>$'+formatMoney(val.preciouno)+'<br><span class="dmo1 '+color+'">$'+formatMoney(dif1)+' <br> % '+formatMoney(por1)+'</span></td><td>$ '+
+                    formatMoney(val.preciocinco)+'<br><span class="dmo1 '+color2+'">$'+formatMoney(dif2)+' <br> % '+formatMoney(por2)+'</span></td></tr>')
+            })
+        }
+    })
+})

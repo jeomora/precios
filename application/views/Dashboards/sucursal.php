@@ -32,6 +32,8 @@
     .eliminDe{background: #FF8484;}
     .agregaDe{background: rgb(146,208,80);}
     .showBody{cursor:pointer;background:aqua;font-size:18px;}
+    .dmo1{font-weight: bold;}
+    .dmo2{color: red;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -70,9 +72,9 @@
             </div>
             <!--end::Row-->	
             <!--begin::Row-->
-            <div class="row col-xl-12 dropRow" style="padding-bottom:20px;">
-                <div class="col-lg-4 col-md-4 col-sm-4"></div>         
-                <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="row ml-lg-8 dropRow" style="padding-bottom:20px;">       
+                <div class="col-xl-4"></div>
+                <div class="col-xl-4">
                     <div class="dropzone dropzone-default dropzone-warning" id="kt_dropzone_uno">
                         <div class="dropzone-msg dz-message needsclick">
                             <h3 class="dropzone-msg-title">SUBIR ARCHIVO TXT MATRICIAL</h3>
@@ -80,6 +82,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-xl-4"></div>
+                <div class="flex-row-lg-fluid col-xl-12">
+                    <div class="row">
+                        <h3 class="btn btn-sm btn-text btn-light-warning text-uppercase font-weight-bold" style="font-size:30px">
+                            NO TE OLVIDES DE REGRESAR LOS PRECIOS DE LAS OFERTAS QUE HAN TERMINADO
+                        </h3>
+                    </div>
+                    <div class="row bodyORec">
+                    </div>
+                    <!--end::Row-->
+
+                </div>
+                    <h1 style="text-align:center;font-size:40px;">OFERTAS ACTIVAS</h1>
+                    
+                    <div class="flex-row-lg-fluid col-xl-12">
+                        <div class="row bodyOfes">
+                        </div>
+                    </div>
             </div>
             <!--end::Row-->
 
@@ -100,4 +120,47 @@
 </div>
 <!--end::Content-->
 
-		
+<!--begin::Modal EDITAR DESCRIPCIÓN  -->
+<div class="modal fade" id="kt_modal_oferta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">LISTA DE PRODUCTOS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered" style="text-align:center;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="background:rgb(255,0,102);color:#000;">INICIA</th>
+                            <th class="modalOfeInicia" style="background:rgb(112,48,160);color:#FFF;"></th>
+                            <th style="background:rgb(255,0,102);color:#000;">TERMINA</th>
+                            <th colspan="2" class="modalOfeTermina" style="background:rgb(0,32,96);color:#FFF;"></th>
+                            <th colspan="2" style="background:rgb(255,0,102);"></th>
+
+                        </tr>
+                        <tr>
+                            <th style="background:#FFF;color:#000;">CÓDIGO</th>
+                            <th style="background:#FFF;color:#000;">NOMBRE</th>
+                            <th style="background:rgb(255,204,255);color:#000;">OFERTA</th>
+                            <th style="background:rgb(244,176,132);color:#000;">NORMAL</th>
+                            <th style="background:#FFF;color:#000;">MÁXIMO</th>
+                            <th style="background:#FFF;color:#000;">ANTERIOR</th>
+                            <th style="background:#FFF;color:#000;">PRECIO 5</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bodyModalOfes">
+                        
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
