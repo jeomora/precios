@@ -72,13 +72,13 @@
 
                 <div class="row col-xl-12">
                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis8 btn-success" data-id-user="8">SUPER CD INDUSTRIAL</button>
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis1" data-id-user="1">TIJERAS</button>
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis2" data-id-user="2">TENENCIA</button>
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis3" data-id-user="3">MERCADO</button>
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis4" data-id-user="4">TRINCHERAS</button>
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis5" data-id-user="5">ULTRAMARINOS</button>
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis6" data-id-user="6">SOLIDARIDAD</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis8 btn-success" data-id-user="8" data-id-rojo="SUPER">SUPER CD INDUSTRIAL</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis1" data-id-user="1" data-id-rojo="TIJERAS">TIJERAS</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis2" data-id-user="2" data-id-rojo="TENENCIA">TENENCIA</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis3" data-id-user="3" data-id-rojo="MERCADO">MERCADO</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis4" data-id-user="4" data-id-rojo="TRINCHERAS">TRINCHERAS</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis5" data-id-user="5" data-id-rojo="ULTRAMARINOS">ULTRAMARINOS</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis6" data-id-user="6" data-id-rojo="SOLIDARIDAD">SOLIDARIDAD</button>
                     </div>
                 </div>
 
@@ -122,8 +122,8 @@
                         <table class="table table-bordered" style="text-align:center;">
                             <thead>
                                 <tr>
-                                    <th class="th1" colspan="4">SUPER</th>
-                                    <th class="th1" colspan="5">PRECIOS<br>SUPER</th>
+                                    <th class="th1 thSucus" colspan="4">SUPER</th>
+                                    <th class="th1 thSucus2" colspan="5">PRECIOS<br>SUPER</th>
                                     <th class="th2" colspan="3">CEDIS</th>
                                     <th class="th2" colspan="5">PRECIOS<br>CEDIS</th>
                                 </tr>

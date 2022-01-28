@@ -89,12 +89,15 @@ $(document).off("click",".btnpagsuc").on("click",".btnpagsuc",function(e){
 $(document).off("click",".btnSucuCedis").on("click",".btnSucuCedis",function(e){
     e.preventDefault();
     var dis = $(this).data("idUser");
+    var dis2 = $(this).data("idRojo");
     $(".tbodyCompa").html("")
     $(".countRojo").html("")
     $(".countVerde").html("")
     $("#excelCompa").css("display","none");
     $("#excelCompa").attr("href","Compara/ExcelCompaCedis/"+dis);
     $(".rowLoad").html('<div class="col-xl-3"><h1 class="text-warning">CARGANDO DATOS...</h1></div><div class="col-xl-6"><img src="assets/img/loading3.gif" class="rowLoadImg"></div>');
+    $(".thSucus").html(dis2);
+    $(".thSucus2").html("PRECIOS <br>"+dis2);
     comparaciones(dis)
 
     $(".btnSucuCedis").removeClass("btn-success")

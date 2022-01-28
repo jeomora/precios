@@ -119,8 +119,8 @@
                         <table class="table table-bordered" style="text-align:center;">
                             <thead>
                                 <tr>
-                                    <th class="th1" colspan="4">SUPER</th>
-                                    <th class="th1" colspan="5">PRECIOS<br>SUPER</th>
+                                    <th class="th1" colspan="4">MI SUCURSAL</th>
+                                    <th class="th1" colspan="5">PRECIOS<br>MI SUCURSAL</th>
                                     <th class="th2" colspan="3">CEDIS</th>
                                     <th class="th2" colspan="5">PRECIOS<br>CEDIS</th>
                                 </tr>
