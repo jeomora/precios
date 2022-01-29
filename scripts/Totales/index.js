@@ -16,6 +16,7 @@ jQuery(document).ready(function() {
 
 function getMeOfes(){
     $(".bodyOfes").html("");
+
     getOfertas().done(function(reso){
         var ofert = 0;var flag = 0;var echoes = "";
         if(reso){
@@ -26,14 +27,37 @@ function getMeOfes(){
                         echoes += '</div><a class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4 modalOferta" data-toggle="modal" data-target="#kt_modal_oferta" data-id-user="'+ofert+'">Ver lista completa</a>'+
                         '<a href="Codigos/ofertas/'+ofert+'" target="_blank"  class="btn btn-block btn-sm btn-light-success font-weight-bolder text-uppercase py-4">'+'<img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
                     }
-                    var corto = val.nombre;
+                    var clstp = [];var clstp2 = [];
+                    var corto = val.nombre;clstp[1]="";clstp[2]="";clstp[3]="";clstp[4]="";clstp[5]="";clstp[6]="";clstp[7]="";clstp[8]="";clstp[9]="";
+                    clstp2[1]="TIJERAS";clstp2[2]="TENENCIA";clstp2[3]="MERCADO";clstp2[4]="TRINCHERAS";clstp2[5]="ULTRAMARINOS";clstp2[6]="SOLIDARIDAD";clstp2[7]="CEDIS";clstp2[8]="SUPER INDUSTRIAL";clstp2[9]="TODAS LAS SUCURSALES";
+                    clstp2[10]="NO VISIBLE";
+                    clstp[val.tipo] = " btn-success"
                     if(val.nombre.length >= 35){
                         corto = val.nombre.substring(0,35)+"...";
                     }
-                    echoes += '<div class="col-xl-3"><div class="card card-custom gutter-b card-stretch"><div class="card-body pt-4 d-flex flex-column justify-content-between"><div class="d-flex align-items-center mb-7">'+
+
+                    echoes += '<div class="col-xl-3"><div class="card card-custom gutter-b card-stretch"><div class="card-body pt-4 d-flex flex-column justify-content-between">'+
+                                '<div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="right" data-original-title="Opciones"><a href="#"'+
+                                ' class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ki ki-bold-more-hor"></i></a>'+
+                                '<div class="dropdown-menu dropdown-menu-md dropdown-menu-right" style="position:absolute;transform:translate3d(-217px,33px,0px);top:0px;left:0px;will-change:transform;"x-placement="bottom-end">'+
+                                '<ul class="navi navi-hover"><li class="navi-header font-weight-bold py-4"><span class="font-size-lg">SELECCIONE LA SUCURSAL:</span></li><li class="navi-separator mb-3 opacity-70"></li>'+
+                                '<div class="btn-group-vertical" role="group" aria-label="Vertical button group" style="width:100%">'+
+                                '<button type="button" class="btn btn-outline-secondary btnCS btnCS9 '+clstp[9]+'" data-id-rojo="9" data-id-user="'+val.conjunto+'">TODAS LAS SUCURSALES</button>'+
+                                '<button type="button" class="btn btn-outline-secondary btnCS btnCS8 '+clstp[8]+'" data-id-rojo="8" data-id-user="'+val.conjunto+'">SUPER INDUSTRIAL</button>'+
+                                '<button type="button" class="btn btn-outline-secondary btnCS btnCS1 '+clstp[1]+'" data-id-rojo="1" data-id-user="'+val.conjunto+'">TIJERAS</button>'+
+                                '<button type="button" class="btn btn-outline-secondary btnCS btnCS2 '+clstp[2]+'" data-id-rojo="2" data-id-user="'+val.conjunto+'">TENENCIA</button>'+
+                                '<button type="button" class="btn btn-outline-secondary btnCS btnCS3 '+clstp[3]+'" data-id-rojo="3" data-id-user="'+val.conjunto+'">MERCADO</button>'+
+                                '<button type="button" class="btn btn-outline-secondary btnCS btnCS4 '+clstp[4]+'" data-id-rojo="4" data-id-user="'+val.conjunto+'">TRINCHERAS</button>'+
+                                '<button type="button" class="btn btn-outline-secondary btnCS btnCS5 '+clstp[5]+'" data-id-rojo="5" data-id-user="'+val.conjunto+'">ULTRAMARINOS</button>'+
+                                '<button type="button" class="btn btn-outline-secondary btnCS btnCS6 '+clstp[6]+'" data-id-rojo="6" data-id-user="'+val.conjunto+'">SOLIDARIDAD</button>'+
+                                '<button type="button" class="btn btn-outline-secondary btnCS btnCS7 '+clstp[7]+'" data-id-rojo="7" data-id-user="'+val.conjunto+'">CEDIS</button>'+
+                                '</div><li class="navi-separator mt-3 opacity-70"></li><li class="navi-footer py-4"><button type="button" class="btnCS btnCS10 btn btn-clean font-weight-bold btn-sm" data-id-rojo="10" data-id-user="'+val.conjunto+
+                                '"><i class="ki ki-trash icon-sm"></i>NO VISIBLE</button></li></ul></div></div>'+
+                                '<div class="d-flex align-items-center mb-7">'+
                                 '<div class="flex-shrink-0 mr-4 mt-lg-0 mt-3"><div class="symbol symbol-lg-75 symbol-success"><span class="symbol-label font-size-h3 font-weight-boldest">'+val.conjunto+'</span>'+
                                 '</div></div><div class="d-flex flex-column"><a class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">OFERTA-'+
-                                val.conjunto+'</a><span class="text-muted font-weight-bold">'+formatDate(val.fecha_registro)+'</span></div></div><p class="mb-7  font-weight-boldest">Fecha Inicio <span class="text-dark pr-1">'+
+                                val.conjunto+'</a><span class="text-warning font-weight-bold txtCual'+val.conjunto+'">'+clstp2[val.tipo]+'</span>'+
+                                '<span class="text-muted font-weight-bold">'+formatDate(val.fecha_registro)+'</span></div></div><p class="mb-7  font-weight-boldest">Fecha Inicio <span class="text-dark pr-1">'+
                                 formatDate(val.fecha_inicio)+'</span><br>Fecha Termino <span class="text-success pr-1">'+formatDate(val.fecha_termino)+'</span></p><div class="mb-7"><div class="d-flex justify-content-between align-items-center">'+
                                 '<span class="text-dark-75 font-weight-bolder mr-2">'+corto+'</span><span class="text-muted font-weight-bold">$ '+formatMoney(val.precio)+'</span></div>';
                     flag++;
@@ -525,6 +549,33 @@ function getOferta(dis){
 function getORecientes(){
     return $.ajax({
         url: site_url+"Uploads/getORecientes",
+        type: "POST",
+        cache: false,
+    });
+}
+
+$(document).off("click",".btnCS").on("click",".btnCS",function(e){
+    e.preventDefault();
+    var dis = $(this).data("idUser");
+    var dis2 = $(this).data("idRojo");
+    console.log(dis2)
+    cambiaQuien(dis,dis2).done(function(resp){
+        if(resp){
+            console.log(resp)
+            if(resp == "ELIMINADO"){
+                getMeOfes()
+                getMeORec()
+            }
+        }
+    })
+    $(".btnCS").removeClass("btn-success")
+    $(".btnCS"+dis2).addClass("btn-success")
+    $(".txtCual"+dis).html($(".btnCS"+dis2).html())
+})
+
+function cambiaQuien(dis,dis2){
+    return $.ajax({
+        url: site_url+"Uploads/cambiaQuien/"+dis+"/"+dis2,
         type: "POST",
         cache: false,
     });

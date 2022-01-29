@@ -2130,5 +2130,9 @@ class Uploads extends MY_Controller {
 		return $this->ofe_md->getMaxReg(NULL)[0];
 	}
 
+	public function cambiaQuien($dis,$dis2){
+		$this->ofe_md->update(["tipo"=>$dis2],["conjunto"=>$dis]);
+		$this->jsonResponse("AJUSTES");
+	}
 
 }
