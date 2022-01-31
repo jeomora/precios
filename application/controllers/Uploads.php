@@ -2135,4 +2135,9 @@ class Uploads extends MY_Controller {
 		$this->jsonResponse("AJUSTES");
 	}
 
+	public function cambiaQuienPz($dis,$dis2){
+		$this->new_md->update(["tipo"=>$dis2],["id_nuevo"=>$dis]);
+		$this->jsonResponse("AJUSTES");
+	}
+
 }

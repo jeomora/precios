@@ -58,7 +58,7 @@ class Nuevos_model extends MY_Model {
 	public function getRojos($where = []){
 		$user = $this->session->userdata();
 		$this->db->select("n.id_nuevo,n.fecha_registro,n.agrego,n.estatus,nd.id_detail,nd.id_rojo,nd.code1,nd.code2,nd.code3,nd.linea,nd.desc1,nd.unidad,nd.desc2,nd.cantidad,nd.costo,nd.iva,nd.mar1,n.sucb
-			,nd.mar2,nd.mar3,nd.mar4,nd.mar11,nd.mar22,nd.mar33,nd.rdiez,nd.mar44,nd.pre1,nd.pre2,nd.pre3,nd.pre4,nd.pre5,nd.pre11,nd.pre22,nd.pre33,nd.pre44,nd.pre55,nd.costopz,nd.matriz,u.nombre,l.estatus as listo,nd.estatus as estatusa,nd.estatusb,n.suca, n.sucb,pz.preciocuatro,pz.preciotres,pz.preciodos,pz.preciouno,pz.preciocinco,pz2.preciocuatro as preciocuatro2,pz2.preciotres as preciotres2,pz2.preciodos as preciodos2,pz2.preciouno as preciouno2,pz2.preciocinco as preciocinco2,nd.blues")
+			,nd.mar2,nd.mar3,nd.mar4,nd.mar11,nd.mar22,nd.mar33,nd.rdiez,nd.mar44,nd.pre1,nd.pre2,nd.pre3,nd.pre4,nd.pre5,nd.pre11,nd.pre22,nd.pre33,nd.pre44,nd.pre55,nd.costopz,nd.matriz,u.nombre,l.estatus as listo,nd.estatus as estatusa,nd.estatusb,n.suca, n.sucb,pz.preciocuatro,pz.preciotres,pz.preciodos,pz.preciouno,pz.preciocinco,pz2.preciocuatro as preciocuatro2,pz2.preciotres as preciotres2,pz2.preciodos as preciodos2,pz2.preciouno as preciouno2,pz2.preciocinco as preciocinco2,nd.blues,n.tipo")
 			->from("nuevos n")
 			->join("nuevo_detail nd","n.id_nuevo = nd.id_nuevo","left")
 			->join("usuarios u","n.agrego = u.id_usuario" ,"left") 
@@ -83,6 +83,7 @@ class Nuevos_model extends MY_Model {
 				$comparativaIndexada[$comparativa[$i]->id_nuevo]["id_nuevo"]		=	$comparativa[$i]->id_nuevo;
 				$comparativaIndexada[$comparativa[$i]->id_nuevo]["sucb"]			=	$comparativa[$i]->sucb;
 				$comparativaIndexada[$comparativa[$i]->id_nuevo]["suca"]			=	$comparativa[$i]->suca;
+				$comparativaIndexada[$comparativa[$i]->id_nuevo]["tipo"]	=	$comparativa[$i]->tipo;
 				$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"]		=	[];
 			}
 
@@ -318,7 +319,7 @@ class Nuevos_model extends MY_Model {
 	public function getRojosSucu($where = []){
 		$user = $this->session->userdata();
 		$this->db->select("ss.access as sss,n.id_nuevo,n.fecha_registro,n.agrego,n.estatus,nd.id_detail,nd.id_rojo,nd.code1,nd.code2,nd.code3,nd.linea,nd.desc1,nd.unidad,nd.desc2,nd.cantidad,nd.costo,nd.iva,nd.mar1,n.sucb
-			,nd.mar2,nd.mar3,nd.mar4,nd.mar11,nd.mar22,nd.mar33,nd.rdiez,nd.mar44,nd.pre1,nd.pre2,nd.pre3,nd.pre4,nd.pre5,nd.pre11,nd.pre22,nd.pre33,nd.pre44,nd.pre55,nd.costopz,nd.matriz,u.nombre,l.estatus as listo,nd.estatus as estatusa,nd.estatusb,n.suca, n.sucb,pz.preciocuatro,pz.preciotres,pz.preciodos,pz.preciouno,pz.preciocinco,pz2.preciocuatro as preciocuatro2,pz2.preciotres as preciotres2,pz2.preciodos as preciodos2,pz2.preciouno as preciouno2,pz2.preciocinco as preciocinco2,nd.blues")
+			,nd.mar2,nd.mar3,nd.mar4,nd.mar11,nd.mar22,nd.mar33,nd.rdiez,nd.mar44,nd.pre1,nd.pre2,nd.pre3,nd.pre4,nd.pre5,nd.pre11,nd.pre22,nd.pre33,nd.pre44,nd.pre55,nd.costopz,nd.matriz,u.nombre,l.estatus as listo,nd.estatus as estatusa,nd.estatusb,n.suca, n.sucb,pz.preciocuatro,pz.preciotres,pz.preciodos,pz.preciouno,pz.preciocinco,pz2.preciocuatro as preciocuatro2,pz2.preciotres as preciotres2,pz2.preciodos as preciodos2,pz2.preciouno as preciouno2,pz2.preciocinco as preciocinco2,nd.blues,n.tipo")
 			->from("nuevos n")
 			->join("nuevo_detail nd","n.id_nuevo = nd.id_nuevo","left")
 			->join("usuarios u","n.agrego = u.id_usuario" ,"left") 
@@ -344,6 +345,7 @@ class Nuevos_model extends MY_Model {
 				$comparativaIndexada[$comparativa[$i]->id_nuevo]["id_nuevo"]		=	$comparativa[$i]->id_nuevo;
 				$comparativaIndexada[$comparativa[$i]->id_nuevo]["sucb"]			=	$comparativa[$i]->sucb;
 				$comparativaIndexada[$comparativa[$i]->id_nuevo]["suca"]			=	$comparativa[$i]->suca;
+				$comparativaIndexada[$comparativa[$i]->id_nuevo]["tipo"]			=	$comparativa[$i]->tipo;
 				$comparativaIndexada[$comparativa[$i]->id_nuevo]["sss"]			=	$comparativa[$i]->sss;
 				$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"]		=	[];
 			}

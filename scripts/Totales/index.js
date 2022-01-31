@@ -175,8 +175,29 @@ function getNuevosB() {
 function oldResultsA(respo){
     $.each(respo,function(inx,val){
         if (val.suca != 0){
-
-            var new_table = '<div class=row><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="4" style="padding:0">'+setZeros2(val.id_nuevo)+'</th><th class="showBody" data-id-user="'+val.id_nuevo+'">MOSTRAR LISTA</th>'+
+            var clstp = [];var clstp2 = [];
+            clstp[1]="";clstp[2]="";clstp[3]="";clstp[4]="";clstp[5]="";clstp[6]="";clstp[7]="";clstp[8]="";clstp[9]="";
+            clstp2[1]="TIJERAS";clstp2[2]="TENENCIA";clstp2[3]="MERCADO";clstp2[4]="TRINCHERAS";clstp2[5]="ULTRAMARINOS";clstp2[6]="SOLIDARIDAD";clstp2[7]="CEDIS";clstp2[8]="SUPER INDUSTRIAL";clstp2[9]="TODAS LAS SUCURSALES";
+            clstp2[10]="NO VISIBLE";    
+            clstp[val.tipo] = " btn-success"
+            var new_table = '<div class=row><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="4" style="padding:0">'+setZeros2(val.id_nuevo)+
+            '<br><div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="right" data-original-title="Opciones"><a href="#"'+
+            ' class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ki ki-bold-more-hor"></i></a>'+
+            '<div class="dropdown-menu dropdown-menu-md dropdown-menu-right" style="position:absolute;transform:translate3d(-217px,33px,0px);top:0px;left:0px;will-change:transform;"x-placement="bottom-end">'+
+            '<ul class="navi navi-hover"><li class="navi-header font-weight-bold py-4"><span class="font-size-lg">SELECCIONE LA SUCURSAL:</span></li><li class="navi-separator mb-3 opacity-70"></li>'+
+            '<div class="btn-group-vertical" role="group" aria-label="Vertical button group" style="width:100%">'+
+            '<button type="button" class="btn btn-outline-secondary btnChA btnChA9 '+clstp[9]+'" data-id-rojo="9" data-id-user="'+val.id_nuevo+'">TODAS LAS SUCURSALES</button>'+
+            '<button type="button" class="btn btn-outline-secondary btnChA btnChA8 '+clstp[8]+'" data-id-rojo="8" data-id-user="'+val.id_nuevo+'">SUPER INDUSTRIAL</button>'+
+            '<button type="button" class="btn btn-outline-secondary btnChA btnChA1 '+clstp[1]+'" data-id-rojo="1" data-id-user="'+val.id_nuevo+'">TIJERAS</button>'+
+            '<button type="button" class="btn btn-outline-secondary btnChA btnChA2 '+clstp[2]+'" data-id-rojo="2" data-id-user="'+val.id_nuevo+'">TENENCIA</button>'+
+            '<button type="button" class="btn btn-outline-secondary btnChA btnChA3 '+clstp[3]+'" data-id-rojo="3" data-id-user="'+val.id_nuevo+'">MERCADO</button>'+
+            '<button type="button" class="btn btn-outline-secondary btnChA btnChA4 '+clstp[4]+'" data-id-rojo="4" data-id-user="'+val.id_nuevo+'">TRINCHERAS</button>'+
+            '<button type="button" class="btn btn-outline-secondary btnChA btnChA5 '+clstp[5]+'" data-id-rojo="5" data-id-user="'+val.id_nuevo+'">ULTRAMARINOS</button>'+
+            '<button type="button" class="btn btn-outline-secondary btnChA btnChA6 '+clstp[6]+'" data-id-rojo="6" data-id-user="'+val.id_nuevo+'">SOLIDARIDAD</button>'+
+            '<button type="button" class="btn btn-outline-secondary btnChA btnChA7 '+clstp[7]+'" data-id-rojo="7" data-id-user="'+val.id_nuevo+'">CEDIS</button>'+
+            '</div><li class="navi-separator mt-3 opacity-70"></li><li class="navi-footer py-4"><button type="button" class="btnChA btnChA10 btn btn-clean font-weight-bold btn-sm" data-id-rojo="10" data-id-user="'+val.id_nuevo+
+            '"><i class="ki ki-trash icon-sm"></i>NO VISIBLE</button></li></ul></div></div><span class="text-warning font-weight-bold txtCualA'+val.id_nuevo+'">'+clstp2[val.tipo]+'</span>'+
+            '</th><th class="showBody" data-id-user="'+val.id_nuevo+'">MOSTRAR LISTA</th>'+
                 '<th><a class="nav-link" target="_blank" href="Codigos/qrme/'+val.id_nuevo+'"><img src="assets/img/codigo-qr.png" style="height:45px"></a></th><th>'+
                 '<a class="nav-link" target="_blank" href="Uploads/excelA/'+val.id_nuevo+'"><img src="assets/img/excel.svg" style="height:45px"></a></th><th colspan="7">'+
                 formatDate2(val.fecha_registro)+'</th><th colspan="17" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr id="head'+val.id_nuevo+'"><th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th>'+
@@ -573,9 +594,34 @@ $(document).off("click",".btnCS").on("click",".btnCS",function(e){
     $(".txtCual"+dis).html($(".btnCS"+dis2).html())
 })
 
+
+$(document).off("click",".btnChA").on("click",".btnChA",function(e){
+    e.preventDefault();
+    var dis = $(this).data("idUser");
+    var dis2 = $(this).data("idRojo");
+    cambiaQuienPz(dis,dis2).done(function(resp){
+        if(resp){
+            if(resp == "ELIMINADO"){
+                //getMeNews();
+            }
+        }
+    })
+    $(".btnChA").removeClass("btn-success")
+    $(".btnChA"+dis2).addClass("btn-success")
+    $(".txtCualA"+dis).html($(".btnChA"+dis2).html())
+})
+
 function cambiaQuien(dis,dis2){
     return $.ajax({
         url: site_url+"Uploads/cambiaQuien/"+dis+"/"+dis2,
+        type: "POST",
+        cache: false,
+    });
+}
+
+function cambiaQuienPz(dis,dis2){
+    return $.ajax({
+        url: site_url+"Uploads/cambiaQuienPz/"+dis+"/"+dis2,
         type: "POST",
         cache: false,
     });

@@ -4,7 +4,7 @@
     <head>
         <base href="<?php echo base_url("/") ?>">
         <meta charset="utf-8"/>
-        <title>Registro Ventas | Dashboard</title>
+        <title>Cambio De Precios | Dashboard</title>
         <meta name="description" content="La Bodeguita Abarrotes Azteca"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
@@ -28,6 +28,7 @@
             var base_url = "<?php echo base_url("/") ?>";//No carga el archivo index
             var site_url = "<?php echo site_url("/") ?>";//Si carga el index 
             var user_name = "<?php echo $this->session->userdata('username') ?>";//Si carga el index 
+            var user_sucus = "<?php echo $this->session->userdata('id_sucursal') ?>";//Si carga el index 
             
         </script>
 
