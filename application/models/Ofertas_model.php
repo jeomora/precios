@@ -38,10 +38,12 @@ class Ofertas_model extends MY_Model {
 	}
 
 	public function getactivas($where=[]){
-		$this->db->select("*")
-		->from("ofertas")
-		->where("estatus <> 0")
-		->where("CURDATE() < fecha_termino")
+		$this->db->select("o.id_oferta,o.fecha_registro,o.fecha_inicio,o.fecha_termino,o.id_producto,o.codigo,o.nombre,o.precio,o.normal,o.maximo,o.estatus,o.registro,o.tipo,o.conjunto,l.ides as ln,l.nombre as linea")
+		->from("ofertas o")
+		->join("productos p","o.codigo = p.codigo","LEFT")
+		->join("lineas l","p.linea = l.id_linea","LEFT")
+		->where("o.estatus <> 0")
+		->where("CURDATE() < o.fecha_termino")
 		->order_by("conjunto","DESC");
 		if($where !== NULL){
 			if(is_array($where)){
