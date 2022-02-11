@@ -274,12 +274,18 @@ function oldResultsB(respo){
                                 '<th style="width:100px" >PAQUETE</th><th style="background:#bdd7ee" colspan="3">PRECIOS DEL 1 AL 3</th></tr></thead><tbody id="bodyB'+value.id_nuevo+'" style="display:none">';
 
             $.each(value.detalles,function(inx,val){
+                var colos = giveMeColor(value.estatus);
+                var des1 = colos[0];var des2 =colos[1];
+                var blues = "";
+                if(value.blues != 0){
+                    blues = "style='background:#00b0f0 !important'";
+                }
                 if(val.estatusb != "0"){
                     var renglon10 = ( val.costo/val.cantidad ) / ( 1+(val.iva/100) );
 
-                    oldsB +=    '<tr><td>'+val.code1+'</td><td>'+val.code2+'</td><td>'+val.linea+'</td><td>'+val.desc1+'</td><td>'+val.unidad+'</td><td>'+val.cantidad+'</td><td>'+formatMoney(val.costo)+'</td>'+
+                    oldsB +=    '<tr><td class="'+des1+'" '+blues+'>'+val.code1+'</td><td class="'+des1+'">'+val.code2+'</td><td>'+val.linea+'</td><td>'+val.desc1+'</td><td>'+val.unidad+'</td><td>'+val.cantidad+'</td><td>'+formatMoney(val.costo)+'</td>'+
                                 '<td class="ivaClass">'+val.iva+'</td><td class="renglon10Class">'+val.rdiez+'</td><td class="precioB">'+formatMoney(val.pre11)+'</td><td class="precioB">'+formatMoney(val.pre22)+
-                                '</td><td class="precioB">'+formatMoney(val.pre33)+'</td><td>'+isnulo(val.code3)+'</td><td>'+isnulo(val.desc2)+'</td><td>'+isnuloF(val.costopz)+'</td><td class="precioB">'+isnuloF(val.pre1)+'</td><td class="precioB">'+
+                                '</td><td class="precioB">'+formatMoney(val.pre33)+'</td><td class="'+des2+'">'+isnulo(val.code3)+'</td><td class="'+des2+'">'+isnulo(val.desc2)+'</td><td>'+isnuloF(val.costopz)+'</td><td class="precioB">'+isnuloF(val.pre1)+'</td><td class="precioB">'+
                                 isnuloF(val.pre2)+'</td><td class="precioB">'+isnuloF(val.pre3)+'</td></tr>';
                 }                        
             })
