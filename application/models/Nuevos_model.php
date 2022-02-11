@@ -55,6 +55,29 @@ class Nuevos_model extends MY_Model {
 		}
 	}
 
+	public function getMaxBlueB($where=[]){
+		$this->db->select("MAX(blues)+1 as blues from nuevo_b");
+		if($where !== NULL){
+			if(is_array($where)){
+				foreach ($where as $field => $value) {
+					$this->db->where($field, $value);
+				}
+			}else{
+				$this->db->where($this->PRI_INDEX, $where);
+			}
+		}
+		$result = $this->db->get()->result();
+		if($result){
+			if(is_array($where)){
+				return $result;
+			}else{
+				return $result;
+			}
+		}else{
+			return false;
+		}
+	}
+
 	public function getRojos($where = []){
 		$user = $this->session->userdata();
 		$this->db->select("n.id_nuevo,n.fecha_registro,n.agrego,n.estatus,nd.id_detail,nd.id_rojo,nd.code1,nd.code2,nd.code3,nd.linea,nd.desc1,nd.unidad,nd.desc2,nd.cantidad,nd.costo,nd.iva,nd.mar1,n.sucb
@@ -139,7 +162,7 @@ class Nuevos_model extends MY_Model {
 	public function getRojosB($where = []){
 		$user = $this->session->userdata();
 		$this->db->select("n.id_nuevo,n.fecha_b as fecha_registro,n.agrego,n.estatus,nd.id_detail,nd.id_rojo,nd.code1,nd.code2,nd.code3,nd.linea,nd.desc1,nd.unidad,nd.desc2,nd.cantidad,nd.costo,nd.iva,n.sucb
-			,nd.pre1,nd.pre2,nd.pre3,nd.pre11,nd.pre22,nd.pre33,nd.rdiez,nd.costopz,nd.matriz,u.nombre,nd.estatus as estato,n.suca, n.sucb")
+			,nd.pre1,nd.pre2,nd.pre3,nd.pre11,nd.pre22,nd.pre33,nd.rdiez,nd.costopz,nd.matriz,u.nombre,nd.estatus as estato,n.suca, n.sucb,nd.blues")
 			->from("nuevos n")
 			->join("nuevo_b nd","n.id_nuevo= nd.id_nuevo and nd.estatus <> 0","left")
 			->join("usuarios u","n.agrego = u.id_usuario" ,"left") 
@@ -184,6 +207,7 @@ class Nuevos_model extends MY_Model {
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["rdiez"]	=	$comparativa[$i]->rdiez;
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["estato"]	=	$comparativa[$i]->estato;
 			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["estatus"]	=	$comparativa[$i]->estatus;
+			$comparativaIndexada[$comparativa[$i]->id_nuevo]["detalles"][$comparativa[$i]->id_detail]["blues"]	=	$comparativa[$i]->blues;
 
 		}
 		if ($comparativaIndexada) {

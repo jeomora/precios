@@ -33,12 +33,22 @@ function oldResultsB(respo){
                                 '<th style="width:100px" >PAQUETE</th><th style="background:#bdd7ee" colspan="3">PRECIOS DEL 1 AL 3</th></tr></thead><tbody id="bodyB'+value.id_nuevo+'" style="display:none">';
 
             $.each(value.detalles,function(inx,val){
+                var colos = giveMeColor(val.estato);
+                var des1 = colos[0];var des2 =colos[1];
+                var blues = "";
+                
+                console.log(colos)
+                console.log(colos[0])
+                console.log(colos[1])
+                if(val.blues != 0){
+                    blues = "style='background:#00b0f0 !important'";
+                }
                 if(val.estatusb != "0"){
                     var renglon10 = ( val.costo/val.cantidad ) / ( 1+(val.iva/100) );
 
-                    oldsB +=    '<tr><td>'+val.code1+'</td><td>'+val.code2+'</td><td>'+val.linea+'</td><td>'+val.desc1+'</td><td>'+val.unidad+'</td><td>'+val.cantidad+'</td><td>'+formatMoney(val.costo)+'</td>'+
+                    oldsB +=    '<tr><td class="'+des1+'" '+blues+'>'+val.code1+'</td><td class="'+des1+'">'+val.code2+'</td><td>'+val.linea+'</td><td>'+val.desc1+'</td><td>'+val.unidad+'</td><td>'+val.cantidad+'</td><td>'+formatMoney(val.costo)+'</td>'+
                                 '<td class="ivaClass">'+val.iva+'</td><td class="renglon10Class">'+val.rdiez+'</td><td class="precioB">'+formatMoney(val.pre11)+'</td><td class="precioB">'+formatMoney(val.pre22)+
-                                '</td><td class="precioB">'+formatMoney(val.pre33)+'</td><td>'+isnulo(val.code3)+'</td><td>'+isnulo(val.desc2)+'</td><td>'+isnuloF(val.costopz)+'</td><td class="precioB">'+isnuloF(val.pre1)+'</td><td class="precioB">'+
+                                '</td><td class="precioB">'+formatMoney(val.pre33)+'</td><td class="'+des2+'">'+isnulo(val.code3)+'</td><td class="'+des2+'">'+isnulo(val.desc2)+'</td><td>'+isnuloF(val.costopz)+'</td><td class="precioB">'+isnuloF(val.pre1)+'</td><td class="precioB">'+
                                 isnuloF(val.pre2)+'</td><td class="precioB">'+isnuloF(val.pre3)+'</td></tr>';
                 }                        
             })
@@ -75,3 +85,58 @@ $(document).off("click",".showBodyB").on("click",".showBodyB",function(event){
     //$("#body"+dis).css("display","block !important")
     document.getElementById("bodyB"+dis).style.display = "contents";
 })
+
+function giveMeColor(estatus){
+    var reso = ["",""];
+    switch( parseInt(estatus) ){
+        case 2:
+            reso = ["cambioDe",""]; //2 EDITAR PZ 
+            break;
+        case 3:
+            reso = ["","cambioDe"];//3 EDITAR CAJA 
+            break;
+        case 4:
+            reso = ["cambioDe","cambioDe"];//4 EDITAR PZ Y CAJA 
+            break;
+        case 5:
+            reso = ["cambioDe","eliminDe"];//5 EDITAR PZ Y ELIM CAJA 
+            break;
+        case 6:
+            reso = ["eliminDe","cambioDe"];//6 EDITAR CAJA Y ELIM PZA 
+            break;
+        case 7:
+            reso = ["cambioDe","agregaDe"];//7 EDITAR PZ Y ADD CAJA 
+            break;
+        case 8:
+            reso = ["agregaDe","cambioDe"];//8 EDITAR CAJA Y ADD  PZA 
+            break;
+        case 9:
+            reso = ["agregaDe",""];//9 ADD PZA 
+            break;
+        case 10:
+            reso = ["","agregaDe"]; //10 ADD CJA 
+            break;
+        case 11:
+            reso = ["agregaDe","agregaDe"]; //11 ADD PZA Y ADD CAJA 
+            break;
+        case 12:
+            reso = ["agregaDe","eliminDe"]; //12 ADD PZA Y ELIM CJA 
+            break;
+        case 13:
+            reso = ["eliminDe","agregaDe"]; //13 ADD CJA Y ELIM PZA 
+            break;
+        case 14:
+            reso = ["eliminDe",""]; //14 ELIM PZA 
+            break;
+        case 15:
+            reso = ["","eliminDe"]; //15 ELIM CJA 
+            break;
+        case 16:
+            reso = ["eliminDe","eliminDe"]; //16 ELIM PZA Y ELIM CJA 
+            break;
+        default:
+            return reso;
+        break;
+    }
+    return reso;
+}

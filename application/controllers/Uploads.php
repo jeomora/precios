@@ -1628,6 +1628,7 @@ class Uploads extends MY_Controller {
 		$flag = 1;
 		$colores = [];$pack = [];
 		$blues = $this->new_md->getMaxBlue(NULL)[0];
+		$bluesB = $this->new_md->getMaxBlueB(NULL)[0];
 		if ( $this->getOldVal($sheet,4,"J") == "PRECIOS DEL 1 AL 5" || $this->getOldVal($sheet,5,"J") == "PRECIOS DEL 1 AL 5" || $this->getOldVal($sheet,4,"J") == "PRECIOS  ARTICULOS DEL 1 AL 5" || $this->getOldVal($sheet,5,"J") == "PRECIOS  ARTICULOS DEL 1 AL 5") {
 			for ($i=4; $i<=$num_rows; $i++) {
 				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO PRINCIPAL"){
@@ -1659,16 +1660,21 @@ class Uploads extends MY_Controller {
 					}
 					//OBTENER CEROS INICIALES
 					$prodo = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"A"),"estatus"=>1]);
-					if ($prodo){
+					if ($prodo && $prodo <> 0){
 						$prodo = $prodo[0]->codigo;
 					}else{
 						$prodo = $this->getOldVal($sheet,$i,"A");
 					}
 					$prodo2 = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"O"),"estatus"=>1]);
-					if ($prodo2){
+					if ($prodo2 && $prodo2 <> 0){
 						$prodo2 = $prodo2[0]->codigo;
 					}else{
-						$prodo2 = $this->getOldVal($sheet,$i,"O");
+						$prodo2 = $this->prod_md->get(NULL,["code"=>$this->getOldVal($sheet,$i,"O"),"estatus"=>1]);
+						if ($prodo2){
+							$prodo2 = $prodo2[0]->code;
+						}else{
+							$prodo2 = $this->getOldVal($sheet,$i,"O");
+						}
 					}
 					$blue = $this->getHexBlue($sheet,$i);
 					//$reds = $sheet->getStyle('O'.$i)->getFill()->getStartColor()->getRGB();
@@ -1752,17 +1758,32 @@ class Uploads extends MY_Controller {
 					$rojo = 1;
 
 					$prodo = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"A"),"estatus"=>1]);
-					if ($prodo){
+					if ($prodo && $prodo <> 0){
 						$prodo = $prodo[0]->codigo;
 					}else{
 						$this->getOldVal($sheet,$i,"A");
 					}
 					$prodo2 = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"AD"),"estatus"=>1]);
-					if ($prodo2){
+					$this->jsonResponse($prodo2);
+					if($prodo2 && $prodo2 <> 0){
 						$prodo2 = $prodo2[0]->codigo;
 					}else{
-						$this->getOldVal($sheet,$i,"AD");
+						$prodo2 = $this->prod_md->get(NULL,["code"=>$this->getOldVal($sheet,$i,"AD"),"estatus"=>1]);
+						if ($prodo2){
+							$prodo2 = $prodo2[0]->code;
+						}else{
+							$prodo2 = $this->getOldVal($sheet,$i,"AD");
+						}
 					}
+					$blueB = $this->getHexBlue($sheet,$i);
+					$blb = 0;
+					if($blueB){
+						$blb = $bluesB->blues;
+					}
+					if($blb === 0){
+						$bluesB = $this->new_md->getMaxBlueB(NULL)[0];
+					}
+					$colore = $this->getMeColorB($sheet,$i);
 					$new_rojo[$i]=[
 						"id_nuevo"		=>	$id_nuevo,
 						"id_rojo"		=>	$rojo,
@@ -1784,6 +1805,8 @@ class Uploads extends MY_Controller {
 						"pre3"			=>	$this->getOldVal($sheet,$i,"AK"),
 						"rdiez"			=>	$this->getOldVal($sheet,$i,"I"),
 						"costopz"		=>	$this->getOldVal($sheet,$i,"AH"),
+						"estatus"		=>	$colore,
+						"blues"			=>	$blb
 					];
 
 					$this->newb_md->insert($new_rojo[$i]);
@@ -1914,6 +1937,106 @@ class Uploads extends MY_Controller {
 		}
 
 		return $colores+$canto;
+	}
+
+	private function getMeColorB($sheet,$i){
+		$color = $sheet->getStyle('B'.$i)->getFill()->getStartColor()->getRGB();
+		$color = $this->getHexB($color);
+		if($color == 0){
+			$color = $sheet->getStyle('C'.$i)->getFill()->getStartColor()->getRGB();
+			$color = $this->getHexB($color);
+			if($color == 0){
+				$color = $sheet->getStyle('D'.$i)->getFill()->getStartColor()->getRGB();
+				$color = $this->getHexB($color);
+			}
+		}
+
+		$color2 = $sheet->getStyle('AE'.$i)->getFill()->getStartColor()->getRGB();
+		$color2 = $this->getHexB($color2);
+		if($color2 == 0){
+			$color2 = $sheet->getStyle('AF'.$i)->getFill()->getStartColor()->getRGB();
+			$color2 = $this->getHexB($color2);
+			if($color2 == 0){
+				$color2 = $sheet->getStyle('AG'.$i)->getFill()->getStartColor()->getRGB();
+				$color2 = $this->getHexB($color2);
+			}
+		}
+
+		$canto = $sheet->getStyle('F'.$i)->getFill()->getStartColor()->getRGB();
+		$canto = $this->getHexB($canto);
+		if ($canto <> 0){
+			$canto = 0.1;
+		}
+
+
+		switch ([$color,$color2]) {
+			case [2,0]:
+				$colores = 2; //2 EDITAR PZ 
+				break;
+			case [0,2]:
+				$colores = 3; //3 EDITAR CAJA 
+				break;
+			case [2,2]:
+				$colores = 4; //4 EDITAR PZ Y CAJA 
+				break;
+			case [2,3]:
+				$colores = 5; //5 EDITAR PZ Y ELIM CAJA 
+				break;
+			case [3,2]:
+				$colores = 6; //6 EDITAR CAJA Y ELIM PZA 
+				break;
+			case [2,1]:
+				$colores = 7; //7 EDITAR PZ Y ADD CAJA 
+				break;
+			case [1,2]:
+				$colores = 8; //8 EDITAR CAJA Y ADD  PZA 
+				break;
+			case [1,0]:
+				$colores = 9; //9 ADD PZA 
+				break;
+			case [0,1]:
+				$colores = 10; //10 ADD CJA 
+				break;
+			case [1,1]:
+				$colores = 11; //11 ADD PZA Y ADD CAJA 
+				break;
+			case [1,3]:
+				$colores = 12; //12 ADD PZA Y ELIM CJA 
+				break;
+			case [3,1]:
+				$colores = 13; //13 ADD CJA Y ELIM PZA 
+				break;
+			case [3,0]:
+				$colores = 14; //14 ELIM PZA 
+				break;
+			case [0,3]:
+				$colores = 15; //15 ELIM CJA 
+				break;
+			case [3,3]:
+				$colores = 16; //16 ELIM PZA Y ELIM CJA 
+				break;
+			default:
+				$colores = 1; //SI TIENE 0.1 SE CAMBÍA LA CANTIDAD	
+				break;
+		}
+
+		return $colores+$canto;
+	}
+
+	private function getHexB($color){
+		$uno = substr($color,0,2);
+		$dos = substr($color,2,2);
+		$tre = substr($color,4,2);
+		if(hexdec($dos) > hexdec($uno) && hexdec($uno) < 200){
+			$color = 1;//verde ALTA
+		}elseif(hexdec($uno) > 190 && hexdec($dos) > 190 && hexdec($tre) < 160){
+			$color = 2; //amarillo EDICIÓN
+		}elseif((hexdec($uno) > 150 && hexdec($dos) < 100 && hexdec($tre) < 100) || ( hexdec($uno) > hexdec($dos) && hexdec($uno) > hexdec($tre) && hexdec($uno) > 150) && hexdec($dos) < 200 && hexdec($tre) < 200){
+			$color = 3;//rojo ELIMINAR
+		}else{
+			$color = 0;
+		}
+		return $color;
 	}
 
 	private function actualizaBase($caso,$nuevo){
