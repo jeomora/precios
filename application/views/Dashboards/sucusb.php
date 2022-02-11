@@ -35,7 +35,8 @@
     .dmo1{font-weight: bold;}
     .dmo2{color: red;}
     .rowLoadImg{height: 150px;}
-    .bodoche>tr>td{padding-bottom:1px;}
+    .precioB{background:#bdd7ee;}
+    .showBodyB,.showBody{cursor:pointer;background:aqua;font-size:18px;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -105,18 +106,18 @@
                     <!--end::Row-->
 
                 </div>
-                    <h1 style="text-align:center;font-size:40px;">OFERTAS ACTIVAS</h1>
+                    <!--<h1 style="text-align:center;font-size:40px;">OFERTAS ACTIVAS</h1>
                     
                     <div class="flex-row-lg-fluid col-xl-12">
                         <div class="row bodyOfes">
                         </div>
-                    </div>
+                    </div>-->
             </div>
             <!--end::Row-->
 
             <div class="row">
             	<div class="col-xl-12">
-            		<div class="row col-xl-12 otrosShows" style="padding-bottom:20px;padding-top:30px;">
+            		<div class="row col-xl-12 otrosShowsB" style="padding-bottom:20px;padding-top:30px;">
             			
             		</div>
             	</div>
@@ -162,41 +163,6 @@
                         </tr>
                     </thead>
                     <tbody class="bodyModalOfes">
-                        
-                    </tbody>
-                </table>
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-                
-            </div>
-        </div>
-    </div>
-</div>
-<!--end::Modal-->
-
-<!--begin::Modal EDITAR DESCRIPCIÓN  -->
-<div class="modal fade" id="kt_modal_compara" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">COMPARA PRECIOS</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered" style="text-align:center;">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th style="">CÓDIGO</th>
-                            <th style="">NOMBRE</th>
-                            <th style="">UM</th>
-                            <th style="">RENGLON 10</th>
-                            <th colspan="5">PRECIOS DEL 1 AL 5</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bodyModalCompara">
                         
                     </tbody>
                 </table>

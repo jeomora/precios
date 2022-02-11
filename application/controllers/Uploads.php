@@ -1735,16 +1735,17 @@ class Uploads extends MY_Controller {
 			];
 			$cambio = $this->cambio_md->insert($new_cambio);
 		}else{
+			$fecha = new DateTime(date('Y-m-d H:i:s'));
 			for ($i=4; $i<=$num_rows; $i++) {
 				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO PRINCIPAL"){
 					if ($flag == 1) {
 						$flag++;
 						$nuevoid = $this->new_md->get(NULL,["sucb"=>0]);
 						if($nuevoid){
-							$this->new_md->update(["sucb"=>1 ],["id_nuevo"=>$nuevoid[0]->id_nuevo]);//GET NEW ID
+							$this->new_md->update(["sucb"=>1,"fecha_b"=> $fecha->format("Y-m-d H:i:s")],["id_nuevo"=>$nuevoid[0]->id_nuevo]);//GET NEW ID
 							$id_nuevo = $nuevoid[0]->id_nuevo;
 						}else{
-							$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"sucb"=>1 ]);//GET NEW ID
+							$id_nuevo = $this->new_md->insert([ "agrego"=>$user["id_usuario"],"sucb"=>1,"fecha_b"=> $fecha->format("Y-m-d H:i:s") ]);//GET NEW ID
 						}
 					}
 					
@@ -2139,5 +2140,12 @@ class Uploads extends MY_Controller {
 		$this->new_md->update(["tipo"=>$dis2],["id_nuevo"=>$dis]);
 		$this->jsonResponse("AJUSTES");
 	}
+
+	public function getListaSucu($id_nuevo){
+		$rojos = $this->new_md->getListaSucu(NULL,$id_nuevo);
+		$this->jsonResponse($rojos);
+	}
+
+	
 
 }

@@ -12,11 +12,12 @@ jQuery(document).ready(function() {
             console.log(clave)
         }
         startQr()
-    })    
+    })   
 });
 
 function startQr(){
     qrmeOf().done(function(resp){
+        console.log(resp)
         
         if(resp){
             var codeqr2 = "";
@@ -29,7 +30,7 @@ function startQr(){
                 }
                 var codeqr = givePZ(value,index);
                 $('#outtxt'+index).html("<h3 class='font-weight-bolder mb-1'><a class='text-dark' style='font-size:55px'>"
-                    +value.nombre+"</a></h3><div class='text-dark mb-9' style='font-size:50px'>"+value.codigo+"</div><div class='col-md-12' style='text-align:center'><button type='button' data-id-rojo='"+value.id_oferta+
+                    +value.nombre+"</a></h3><div class='text-dark mb-9' sty le='font-size:50px'>"+value.codigo+"</div><div class='col-md-12' style='text-align:center'><button type='button' data-id-rojo='"+value.id_oferta+
                     "' class='"+cliston+"'>"+liston+"</button></div>")
                 
                 $('#output'+index).qrcode({
@@ -46,6 +47,15 @@ function startQr(){
             
         }
     })
+}
+
+
+function getMeClave() {
+    return $.ajax({
+        url: site_url+"Codigos/getMeClave",
+        type: "POST",
+        cache: false,
+    });
 }
 
 $(document).off("click",".btnlistos").on("click",".btnlistos",function(event){
@@ -68,13 +78,6 @@ function qrmeOf() {
     });
 }
 
-function getMeClave() {
-    return $.ajax({
-        url: site_url+"Codigos/getMeClave",
-        type: "POST",
-        cache: false,
-    });
-}
 
 function givePZ(value,index){
     var reso = ["",""];
@@ -93,10 +96,10 @@ function givePZ(value,index){
     var precinco = parseFloat((value.costo / value.cantidad),2);
     precinco += 0.01; 
     var renglon10 = value.costopz / ( 1+(value.iva/100) );
-    var codeqr = "\x05A\x06b"+value.codigo+"\r\nc17\r\n"+iva+value.precio+"\r\n\n\n\r\r\n\n\n\r\r\n\r\r\r\r\r\rT";
+    var codeqr = "\x05G\x06b"+value.codigo+"\r\nc17\r\n"+iva+value.preciouno+"\r\n\n\n\r\r\n\n\n\r\r\n\r\r\r\r\r\rT";
 
     if(value.ums == 2 || value.ums == 5 || value.ums == 7 || value.ums == 12 || value.ums == 2 || value.ums == 3 || value.ums == 10){
-        codeqr = "\x05B\x06b"+value.codigo+"\r\nc"+clave+"1\r\n\x1911\r\n"+iva+value.precio+"\r\n\n\n\r\r\n\n\n\r\r\n\r\r\r\r\r\rT"
+        codeqr = "\x05B\x06b"+value.codigo+"\r\nc"+clave+"1\r\n\x1911\r\n"+iva+value.preciouno+"\r\n\n\n\r\r\n\n\n\r\r\n\r\r\r\r\r\rT"
     }
 
 

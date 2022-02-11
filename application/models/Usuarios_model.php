@@ -210,6 +210,37 @@ class Usuarios_model extends MY_Model {
 		}
 	}
 
+	public function getLastDate($where=[]){
+		$this->db->select("MAX(c.fecha_cambio) as lastdate,c.antes,c.id_usuario,u.nombre,u.id_sucursal,s.nombre as sucursal")
+		->from("cambios c")
+		->join("usuarios u","c.id_usuario = u.id_usuario","LEFT")
+		->join("sucursales s","u.id_sucursal = s.id_sucursal","LEFT")
+		->where("c.accion","Sube Matricial")
+		->group_by("c.id_usuario")
+		->order_by("u.id_sucursal","ASC");
+		$comparativa = $this->db->get()->result();
+		$comparativaIndexada = [];
+		for ($i=0; $i<sizeof($comparativa); $i++) {
+			if (isset($comparativaIndexada[$comparativa[$i]->id_sucursal])) {
+				
+			}else{
+				$comparativaIndexada[$comparativa[$i]->id_sucursal]					=	[];
+				$comparativaIndexada[$comparativa[$i]->id_sucursal]["lastdate"]	=	$comparativa[$i]->lastdate;
+				$comparativaIndexada[$comparativa[$i]->id_sucursal]["nombre"]			=	$comparativa[$i]->nombre;
+				$comparativaIndexada[$comparativa[$i]->id_sucursal]["id_sucursal"]		=	$comparativa[$i]->id_sucursal;
+				$comparativaIndexada[$comparativa[$i]->id_sucursal]["antes"]			=	$comparativa[$i]->antes;
+				$comparativaIndexada[$comparativa[$i]->id_sucursal]["id_usuario"]			=	$comparativa[$i]->id_usuario;
+				$comparativaIndexada[$comparativa[$i]->id_sucursal]["sucursal"]	=	$comparativa[$i]->sucursal;
+			}
+
+		}
+		if ($comparativaIndexada) {
+			return $comparativaIndexada;
+		} else {
+			return false;
+		}
+	}
+
 }
 
 /* End of file Usuarios_model.php */

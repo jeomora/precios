@@ -100,17 +100,27 @@
                 <div class="modal-body">
                     <input type="hidden" name="id_usuarioss" id="id_usuarioss" value="">
                     <div class="row">
-                        <div class="col-sm-5">
+                        <div class="col-sm-3">
                             <div class="form-group">
-                                <label for="codigos">Nombre</label>
-                                <input id="codigos" type="text" name="codigos" value="" class="form-control" placeholder="Nombre de la sucursal">
+                                <label for="codigos">Identificador</label>
+                                <input id="codigos" type="text" name="codigos" value="" class="form-control" placeholder="Nickname">
                                 <div class="invalid-feedback codesValid">Campo requerido.</div>
                             </div>
                         </div>
                         <div class="col-sm-7">
                             <div class="form-group">
-                                <label for="codigos">Formato</label>
-                                <input id="formato" type="text" name="formato" value="" class="form-control" placeholder="Aparece en los vales">
+                                <label for="codigos">Completo (ej: TIJERAS AZTECA AUTOSERVICIOS S.A DE C.V)</label>
+                                <input id="formato" type="text" name="formato" value="" class="form-control" placeholder="Completo">
+                                <div class="invalid-feedback codesValid">Campo requerido.</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label for="seletype">TIPO SUCURSAL</label>
+                                <select class="form-group" id="seletype" name="seletype">
+                                    <option value="1">A</option>
+                                    <option value="2">B</option>
+                                </select>
                                 <div class="invalid-feedback codesValid">Campo requerido.</div>
                             </div>
                         </div>

@@ -41,12 +41,20 @@ class Inicio extends MY_Controller {
 				$data["ofertones"] = $this->ofe_md->getActivas(NULL);
 				$this->estructura("Dashboards/principal", $data);
 			}elseif($user["id_grupo"] === "2" || $user["id_grupo"] === 2){ // SUCURSALES
-				$data['scripts'] = [
-					'/scripts/Sucursales/sucursal',
-				];
-				$this->estructura("Dashboards/sucursal", $data);	
-			}elseif($user["id_grupo"] === "3" || $user["id_grupo"] === 3){ // ENTRADAS
-				redirect("Sucursales/misEntradas", $data);	
+				$sucur = $this->sucu_md->get(NULL,["id_sucursal"=>$user["id_sucursal"]])[0];
+				if($sucur->typeSuc == 1){
+					$data['scripts'] = [
+						'/scripts/Sucursales/sucursal',
+					];
+					$this->estructura("Dashboards/sucursal", $data);
+				}else{
+					$data['scripts'] = [
+						'/scripts/Sucursales/sucursalb',
+					];
+					$this->estructura("Dashboards/sucusb", $data);
+				}	
+			}elseif($user["id_grupo"] === "3" || $user["id_grupo"] === 3){ // IMAGENES
+				redirect("Imagenes", $data);	
 			}elseif($user["id_grupo"] === "4" || $user["id_grupo"] === 4){ // COMPRAS
 				redirect("Compras", $data);	
 			}

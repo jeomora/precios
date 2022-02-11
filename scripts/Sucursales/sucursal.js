@@ -30,14 +30,17 @@ function oldResultsA(respo){
     $.each(respo,function(inx,val){
         if(val.tipo == user_sucus || val.tipo == 9){
             if (val.suca != 0){
-                var new_table = '<div class=row><table class="table table-bordered" style="text-align:center;"><thead><tr><th class="gensuca" colspan="4" style="padding:0">'+setZeros2(val.id_nuevo)+'</th><th class="showBody" data-id-user="'+val.id_nuevo+'">MOSTRAR LISTA</th>'+
+                var new_table = '<div class=row><table class="table table-bordered" style="text-align:center;"><thead><tr>'+
+                '<th style="padding:0"><button type="button" class="btn btn-block btn-comparando btn-light-info" data-toggle="modal" style="border-radius:0" data-target="#kt_modal_compara" data-id-user="'+val.id_nuevo+'">'+
+                    '<img src="assets/img/compara.png" style="height:73px"></button></th>'+
+                    '<th class="gensuca" colspan="3" style="padding:0">'+setZeros2(val.id_nuevo)+'</th><th class="showBody" data-id-user="'+val.id_nuevo+'">MOSTRAR LISTA</th>'+
                     '<th><a class="nav-link" target="_blank" href="Codigos/qrmeS/'+val.id_nuevo+'"><img src="assets/img/codigo-qr.png" style="height:45px"></a></th><th>'+
                     '<a class="nav-link" target="_blank" href="Uploads/excelA/'+val.id_nuevo+'"><img src="assets/img/excel.svg" style="height:45px"></a></th><th colspan="7">'+
                     formatDate2(val.fecha_registro)+'</th><th colspan="17" style="background:rgb(255,51,51)">AJUSTES</th></tr><tr><th style="width:100px" >CÓDIGO</th><th style="width:100px" >RENGLON 18</th><th style="width:70px" >LIN</th>'+
                     '<th style="width:350px" >DESCRIPCIÓN</th><th style="width:70px" >UM</th><th style="width:100px" >C</th><th style="width:150px" >PAQUETE</th>'+
                     '<th style="width:100px" class="ivaClass">IVA</th><th style="width:100px" class="renglon10Class">RENGLON 10</th><th colspan="5">PRECIOS DEL 1 AL 5</th>'+
                     '<th style="width:100px" >CÓDIGO</th><th style="width:350px" >DESCRIPCIÓN</th>'+
-                    '<th style="" colspan="5">PRECIOS DEL 1 AL 5</th></tr></thead><tbody id="body'+val.id_nuevo+'" style="display:none">';
+                    '<th style="" colspan="5">PRECIOS DEL 1 AL 5</th></tr></thead><tbody class="bodoche" id="body'+val.id_nuevo+'" style="display:none">';
                 $.each(val.detalles,function(index,value){
 
                     var colos = giveMeColor(value.estatus);
@@ -50,17 +53,17 @@ function oldResultsA(respo){
                         var renglon10 = ( value.costo/value.cantidad ) / ( 1+(value.iva/100) );
                         new_table += '<tr><td class="'+des1+'" '+blues+'>'+value.code1+'</td><td class="'+des1+'">'+value.code2+'</td><td class="'+des1+'">'+value.linea+'</td><td class="'+des1+'">'+value.desc1+'</td><td class="'+des1+'">'+value.unidad+'</td><td class="'+des1+'">'+value.cantidad+'</td><td>'+value.costo+'</td>'+
                             '<td class="ivaClass">'+formatMoney(value.iva,0)+'</td><td class="renglon10Class">'+value.rdiez+'</td>'+
-                            '<td>'+formatMoney(value.pre11)+'<br><span '+isMayor(value.pre11,value.preciouno)+'>'+formatMoney(value.preciouno)+'</span></td>'+
-                            '<td>'+formatMoney(value.pre22)+'<br><span '+isMayor(value.pre22,value.preciodos)+'>'+formatMoney(value.preciodos)+'</span></td>'+
-                            '<td>'+formatMoney(value.pre33)+'<br><span '+isMayor(value.pre33,value.preciotres)+'>'+formatMoney(value.preciotres)+'</span></td>'+
-                            '<td>'+formatMoney(value.pre44)+'<br><span '+isMayor(value.pre44,value.preciocuatro)+'>'+formatMoney(value.preciocuatro)+'</span></td>'+
-                            '<td>'+formatMoney(value.pre55)+'<br><span '+isMayor(value.pre55,value.preciocinco)+'>'+formatMoney(value.preciocinco)+'</span></td>'+
+                            '<td>'+formatMoney(value.pre11)+'</td>'+
+                            '<td>'+formatMoney(value.pre22)+'</td>'+
+                            '<td>'+formatMoney(value.pre33)+'</td>'+
+                            '<td>'+formatMoney(value.pre44)+'</td>'+
+                            '<td>'+formatMoney(value.pre55)+'</td>'+
                             '<td class="'+des2+'">'+isnulo(value.code3)+'</td><td class="'+des2+'">'+isnulo(value.desc2)+'</td>'+
-                            '<td>'+isnuloF(value.pre1)+'<br><span '+isMayor(value.pre1,value.preciouno2)+'>'+formatMoney(value.preciouno2)+'</span></td>'+
-                            '<td>'+isnuloF(value.pre2)+'<br><span '+isMayor(value.pre2,value.preciodos2)+'>'+formatMoney(value.preciodos2)+'</span></td>'+
-                            '<td>'+isnuloF(value.pre3)+'<br><span '+isMayor(value.pre3,value.preciotres2)+'>'+formatMoney(value.preciotres2)+'</span></td>'+
-                            '<td>'+isnuloF(value.pre4)+'<br><span '+isMayor(value.pre4,value.preciocuatro2)+'>'+formatMoney(value.preciocuatro2)+'</span></td>'+
-                            '<td>'+isnuloF(value.pre5)+'<br><span '+isMayor(value.pre5,value.preciocinco2)+'>'+formatMoney(value.preciocinco2)+'</span></td></tr>'
+                            '<td>'+isnuloF(value.pre1)+'</td>'+
+                            '<td>'+isnuloF(value.pre2)+'</td>'+
+                            '<td>'+isnuloF(value.pre3)+'</td>'+
+                            '<td>'+isnuloF(value.pre4)+'</td>'+
+                            '<td>'+isnuloF(value.pre5)+'</td></tr>'
                     }
                 })
                 
@@ -332,20 +335,22 @@ function getMeORec(){
         var ofert = 0;var flag = 0;var echoes = "";
         if(reso){
             $.each(reso,function(index,val){
-                if(ofert != val.conjunto){
-                    if(flag != 0){
-                        flag=0;
-                        echoes += '</div><a class="btn btn-block btn-sm btn-light-danger font-weight-bolder text-uppercase py-4 modalOferta" data-toggle="modal" data-target="#kt_modal_oferta" data-id-user="'+ofert+'">Ver productos</a>'+
-                        '<a href="Codigos/ofertasRS/'+ofert+'" target="_blank"  class="btn btn-block btn-sm btn-light-primary font-weight-bolder text-uppercase py-4">'+'<img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
-                    }
+                if(val.tipo == user_sucus || val.tipo == 9){
+                    if(ofert != val.conjunto){
+                        if(flag != 0){
+                            flag=0;
+                            echoes += '</div><a class="btn btn-block btn-sm btn-light-danger font-weight-bolder text-uppercase py-4 modalOferta" data-toggle="modal" data-target="#kt_modal_oferta" data-id-user="'+ofert+'">Ver productos</a>'+
+                            '<a href="Codigos/ofertasRS/'+ofert+'" target="_blank"  class="btn btn-block btn-sm btn-light-primary font-weight-bolder text-uppercase py-4">'+'<img src="assets/img/codigo-qr.png" style="height:45px"></a></div></div></div>';
+                        }
 
-                    echoes += '<div class="col-xl-2"><div class="card card-custom gutter-b card-stretch"><div class="card-body pt-4 d-flex flex-column justify-content-between"><div class="d-flex align-items-center mb-7">'+
-                                '<div class="flex-shrink-0 mr-4 mt-lg-0 mt-3"><div class="symbol symbol-lg-75 symbol-primary"><span class="symbol-label font-size-h3 font-weight-boldest">'+val.conjunto+'</span>'+
-                                '</div></div><div class="d-flex flex-column"><a class="text-warning font-weight-bold text-hover-primary font-size-h4 mb-0">OFERTA-'+
-                                val.conjunto+'</a><span class="text-muted font-weight-bold">'+formatDate(val.fecha_registro)+'</span></div></div><p class="mb-7  font-weight-boldest">Fecha Termino <span class="text-primary pr-1">'+
-                                formatDate(val.fecha_termino)+'</span></p>';
-                    flag++;
-                    ofert = val.conjunto;
+                        echoes += '<div class="col-xl-2"><div class="card card-custom gutter-b card-stretch"><div class="card-body pt-4 d-flex flex-column justify-content-between"><div class="d-flex align-items-center mb-7">'+
+                                    '<div class="flex-shrink-0 mr-4 mt-lg-0 mt-3"><div class="symbol symbol-lg-75 symbol-primary"><span class="symbol-label font-size-h3 font-weight-boldest">'+val.conjunto+'</span>'+
+                                    '</div></div><div class="d-flex flex-column"><a class="text-warning font-weight-bold text-hover-primary font-size-h4 mb-0">OFERTA-'+
+                                    val.conjunto+'</a><span class="text-muted font-weight-bold">'+formatDate(val.fecha_registro)+'</span></div></div><p class="mb-7  font-weight-boldest">Fecha Termino <span class="text-primary pr-1">'+
+                                    formatDate(val.fecha_termino)+'</span></p>';
+                        flag++;
+                        ofert = val.conjunto;
+                    }
                 }
             })
             echoes+='</div> <a class="btn btn-block btn-sm btn-light-danger font-weight-bolder text-uppercase py-4 modalOferta" data-toggle="modal" data-target="#kt_modal_oferta" data-id-user="'+ofert+'">Ver lista completa</a>'+
@@ -381,5 +386,21 @@ $(document).off("click",".modalOferta").on("click",".modalOferta",function(event
                     formatMoney(val.preciocinco)+'<br><span class="dmo1 '+color2+'">$'+formatMoney(dif2)+' <br> % '+formatMoney(por2)+'</span></td></tr>')
             })
         }
+    })
+})
+
+function getListaSucu(id_nuevo){
+    return $.ajax({
+        url: site_url+"Uploads/getListaSucu/"+id_nuevo,
+        type: "POST",
+        cache: false,
+    });
+}
+
+$(document).off("click",".btn-comparando").on("click",".btn-comparando",function(e){
+    e.preventDefault();
+    var dis = $(this).data("idUser");
+    getListaSucu(dis).done(function(resp){
+        console.log(resp)
     })
 })

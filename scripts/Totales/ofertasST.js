@@ -93,7 +93,7 @@ function givePZ(value,index){
     var precinco = parseFloat((value.costo / value.cantidad),2);
     precinco += 0.01; 
     var renglon10 = value.costopz / ( 1+(value.iva/100) );
-    var codeqr = "\x05A\x06b"+value.codigo+"\r\nc17\r\n"+iva+value.precio+"\r\n\n\n\r\r\n\n\n\r\r\n\r\r\r\r\r\rT";
+    var codeqr = "\x05G\x06b"+value.codigo+"\r\nc17\r\n"+iva+value.precio+"\r\n\n\n\r\r\n\n\n\r\r\n\r\r\r\r\r\rT";
 
     if(value.ums == 2 || value.ums == 5 || value.ums == 7 || value.ums == 12 || value.ums == 2 || value.ums == 3 || value.ums == 10){
         codeqr = "\x05B\x06b"+value.codigo+"\r\nc"+clave+"1\r\n\x1911\r\n"+iva+value.precio+"\r\n\n\n\r\r\n\n\n\r\r\n\r\r\r\r\r\rT"

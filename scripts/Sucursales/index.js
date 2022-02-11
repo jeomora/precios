@@ -109,7 +109,6 @@ $(document).off("click", ".new_usuario").on("click", ".new_usuario", function(ev
     var flag = 1;
     flag = valis($("#codigos"),$(".codesValid"),flag);
     if(flag){
-        
         sendFormas("Sucursales/save_sucursal", $("#form_usuario_new"), "");
     }
 });

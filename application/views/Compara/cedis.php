@@ -72,13 +72,41 @@
 
                 <div class="row col-xl-12">
                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis8 btn-success" data-id-user="8" data-id-rojo="SUPER">SUPER CD INDUSTRIAL</button>
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis1" data-id-user="1" data-id-rojo="TIJERAS">TIJERAS</button>
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis2" data-id-user="2" data-id-rojo="TENENCIA">TENENCIA</button>
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis3" data-id-user="3" data-id-rojo="MERCADO">MERCADO</button>
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis4" data-id-user="4" data-id-rojo="TRINCHERAS">TRINCHERAS</button>
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis5" data-id-user="5" data-id-rojo="ULTRAMARINOS">ULTRAMARINOS</button>
-                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis6" data-id-user="6" data-id-rojo="SOLIDARIDAD">SOLIDARIDAD</button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis8 btn-success" data-id-user="8" data-id-rojo="SUPER">
+                            SUPER CD INDUSTRIAL<br>
+                            <?php if(isset($lasta[8])):echo $dias[date('w',strtotime($lasta[8]["lastdate"]))]." ".date('d',strtotime($lasta[8]["lastdate"]))." DE ".$meses[date('n',strtotime($lasta[8]["lastdate"]))-1]." ".date('H:i:s', strtotime($lasta[8]["lastdate"]));else:echo "Sin Registro";endif; ?><br>
+                            <span style="font-size:16px"><?php if(isset($lasta[8])):$now=time();$datediff=$now-strtotime($lasta[8]["lastdate"]);echo "(".round($datediff / (60 * 60 * 24))." días)";endif; ?></span><br>
+                        </button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis1" data-id-user="1" data-id-rojo="TIJERAS">
+                            TIJERAS<br>
+                            <?php if(isset($lasta[1])):echo $dias[date('w',strtotime($lasta[1]["lastdate"]))]." ".date('d',strtotime($lasta[1]["lastdate"]))." DE ".$meses[date('n',strtotime($lasta[1]["lastdate"]))-1]." ".date('H:i:s', strtotime($lasta[1]["lastdate"]));else:echo "Sin Registro";endif; ?><br>
+                            <span style="font-size:16px"><?php if(isset($lasta[1])):$now=time();$datediff=$now-strtotime($lasta[1]["lastdate"]);echo "(".round($datediff / (60 * 60 * 24))." días)";endif; ?></span><br>
+                        </button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis2" data-id-user="2" data-id-rojo="TENENCIA">
+                            TENENCIA<br>
+                            <?php if(isset($lasta[2])):echo $dias[date('w',strtotime($lasta[2]["lastdate"]))]." ".date('d',strtotime($lasta[2]["lastdate"]))." DE ".$meses[date('n',strtotime($lasta[2]["lastdate"]))-1]." ".date('H:i:s', strtotime($lasta[2]["lastdate"]));else:echo "Sin Registro";endif; ?><br>
+                            <span style="font-size:16px"><?php if(isset($lasta[2])):$now=time();$datediff=$now-strtotime($lasta[2]["lastdate"]);echo "(".round($datediff / (60 * 60 * 24))." días)";endif; ?></span><br>
+                        </button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis3" data-id-user="3" data-id-rojo="MERCADO">
+                            MERCADO<br>
+                            <?php if(isset($lasta[3])):echo $dias[date('w',strtotime($lasta[3]["lastdate"]))]." ".date('d',strtotime($lasta[3]["lastdate"]))." DE ".$meses[date('n',strtotime($lasta[3]["lastdate"]))-1]." ".date('H:i:s', strtotime($lasta[3]["lastdate"]));else:echo "Sin Registro";endif; ?><br>
+                            <span style="font-size:16px"><?php if(isset($lasta[3])):$now=time();$datediff=$now-strtotime($lasta[3]["lastdate"]);echo "(".round($datediff / (60 * 60 * 24))." días)";endif; ?></span><br>
+                        </button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis4" data-id-user="4" data-id-rojo="TRINCHERAS">
+                            TRINCHERAS<br>
+                            <?php if(isset($lasta[4])):echo $dias[date('w',strtotime($lasta[4]["lastdate"]))]." ".date('d',strtotime($lasta[4]["lastdate"]))." DE ".$meses[date('n',strtotime($lasta[4]["lastdate"]))-1]." ".date('H:i:s', strtotime($lasta[4]["lastdate"]));else:echo "Sin Registro";endif; ?><br>
+                            <span style="font-size:16px"><?php if(isset($lasta[4])):$now=time();$datediff=$now-strtotime($lasta[4]["lastdate"]);echo "(".round($datediff / (60 * 60 * 24))." días)";endif; ?></span><br>
+                        </button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis5" data-id-user="5" data-id-rojo="ULTRAMARINOS">
+                            ULTRAMARINOS<br>
+                            <?php if(isset($lasta[5])):echo $dias[date('w',strtotime($lasta[5]["lastdate"]))]." ".date('d',strtotime($lasta[5]["lastdate"]))." DE ".$meses[date('n',strtotime($lasta[5]["lastdate"]))-1]." ".date('H:i:s', strtotime($lasta[5]["lastdate"]));else:echo "Sin Registro";endif; ?><br>
+                            <span style="font-size:16px"><?php if(isset($lasta[5])):$now=time();$datediff=$now-strtotime($lasta[5]["lastdate"]);echo "(".round($datediff / (60 * 60 * 24))." días)";endif; ?></span><br>
+                        </button>
+                        <button type="button" class="btn btn btn-outline-secondary font-weight-bold btnSucuCedis btnSucuCedis6" data-id-user="6" data-id-rojo="SOLIDARIDAD">
+                            SOLIDARIDAD<br>
+                            <?php if(isset($lasta[6])):echo $dias[date('w',strtotime($lasta[6]["lastdate"]))]." ".date('d',strtotime($lasta[6]["lastdate"]))." DE ".$meses[date('n',strtotime($lasta[6]["lastdate"]))-1]." ".date('H:i:s', strtotime($lasta[6]["lastdate"]));else:echo "Sin Registro";endif; ?><br>
+                            <span style="font-size:16px"><?php if(isset($lasta[6])):$now=time();$datediff=$now-strtotime($lasta[6]["lastdate"]);echo "(".round($datediff / (60 * 60 * 24))." días)";endif; ?></span><br>
+                        </button>
                     </div>
                 </div>
 

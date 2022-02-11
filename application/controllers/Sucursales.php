@@ -28,6 +28,7 @@ class Sucursales extends MY_Controller {
 		$usuario = [
 			"nombre"	=>	$this->input->post('codigos'),
 			"formato"	=>	$this->input->post('formato'),
+			"typeSuc"	=>	$this->input->post('seletype'),
 		];
 
 		$getUsuario = $this->sucu_md->get(NULL, ['nombre'=>$usuario['nombre'],'formato'=>$usuario['formato']])[0];
@@ -44,7 +45,7 @@ class Sucursales extends MY_Controller {
 				"type"	=> 'error'
 			];
 		}
-		$this->jsonResponse($mensaje);
+		$this->jsonResponse($usuario);
 	}
 
 	public function getCharts($id_sucursal){

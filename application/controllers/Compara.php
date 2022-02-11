@@ -503,10 +503,12 @@ class Compara extends MY_Controller {
 			$data["dias"] = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
 			$data["meses"] = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
 			$data["fecha"] =  $data["dias"][date('w')]." ".date('d')." DE ".$data["meses"][date('n')-1]. " DEL ".date('Y') ;
+			$data["lasta"] = $this->user_md->getLastDate(NULL);
 			$data['scripts'] = [
 				'/scripts/Compara/cedis',
 			];
 			$this->estructura("Compara/cedis", $data);
+			//$this->jsonResponse($data["lasta"]);
 		}else{
 			$this->data["message"] =NULL;
 			$this->estructura_login("Admin/login", $this->data, FALSE);

@@ -38,10 +38,12 @@ class Ofertas_model extends MY_Model {
 	}
 
 	public function getactivas($where=[]){
-		$this->db->select("o.id_oferta,o.fecha_registro,o.fecha_inicio,o.fecha_termino,o.id_producto,o.codigo,o.nombre,o.precio,o.normal,o.maximo,o.estatus,o.registro,o.tipo,o.conjunto,l.ides as ln,l.nombre as linea")
+		$this->db->select("o.id_oferta,o.fecha_registro,o.fecha_inicio,o.fecha_termino,o.id_producto,o.codigo,o.nombre,o.precio,o.normal,o.maximo,o.estatus,o.registro,o.tipo,o.conjunto,l.ides as ln,l.nombre as linea,u.ides as umedida,p.unidad,p.imagen,i.url,i.tags,i.nombre as imag")
 		->from("ofertas o")
 		->join("productos p","o.codigo = p.codigo","LEFT")
 		->join("lineas l","p.linea = l.id_linea","LEFT")
+		->join("unidades u","p.ums = u.id_unidad","LEFT")
+		->join("imagenes i","p.imagen = i.id_imagen","LEFT")
 		->where("o.estatus <> 0")
 		->where("CURDATE() < o.fecha_termino")
 		->order_by("conjunto","DESC");
@@ -146,6 +148,8 @@ class Ofertas_model extends MY_Model {
 			return false;
 		}
 	}
+
+	
 
 	
 
