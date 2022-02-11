@@ -36,7 +36,7 @@ class Uploads extends MY_Controller {
 		$filena=$_FILES['file_matriz']['name'];
 		$filen = "matricial".date("dmyHis")."".rand(1000,9999);
 		$config['upload_path']          = './assets/uploads/matriciales/';
-        $config['allowed_types']        = 'jpg|xls|xlsx|dat|txt';
+        $config['allowed_types']        = '*';
         $config['max_size']             = 40000;
         $config['max_width']            = 40024;
         $config['max_height']           = 40024;
@@ -1764,7 +1764,6 @@ class Uploads extends MY_Controller {
 						$this->getOldVal($sheet,$i,"A");
 					}
 					$prodo2 = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"AD"),"estatus"=>1]);
-					$this->jsonResponse($prodo2);
 					if($prodo2 && $prodo2 <> 0){
 						$prodo2 = $prodo2[0]->codigo;
 					}else{

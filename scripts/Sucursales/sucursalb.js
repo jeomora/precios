@@ -37,9 +37,6 @@ function oldResultsB(respo){
                 var des1 = colos[0];var des2 =colos[1];
                 var blues = "";
                 
-                console.log(colos)
-                console.log(colos[0])
-                console.log(colos[1])
                 if(val.blues != 0){
                     blues = "style='background:#00b0f0 !important'";
                 }
@@ -140,3 +137,47 @@ function giveMeColor(estatus){
     }
     return reso;
 }
+
+var theDate = new Date().getTime();
+Dropzone.autoDiscover = false;
+
+var myDropzoneMatriz = new Dropzone("div#kt_dropzone_uno", {
+    paramName: "file_matriz",
+    maxFiles: 1,
+    maxFilesize: 200, 
+    timeout: 1800000,
+    renameFilename: function (filename) {
+        return filename;
+    },
+    url: site_url+"Compara/upload_matriz",
+    autoProcessQueue: true,
+    queuecomplete: function (resp) {
+        toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": false,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "1000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+        };
+    },
+    success: function(file, response){
+        var dt = new Date();
+        var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+        myDropzoneMatriz.removeAllFiles();
+        if(response === "Documento incorrecto"){
+            toastr.error("Por favor revise el txt que se subió a la plataforma","Archivo incorrecto");
+        }else{
+            toastr.success("Se cargarón correctamente los datos","Listo");
+        }
+        getMeNews()
+    }
+});

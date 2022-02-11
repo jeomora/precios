@@ -277,7 +277,7 @@ function oldResultsB(respo){
                 var colos = giveMeColor(value.estatus);
                 var des1 = colos[0];var des2 =colos[1];
                 var blues = "";
-                if(value.blues != 0){
+                if(val.blues != 0){
                     blues = "style='background:#00b0f0 !important'";
                 }
                 if(val.estatusb != "0"){

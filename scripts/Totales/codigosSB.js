@@ -7,7 +7,7 @@ jQuery(document).ready(function() {
     getMeClave().done(function(resp){
 
         if(resp){
-            clave = diccionario(resp.access)+"\r";
+            //clave = diccionario(resp.access)+"\r";
             console.log(clave)
         }
         startQr()
