@@ -23,7 +23,7 @@ class Compara extends MY_Controller {
 		$filena=$_FILES['file_matriz']['name'];
 		$filen = "sucursal".date("dmyHis")."".rand(1000,9999);
 		$config['upload_path']          = './assets/uploads/matriciales/';
-        $config['allowed_types']        = 'jpg|jpeg|png|jfif|pdf';
+        $config['allowed_types']        = '*';
         $config['max_size']             = 40000;
         $config['max_width']            = 40024;
         $config['max_height']           = 40024;
