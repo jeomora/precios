@@ -103,15 +103,15 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item mb-2">
+                        <!--<li class="nav-item mb-2">
                             <a class="nav-link" id="sucursal-tab-2" data-toggle="tab" href="#store-cat" aria-controls="sucursal">
                                 <span class="nav-text">PAQUETES <br>
                                     <span class="fechaUpload">
                                         Hace <?php echo $hcatalo ?>
                                     </span>
                                 </span>
-                            </a>
-                        </li>
+                            </a> 
+                        </li>-->
                         <li class="nav-item mb-2">
                             <a class="nav-link" id="sucursal-tab-oferta" data-toggle="tab" href="#store-oferta">
                                 <span class="nav-text">

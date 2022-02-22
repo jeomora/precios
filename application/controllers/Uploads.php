@@ -26,6 +26,7 @@ class Uploads extends MY_Controller {
 		$this->load->model("Paquetes_model", "pack_md");
 		$this->load->model("Nuevob_model", "newb_md");
 		$this->load->model("Ofertas_model", "ofe_md");
+		$this->load->model("Lastco_model", "last_md");
 		$this->load->library("form_validation");
 	}
 
@@ -316,6 +317,115 @@ class Uploads extends MY_Controller {
 		}	
 
 		$this->jsonResponse($pos)	;
+	}
+
+	public function upload_catos(){
+		ini_set("memory_limit", -1);
+
+		$user = $this->session->userdata();
+		$filen = "catos".date("dmyHis")."".rand(1000,9999);
+		$config['upload_path']          = './assets/uploads/catalogo/';
+        $config['allowed_types']        = '*';
+        $config['max_size']             = 40000;
+        $config['max_width']            = 40024;
+        $config['max_height']           = 40024;
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        $this->upload->do_upload('file_cata',$filen);
+        $path_parts = pathinfo($_FILES["file_cata"]["name"]);
+		$extension = $path_parts['extension'];
+
+		$new_cambio = [
+			"accion" => "Sube Catálogo Articulos",
+			"antes" => "".$filen.".".$extension,
+			"id_usuario" => $user["id_usuario"]
+		];
+		$cambio = $this->cambio_md->insert($new_cambio);
+
+		$user = $this->session->userdata();
+		$fecha = new DateTime(date('Y-m-d H:i:s'));
+
+		$dom = file_get_contents($_FILES["file_cata"]["tmp_name"]); 
+		$articulos = [];
+		$flag = 0;
+		$flagNo = 1;
+		$pos = explode("\n", $dom);
+
+		$flag = 0;
+		$catalogo = [];
+		$filena = false;
+		$hayCaja = false;
+		if(strpos($dom,"Catalogo de Articulos")){
+			$filena = true;
+		}
+		if(!$filena){
+			$this->jsonResponse("Documento incorrecto");
+		}else{
+			for ($i=0; $i<(sizeof($pos)-20); $i++){
+				if (!empty($pos[$i])){
+						
+					$pos[$i] = str_replace("", "", $pos[$i]);
+					$pos[$i] = str_replace("", "", $pos[$i]);
+					$pos[$i] = str_replace("€", "P", $pos[$i]);
+					$pos[$i] = str_replace("�", "P", $pos[$i]);
+					$pos[$i] = str_replace("¥", "Ñ", $pos[$i]);
+					$pos[$i] = str_replace("?", "Ñ", $pos[$i]);
+					if(strpos($pos[$i],"cei-0291-2.6")  && strlen($pos[$i]) < 150){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Catalogo de Articulos") && strlen($pos[$i]) < 150){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"D e s c r i p c i o n")  && strlen($pos[$i]) < 150){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Codigo")  && strlen($pos[$i]) < 150){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"-----------")){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Hoja : ") && strlen($pos[$i]) < 150){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"*******************") && strlen($pos[$i]) < 150){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Utilidad") && strlen($pos[$i]) < 150){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"CEDIS ABARROTES AZTECA")  && strlen($pos[$i]) < 150){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"FIN DE REPORTE")){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Proveedor")){
+						$pos[$i] = "";
+					}
+					if(strlen($pos[$i]) < 10){
+						$pos[$i] = "";	
+					}
+
+					if($pos[$i] <> ""){
+						$codigo = substr($pos[$i], 4,17); 
+						$codigo = str_replace(" ", "", $codigo);
+						$lastco = substr($pos[$i], 80,13); 
+						$lastco = str_replace(" ", "", $lastco);
+						$lastco = str_replace(",", "", $lastco);
+						$this->last_md->update(["estatus"=>0] , ["codigo"=>$codigo,"estatus"=>1]);
+						$last = $this->last_md->insert(["costo"=>$lastco,"codigo"=>$codigo]);
+						
+					}				
+				}
+			}
+			$mensaje=[	"id"	=>	'Éxito',
+						"desc"	=>	'Datos cargados correctamente en el Sistema',
+						"type"	=>	'success'];
+			$this->jsonResponse($mensaje);
+		}	
+
+		$this->jsonResponse($pos);
 	}
 
 	public function upload_excel(){

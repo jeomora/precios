@@ -216,7 +216,7 @@ function oldResultsA(respo){
                 if (value){
                     var renglon10 = ( value.costo/value.cantidad ) / ( 1+(value.iva/100) );
                     new_table += '<tr><td class="'+des1+'" '+blues+'>'+value.code1+'</td><td class="'+des1+'">'+value.code2+'</td><td class="'+des1+'">'+value.linea+'</td><td class="'+des1+'">'+value.desc1+'</td><td class="'+des1+'">'+value.unidad+'</td><td class="'+des1+'">'+value.cantidad+'</td><td>'+value.costo+'</td>'+
-                        '<td class="ivaClass">'+formatMoney(value.iva,0)+'</td><td class="renglon10Class">'+value.rdiez+'</td>'+
+                        '<td class="ivaClass">'+formatMoney(value.iva,0)+'</td><td class="renglon10Class">'+value.rdiez+'<br><span '+isMayor(parseFloat(value.rdiez).toFixed(4),value.lastcosto)+'>'+formatMoney(value.lastcosto,4)+'</span></td>'+
                         '<td>'+formatMoney(value.pre11)+'<br><span '+isMayor(value.pre11,value.preciouno)+'>'+formatMoney(value.preciouno)+'</span></td>'+
                         '<td>'+formatMoney(value.pre22)+'<br><span '+isMayor(value.pre22,value.preciodos)+'>'+formatMoney(value.preciodos)+'</span></td>'+
                         '<td>'+formatMoney(value.pre33)+'<br><span '+isMayor(value.pre33,value.preciotres)+'>'+formatMoney(value.preciotres)+'</span></td>'+
@@ -261,6 +261,7 @@ function isMayor(uno,dos){
     }
     return color;
 }
+
 function oldResultsB(respo){
     $.each(respo,function(indx,value){
         if (value.sucb != 0){
@@ -518,6 +519,48 @@ var myDropzoneOfertas  = new Dropzone("div#kt_dropzone_ofertas", {
         }
     }
 });
+
+var myDropzoneCatos = new Dropzone("div#kt_dropzone_cata", {
+    paramName: "file_cata",
+    maxFiles: 1,
+    maxFilesize: 200, // MB
+    timeout: 1800000,
+    renameFilename: function (filename) {
+        return filename;
+    },
+    url: site_url+"Uploads/upload_catos",
+    autoProcessQueue: true,
+    queuecomplete: function (resp) {
+        toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": false,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "1000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+        };
+    },
+    success: function(file, response){
+        var dt = new Date();
+        var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+        getMeNews();
+        myDropzoneCatos.removeAllFiles();
+        if(response === "Documento incorrecto"){
+            toastr.error("Por favor revise el txt que se subió a la plataforma","Archivo incorrecto");
+        }else{
+            toastr.success("Se cargarón correctamente los datos","Listo");
+        }
+    }
+});
+
 
 
 function isnulo(vlo){
