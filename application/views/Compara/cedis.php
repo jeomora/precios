@@ -121,6 +121,19 @@
                         <i class="flaticon2-file"></i> DESCARGAR A UN EXCEL
                     </a>                    
                 </div>
+                <!--end::Row-->
+                <!--begin::Row-->
+                <div class="row col-xl-12 " style="padding-bottom:20px;">
+                    <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
+                        <button type="button" class="btn btn-outline-secondary btnCualBusco" data-id-rojo="10">RENGLON 10</button>
+                        <button type="button" class="btn btn-outline-secondary btnCualBusco btn-success btnCualBusco1" data-id-rojo="1">PRECIO 1</button>
+                        <!--<button type="button" class="btn btn-outline-secondary btnCualBusco btnCualBusco2" data-id-rojo="2">PRECIO 2</button>
+                        <button type="button" class="btn btn-outline-secondary btnCualBusco btnCualBusco3" data-id-rojo="3">PRECIO 3</button>
+                        <button type="button" class="btn btn-outline-secondary btnCualBusco btnCualBusco4" data-id-rojo="4">PRECIO 4</button>
+                        <button type="button" class="btn btn-outline-secondary btnCualBusco btnCualBusco5" data-id-rojo="5">PRECIO 5</button>-->
+                    </div>
+                </div>
+                <!--end::Row-->
                 <!--begin::Row-->
                 <div class="row col-xl-12 " style="padding-bottom:20px;">
                     <div class="col-xl-6">
@@ -151,8 +164,8 @@
                             <thead>
                                 <tr>
                                     <th class="th1 thSucus" colspan="4">SUPER</th>
-                                    <th class="th1 thSucus2" colspan="5">PRECIOS<br>SUPER</th>
-                                    <th class="th2" colspan="3">CEDIS</th>
+                                    <th class="th1 thSucus2" colspan="6">PRECIOS<br>SUPER</th>
+                                    <th class="th2" colspan="4">CEDIS</th>
                                     <th class="th2" colspan="5">PRECIOS<br>CEDIS</th>
                                 </tr>
                                 <tr>
@@ -165,6 +178,8 @@
                                     <th class="th1" style="width:70px" >PRECIO 3</th>
                                     <th class="th1" style="width:70px" >PRECIO 4</th>
                                     <th class="th1" style="width:70px" >PRECIO 5</th>
+                                    <th class="th1" style="width:70px" >RENGLON 10</th>
+                                    <th class="th2" style="width:70px" >RENGLON 10</th>
                                     <th class="th2" style="width:100px" >CÓDIGO</th>
                                     <th class="th2" style="width:350px" >DESCRIPCIÓN</th>
                                     <th class="th2" style="width:70px" >UM</th>

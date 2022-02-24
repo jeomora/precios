@@ -59,7 +59,7 @@
                                         <p class="text-dark font-weight-bold mt-3">
                                             A continuación podrá visualizar los precios para actualizar.<br>
                                             Cualquier duda o sugerencia le pedimos comunicarse con el personal responsable en el área de compras.<br>
-                                            <h1>SE MUESTRAN SÓLO LOS CAMBIOS DE LOS ÚLTIMOS 7 DÍAS.</h1>
+                                            <h1>SE MUESTRAN SÓLO LOS CAMBIOS DE LOS ÚLTIMOS 3 DÍAS.</h1>
                                         </p>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                 <div class="col-xl-4">
                     <div class="dropzone dropzone-default dropzone-warning" id="kt_dropzone_uno">
                         <div class="dropzone-msg dz-message needsclick">
-                            <h3 class="dropzone-msg-title">SUBIR ARCHIVO TXT MATRICIAL</h3>
+                            <h3 class="dropzone-msg-title">SUBIR ARCHIVO TXT MATRICIAL / CATALOGO</h3>
                             <span class="dropzone-msg-desc">Clic para seleccionar arhivo y/o arrastre el archivo txt.</span>
                         </div>
                     </div>

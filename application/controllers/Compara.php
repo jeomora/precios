@@ -13,6 +13,7 @@ class Compara extends MY_Controller {
 		$this->load->model("Nuevodetail_model", "det_md");
 		$this->load->model("Listos_model", "listo_md");
 		$this->load->model("Sucursales_model", "sucursal_md");
+		$this->load->model("Lastcosuc_model", "lasto_md");
 		$this->load->library("form_validation");
 	}
 
@@ -192,6 +193,11 @@ class Compara extends MY_Controller {
 		$this->jsonResponse($comparativa);
 	}
 
+	public function getRenglonCedis($sucursal=8){
+		$comparativa = $this->sprod_md->getRenglonCedis(NULL,$sucursal);
+		$this->jsonResponse($comparativa);
+	}
+
 	public function upload_matriz(){
 		$user = $this->session->userdata();
 		ini_set("memory_limit", -1);	
@@ -208,13 +214,6 @@ class Compara extends MY_Controller {
         $this->upload->do_upload('file_matriz',$filen);
         $path_parts = pathinfo($_FILES["file_matriz"]["name"]);
 		$extension = $path_parts['extension'];
-
-		$new_cambio = [
-			"accion" => "Sube Matricial",
-			"antes" => "".$filen.".".$extension,
-			"id_usuario" => $user["id_usuario"]
-		];
-		$cambio = $this->cambio_md->insert($new_cambio);
 
 
 		$data ['id_prov'] = 0;
@@ -237,6 +236,19 @@ class Compara extends MY_Controller {
 		$filena = false;
 		if(strpos($dom,"LISTA DE PRECIOS CON EXISTENCIA")){
 			$filena = true;
+				$new_cambio = [
+				"accion" => "Sube Matricial",
+				"antes" => "".$filen.".".$extension,
+				"id_usuario" => $user["id_usuario"]
+			];
+			$cambio = $this->cambio_md->insert($new_cambio);
+		}else{
+			$new_cambio = [
+				"accion" => "Sube CATALOGO",
+				"antes" => "".$filen.".".$extension,
+				"id_usuario" => $user["id_usuario"]
+			];
+			$cambio = $this->cambio_md->insert($new_cambio);
 		}
 		if ($filena){
 			for ($i=0; $i<sizeof($pos); $i++){
@@ -360,8 +372,81 @@ class Compara extends MY_Controller {
 						"type"	=>	'success'];
 			$this->jsonResponse($mensaje);
 		}else{
-			$this->jsonResponse("Documento incorrecto");
+			if(strpos($dom,"Catalogo de Articulos")){
+				$filena = true;
+			}
+			if(!$filena){
+				$this->jsonResponse("Documento incorrecto");
+			}else{
+				for ($i=0; $i<sizeof($pos); $i++){
+					if (!empty($pos[$i])){
+							
+						$pos[$i] = str_replace("", "", $pos[$i]);
+						$pos[$i] = str_replace("", "", $pos[$i]);
+						$pos[$i] = str_replace("€", "P", $pos[$i]);
+						$pos[$i] = str_replace("�", "P", $pos[$i]);
+						$pos[$i] = str_replace("¥", "Ñ", $pos[$i]);
+						$pos[$i] = str_replace("?", "Ñ", $pos[$i]);
+						if(strpos($pos[$i],"cei-0291-2.6")  && strlen($pos[$i]) < 150){
+							$pos[$i] = "";
+						}
+						if(strpos($pos[$i],"Catalogo de Articulos") && strlen($pos[$i]) < 150){
+							$pos[$i] = "";
+						}
+						if(strpos($pos[$i],"D e s c r i p c i o n")  && strlen($pos[$i]) < 150){
+							$pos[$i] = "";
+						}
+						if(strpos($pos[$i],"Codigo")  && strlen($pos[$i]) < 150){
+							$pos[$i] = "";
+						}
+						if(strpos($pos[$i],"-----------")){
+							$pos[$i] = "";
+						}
+						if(strpos($pos[$i],"Hoja : ") && strlen($pos[$i]) < 150){
+							$pos[$i] = "";
+						}
+						if(strpos($pos[$i],"*******************") && strlen($pos[$i]) < 150){
+							$pos[$i] = "";
+						}
+						if(strpos($pos[$i],"Utilidad") && strlen($pos[$i]) < 150){
+							$pos[$i] = "";
+						}
+						if(strpos($pos[$i],"CEDIS ABARROTES AZTECA")  && strlen($pos[$i]) < 150){
+							$pos[$i] = "";
+						}
+						if(strpos($pos[$i],"FIN DE REPORTE")){
+							$pos[$i] = "";
+						}
+						if(strpos($pos[$i],"Proveedor")){
+							$pos[$i] = "";
+						}
+						if(strlen($pos[$i]) < 10){
+							$pos[$i] = "";	
+						}
+
+						if($pos[$i] <> ""){
+							$codigo = substr($pos[$i], 4,17); 
+							$codigo = str_replace(" ", "", $codigo);
+							$lastco = substr($pos[$i], 80,13); 
+							$lastco = str_replace(" ", "", $lastco);
+							$lastco = str_replace(",", "", $lastco);
+							$lasto  = $this->lasto_md->get(NULL , ["codigo"=>$codigo,"estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
+							if($lasto){
+								$this->lasto_md->update(["costo"=>$lastco] , [ "id_last"=>$lasto[0]->id_last ]);
+							}else{
+								$last = $this->lasto_md->insert(["costo"=>$lastco,"codigo"=>$codigo,"id_sucursal"=>$user["id_sucursal"]]);
+							}
+							
+						}				
+					}
+				}
+				$mensaje=[	"id"	=>	'Éxito',
+							"desc"	=>	'Datos cargados correctamente en el Sistema',
+							"type"	=>	'success'];
+				$this->jsonResponse($mensaje);
+			}
 		}
+
 	}
 
 	public function excelCompa(){
@@ -605,7 +690,10 @@ class Compara extends MY_Controller {
 				$hoja->setCellValue("N".$rws, $value->p3)->getStyle("N{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
 				$hoja->setCellValue("O".$rws, $value->p4)->getStyle("O{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
 				$hoja->setCellValue("P".$rws, $value->p5)->getStyle("P{$rws}")->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
-
+				if( $value->cofe <> null && $value->cofe <> ""){
+                    $this->cellStyle("A".$rws.":C".$rws, "F7C9FF", "000000", FALSE, 12, "Calibri");
+                    $this->cellStyle("I".$rws.":K".$rws, "F7C9FF", "000000", FALSE, 12, "Calibri");
+                }
 				if($value->preciouno > $value->p1){
 					$this->cellStyle("D".$rws, "BAF3E0", "000000", FALSE, 12, "Calibri");
 				}elseif($value->preciouno < $value->p1){

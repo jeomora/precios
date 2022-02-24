@@ -361,7 +361,7 @@ class Uploads extends MY_Controller {
 		if(!$filena){
 			$this->jsonResponse("Documento incorrecto");
 		}else{
-			for ($i=0; $i<(sizeof($pos)-20); $i++){
+			for ($i=0; $i<sizeof($pos); $i++){
 				if (!empty($pos[$i])){
 						
 					$pos[$i] = str_replace("", "", $pos[$i]);
