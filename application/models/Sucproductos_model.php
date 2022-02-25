@@ -115,6 +115,68 @@ class Sucproductos_model extends MY_Model {
 		}
 	}
 
+	public function getCodigosccCedis($where = [],$sucursal=8){
+		$user = $this->session->userdata();
+		$this->db->select("p.id_producto,sp.id_producto as ides,sp.codigo,sp.nombre,sp.ums,sp.code, p.codigo as codigo2,p.nombre as nombre2,p.ums as ums2,p.code as code2")
+		->from("sucproductos sp") 
+		->join("productos p","sp.codigo = p.codigo","LEFT")
+		->where("sp.id_sucursal = ".$sucursal)
+		->having("p.id_producto IS NULL")
+		->group_by("sp.id_producto")
+		->order_by("sp.nombre","ASC");
+
+		if($where !== NULL){
+			if(is_array($where)){
+				foreach ($where as $field => $value) {
+					$this->db->where($field, $value);
+				}
+			}else{
+				$this->db->where($this->PRI_INDEX, $where);
+			}
+		}
+		$result = $this->db->get()->result();
+		if($result){
+			if(is_array($where)){
+				return $result;
+			}else{
+				return $result;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	public function getCodigosccSucus($where = [],$sucursal=8){
+		$user = $this->session->userdata();
+		$this->db->select("p.id_producto,sp.id_producto as ides,sp.codigo,sp.nombre,sp.ums,sp.code, p.codigo as codigo2,p.nombre as nombre2,p.ums as ums2,p.code as code2")
+		->from("sucproductos sp") 
+		->join("productos p","sp.codigo = p.codigo","LEFT")
+		->where("sp.id_sucursal = ".$sucursal)
+		->having("sp.nombre <> p.nombre")
+		->group_by("sp.id_producto")
+		->order_by("sp.nombre","ASC");
+
+		if($where !== NULL){
+			if(is_array($where)){
+				foreach ($where as $field => $value) {
+					$this->db->where($field, $value);
+				}
+			}else{
+				$this->db->where($this->PRI_INDEX, $where);
+			}
+		}
+		$result = $this->db->get()->result();
+		if($result){
+			if(is_array($where)){
+				return $result;
+			}else{
+				return $result;
+			}
+		}else{
+			return false;
+		}
+	}
+
 }
 
 /* End of file Grupos_model.php */
