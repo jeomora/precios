@@ -27,10 +27,13 @@ function comparaciones(vSucuCed) {
         var p11 = 0;var p111 = 0;
         if(resp){
             $.each(resp,function(index,value){
-                $(".tbodyCompa").append('<tr class="cienrow"><td>'+(index+1)+'</td><td>'+value.codigo+'</td><td>'+value.nombre+'</td><td>'+value.ums+'</td></tr>')
+                if(value.estatus != 0){
+                    $(".tbodyCompa").append('<tr class="cienrow"><td>'+(index+1)+'</td><td>'+value.codigo+'</td><td>'+value.nombre+'</td><td>'+value.ums+'</td></tr>')
+                    p111++;
+                }
             })
-            $(".countRojo").html(resp.length);
-            $(".rowLoad").html('<div><h4 style="font-size:16px"><br>Se encontrarón '+resp.length+' resultados</h4></div>');
+            $(".countRojo").html(p111);
+            $(".rowLoad").html('<div><h4 style="font-size:16px"><br>Se encontrarón '+p111+' resultados</h4></div>');
         }else{
             $(".rowLoad").html('<div class="col-xl-3"><h1 class="text-danger">NO SE ENCONTRARÓN DATOS, POR FAVOR SELECCIONA OTRA SUCURSAL Y VUELVE A SELECCIONAR ESTA</h1></div><div class="col-xl-6"><img src="assets/img/loading4.gif" class="rowLoadImg"></div>');
         }
@@ -46,7 +49,7 @@ function comparaciones2(vSucuCed) {
             $.each(resp,function(index,value){
                 var nombo = "";
                 for (var i = 0;i <= value.nombre.length - 1; i++) {
-                    value.nombre[i] 
+                    
                     if(value.nombre2[i]){
                         if(value.nombre2[i] != value.nombre[i]){
                             nombo += "<span style='background:yellow'>"+value.nombre[i]+"</span>";
@@ -58,13 +61,17 @@ function comparaciones2(vSucuCed) {
                     }
                 }
                 if(value.nombre.length < value.nombre2.length){
-                        nombo += "<span style='background:yellow'>-></span>";
-                    }
-                $(".tbodyCompa2").append('<tr class="cienrow"><td>'+(index+1)+'</td><td>'+value.codigo+'</td><td>'+nombo+'</td><td>'+value.ums+'</td>'+
+                    nombo += "<span style='background:yellow'>-></span>";
+                }
+                if(value.estatus != 0){
+                    $(".tbodyCompa2").append('<tr class="cienrow"><td>'+(index+1)+'</td><td>'+value.codigo+'</td><td>'+nombo+'</td><td>'+value.ums+'</td>'+
                     '<td>'+value.codigo2+'</td><td>'+value.nombre2+'</td><td>'+value.ums2+'</td></tr>')
+                    p111++;
+                }
+                
             })
-            $(".countVerde").html(resp.length);
-            $(".rowLoad").html('<div><h4 style="font-size:16px"><br>Se encontrarón '+resp.length+' resultados</h4></div>');
+            $(".countVerde").html(p111);
+            $(".rowLoad").html('<div><h4 style="font-size:16px"><br>Se encontrarón '+p111+' resultados</h4></div>');
         }else{
             $(".rowLoad").html('<div class="col-xl-3"><h1 class="text-danger">NO SE ENCONTRARÓN DATOS, POR FAVOR SELECCIONA OTRA SUCURSAL Y VUELVE A SELECCIONAR ESTA</h1></div><div class="col-xl-6"><img src="assets/img/loading4.gif" class="rowLoadImg"></div>');
         }

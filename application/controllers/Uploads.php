@@ -410,12 +410,20 @@ class Uploads extends MY_Controller {
 					if($pos[$i] <> ""){
 						$codigo = substr($pos[$i], 4,17); 
 						$codigo = str_replace(" ", "", $codigo);
+						$nome = substr($pos[$i], 21,48); 
+						$nome = str_replace("  ", "", $nome);
+						$nome = str_replace("¥", "Ñ", $nome);
 						$lastco = substr($pos[$i], 80,13); 
 						$lastco = str_replace(" ", "", $lastco);
 						$lastco = str_replace(",", "", $lastco);
 						$this->last_md->update(["estatus"=>0] , ["codigo"=>$codigo,"estatus"=>1]);
 						$last = $this->last_md->insert(["costo"=>$lastco,"codigo"=>$codigo]);
 						
+
+						$prod = $this->prod_md->get(NULL,["estatus"=>1,"codigo"=>$codigo]);
+						if ($prod) {
+							$this->prod_md->update(["nombre"=>$nome],["id_producto"=>$prod[0]->id_producto]);
+						}
 					}				
 				}
 			}
@@ -1773,8 +1781,8 @@ class Uploads extends MY_Controller {
 					if ($prodo && $prodo <> 0){
 						$prodo = $prodo[0]->codigo;
 					}else{
-						$prodo = $this->getOldVal($sheet,$i,"A");
-					}
+						$prodo = $sheet->getCellByColumnAndRow(0, $i)->getFormattedValue();
+											}
 					$prodo2 = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"O"),"estatus"=>1]);
 					if ($prodo2 && $prodo2 <> 0){
 						$prodo2 = $prodo2[0]->codigo;

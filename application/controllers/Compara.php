@@ -200,6 +200,7 @@ class Compara extends MY_Controller {
 
 	public function upload_matriz(){
 		$user = $this->session->userdata();
+		mb_internal_encoding("UTF-8");
 		ini_set("memory_limit", -1);	
 		$user = $this->session->userdata();
 		$filena=$_FILES['file_matriz']['name'];
@@ -294,6 +295,7 @@ class Compara extends MY_Controller {
 							$code1 = substr($pos[$i], 0,17);
 							$code1 = str_replace(" ", "", $code1);
 							$descripcion = substr($pos[$i], 17,36);
+							//$descripcion = str_replace("¥", "Ñ", $descripcion);
 							$unidad = substr($pos[$i], 53,3);
 							$existencia = substr($pos[$i], 56,12);
 
@@ -334,7 +336,7 @@ class Compara extends MY_Controller {
 							$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
 
 							if($producto){
-								$id_producto = $this->sprod_md->update($new_producto,$producto[0]->id_producto);
+								$id_producto = $this->sprod_md->update($new_producto,["id_producto"=>$producto[0]->id_producto]);
 								$id_producto = $producto[0]->id_producto;
 							}else{
 								$id_producto = $this->sprod_md->insert($new_producto);
@@ -368,7 +370,7 @@ class Compara extends MY_Controller {
 			}
 			
 			$mensaje=[	"id"	=>	'Éxito',
-						"desc"	=>	'Datos cargados correctamente en el Sistema',
+						"desc"	=>	'Datos cargados correctamdente en el Sistema',
 						"type"	=>	'success'];
 			$this->jsonResponse($mensaje);
 		}else{
@@ -423,10 +425,14 @@ class Compara extends MY_Controller {
 						if(strlen($pos[$i]) < 10){
 							$pos[$i] = "";	
 						}
-
+						
 						if($pos[$i] <> ""){
-							$codigo = substr($pos[$i], 4,17); 
+							$codigo = substr($pos[$i], 4,16); 
 							$codigo = str_replace(" ", "", $codigo);
+							$nome = substr($pos[$i], 21,48); 
+							$nome = str_replace("  ", "", $nome);
+							$nome = str_replace("¥", "Ñ", $nome);
+
 							$lastco = substr($pos[$i], 80,13); 
 							$lastco = str_replace(" ", "", $lastco);
 							$lastco = str_replace(",", "", $lastco);
@@ -435,6 +441,10 @@ class Compara extends MY_Controller {
 								$this->lasto_md->update(["costo"=>$lastco] , [ "id_last"=>$lasto[0]->id_last ]);
 							}else{
 								$last = $this->lasto_md->insert(["costo"=>$lastco,"codigo"=>$codigo,"id_sucursal"=>$user["id_sucursal"]]);
+							}
+							$prod = $this->sprod_md->get(NULL,["estatus"=>1,"codigo"=>$codigo,"id_sucursal"=>$user["id_sucursal"]]);
+							if ($prod) {
+								$this->sprod_md->update(["nombre"=>$nome],["id_producto"=>$prod[0]->id_producto]);
 							}
 							
 						}				
@@ -446,7 +456,6 @@ class Compara extends MY_Controller {
 				$this->jsonResponse($mensaje);
 			}
 		}
-
 	}
 
 	public function excelCompa(){

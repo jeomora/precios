@@ -117,10 +117,11 @@ class Sucproductos_model extends MY_Model {
 
 	public function getCodigosccCedis($where = [],$sucursal=8){
 		$user = $this->session->userdata();
-		$this->db->select("p.id_producto,sp.id_producto as ides,sp.codigo,sp.nombre,sp.ums,sp.code, p.codigo as codigo2,p.nombre as nombre2,p.ums as ums2,p.code as code2")
+		$this->db->select("p.id_producto,sp.id_producto as ides,sp.codigo,sp.nombre,sp.ums,sp.code, p.codigo as codigo2,p.nombre as nombre2,p.ums as ums2,p.code as code2,p.estatus")
 		->from("sucproductos sp") 
 		->join("productos p","sp.codigo = p.codigo","LEFT")
 		->where("sp.id_sucursal = ".$sucursal)
+		->where("sp.estatus <> 0")
 		->having("p.id_producto IS NULL")
 		->group_by("sp.id_producto")
 		->order_by("sp.nombre","ASC");
@@ -148,10 +149,11 @@ class Sucproductos_model extends MY_Model {
 
 	public function getCodigosccSucus($where = [],$sucursal=8){
 		$user = $this->session->userdata();
-		$this->db->select("p.id_producto,sp.id_producto as ides,sp.codigo,sp.nombre,sp.ums,sp.code, p.codigo as codigo2,p.nombre as nombre2,p.ums as ums2,p.code as code2")
+		$this->db->select("p.id_producto,sp.id_producto as ides,sp.codigo,sp.nombre,sp.ums,sp.code, p.codigo as codigo2,p.nombre as nombre2,p.ums as ums2,p.code as code2,p.estatus")
 		->from("sucproductos sp") 
 		->join("productos p","sp.codigo = p.codigo","LEFT")
 		->where("sp.id_sucursal = ".$sucursal)
+		->where("sp.estatus <> 0")
 		->having("sp.nombre <> p.nombre")
 		->group_by("sp.id_producto")
 		->order_by("sp.nombre","ASC");
