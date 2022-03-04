@@ -305,6 +305,9 @@ function diccionario(vals){
             case "ñ":
                 valo += ";"
             break;
+            case "Ñ":
+                valo += ";"
+            break;
             case ")":
                 valo += "("
             break;
