@@ -112,7 +112,7 @@ function getMeClave() {
 function givePZ(value,index){
     var reso = ["",""];
 
-    var imprime = "i1x\r"
+    var imprime = "i1\r"
     if(value.linea == "SE" || value.linea == "77"){
         imprime = "";
     }
