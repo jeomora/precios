@@ -2,6 +2,7 @@
 jQuery(document).ready(function() {
     $("#titlePrincipal").html("CAMBIOS DE PRECIOS");
     getMeNews();
+    KTInputmask.init();
 });
 
 function getMeNews(){
@@ -181,3 +182,38 @@ var myDropzoneMatriz = new Dropzone("div#kt_dropzone_uno", {
         getMeNews()
     }
 });
+
+function getSucuEtiqueta(cuantos){
+    return $.ajax({
+        url: site_url+"Uploads/getSucuEtiqueta",
+        type: "POST",
+        cache: false,
+    });
+}
+
+function imprimeEtiqueta(nelson,cuantos){
+    return $.ajax({
+        url: site_url+"Uploads/imprimeEtiqueta/"+nelson+"/"+cuantos,
+        type: "POST",
+        cache: false,
+    });
+}
+
+var KTInputmask = function () {
+    var demos = function () {
+        $("#no_etiquetas").inputmask('integer', {
+        });
+    }
+    return {
+        init: function() {
+            demos();
+        }
+    };
+}();
+
+
+$(document).off("click",".radioC").on("click",".radioC",function(event){
+    imprimeEtiqueta($(this).val(),$("#no_etiquetas").val()).done(function(resp){
+        toastr.success("Se realizo el cambio","Listo");
+    })
+})

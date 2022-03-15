@@ -60,7 +60,29 @@
                                         <p class="text-dark font-weight-bold mt-3">
                                             A continuación podrá visualizar los precios para actualizar.<br>
                                             Cualquier duda o sugerencia le pedimos comunicarse con el personal responsable en el área de compras.<br>
-                                            <h1>SE MUESTRAN SÓLO LOS CAMBIOS DE LOS ÚLTIMOS 7 DÍAS.</h1>
+                                            <h1>SE MUESTRAN SÓLO LOS CAMBIOS DE LOS ÚLTIMOS 3 DÍAS.</h1>
+                                            <div class="form-group" style="border:1px dashed;padding:5px 15px;">
+                                            <h3>SELECCIONE SI SE IMPRIMEN ETIQUETAS DE PRECIO</h3>
+                                            <div class="radio-inline">
+                                                <label class="radio radio-lg" style="font-size:16px">
+                                                    <input type="radio" <?php if($etiqueto->printo == 1):echo 'checked="checked"';endif; ?> name="radio_no" class="radioC" value="1"/>
+                                                    <span></span>
+                                                    Sí se imprimen etiquetas.(Excepto carnes frias y semillas)
+                                                </label>
+                                                <div class="form-group row">
+                                                    <div class="col-lg-6 col-md-9 col-sm-12">
+                                                        <input type='text' class="form-control" id="no_etiquetas" type="text" value="<?php echo $etiqueto->manyp ?>" />
+                                                        <span class="form-text text-muted"># ETIQUETAS</span>
+                                                    </div>
+                                                </div>
+                                                <label class="radio radio-lg" style="font-size:16px">
+                                                    <input type="radio" <?php if($etiqueto->printo == 0):echo 'checked="checked"';endif; ?> name="radio_no" class="radioC" value="0"/>
+                                                    <span></span>
+                                                    No etiquetas
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <h3 class="text-danger">LA IMPRESORA DEBE ESTAR CONECTADA AL ADMINISTRADOR QUE REALICE EL CAMBIO</h3>
                                         </p>
                                     </div>
                                 </div>

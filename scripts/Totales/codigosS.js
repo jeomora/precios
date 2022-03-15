@@ -3,18 +3,31 @@ var rojosArray = [];
 var almacena = [];
 var descChange = 0;
 var clave = "";
+var printo = 1;var print = 1;
 jQuery(document).ready(function() {
+
     getMeClave().done(function(resp){
 
         if(resp){
             clave = diccionario(resp.access)+"\r";
             console.log(clave)
         }
+        doIPrint();
+    })
+});
+
+function doIPrint(){
+    getSucuEtiqueta().done(function(resp){
+        if(resp){
+            printo = resp.manyp;
+            print = resp.printo;
+        }else{
+            printo = 1;
+            print = 1;
+        }
         startQr()
     })
-    
-    
-});
+}
 function startQr(){
     qrmeup().done(function(resp){
         console.log(resp)
@@ -112,10 +125,15 @@ function getMeClave() {
 function givePZ(value,index){
     var reso = ["",""];
     var imprime = "i1\r"
+    if(print == 0){
+        imprime = "";
+    }else{
+        imprime = "i"+printo+"\r"
+    }
     if(value.linea == "SE" || value.linea == "77"){
         imprime = "";
     }
-
+    
     var iva = "\r\n";var cajas = true;
     if(value.iva == "0.00" || value.iva == "0"){
         value.iva = "\r\rN";
@@ -360,4 +378,12 @@ function diccionario(vals){
         }
     }
     return valo;
+}
+
+function getSucuEtiqueta(cuantos){
+    return $.ajax({
+        url: site_url+"Uploads/getSucuEtiqueta",
+        type: "POST",
+        cache: false,
+    });
 }

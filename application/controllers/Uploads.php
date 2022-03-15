@@ -408,21 +408,24 @@ class Uploads extends MY_Controller {
 					}
 
 					if($pos[$i] <> ""){
-						$codigo = substr($pos[$i], 4,17); 
-						$codigo = str_replace(" ", "", $codigo);
-						$nome = substr($pos[$i], 21,48); 
-						$nome = str_replace("  ", "", $nome);
-						$nome = str_replace("¥", "Ñ", $nome);
-						$lastco = substr($pos[$i], 80,13); 
-						$lastco = str_replace(" ", "", $lastco);
-						$lastco = str_replace(",", "", $lastco);
-						$this->last_md->update(["estatus"=>0] , ["codigo"=>$codigo,"estatus"=>1]);
-						$last = $this->last_md->insert(["costo"=>$lastco,"codigo"=>$codigo]);
-						
+						if (substr($pos[$i], 0,1) === " "){
+							$codigo = substr($pos[$i], 4,17); 
+							$codigo = str_replace(" ", "", $codigo);
+							$nome = substr($pos[$i], 21,48); 
+							$nome = str_replace("  ", "", $nome);
+							$nome = str_replace("¥", "Ñ", $nome);
+							$lastco = substr($pos[$i], 80,13); 
+							$lastco = str_replace(" ", "", $lastco);
+							$lastco = str_replace(",", "", $lastco);
+							
 
-						$prod = $this->prod_md->get(NULL,["estatus"=>1,"codigo"=>$codigo]);
-						if ($prod) {
-							$this->prod_md->update(["nombre"=>$nome],["id_producto"=>$prod[0]->id_producto]);
+							$prod = $this->prod_md->get(NULL,["estatus"=>1,"codigo"=>$codigo]);
+							if ($prod){
+								$this->prod_md->update(["nombre"=>$nome],["id_producto"=>$prod[0]->id_producto]);
+
+								$this->last_md->update(["estatus"=>0] , ["codigo"=>$codigo,"estatus"=>1]);
+								$last = $this->last_md->insert(["costo"=>$lastco,"codigo"=>$codigo,"id_producto"=>$prod[0]->id_producto]);
+							}
 						}
 					}				
 				}
@@ -2386,6 +2389,16 @@ class Uploads extends MY_Controller {
 		$this->jsonResponse($rojos);
 	}
 
-	
+	public function getSucuEtiqueta(){
+		$user = $this->session->userdata();
+		$rojos = $this->sucu_md->get(NULL,["id_sucursal"=>$user["id_sucursal"]])[0];
+		$this->jsonResponse($rojos);
+	}
+
+	public function imprimeEtiqueta($nelson,$cuanto){
+		$user = $this->session->userdata();
+		$rojos = $this->sucu_md->update(["printo"=>$nelson,"manyp"=>$cuanto] , ["id_sucursal"=>$user["id_sucursal"]]);
+		$this->jsonResponse($rojos);
+	}
 
 }

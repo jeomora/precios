@@ -88,7 +88,7 @@ class Nuevos_model extends MY_Model {
 			->join("listos l","nd.id_detail = l.id_detalle AND l.estatus = 1 AND l.id_sucursal = ".$user["id_sucursal"]."" ,"left") 
 			->join("productos p","nd.code1 = p.codigo AND p.estatus <> 0 " ,"left")
 			->join("precios pz","p.id_producto = pz.id_producto AND pz.estatus <> 0 " ,"left") 
-			->join("lastcos la","p.codigo = la.codigo AND la.estatus <> 0 " ,"left")
+			->join("lastcos la","p.id_producto = la.id_producto AND la.estatus <> 0 " ,"left")
 			->join("productos p2","nd.code3 = p2.codigo AND p2.estatus <> 0 " ,"left") 
 			->join("precios pz2","p2.id_producto = pz2.id_producto AND pz2.estatus <> 0 " ,"left") 
 			->where("n.estatus = 1")

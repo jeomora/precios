@@ -16,6 +16,7 @@ class Inicio extends MY_Controller {
 		$this->load->model("Lineas_model", "ln_md");
 		$this->load->model("Nuevos_model", "new_md");
 		$this->load->model("Ofertas_model", "ofe_md");
+		$this->load->model("Sucursales_model", "sucu_md");
 		$this->load->library("form_validation");
 	}
 
@@ -42,6 +43,7 @@ class Inicio extends MY_Controller {
 				$this->estructura("Dashboards/principal", $data);
 			}elseif($user["id_grupo"] === "2" || $user["id_grupo"] === 2){ // SUCURSALES
 				$sucur = $this->sucu_md->get(NULL,["id_sucursal"=>$user["id_sucursal"]])[0];
+				$data["etiqueto"] = $this->sucu_md->get(NULL,["id_sucursal"=>$user["id_sucursal"]])[0];
 				if($sucur->typeSuc == 1){
 					$data['scripts'] = [
 						'/scripts/Sucursales/sucursal',

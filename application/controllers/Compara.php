@@ -422,31 +422,40 @@ class Compara extends MY_Controller {
 						if(strpos($pos[$i],"Proveedor")){
 							$pos[$i] = "";
 						}
+						if(strpos($pos[$i],"(Continuacion)")){
+							$pos[$i] = "";
+						}
 						if(strlen($pos[$i]) < 10){
 							$pos[$i] = "";	
 						}
 						
 						if($pos[$i] <> ""){
-							$codigo = substr($pos[$i], 4,16); 
-							$codigo = str_replace(" ", "", $codigo);
-							$nome = substr($pos[$i], 21,48); 
-							$nome = str_replace("  ", "", $nome);
-							$nome = str_replace("¥", "Ñ", $nome);
+							if (substr($pos[$i], 0,1) === " "){
+								$codigo = substr($pos[$i], 4,16); 
+								$codigo = str_replace(" ", "", $codigo);
+								$nome = substr($pos[$i], 21,48); 
+								$nome = str_replace("  ", "", $nome);
+								$nome = str_replace("¥", "Ñ", $nome);
 
-							$lastco = substr($pos[$i], 80,13); 
-							$lastco = str_replace(" ", "", $lastco);
-							$lastco = str_replace(",", "", $lastco);
-							$lasto  = $this->lasto_md->get(NULL , ["codigo"=>$codigo,"estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
-							if($lasto){
-								$this->lasto_md->update(["costo"=>$lastco] , [ "id_last"=>$lasto[0]->id_last ]);
-							}else{
-								$last = $this->lasto_md->insert(["costo"=>$lastco,"codigo"=>$codigo,"id_sucursal"=>$user["id_sucursal"]]);
+								$lastco = substr($pos[$i], 80,13); 
+								$lastco = str_replace(" ", "", $lastco);
+								$lastco = str_replace(",", "", $lastco);
+
+								$prod = $this->sprod_md->get(NULL,["estatus"=>1,"codigo"=>$codigo,"id_sucursal"=>$user["id_sucursal"]]);
+								if ($prod) {
+									$this->sprod_md->update(["nombre"=>$nome],["id_producto"=>$prod[0]->id_producto]);
+
+									$lasto  = $this->lasto_md->get(NULL , ["codigo"=>$codigo,"estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
+									if($lasto){
+										$this->lasto_md->update(["costo"=>$lastco] , [ "id_last"=>$lasto[0]->id_last ]);
+									}else{
+										$last = $this->lasto_md->insert([ "costo"=>$lastco,"codigo"=>$codigo,"id_sucursal"=>$user["id_sucursal"],"id_producto"=>$prod[0]->id_producto ]);
+									}
+								}
+
+								
+								
 							}
-							$prod = $this->sprod_md->get(NULL,["estatus"=>1,"codigo"=>$codigo,"id_sucursal"=>$user["id_sucursal"]]);
-							if ($prod) {
-								$this->sprod_md->update(["nombre"=>$nome],["id_producto"=>$prod[0]->id_producto]);
-							}
-							
 						}				
 					}
 				}

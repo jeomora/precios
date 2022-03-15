@@ -3,6 +3,7 @@ var rojosArray = [];
 var almacena = [];
 var descChange = 0;
 var clave = "";
+var printo = 1;var print = 1;
 jQuery(document).ready(function() {
     getMeClave().done(function(resp){
 
@@ -15,11 +16,27 @@ jQuery(document).ready(function() {
                 clave = diccionario(resp.access)+"\r";
             }
         }
-        startQr()
+        doIPrint();
+        //startQr()
     })
     
     
 });
+
+function doIPrint(){
+    getSucuEtiqueta().done(function(resp){
+        if(resp){
+            printo = resp.manyp;
+            print = resp.printo;
+        }else{
+            printo = 1;
+            print = 1;
+        }
+        startQr()
+    })
+}
+
+
 function startQr(){
     qrmeup().done(function(resp){
         console.log(resp)
@@ -117,6 +134,16 @@ function getMeClave() {
 function givePZ(value,index){
     var reso = ["",""];
 
+    var imprime = "i1\r"
+    if(print == 0){
+        imprime = "";
+    }else{
+        imprime = "i"+printo+"\r"
+    }
+    if(value.linea == "SE" || value.linea == "77"){
+        imprime = "";
+    }
+
     var iva = "\r\n";var cajas = true;
     if(value.iva == "0.00" || value.iva == "0"){
         value.iva = "\r\rN";
@@ -152,23 +179,23 @@ function givePZ(value,index){
     switch( parseInt(value.estatus) ){
         case 2:
             reso = ["cambioDe",""]; //2 EDITAR PZ 
-            codeqr+="c4\r\x09"+value.desc1+"\r18\r"+value.code2+"\r\n\rt"
+            codeqr+="c4\r\x09"+value.desc1+"\r18\r"+value.code2+"\r\n\r"+imprime+"t"
             codeqr += codeqr2;
             break;
         case 3:
             reso = ["","cambioDe"];//3 EDITAR CAJA 
             codeqr2 += "3\r\x09"+value.desc2+"\r\n\rt"
-            codeqr += codeqr2+"t";
+            codeqr += codeqr2+""+imprime+"t";
             break;
         case 4:
             reso = ["cambioDe","cambioDe"];//4 EDITAR PZ Y CAJA 
-            codeqr+="c4\r\x09"+value.desc1+"\r18\r"+value.code2+"\r\n\rt"
+            codeqr+="c4\r\x09"+value.desc1+"\r18\r"+value.code2+"\r\n\r"+imprime+"t"
             codeqr2 += "3\r\x09"+value.desc2+"\r\n\x01t";
             codeqr+=codeqr2;
             break;
         case 5:
             reso = ["cambioDe","eliminDe"];//5 EDITAR PZ Y ELIM CAJA 
-            codeqr+="c4\r\x09"+value.desc1+"\r18\r"+value.code2+"\r\n\rt"
+            codeqr+="c4\r\x09"+value.desc1+"\r18\r"+value.code2+"\r\n\r"+imprime+"t"
             codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rtt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
             codeqr+=codeqr2;
             break;
@@ -180,7 +207,7 @@ function givePZ(value,index){
             break;
         case 7:
             reso = ["cambioDe","agregaDe"];//7 EDITAR PZ Y ADD CAJA 
-            codeqr+="c4\r\x09"+value.desc1+"\r18\r"+value.code2+"\r\n\rt"
+            codeqr+="c4\r\x09"+value.desc1+"\r18\r"+value.code2+"\r\n\r"+imprime+"t"
             cajaAlta = value.code1+"\r"+value.cantidad+"\r"
             if(value.blues != 0){
                 cajaAlta = almacena[value.blues];
@@ -190,14 +217,14 @@ function givePZ(value,index){
             break;
         case 8:
             reso = ["agregaDe","cambioDe"];//8 EDITAR CAJA Y ADD  PZA 
-            codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0Ft"
+            codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0F"+imprime+"t"
             codeqr2 += "3\r\x09"+value.desc2+"\r\n\rt"
             codeqr+=codeqr2;
             break;
         case 9:
             reso = ["agregaDe",""];//9 ADD PZA 
             codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+
-            value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0Ft"
+            value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0F"+imprime+"t"
             codeqr+=codeqr2;
             break;
         case 10:
@@ -211,7 +238,7 @@ function givePZ(value,index){
             break;
         case 11:
             reso = ["agregaDe","agregaDe"]; //11 ADD PZA Y ADD CAJA 
-            codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0Ft"
+            codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0F"+imprime+"t"
             cajaAlta = value.code1+"\r"+value.cantidad+"\r"
             if(value.blues != 0){
                 cajaAlta = almacena[value.blues];
@@ -221,7 +248,7 @@ function givePZ(value,index){
             break;
         case 12:
             reso = ["agregaDe","eliminDe"]; //12 ADD PZA Y ELIM CAJA 
-            codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0Ft"
+            codeqr = "\x05A\x06A"+value.linea+"\r"+value.code1+"\r"+value.desc1+"\r"+value.unidad+"\r"+value.proves+"\r\n\r"+value.rdiez+"\r\n\r\n"+value.iva+""+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r"+value.cantidad+"\r"+value.code2+"\r\r\r\x0F"+imprime+"t"
             codeqr2 = "\x05B\x06b"+value.code3+"\r\neS\rtt"//"\x05D\x0600\r"+value.linea+"\r"+value.code3+"\r00\r"+value.linea+"\r"+value.code3+"\r"
             codeqr+=codeqr2
             break;
@@ -252,7 +279,7 @@ function givePZ(value,index){
             codeqr = codeqr2+"..."+codeqr;
             break;
         default:
-            codeqr = "\x05A\x06b"+value.code1+"\r\nc10\r"+value.rdiez+"\r\r17\r\n"+iva+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r\n\r\nT";
+            codeqr = "\x05A\x06b"+value.code1+"\r\nc10\r"+value.rdiez+"\r\r17\r\n"+iva+value.pre11+"\r\n\n\n"+value.pre22+"\r\n\n\n"+value.pre33+"\r\n\r\n"+imprime+"T";
             if(cajas){
                 codeqr2 = "\x05B\x06b"+value.code3+"\r\nc"+clave+"1\r\n\x1911\r\n\n\n"+value.pre1+"\r\n\n\n"+value.pre2+"\r\n\n\n"+value.pre3+"\r\r\nT"
                 codeqr += codeqr2;
@@ -353,4 +380,12 @@ function diccionario(vals){
         }
     }
     return valo;
+}
+
+function getSucuEtiqueta(cuantos){
+    return $.ajax({
+        url: site_url+"Uploads/getSucuEtiqueta",
+        type: "POST",
+        cache: false,
+    });
 }

@@ -4,9 +4,8 @@ jQuery(document).ready(function() {
     getMeNews();
     getMeOfes();
     getMeORec();
+    KTInputmask.init();
 });
-
-   
 function getMeNews(){
     $(".otrosShows").html("");
     getNuevosA().done(function(resp){
@@ -404,3 +403,38 @@ $(document).off("click",".btn-comparando").on("click",".btn-comparando",function
         console.log(resp)
     })
 })
+
+var KTInputmask = function () {
+    var demos = function () {
+        $("#no_etiquetas").inputmask('integer', {
+        });
+    }
+    return {
+        init: function() {
+            demos();
+        }
+    };
+}();
+
+
+$(document).off("click",".radioC").on("click",".radioC",function(event){
+    imprimeEtiqueta($(this).val(),$("#no_etiquetas").val()).done(function(resp){
+        toastr.success("Se realizo el cambio","Listo");
+    })
+})
+
+function getSucuEtiqueta(cuantos){
+    return $.ajax({
+        url: site_url+"Uploads/getSucuEtiqueta",
+        type: "POST",
+        cache: false,
+    });
+}
+
+function imprimeEtiqueta(nelson,cuantos){
+    return $.ajax({
+        url: site_url+"Uploads/imprimeEtiqueta/"+nelson+"/"+cuantos,
+        type: "POST",
+        cache: false,
+    });
+}
