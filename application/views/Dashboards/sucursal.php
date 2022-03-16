@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                                 <div class="position-absolute right-0 bottom-0 mr-5 overflow-hidden">
-                                    <img src="assets/media/svg/illustrations/cajas.svg" style="height:350px;width:350px;margin-bottom:-80px;" id="imgStart" />
+                                    <img src="assets/media/svg/illustrations/cajas.svg" style="height:400px;width:400px;margin-bottom:-27px;" id="imgStart" />
                                 </div>
                             </div>
                         </div>

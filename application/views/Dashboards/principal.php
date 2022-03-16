@@ -67,6 +67,7 @@
     .bodyModalOfes>tr:hover{background: bisque;}
     .dmo1{font-weight: bold;}
     .dmo2{color: red;}
+    .code1cambio,.code2cambio,.code3cambio{padding:2px;width:120px;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">

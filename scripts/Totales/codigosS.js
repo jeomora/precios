@@ -9,8 +9,13 @@ jQuery(document).ready(function() {
     getMeClave().done(function(resp){
 
         if(resp){
-            clave = diccionario(resp.access)+"\r";
-            console.log(clave)
+            if(resp.access == ""){
+                clave = ""
+            }else if(resp.access == null){
+                clave = ""
+            }else{
+                clave = diccionario(resp.access)+"\r";
+            }
         }
         doIPrint();
     })

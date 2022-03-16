@@ -1785,7 +1785,9 @@ class Uploads extends MY_Controller {
 						$prodo = $prodo[0]->codigo;
 					}else{
 						$prodo = $sheet->getCellByColumnAndRow(0, $i)->getFormattedValue();
-											}
+					}
+					$prod18 = $sheet->getCellByColumnAndRow(1, $i)->getFormattedValue();
+
 					$prodo2 = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"O"),"estatus"=>1]);
 					if ($prodo2 && $prodo2 <> 0){
 						$prodo2 = $prodo2[0]->codigo;
@@ -1797,6 +1799,7 @@ class Uploads extends MY_Controller {
 							$prodo2 = $this->getOldVal($sheet,$i,"O");
 						}
 					}
+					$prodo2 = $sheet->getCellByColumnAndRow(14, $i)->getFormattedValue();
 					$blue = $this->getHexBlue($sheet,$i);
 					//$reds = $sheet->getStyle('O'.$i)->getFill()->getStartColor()->getRGB();
 					//$reds = $this->getHex($reds);
@@ -1812,7 +1815,7 @@ class Uploads extends MY_Controller {
 						"id_nuevo"		=>	$id_nuevo,
 						"id_rojo"		=>	$rojo,
 						"code1"			=>	$prodo,
-						"code2"			=>	$this->getOldVal($sheet,$i,"B"),
+						"code2"			=>	$prod18,
 						"linea"			=>	$this->getOldVal($sheet,$i,"C"),
 						"desc1"			=>	$this->getOldVal($sheet,$i,"D"),
 						"unidad"		=>	$this->getOldVal($sheet,$i,"E"),
@@ -2399,6 +2402,17 @@ class Uploads extends MY_Controller {
 		$user = $this->session->userdata();
 		$rojos = $this->sucu_md->update(["printo"=>$nelson,"manyp"=>$cuanto] , ["id_sucursal"=>$user["id_sucursal"]]);
 		$this->jsonResponse($rojos);
+	}
+
+	public function cambiocodigo($uno,$dos,$tres){
+		if($tres == 1){
+			$this->det_md->update([ "code1"=>$dos ],["id_detail"=>$uno]);
+		}elseif($tres == 2){
+			$this->det_md->update([ "code2"=>$dos ],["id_detail"=>$uno]);
+		}else{
+			$this->det_md->update([ "code3"=>$dos ],["id_detail"=>$uno]);
+		}
+		$this->jsonResponse("listo");
 	}
 
 }

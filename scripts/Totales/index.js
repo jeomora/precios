@@ -215,14 +215,17 @@ function oldResultsA(respo){
                 }
                 if (value){
                     var renglon10 = ( value.costo/value.cantidad ) / ( 1+(value.iva/100) );
-                    new_table += '<tr><td class="'+des1+'" '+blues+'>'+value.code1+'</td><td class="'+des1+'">'+value.code2+'</td><td class="'+des1+'">'+value.linea+'</td><td class="'+des1+'">'+value.desc1+'</td><td class="'+des1+'">'+value.unidad+'</td><td class="'+des1+'">'+value.cantidad+'</td><td>'+value.costo+'</td>'+
+                    new_table += '<tr><td class="'+des1+'" '+blues+'><input type="text" value="'+value.code1+'" class="form-control code1cambio" data-id-user="'+value.detalle+'"/></td>'+
+                        '<td class="'+des1+'"><input type="text" value="'+value.code2+'" class="form-control code2cambio" data-id-user="'+value.detalle+'"/></td>'+
+                        '<td class="'+des1+'">'+value.linea+'</td><td class="'+des1+'">'+value.desc1+'</td><td class="'+des1+'">'+value.unidad+'</td><td class="'+des1+'">'+value.cantidad+'</td><td>'+value.costo+'</td>'+
                         '<td class="ivaClass">'+formatMoney(value.iva,0)+'</td><td class="renglon10Class">'+value.rdiez+'<br><span '+isMayor(parseFloat(value.rdiez).toFixed(4),value.lastcosto)+'>'+formatMoney(value.lastcosto,4)+'</span></td>'+
                         '<td>'+formatMoney(value.pre11)+'<br><span '+isMayor(value.pre11,value.preciouno)+'>'+formatMoney(value.preciouno)+'</span></td>'+
                         '<td>'+formatMoney(value.pre22)+'<br><span '+isMayor(value.pre22,value.preciodos)+'>'+formatMoney(value.preciodos)+'</span></td>'+
                         '<td>'+formatMoney(value.pre33)+'<br><span '+isMayor(value.pre33,value.preciotres)+'>'+formatMoney(value.preciotres)+'</span></td>'+
                         '<td>'+formatMoney(value.pre44)+'<br><span '+isMayor(value.pre44,value.preciocuatro)+'>'+formatMoney(value.preciocuatro)+'</span></td>'+
                         '<td>'+formatMoney(value.pre55)+'<br><span '+isMayor(value.pre55,value.preciocinco)+'>'+formatMoney(value.preciocinco)+'</span></td>'+
-                        '<td class="'+des2+'">'+isnulo(value.code3)+'</td><td class="'+des2+'">'+isnulo(value.desc2)+'</td>'+
+                        '<td class="'+des2+'"><input type="text" value="'+isnulo(value.code3)+'" class="form-control code3cambio" data-id-user="'+value.detalle+'"/></td>'+
+                        '<td class="'+des2+'">'+isnulo(value.desc2)+'</td>'+
                         '<td>'+isnuloF(value.pre1)+'<br><span '+isMayor(value.pre1,value.preciouno2)+'>'+formatMoney(value.preciouno2)+'</span></td>'+
                         '<td>'+isnuloF(value.pre2)+'<br><span '+isMayor(value.pre2,value.preciodos2)+'>'+formatMoney(value.preciodos2)+'</span></td>'+
                         '<td>'+isnuloF(value.pre3)+'<br><span '+isMayor(value.pre3,value.preciotres2)+'>'+formatMoney(value.preciotres2)+'</span></td>'+
@@ -235,6 +238,49 @@ function oldResultsA(respo){
             $(".otrosShows").prepend(new_table);
         }
     })
+}
+
+$(document).off("keydown",".code1cambio").on("keydown",".code1cambio",function(e){    
+    var dis = $(this);
+    if(e.which == 13){
+        cambiocodigo(dis.data("idUser"),dis.val(),1).done(function(resp){
+            if(resp){
+                toastr.success("Se realizó cambio","LISTO")
+                dis.addClass("bg-light-success")
+            }
+        })
+    }
+    
+})
+$(document).off("keydown",".code2cambio").on("keydown",".code2cambio",function(e){
+    var dis = $(this);
+    if(e.which == 13){
+        cambiocodigo(dis.data("idUser"),dis.val(),2).done(function(resp){
+            if(resp){
+                toastr.success("Se realizó cambio","LISTO")
+                dis.addClass("bg-light-success")
+            }
+        })
+    }
+})
+$(document).off("keydown",".code3cambio").on("keydown",".code3cambio",function(e){
+    var dis = $(this);
+    if(e.which == 13){
+        cambiocodigo(dis.data("idUser"),dis.val(),3).done(function(resp){
+            if(resp){
+                toastr.success("Se realizó cambio","LISTO")
+                dis.addClass("bg-light-success")
+            }
+        })
+    }
+})
+
+function cambiocodigo(uno,dos,tres){
+    return $.ajax({
+        url: site_url+"Uploads/cambiocodigo/"+uno+"/"+dos+"/"+tres,
+        type: "POST",
+        cache: false,
+    });
 }
 
 $(document).off("click",".showBody").on("click",".showBody",function(event){
