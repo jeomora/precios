@@ -60,21 +60,27 @@ function startQr(){
                     fore = "#1BC5BD"
                 }
                 
-                $('#outtxt'+index).html("<h3 class='font-weight-bolder mb-1'><a class='text-primary' style='font-size:55px'>"
-                    +deco1+"</a></h3><div class='text-primary mb-9' style='font-size:50px'>"+value.code1+"</div><div class='text-primary mb-9' style='font-size:35px'>Existencia: "+value.existencia+"</div>"+
+                $('#outtxt'+index).html("<h3 class='font-weight-bolder mb-1'><a class='text-black' style='font-size:55px'>"
+                    +deco1+"</a></h3><div class='text-black mb-9' style='font-size:50px'>"+value.code1+"</div><div class='text-black mb-9' style='font-size:35px'>Existencia: "+value.existencia+"</div>"+
                     "<div class='col-md-12' style='text-align:center'></div>")
-                if(value.pre1 <= 0 ){
+                if(value.pre11 <= 0 ){
                     $('#outtxt'+index).append("<h1>EL <span style='font-weight:bold'>PRECIO 1</span> APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
-                }else if(value.pre2 <= 0 ){
+                    $('#outtxt'+index).css("color","black")
+                }else if(value.pre22 <= 0 ){
                     $('#outtxt'+index).append("<h1>EL <span style='font-weight:bold'>PRECIO 2</span> APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
-                }else if(value.pre3 <= 0 ){
+                    $('#outtxt'+index).css("color","black")
+                }else if(value.pre33 <= 0 ){
                     $('#outtxt'+index).append("<h1>EL <span style='font-weight:bold'>PRECIO 3</span> APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
-                }else if(value.pre4 <= 0 ){
+                    $('#outtxt'+index).css("color","black")
+                }else if(value.pre44 <= 0 ){
                     $('#outtxt'+index).append("<h1>EL <span style='font-weight:bold'>PRECIO 4</span> APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
-                }else if(value.pre5 <= 0 ){
+                    $('#outtxt'+index).css("color","black")
+                }else if(value.pre55 <= 0 ){
                     $('#outtxt'+index).append("<h1>EL <span style='font-weight:bold'>PRECIO 5</span> APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
+                    $('#outtxt'+index).css("color","black")
                 }else if(value.rdiez <= 0 ){
                     $('#outtxt'+index).append("<h1>EL <span style='font-weight:bold'>PRECIO DEL RENGLON 10</span> APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
+                    $('#outtxt'+index).css("color","black")
                 }else{
                     $('#outtxt'+index).append("<button type='button' data-id-rojo='"+value.id_detail+"' class='"+cliston+"'>"+liston+"</button>")
                     if (codeqr.indexOf("...") >= 0){
@@ -185,6 +191,8 @@ function givePZ(value,index){
         almacena[value.blues] += ""+value.code1+"\r"+value.cantidad+"\r";
     }
     var cajaAlta = "";
+
+    value.estatus = yaAgregados(value,index)
 
     switch( parseInt(value.estatus) ){
         case 2:
@@ -405,4 +413,100 @@ function getSucuEtiqueta(cuantos){
         type: "POST",
         cache: false,
     });
+}
+
+function cambioYaExiste(value){
+    return $.ajax({
+        url: site_url+"/Codigos/cambioYaExiste",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+            values : value
+        }
+    });
+}
+
+function yaAgregados(value,index){
+    var nuevoStats = parseInt(value.estatus);
+    var flag = 0;
+    var cambio = "";var cambio2 = "";var cambio3 ="";
+
+    //ADD PIEZA
+    if(value.estatus == 9 && value.codigo == value.code1){
+        nuevoStats = 2;
+        flag = 1;
+        cambio = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
+    }
+    if(value.estatus == 12 && value.codigo == value.code1){
+        nuevoStats = 5;
+        flag = 1;
+        cambio = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
+    }
+    if(value.estatus == 8 && value.codigo == value.code1){
+        nuevoStats = 4;
+        flag = 1;
+        cambio = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
+    }
+
+
+    //ADD CAJA
+    if(value.estatus == 7 && value.codigosss == value.code3){
+        nuevoStats = 4;
+        flag = 1;
+        cambio2 = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
+    }
+    if(value.estatus == 10 && value.codigosss == value.code3){
+        nuevoStats = 3;
+        flag = 1;
+        cambio2 = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
+    }
+    
+    if(value.estatus == 13 && value.codigosss == value.code3){
+        nuevoStats = 6;
+        flag = 1;
+        cambio2 = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
+    }
+
+
+    //BOTH
+    if(value.estatus == 11 && value.codigo == value.code1 && value.codigosss == value.code3){
+        nuevoStats = 4;
+        flag = 1;
+        cambio = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
+        cambio2 = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
+    }
+    if(value.estatus == 11 && value.codigo == value.code1 && value.codigosss != value.code3){
+        nuevoStats = 7;
+        flag = 1;
+        cambio = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
+        cambio2 = "";
+    }
+    if(value.estatus == 11 && value.codigo != value.code1 && value.codigosss == value.code3){
+        nuevoStats = 8;
+        flag = 1;
+        cambio = "";
+        cambio2 = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
+    }
+
+    if(value.estatus == 4 || value.estatus == 8 || value.estatus == 6){
+        if(value.code3 != value.codigosss){
+            cambio3 = "ES POSIBLE QUE NO TENGAS DADO DE ALTA LA CAJA CÓDIGO "+value.code3+"<br><br>"
+        }
+    }
+
+    if(value.estatus == 4 || value.estatus == 5 || value.estatus == 7){
+        if(value.code1 != value.codigo){
+            cambio3 += "ES POSIBLE QUE NO TENGAS DADO DE ALTA EL PRODUCTO CON EL CÓDIGO "+value.code1
+        }
+    }
+    
+
+    if(flag){
+        var values = {"antes":cambio,"despues":cambio2,"accion":"YA EXISTE"};
+        cambioYaExiste(JSON.stringify(values)).done(function(resp){
+            $("#outtxtya"+index).html("<h1>"+cambio+"<br><br>"+cambio2+"</h1>");
+            $("#outtxtyaN"+index).html("<h1>"+cambio3+"</h1>");
+        })
+        return nuevoStats;
+    }
 }

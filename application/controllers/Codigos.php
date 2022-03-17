@@ -10,6 +10,7 @@ class Codigos extends MY_Controller {
 		$this->load->model("Nuevodetail_model", "det_md");
 		$this->load->model("Nuevob_model", "newb_md");
 		$this->load->model("Ofertas_model", "ofe_md");
+		$this->load->model("Cambios_model", "chg_md");
 		$this->load->library("form_validation");
 	}
 
@@ -185,5 +186,19 @@ class Codigos extends MY_Controller {
 		$values = $this->newb_md->get(NULL,["id_nuevo"=>$value]);
 		$data["siArr"] = sizeof($values);
 		$this->estructuraQr("Dashboards/codigosSB", $data);
+	}
+
+	public function cambioYaExiste(){
+		$user = $this->session->userdata();
+		$valo = $this->input->post("values");
+		$values = json_decode($valo);
+		$valores = [
+			"accion"	=>	$values->accion,
+			"antes"		=>	$values->antes,
+			"despues"	=>	$values->despues,
+			"id_usuario"=>	$user["id_usuario"]
+		];
+		$prod = $this->chg_md->insert($valores);
+		$this->jsonResponse($prod);
 	}
 }

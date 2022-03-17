@@ -19,6 +19,16 @@
                 <div class="card card-custom gutter-b bg-white">
                     <!--begin::Card Body-->
                     <div class="card-body d-flex rounded bg-white p-12 flex-column flex-md-row flex-lg-column flex-xxl-row" style="display:grid !important;">
+                        <div class="card card-custom ">
+                            <!--begin::Card Body-->
+                            <div class="card-body text-danger"  id="outtxtya<?php echo $i ?>">
+
+                            </div>
+                            <div class="card-body text-warning"  id="outtxtyaN<?php echo $i ?>">
+
+                            </div>
+                            <!--end::Card Body-->
+                        </div>
                         <!--begin::Image-->
                         <div class="bgi-no-repeat bgi-position-center bgi-size-cover mw-100 mh-100"  id="output<?php echo $i ?>" style="text-align:center;padding-bottom:80px;">
                             
