@@ -150,7 +150,7 @@ var myDropzoneMatriz = new Dropzone("div#kt_dropzone_uno", {
     renameFilename: function (filename) {
         return filename;
     },
-    url: site_url+"Compara/upload_matriz",
+    url: site_url+"Compara/upload_matrizB",
     autoProcessQueue: true,
     queuecomplete: function (resp) {
         toastr.options = {

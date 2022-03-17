@@ -70,41 +70,56 @@ function startQr(){
                 }
                 
                 $('#outtxt'+index).html("<h3 class='font-weight-bolder mb-1'><a class='text-primary' style='font-size:55px'>"
-                    +deco1+"</a></h3><div class='text-primary mb-9' style='font-size:50px'>"+value.code1+"</div><div class='col-md-12' style='text-align:center'><button type='button' data-id-rojo='"+value.id_detail+
-                    "' class='"+cliston+"'>"+liston+"</button></div>")
-                if (codeqr.indexOf("...") >= 0){
-                    $('#outtxt'+index).css("color","red")
-                    var code1 = codeqr.substr(0, codeqr.indexOf('...')); 
-                    $('#output'+index).qrcode({
-                        encoding:"UTF-8",
-                        render: "canvas", 
-                        text: code1, 
-                        width: 720,
-                        height: 720,
-                        background: "#FFFFFF",
-                        foreground: ""+fore,
-                    })
-                    var code2 = codeqr.substr(codeqr.indexOf('...')+3); 
-                    $('#outputs'+index).qrcode({
-                        render: "canvas", 
-                        text: code2, 
-                        width: 720,
-                        height: 720,
-                        background: "#FFFFFF",
-                        foreground: ""+fore,
-                    })
+                    +deco1+"</a></h3><div class='text-primary mb-9' style='font-size:50px'>"+value.code1+"</div><div class='text-primary mb-9' style='font-size:35px'>Existencia: "+value.existencia+"</div>"+
+                    "<div class='col-md-12' style='text-align:center'></div>")
+                if(value.pre1 <= 0 ){
+                    $('#outtxt'+index).append("<h1>EL PRECIO 1 APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
+                }else if(value.pre2 <= 0 ){
+                    $('#outtxt'+index).append("<h1>EL PRECIO 2 APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
+                }else if(value.pre3 <= 0 ){
+                    $('#outtxt'+index).append("<h1>EL PRECIO 3 APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
+                }else if(value.pre4 <= 0 ){
+                    $('#outtxt'+index).append("<h1>EL PRECIO 4 APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
+                }else if(value.pre5 <= 0 ){
+                    $('#outtxt'+index).append("<h1>EL PRECIO 5 APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
+                }else if(value.rdiez <= 0 ){
+                    $('#outtxt'+index).append("<h1>EL PRECIO DEL RENGLON 10 APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
                 }else{
-                    $('#outtxt'+index).css("color","blue")
-                    $('#output'+index).qrcode({
-                        encoding:"UTF-8",
-                        render: "canvas", 
-                        text: codeqr, 
-                        width: 720,
-                        height: 720,
-                        background: "#FFFFFF",
-                        foreground: ""+fore,
+                    $('#outtxt'+index).append("<button type='button' data-id-rojo='"+value.id_detail+"' class='"+cliston+"'>"+liston+"</button>")
+                    if (codeqr.indexOf("...") >= 0){
+                        $('#outtxt'+index).css("color","red")
+                        var code1 = codeqr.substr(0, codeqr.indexOf('...')); 
+                        $('#output'+index).qrcode({
+                            encoding:"UTF-8",
+                            render: "canvas", 
+                            text: code1, 
+                            width: 720,
+                            height: 720,
+                            background: "#FFFFFF",
+                            foreground: ""+fore,
+                        })
+                        var code2 = codeqr.substr(codeqr.indexOf('...')+3); 
+                        $('#outputs'+index).qrcode({
+                            render: "canvas", 
+                            text: code2, 
+                            width: 720,
+                            height: 720,
+                            background: "#FFFFFF",
+                            foreground: ""+fore,
+                        })
+                    }else{
+                        $('#outtxt'+index).css("color","blue")
+                        $('#output'+index).qrcode({
+                            encoding:"UTF-8",
+                            render: "canvas", 
+                            text: codeqr, 
+                            width: 720,
+                            height: 720,
+                            background: "#FFFFFF",
+                            foreground: ""+fore,
 
-                    })
+                        })
+                    }
                 }
 
                 
@@ -135,13 +150,17 @@ function givePZ(value,index){
     var reso = ["",""];
 
     var imprime = "i1\r"
-    if(print == 0){
+    if(value.existencia == null || value.existencia == 0 || value.existencia == ""){
         imprime = "";
     }else{
-        imprime = "i"+printo+"\r"
-    }
-    if(value.linea == "SE" || value.linea == "77"){
-        imprime = "";
+        if(print == 0){
+            imprime = "";
+        }else{
+            imprime = "i"+printo+"\r"
+        }
+        if(value.linea == "SE" || value.linea == "77"){
+            imprime = "";
+        }
     }
 
     var iva = "\r\n";var cajas = true;

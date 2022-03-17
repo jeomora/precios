@@ -14,6 +14,7 @@ class Compara extends MY_Controller {
 		$this->load->model("Listos_model", "listo_md");
 		$this->load->model("Sucursales_model", "sucursal_md");
 		$this->load->model("Lastcosuc_model", "lasto_md");
+		$this->load->model("Existencias_model", "exis_md");
 		$this->load->library("form_validation");
 	}
 
@@ -35,7 +36,7 @@ class Compara extends MY_Controller {
 		$extension = $path_parts['extension'];
 
 		$new_cambio = [
-			"accion" => "Sube Matricial Sucursal",
+			"accion" => "Sube Matricial Sucursal B",
 			"antes" => "".$filen.".".$extension,
 			"id_usuario" => $user["id_usuario"]
 		];
@@ -71,7 +72,7 @@ class Compara extends MY_Controller {
 					$pos[$i] = str_replace("€", "P", $pos[$i]);
 					$pos[$i] = str_replace("�", "P", $pos[$i]);
 					$pos[$i] = str_replace("cei-029u-2.6", "", $pos[$i]);
-					$pos[$i] = str_replace("¥", "Ñ", $pos[$i]);
+					//$pos[$i] = str_replace("¥", "Ñ", $pos[$i]);
 					$pos[$i] = str_replace("�", "Ñ", $pos[$i]);
 					$pos[$i] = str_replace("?", "Ñ", $pos[$i]);
 					
@@ -100,19 +101,39 @@ class Compara extends MY_Controller {
 							$descripcion = substr($pos[$i], 17,41);
 							$descripcion = str_replace("  ", "", $descripcion);
 							$unidad = substr($pos[$i], 58,3);
-							$existencia = substr($pos[$i], 61,12);
+							$existencia = substr($pos[$i], 62,12);
 							$existencia = str_replace(" ", "", $existencia);
+							$existencia = str_replace(",", "", $existencia);
+							$exo = substr($pos[$i], 73,1);
+							if($exo == "-"){
+								$existencia = "-".$existencia;
+							}
 
-							$p1 = substr($pos[$i], 74,12);
+							$p1 = substr($pos[$i], 76,12);
 							$p1 = str_replace(" ", "", $p1);
+							$p1 = str_replace(",", "", $p1);
+							$exo = substr($pos[$i], 86,1);
+							if($exo == "-"){
+								$p1 = "-".$p1;
+							}
 
-							$p2 = substr($pos[$i], 86,12);
+							$p2 = substr($pos[$i], 87,12);
 							$p2 = str_replace(" ", "", $p2);
+							$p2 = str_replace(",", "", $p2);
+							$exo = substr($pos[$i], 98,1);
+							if($exo == "-"){
+								$p2 = "-".$p2;
+							}
 
-							$p3 = substr($pos[$i], 98,12);
+							$p3 = substr($pos[$i], 99,12);
 							$p3 = str_replace(" ", "", $p3);
+							$p3 = str_replace(",", "", $p3);
+							$exo = substr($pos[$i], 110,1);
+							if($exo == "-"){
+								$p3 = "-".$p3;
+							}
 
-							$code2 = substr($pos[$i], 123,13);
+							$code2 = substr($pos[$i], 112,26);
 							$code2 = str_replace(" ", "", $code2);
 
 							$new_producto=[
@@ -125,15 +146,28 @@ class Compara extends MY_Controller {
 								"fecha_registro"=>	date("Y-m-d H:i:s")
 							];
 
-							$producto = $this->sprod_md->get(NULL,["codigo"=>"'".$code1."'","estatus"=>1,"id_sucursal"=>$user["id_sucursal"]])[0];
+							$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"id_sucursal"=>$user["id_sucursal"]]);
 
 							if($producto){
-								$id_producto = $this->sprod_md->update($new_producto,$producto->id_producto);
-								$id_producto = $producto->id_producto;
+								$id_producto = $this->sprod_md->update($new_producto,$producto[0]->id_producto);
+								$id_producto = $producto[0]->id_producto;
 							}else{
 								$id_producto = $this->sprod_md->insert($new_producto);
 							}
-							
+							$new_existencia=[
+								"id_producto"	=>	$id_producto,
+								"existencia"	=>	$existencia,
+								"fecha_registro"=>	date("Y-m-d H:i:s")
+							];
+
+							$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto ]);
+
+							if($existencia){
+								$id_existencia = $this->exis_md->update($new_existencia,$existencia[0]->id_existencia);
+								$id_existencia = $existencia[0]->id_existencia;
+							}else{
+								$id_existencia = $this->exis_md->insert($new_existencia);
+							}
 
 							$new_precios=[
 								"id_producto"	=>	$id_producto,
@@ -260,6 +294,7 @@ class Compara extends MY_Controller {
 					$pos[$i] = str_replace("�", "P", $pos[$i]);
 					$pos[$i] = str_replace("cei-029u-2.6", "", $pos[$i]);
 					$pos[$i] = str_replace("¥", "Ñ", $pos[$i]);
+					$pos[$i] = str_replace(chr(190), "Ñ", $pos[$i]);
 					$pos[$i] = str_replace("?", "Ñ", $pos[$i]);
 					
 					if(strpos($pos[$i],"Hoja : ") && strlen($pos[$i]) < 200){
@@ -298,28 +333,54 @@ class Compara extends MY_Controller {
 							//$descripcion = str_replace("¥", "Ñ", $descripcion);
 							$unidad = substr($pos[$i], 53,3);
 							$existencia = substr($pos[$i], 56,12);
+							$existencia = str_replace(" ", "", $existencia);
+							$existencia = str_replace(",", "", $existencia);
+							$exo = substr($pos[$i], 68,1);
+							if($exo == "-"){
+								$existencia = "-".$existencia;
+							}
 
 							$p1 = substr($pos[$i], 70,11);
 							$p1 = str_replace(" ", "", $p1);
 							$p1 = str_replace(",", "", $p1);
+							$exo = substr($pos[$i], 81,1);
+							if($exo == "-"){
+								$p1 = "-".$p1;
+							}
 
-							$p2 = substr($pos[$i], 81,12);
+							$p2 = substr($pos[$i], 82,12);
 							$p2 = str_replace(" ", "", $p2);
 							$p2 = str_replace(",", "", $p2);
+							$exo = substr($pos[$i], 93,1);
+							if($exo == "-"){
+								$p2 = "-".$p2;
+							}
 
-							$p3 = substr($pos[$i], 93,12);
+							$p3 = substr($pos[$i], 94,12);
 							$p3 = str_replace(" ", "", $p3);
 							$p3 = str_replace(",", "", $p3);
+							$exo = substr($pos[$i], 105,1);
+							if($exo == "-"){
+								$p3 = "-".$p3;
+							}
 
-							$p4 = substr($pos[$i], 105,12);
+							$p4 = substr($pos[$i], 106,12);
 							$p4 = str_replace(" ", "", $p4);
 							$p4 = str_replace(",", "", $p4);
+							$exo = substr($pos[$i], 117,1);
+							if($exo == "-"){
+								$p4 = "-".$p4;
+							}
 
-							$p5 = substr($pos[$i], 117,12);
+							$p5 = substr($pos[$i], 118,12);
 							$p5 = str_replace(" ", "", $p5);
 							$p5 = str_replace(",", "", $p5);
+							$exo = substr($pos[$i], 129,1);
+							if($exo == "-"){
+								$p5 = "-".$p5;
+							}
 
-							$code2 = substr($pos[$i], 129,14);
+							$code2 = substr($pos[$i], 130,14);
 							$code2 = str_replace(" ", "", $code2);
 							
 
@@ -340,6 +401,21 @@ class Compara extends MY_Controller {
 								$id_producto = $producto[0]->id_producto;
 							}else{
 								$id_producto = $this->sprod_md->insert($new_producto);
+							}
+
+							$new_existencia=[
+								"id_producto"	=>	$id_producto,
+								"existencia"	=>	$existencia,
+								"fecha_registro"=>	date("Y-m-d H:i:s")
+							];
+
+							$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto ]);
+
+							if($existencia){
+								$id_existencia = $this->exis_md->update($new_existencia,$existencia[0]->id_existencia);
+								$id_existencia = $existencia[0]->id_existencia;
+							}else{
+								$id_existencia = $this->exis_md->insert($new_existencia);
 							}
 							
 
