@@ -1881,11 +1881,12 @@ class Uploads extends MY_Controller {
 					
 					$rojo = 1;
 
+
 					$prodo = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"A"),"estatus"=>1]);
 					if ($prodo && $prodo <> 0){
 						$prodo = $prodo[0]->codigo;
 					}else{
-						$this->getOldVal($sheet,$i,"A");
+						$prodo = $sheet->getCellByColumnAndRow(0, $i)->getFormattedValue();
 					}
 					$prodo2 = $this->prod_md->get(NULL,["codigo"=>$this->getOldVal($sheet,$i,"AD"),"estatus"=>1]);
 					if($prodo2 && $prodo2 <> 0){
