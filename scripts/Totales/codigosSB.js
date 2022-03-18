@@ -419,7 +419,7 @@ function cambioYaExiste(value){
 
 function yaAgregados(value,index){
     var nuevoStats = parseInt(value.estatus);
-    var flag = 0;
+    var flag = 0;var flag2 = 0;
     var cambio = "";var cambio2 = "";var cambio3 ="";
 
     //ADD PIEZA
@@ -479,25 +479,28 @@ function yaAgregados(value,index){
         cambio2 = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
     }
 
-    if(value.estatus == 4 || value.estatus == 8 || value.estatus == 6){
+    if(value.estatus == 4 || value.estatus == 8 || value.estatus == 6 || value.estatus == 1 || value.estatus == 3 || value.estatus == 15 || value.estatus == 16){
         if(value.code3 != value.codigosss){
             cambio3 = "ES POSIBLE QUE NO TENGAS DADO DE ALTA LA CAJA CÓDIGO "+value.code3+"<br><br>"
+            flag2 = 1;
         }
     }
 
-    if(value.estatus == 4 || value.estatus == 5 || value.estatus == 7){
+    if(value.estatus == 4 || value.estatus == 5 || value.estatus == 7 || value.estatus == 1 || value.estatus == 2 || value.estatus == 14 || value.estatus == 16){
         if(value.code1 != value.codigo){
             cambio3 += "ES POSIBLE QUE NO TENGAS DADO DE ALTA EL PRODUCTO CON EL CÓDIGO "+value.code1
+            flag2 = 1;
         }
     }
-    
+    if(flag2){
+        $("#outtxtyaN"+index).html("<h1>"+cambio3+"</h1>");
+    }
 
     if(flag){
         var values = {"antes":cambio,"despues":cambio2,"accion":"YA EXISTE"};
         cambioYaExiste(JSON.stringify(values)).done(function(resp){
             $("#outtxtya"+index).html("<h1>"+cambio+"<br><br>"+cambio2+"</h1>");
-            $("#outtxtyaN"+index).html("<h1>"+cambio3+"</h1>");
         })
-        return nuevoStats;
     }
+    return nuevoStats;
 }
