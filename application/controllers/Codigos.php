@@ -196,9 +196,15 @@ class Codigos extends MY_Controller {
 			"accion"	=>	$values->accion,
 			"antes"		=>	$values->antes,
 			"despues"	=>	$values->despues,
-			"id_usuario"=>	$user["id_usuario"]
+			"id_usuario"=>	$user["id_usuario"],
+			"estatus"	=>	$values->esta
 		];
-		$prod = $this->chg_md->insert($valores);
+		$ya = $this->chg_md->get(NULL, ["id_usuario"=>	$user["id_usuario"],"estatus"=>$values->esta] );
+		if($ya){
+
+		}else{
+			$prod = $this->chg_md->insert($valores);
+		}
 		$this->jsonResponse($prod);
 	}
 }

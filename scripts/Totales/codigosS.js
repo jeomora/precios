@@ -68,7 +68,43 @@ function startQr(){
                 $('#outtxt'+index).html("<h3 class='font-weight-bolder mb-1'><a class='text-black' style='font-size:55px'>"
                     +deco1+"</a></h3><div class='text-black mb-9' style='font-size:50px'>"+value.code1+"</div><div class='text-black mb-9' style='font-size:35px'>Existencia: "+value.existencia+"</div>"+
                     "<div class='col-md-12' style='text-align:center'></div>")
-                if(value.pre11 <= 0 ){
+                if(value.estatus == 6 || value.estatus == 13 || value.estatus == 14 || value.estatus == 16){
+                    $('#outtxt'+index).append("<button type='button' data-id-rojo='"+value.id_detail+"' class='"+cliston+"'>"+liston+"</button>")
+                    if (codeqr.indexOf("...") >= 0){
+                        $('#outtxt'+index).css("color","red")
+                        var code1 = codeqr.substr(0, codeqr.indexOf('...')); 
+                        $('#output'+index).qrcode({
+                            encoding:"UTF-8",
+                            render: "canvas", 
+                            text: code1, 
+                            width: 720,
+                            height: 720,
+                            background: "#FFFFFF",
+                            foreground: "#FF8484",
+                        })
+                        var code2 = codeqr.substr(codeqr.indexOf('...')+3); 
+                        $('#outputs'+index).qrcode({
+                            render: "canvas", 
+                            text: code2, 
+                            width: 720,
+                            height: 720,
+                            background: "#FFFFFF",
+                            foreground: "#FF8484",
+                        })
+                    }else{
+                        $('#outtxt'+index).css("color","blue")
+                        $('#output'+index).qrcode({
+                            encoding:"UTF-8",
+                            render: "canvas", 
+                            text: codeqr, 
+                            width: 720,
+                            height: 720,
+                            background: "#FFFFFF",
+                            foreground: "#FF8484",
+
+                        })
+                    }
+                }else if(value.pre11 <= 0 ){
                     $('#outtxt'+index).append("<h1>EL <span style='font-weight:bold'>PRECIO 1</span> APARECE EN CEROS, POR FAVOR REVISE EL PRECIO E INTENTELO NUEVAMENTE</h1>")
                     $('#outtxt'+index).css("color","black")
                 }else if(value.pre22 <= 0 ){
@@ -430,17 +466,17 @@ function yaAgregados(value,index){
     if(value.estatus == 9 && value.codigo == value.code1){
         nuevoStats = 2;
         flag = 1;
-        cambio = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
+        cambio = "EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
     }
     if(value.estatus == 12 && value.codigo == value.code1){
         nuevoStats = 5;
         flag = 1;
-        cambio = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
+        cambio = "EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
     }
     if(value.estatus == 8 && value.codigo == value.code1){
         nuevoStats = 4;
         flag = 1;
-        cambio = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
+        cambio = "EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
     }
 
 
@@ -448,18 +484,18 @@ function yaAgregados(value,index){
     if(value.estatus == 7 && value.codigosss == value.code3){
         nuevoStats = 4;
         flag = 1;
-        cambio2 = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
+        cambio2 = "EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
     }
     if(value.estatus == 10 && value.codigosss == value.code3){
         nuevoStats = 3;
         flag = 1;
-        cambio2 = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
+        cambio2 = "EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
     }
     
     if(value.estatus == 13 && value.codigosss == value.code3){
         nuevoStats = 6;
         flag = 1;
-        cambio2 = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
+        cambio2 = "EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
     }
 
 
@@ -467,20 +503,20 @@ function yaAgregados(value,index){
     if(value.estatus == 11 && value.codigo == value.code1 && value.codigosss == value.code3){
         nuevoStats = 4;
         flag = 1;
-        cambio = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
-        cambio2 = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
+        cambio = "EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
+        cambio2 = "EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
     }
     if(value.estatus == 11 && value.codigo == value.code1 && value.codigosss != value.code3){
         nuevoStats = 7;
         flag = 1;
-        cambio = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
+        cambio = "EL CAMBIO COMO ALTA DE LA PIEZA "+value.desc1+" // "+value.code1+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA EN MATRICIAL EL PRODUCTO CON LA DESCRIPCIÓN : "+value.nombre;
         cambio2 = "";
     }
     if(value.estatus == 11 && value.codigo != value.code1 && value.codigosss == value.code3){
         nuevoStats = 8;
         flag = 1;
         cambio = "";
-        cambio2 = "CAMBIO "+value.id_nuevo+"  => EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
+        cambio2 = "EL CAMBIO COMO ALTA DE LA CAJA "+value.desc2+" // "+value.code3+" // SE CAMBIO A EDICIÓN POR QUE YA SE ENCONTRABA LA CAJA CON LA DESCRIPCIÓN : "+value.nombresss;
     }
 
     if(value.estatus == 4 || value.estatus == 8 || value.estatus == 6 || value.estatus == 1 || value.estatus == 3 || value.estatus == 15 || value.estatus == 16){
@@ -501,7 +537,7 @@ function yaAgregados(value,index){
     }
 
     if(flag){
-        var values = {"antes":cambio,"despues":cambio2,"accion":"YA EXISTE"};
+        var values = {"antes":cambio,"despues":cambio2,"accion":"YA EXISTE","esta":value.id_nuevo};
         cambioYaExiste(JSON.stringify(values)).done(function(resp){
             $("#outtxtya"+index).html("<h1>"+cambio+"<br><br>"+cambio2+"</h1>");
         })

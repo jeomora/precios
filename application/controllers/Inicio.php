@@ -40,6 +40,7 @@ class Inicio extends MY_Controller {
 					'/scripts/Totales/index',
 				];
 				$data["ofertones"] = $this->ofe_md->getActivas(NULL);
+				$data["cambioya"] = $this->cambio_md->getCambioYa(NULL);
 				$this->estructura("Dashboards/principal", $data);
 			}elseif($user["id_grupo"] === "2" || $user["id_grupo"] === 2){ // SUCURSALES
 				$sucur = $this->sucu_md->get(NULL,["id_sucursal"=>$user["id_sucursal"]])[0];

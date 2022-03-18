@@ -151,6 +151,15 @@
                                 </span>
                             </a>
                         </li>
+                        <li class="nav-item mb-2">
+                            <a class="nav-link" id="sucursal-tab-6" data-toggle="tab" href="#store-cambio" aria-controls="sucursal">
+                                <span class="nav-text">DE ALTA <br>A EDICIÓN<br>
+                                    <span class="fechaUpload">
+                                        
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="col-xl-12">
@@ -292,6 +301,52 @@
                                 <!--begin::Row-->
                                 <div class="row col-xl-12 otrosShowsB" style="padding-bottom:20px;padding-top:30px;">
 
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="store-cambio" role="tabpanel" aria-labelledby="store-tab-cambio"><!-- SUCURSALES B -->
+
+                                <h1>DE ALTAS A EDICIÓN</h1>
+
+
+                                <!--begin::Row-->
+                                <div class="row col-xl-12 cambiosEdicion" style="padding-bottom:20px;padding-top:30px;">
+                                    <table class="table table-striped table-bordered">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>FECHA</th>
+                                                <th>SUCURSAL</th>
+                                                <th>CAMBIO #</th>
+                                                <th>FECHA DEL CAMBIO</th>
+                                                <th>PIEZAS</th>
+                                                <th>CAJAS</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php if($cambioya):foreach ($cambioya as $key => $v):?> 
+                                                <tr>
+                                                    <td>
+                                                        <?php echo $dias[date('w',strtotime($v->fecha_cambio))]." ".date('d',strtotime($v->fecha_cambio))." DE ".$meses[date('n',strtotime($v->fecha_cambio))] ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $v->nombre ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $v->estatus ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if($v->typeSuc == 2): echo $dias[date('w',strtotime($v->fecha_b))]." ".date('d',strtotime($v->fecha_b))." DE ".$meses[date('n',strtotime($v->fecha_b))-1];else: echo $dias[date('w',strtotime($v->fecha_registro))]." ".date('d',strtotime($v->fecha_registro))." DE ".$meses[date('n',strtotime($v->fecha_registro))-1];endif; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $v->antes ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $v->despues ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach;endif; ?> 
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
