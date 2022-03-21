@@ -77,6 +77,7 @@ class Uploads extends MY_Controller {
 			$filena = true;
 		}
 		if ($filena){
+			$this->prod_md->update(["estatus"=>0],["estatus"=>1]);
 			for ($i=0; $i<sizeof($pos); $i++){
 				if (!empty($pos[$i])){
 					$pos[$i] = str_replace("", "", $pos[$i]);
@@ -161,14 +162,14 @@ class Uploads extends MY_Controller {
 								"linea"			=>	$linea,
 								"ums"			=>	$ums,
 								"code"			=>	$code2,
-								"fecha_registro"=>	date("Y-m-d H:i:s")
+								"fecha_registro"=>	date("Y-m-d H:i:s"),
+								"estatus"		=>	1
 							];
-
-							$producto = $this->prod_md->get(NULL,["codigo"=>$code1,"estatus"=>1])[0];
+							$producto = $this->prod_md->get(NULL,["codigo"=>$code1]);
 
 							if($producto){
-								$id_producto = $this->prod_md->update($new_producto,$producto->id_producto);
-								$id_producto = $producto->id_producto;
+								$id_producto = $this->prod_md->update($new_producto,$producto[0]->id_producto);
+								$id_producto = $producto[0]->id_producto;
 							}else{
 								$id_producto = $this->prod_md->insert($new_producto);
 							}

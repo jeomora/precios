@@ -69,6 +69,7 @@ class Productos_model extends MY_Model {
 		->join("lineas l","p.linea = l.id_linea AND l.estatus = 1","LEFT")
 		->join("unidades u","p.ums = u.id_unidad AND u.estatus = 1","LEFT")
 		->join("precios pz","p.id_producto = pz.id_producto AND pz.estatus = 1","LEFT")
+		->where("p.estatus",1)
 		->order_by("l.ides,p.nombre","ASC");
 		if($where !== NULL){
 			if(is_array($where)){
@@ -96,6 +97,7 @@ class Productos_model extends MY_Model {
 		->from("productos p")
 		->join("lineas l","p.linea = l.id_linea AND l.estatus = 1","LEFT")
 		->join("unidades u","p.ums = u.id_unidad AND u.estatus = 1","LEFT")
+		->where("p.estatus",1)
 		->order_by("l.ides,p.nombre","ASC");
 		if($where !== NULL){
 			if(is_array($where)){

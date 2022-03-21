@@ -65,6 +65,7 @@ class Compara extends MY_Controller {
 			$filena = true;
 		}
 		if ($filena){
+			$this->sprod_md->update(["estatus"=>0],["estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
 			for ($i=0; $i<sizeof($pos); $i++){
 				if (!empty($pos[$i])){
 					$pos[$i] = str_replace("", "", $pos[$i]);
@@ -143,10 +144,11 @@ class Compara extends MY_Controller {
 								"ums"			=>	$unidad,
 								"code"			=>	$code2,
 								"id_sucursal"	=>	$user["id_sucursal"],
-								"fecha_registro"=>	date("Y-m-d H:i:s")
+								"fecha_registro"=>	date("Y-m-d H:i:s"),
+								"estatus"		=>	1
 							];
 
-							$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"id_sucursal"=>$user["id_sucursal"]]);
+							$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"id_sucursal"=>$user["id_sucursal"],"estatus"=>1]);
 
 							if($producto){
 								$id_producto = $this->sprod_md->update($new_producto,$producto[0]->id_producto);
@@ -286,6 +288,7 @@ class Compara extends MY_Controller {
 			$cambio = $this->cambio_md->insert($new_cambio);
 		}
 		if ($filena){
+			$this->sprod_md->update(["estatus"=>0],["estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
 			for ($i=0; $i<sizeof($pos); $i++){
 				if (!empty($pos[$i])){
 					$pos[$i] = str_replace("", "", $pos[$i]);
@@ -391,10 +394,11 @@ class Compara extends MY_Controller {
 								"ums"			=>	$unidad,
 								"code"			=>	$code2,
 								"id_sucursal"	=>	$user["id_sucursal"],
-								"fecha_registro"=>	date("Y-m-d H:i:s")
+								"fecha_registro"=>	date("Y-m-d H:i:s"),
+								"estatus"		=>	1
 							];
 
-							$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
+							$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"id_sucursal"=>$user["id_sucursal"]]);
 
 							if($producto){
 								$id_producto = $this->sprod_md->update($new_producto,["id_producto"=>$producto[0]->id_producto]);
