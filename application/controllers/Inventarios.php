@@ -17,6 +17,7 @@ class Inventarios extends MY_Controller {
 		$this->load->model("Nuevos_model", "new_md");
 		$this->load->model("Imagenes_model", "img_md");
 		$this->load->model("Ofertas_model", "ofe_md");
+		$this->load->model("Inventario_model", "inv_md");
 		$this->load->library("form_validation");
 	}
 
