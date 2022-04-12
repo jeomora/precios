@@ -215,9 +215,9 @@
                                 </a>
                             </li>
                         <?php endif; ?>
-                        <!--<?php if($usuario["id_grupo"] == 3 || $usuario["id_grupo"] == 1): ?>
+                        <?php if($usuario["id_grupo"] == 3 || $usuario["id_grupo"] == 1): ?>
                             <li class="menu-section ">
-                                <h4 class="menu-text">INVENTARIOS</h4>
+                                <h4 class="menu-text">INVENTARIO</h4>
                                 <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                             </li>
                             <li class="menu-images menu-item " aria-haspopup="true" >
@@ -233,10 +233,10 @@
                                         </svg>
                                         
                                     </span>
-                                    <span class="menu-text">Marcar Pasillos</span>
+                                    <span class="menu-text">INVENTARIO</span>
                                 </a>
                             </li>
-                        <?php endif; ?>-->
+                        <?php endif; ?>
 
                         </li>                     
                     </ul>

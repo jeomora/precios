@@ -45,12 +45,12 @@ canvas.drawingBuffer{
                             <div class="d-flex align-items-start justify-content-start flex-grow-1 bg-light-info p-8 card-rounded flex-grow-1 position-relative">
                                 <div class="d-flex flex-column align-items-start flex-grow-1 h-100">
                                     <div class="p-1 flex-grow-1">
-                                        <h4 class="text-info font-weight-bolder">LECTOR DE CÓDIGOS</h4>
+                                        <h4 class="text-info font-weight-bolder">INVENTARIO</h4>
                                         <p class="text-dark font-weight-bold mt-3">
-                                            
+                                            Se muestran los registros por pasillos. <br>
+                                            Podrá eliminar cualquiera de las entradas. <br>
+                                            Los registros como "CEDIS" significa que no se encuentra el codigo <br> registrado en el sistema, puede intentar el registro de manera manual en COMPUCAJA. 
                                         </p>
-
-                                        <button type="button" class="btn btn-dark font-weight-bold mr-2" data-toggle="modal" data-target="#kt_modal_prodsImg">BUSCAR PRODUCTO</button>
                                     </div>
                                 </div>
                                 <div class="position-absolute right-0 bottom-0 mr-5 overflow-hidden">
@@ -63,36 +63,9 @@ canvas.drawingBuffer{
                 </div>
             </div>
             <!--end::Row-->	
-            <!--begin::Row-->
-            <div class="row ml-lg-8 dropRow" style="padding-bottom:20px;">       
-                <div class="flex-row-lg-fluid col-xl-12">
-                    <div class="row">
-                        <h3 class="btn btn-sm btn-text btn-light-info text-uppercase font-weight-bold" style="font-size:30px">
-                            LECTOR
-                        </h3>
-                    </div>
-                    <div class="row bodyORec">
-                    </div>
-                    <!--end::Row-->
-
-                </div>
-                    <!--<h1 style="text-align:center;font-size:40px;">OFERTAS ACTIVAS</h1>
-                    
-                    <div class="flex-row-lg-fluid col-xl-12">
-                        <div class="row bodyOfes">
-                        </div>
-                    </div>-->
-            </div>
-            <!--end::Row-->
-
-            <div class="row col-xl-12">
-                <p id="resultado">código</p>
-                <p>A continuación, el contenedor: </p>
-                <div id="contenedor"></div>
-            </div>
 
             <!--begin::Row-->
-            <div class="row rowtos">          
+            <div class="row">          
                 <div class="col-md-4 my-2 my-md-0">
                     <div class="input-icon">
                         <input type="text" class="form-control" placeholder="Buscar en la tabla" id="tableSearch">
@@ -106,7 +79,11 @@ canvas.drawingBuffer{
                     <div class="card card-custom gutter-b card-stretch">
                         <!--begin::Body-->
                         <div class="card-body py-0" style="padding-bottom:30px !important">
-                            <div class="kt-portlet__body kt-portlet__body--fit" id="cardTable"><div class="kt-datatable datatable datatable-bordered datatable-head-custom" id="prodTable"></div></div>
+                            <div class="kt-portlet__body kt-portlet__body--fit">
+                                <!--begin: Datatable -->
+                                <div class="kt-datatable datatable datatable-bordered datatable-head-custom" id="prodTable"></div>
+                                <!--end: Datatable -->
+                            </div>
                         </div>
                         <!--end::Body-->
                     </div>
@@ -114,15 +91,6 @@ canvas.drawingBuffer{
                 </div>
             </div>
             <!--end::Row-->
-
-            <div class="row">
-            	<div class="col-xl-12">
-            		<div class="row col-xl-12 otrosShowsB" style="padding-bottom:20px;padding-top:30px;">
-            			
-            		</div>
-            	</div>
-            </div>
-            
 
         <!--end::Dashboard-->
 		</div>
