@@ -11,7 +11,7 @@ jQuery(document).ready(function() {
                     value.cantidad+"</div><div class='col-md-12' style='text-align:center'></div>") 
                 if(flag2 == 10){
                     flag2 = 1;
-                    textCode += value.codigo+"\r"+value.cantidad+"\r\x19999\rN\rN\n\r\r\n\x0F\x0F";
+                    textCode += value.codigo+"\r"+value.cantidad+"\r";
                     if(est){
                         colores = "#FF8484";
                         est = false
@@ -47,7 +47,7 @@ jQuery(document).ready(function() {
                     colores = "#84BBFF";
                     est = true
                 }
-                textCode += "\x19999\rN\rN\n\r\r\n\x0F\x0F";
+                textCode += "";
                 $('#output'+flag).qrcode({
                     render: "canvas", 
                     text: textCode, 
@@ -68,7 +68,7 @@ jQuery(document).ready(function() {
 
 function qrmeup() {
     return $.ajax({
-        url: site_url+"Inventarios/qrmeup/"+window.location.pathname.split("/").pop(),
+        url: site_url+"Inventarios/qrmeupCedis/"+window.location.pathname.split("/").pop(),
         type: "POST",
         cache: false,
     });

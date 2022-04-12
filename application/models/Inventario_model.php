@@ -91,11 +91,12 @@ class Inventario_model extends MY_Model {
 
 	public function getInventario($where = []){
 		$user = $this->session->userdata();
-		$this->db->select("i.id_inventario,i.id_producto,i.cantidad,i.fecha_registro,i.id_pasillo,p.nombre as pasillo,p.imagen,s.codigo,s.nombre,s.ums,sp.preciocinco")
+		$this->db->select("i.id_inventario,i.id_producto,i.cantidad,i.fecha_registro,i.id_pasillo,p.nombre as pasillo,p.imagen,s.codigo,s.nombre,s.ums,sp.preciocinco,i.estatus,ps.codigo as codp,ps.nombre as nomp")
 			->from("inventario i")
 			->join("pasillos p","i.id_pasillo = p.id_pasillo","LEFT")
 			->join("sucproductos s","i.id_producto = s.id_producto" ,"LEFT") 
 			->join("sucprecios sp","i.id_producto = sp.id_producto","LEFT")
+			->join("productos ps","i.id_producto = ps.id_producto" ,"LEFT") 
 			->where("i.estatus <> 0")
 			->order_by("i.id_pasillo,i.id_producto","ASC");
 
@@ -114,12 +115,15 @@ class Inventario_model extends MY_Model {
 
 			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["id_inventario"]	=	$comparativa[$i]->id_inventario;
 			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["nombre"]			=	$comparativa[$i]->nombre;
+			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["nomp"]			=	$comparativa[$i]->nomp;
+			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["codp"]			=	$comparativa[$i]->codp;
 			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["ums"]				=	$comparativa[$i]->ums;
 			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["imagen"]			=	$comparativa[$i]->imagen;
 			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["cantidad"]			=	$comparativa[$i]->cantidad;
 			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["codigo"]			=	$comparativa[$i]->codigo;
 			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["id_producto"]		=	$comparativa[$i]->id_producto;
 			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["preciocinco"]		=	$comparativa[$i]->preciocinco;
+			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["estatus"]		=	$comparativa[$i]->estatus;
 
 			if (isset( $comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["producto"][$comparativa[$i]->id_producto] )){
 				$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["producto"][$comparativa[$i]->id_producto]["nombre"]	=	$comparativa[$i]->nombre;
@@ -208,9 +212,9 @@ class Inventario_model extends MY_Model {
 		$user = $this->session->userdata();
 		$this->db->select("i.id_producto,i.cantidad,i.fecha_registro,s.codigo,s.nombre,s.ums")
 		->from("inventario i")
-		->join("sucproductos s","i.id_producto = s.id_producto","LEFT")
+		->join("productos s","i.id_producto = s.id_producto","LEFT")
 		->where("i.id_pasillo",$value)
-		->where("i.estatus",0);
+		->where("i.estatus",2);
 		if($where !== NULL){
 			if(is_array($where)){
 				foreach ($where as $field => $value) {

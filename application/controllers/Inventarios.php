@@ -69,4 +69,27 @@ class Inventarios extends MY_Controller {
 		$this->jsonResponse($values);
 	}
 
+	public function qrmeCedis($value){
+		$user = $this->session->userdata();//Trae los datos del usuario
+		$data["dias"] = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
+		$data["meses"] = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+		$data["fecha"] =  $data["dias"][date('w')]." ".date('d')." DE ".$data["meses"][date('n')-1]. " DEL ".date('Y') ;
+		$data['scripts'] = [
+			'/scripts/qrcode',
+			'/scripts/Inventarios/codigosCedis',
+			'/scripts/Swiper/package/js/swiper.min',
+		];
+		$data['links'] = [
+			'/scripts/Swiper/package/css/swiper.min',
+		];
+		$values = $this->inv_md->get(NULL,["id_pasillo"=>$value,"estatus"=>2]);
+		$data["siArr"] = sizeof($values)/10;
+		$this->estructuraQr("Inventarios/codigosCedis", $data);
+	}
+
+	public function qrmeupCedis($val){
+		$values = $this->inv_md->getCedis(NULL,$val);
+		$this->jsonResponse($values);
+	}
+
 }
