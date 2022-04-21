@@ -91,12 +91,13 @@ class Inventario_model extends MY_Model {
 
 	public function getInventario($where = []){
 		$user = $this->session->userdata();
-		$this->db->select("i.id_inventario,i.id_producto,i.cantidad,i.fecha_registro,i.id_pasillo,p.nombre as pasillo,p.imagen,s.codigo,s.nombre,s.ums,sp.preciocinco,i.estatus,ps.codigo as codp,ps.nombre as nomp")
+		$this->db->select("i.id_inventario,i.id_producto,i.cantidad,i.fecha_registro,i.id_pasillo,p.nombre as pasillo,p.imagen,s.codigo,s.nombre,s.ums,sp.preciotres,i.estatus,ps.codigo as codp,ps.nombre as nomp,e.existencia")
 			->from("inventario i")
 			->join("pasillos p","i.id_pasillo = p.id_pasillo","LEFT")
 			->join("sucproductos s","i.id_producto = s.id_producto" ,"LEFT") 
 			->join("sucprecios sp","i.id_producto = sp.id_producto","LEFT")
 			->join("productos ps","i.id_producto = ps.id_producto" ,"LEFT") 
+			->join("existencias e","i.id_producto = e.id_producto" ,"LEFT")
 			->where("i.estatus <> 0")
 			->order_by("i.id_pasillo,i.id_producto","ASC");
 
@@ -122,7 +123,8 @@ class Inventario_model extends MY_Model {
 			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["cantidad"]			=	$comparativa[$i]->cantidad;
 			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["codigo"]			=	$comparativa[$i]->codigo;
 			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["id_producto"]		=	$comparativa[$i]->id_producto;
-			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["preciocinco"]		=	$comparativa[$i]->preciocinco;
+			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["preciocinco"]		=	$comparativa[$i]->preciotres;
+			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["existencia"]		=	$comparativa[$i]->existencia;
 			$comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["detalles"][$comparativa[$i]->id_inventario]["estatus"]		=	$comparativa[$i]->estatus;
 
 			if (isset( $comparativaIndexada["pasillos"][$comparativa[$i]->id_pasillo]["producto"][$comparativa[$i]->id_producto] )){

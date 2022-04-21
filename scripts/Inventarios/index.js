@@ -100,6 +100,15 @@ var KTDatatableChildDataLocalDemo = function() {
                         return '<span class="kt-align-right kt-font-brand kt-font-bold">'+row.General+'</span>';
                     },
                 }, {
+                    field: 'Existencia',
+                    title: 'ANTERIOR',
+                    width: 100,
+                    teautoHide: false,
+                    textAlign: 'right',
+                    template: function(row) {
+                        return '<span class="kt-align-right kt-font-brand kt-font-bold">'+row.Existencia+'</span>';
+                    },
+                }, {
                     field: 'Totalite2',
                     title: 'TOTAL GLOBAL',
                     width: 100,
@@ -134,7 +143,7 @@ var KTDatatableChildDataLocalDemo = function() {
                                 }
 
                                 yeison2 = yeison2 + '{"OrderID":"'+values.id_inventario+'","Producto":"'+values.nombre+'","Costo":"$ '+formatMoney((values.preciocinco-0.01))+'","Cantidad":"'+formatMoney(values.cantidad,0)+
-                                '","General":"'+resp.totales[values.id_producto].cantidad+'","Codigo":"'+values.codigo+'","Ums":"'+values.ums+'","Estatus":"'+values.estatus+'","Totalite2":"$ '+formatMoney(totalite2)+'","Totalite":"$ '+formatMoney(totalite)+'"},'
+                                '","General":"'+resp.totales[values.id_producto].cantidad+'","Codigo":"'+values.codigo+'","Ums":"'+values.ums+'","Estatus":"'+values.estatus+'","Existencia":"'+values.existencia+'","Totalite2":"$ '+formatMoney(totalite2)+'","Totalite":"$ '+formatMoney(totalite)+'"},'
                                 totales += totalite;
                                 if(values.estatus == 1){
                                     totps += 1;

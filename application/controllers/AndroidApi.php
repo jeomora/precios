@@ -19,7 +19,7 @@ class AndroidApi extends MY_Controller {
 	}
 
 	public function getPasillos($ids = 8){
-		$res = $this->pass_md->getPasillos(["p.id_sucursal"=>$ids]);
+		$res = $this->pass_md->getPasillos(["p.id_sucursal"=>$ids,"p.estatus"=>1]);
 		if($res){
 			$data = [ 
 				"count"		=>	sizeof($res),
@@ -35,6 +35,8 @@ class AndroidApi extends MY_Controller {
 					"sucursal"	=>	$val->id_sucursal,
 					"estatus"	=>	$val->estatus,
 					"sumpas"	=>	$val->sumpas,
+					"color"		=>	$val->color,
+					"txtCol"		=>	$val->txtCol,
 				];
 			}
 		}else{
@@ -48,8 +50,8 @@ class AndroidApi extends MY_Controller {
 		$this->jsonResponse($res);
 	}
 
-
-	public function getProducto($ids = 8, $producto){
+	public function getProducto($producto){
+		$ids = 12;
 		$res = $this->inv_md->getCodigo(["s.id_sucursal"=>$ids,"s.codigo"=>$producto,"s.estatus"=>1]);
 		if($res){
 			if($res[0]->id_producto == null){
@@ -61,7 +63,7 @@ class AndroidApi extends MY_Controller {
 		$this->jsonResponse($res);
 	}
 
-	public function getProductoCs($ids = 8, $producto){
+	public function getProductoCs($producto){
 		$res = $this->inv_md->getCodigoCs(["s.codigo"=>$producto,"s.estatus"=>1]);
 		if($res){
 			if($res[0]->id_producto == null){

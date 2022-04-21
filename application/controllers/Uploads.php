@@ -1812,6 +1812,10 @@ class Uploads extends MY_Controller {
 						$blues = $this->new_md->getMaxBlue(NULL)[0];
 					}
 					$colore = $this->getMeColor($sheet,$i);
+					$umcajon = $this->getOldVal($sheet,$i,"R");
+					if($umcajon == "" || $umcajon == NULL){
+						$umcajon="CJA";
+					}
 					$new_rojo[$i]=[
 						"id_nuevo"		=>	$id_nuevo,
 						"id_rojo"		=>	$rojo,
@@ -1836,6 +1840,7 @@ class Uploads extends MY_Controller {
 						"pre44"			=>	$this->getOldVal($sheet,$i,"M"),
 						"pre55"			=>	$this->getOldVal($sheet,$i,"N"),
 						"rdiez"			=>	$this->getOldVal($sheet,$i,"I"),
+						"umcaja"		=>	$umcajon,
 						"costopz"		=>	($this->getOldVal($sheet,$i,"N")-0.01),
 						"estatus"		=>	$colore,
 						"blues"			=>	$bl
@@ -1909,6 +1914,10 @@ class Uploads extends MY_Controller {
 						$bluesB = $this->new_md->getMaxBlueB(NULL)[0];
 					}
 					$colore = $this->getMeColorB($sheet,$i);
+					$umcajon = $this->getOldVal($sheet,$i,"AG");
+					if($umcajon == "" || $umcajon == NULL){
+						$umcajon="CJA";
+					}
 					$new_rojo[$i]=[
 						"id_nuevo"		=>	$id_nuevo,
 						"id_rojo"		=>	$rojo,
@@ -1929,6 +1938,7 @@ class Uploads extends MY_Controller {
 						"pre2"			=>	$this->getOldVal($sheet,$i,"AJ"),
 						"pre3"			=>	$this->getOldVal($sheet,$i,"AK"),
 						"rdiez"			=>	$this->getOldVal($sheet,$i,"I"),
+						"umcaja"		=>	$umcajon,
 						"costopz"		=>	$this->getOldVal($sheet,$i,"AH"),
 						"estatus"		=>	$colore,
 						"blues"			=>	$blb
