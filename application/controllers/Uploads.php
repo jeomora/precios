@@ -309,7 +309,8 @@ class Uploads extends MY_Controller {
 								}
 							}
 						}
-					}				}
+					}				
+				}
 			}
 			$mensaje=[	"id"	=>	'Éxito',
 						"desc"	=>	'Datos cargados correctamente en el Sistema',
