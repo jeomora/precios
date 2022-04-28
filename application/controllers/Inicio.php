@@ -16,7 +16,9 @@ class Inicio extends MY_Controller {
 		$this->load->model("Lineas_model", "ln_md");
 		$this->load->model("Nuevos_model", "new_md");
 		$this->load->model("Ofertas_model", "ofe_md");
+		$this->load->model("Cotizaciones_model", "cotiz_md");
 		$this->load->model("Sucursales_model", "sucu_md");
+		$this->load->model("Remisiones_model", "remis_md");
 		$this->load->library("form_validation");
 	}
 
@@ -60,6 +62,15 @@ class Inicio extends MY_Controller {
 				redirect("Imagenes", $data);	
 			}elseif($user["id_grupo"] === "4" || $user["id_grupo"] === 4){ // COMPRAS
 				redirect("Compras", $data);	
+			}elseif($user["id_grupo"] === "5" || $user["id_grupo"] === 5){//SALIDAS
+				$data['scripts'] = [
+						'/scripts/Salidas/index',
+					];
+				$data["cotizHoy"]= $this->cotiz_md->getCotizacionesHoy(NULL);
+				$data["cotizNoRemis"]= $this->cotiz_md->getCotizNoRemis(NULL);
+				$data["remisNoCotiz"]= $this->remis_md->getRemisNoCotiz(NULL);
+				$data["diferencias"] = $this->remis_md->getDiferencias(NULL);
+				$this->estructura("Salidas/formato", $data);
 			}
 		}else{
 			$this->data["message"] =NULL;
