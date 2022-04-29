@@ -178,6 +178,12 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-xl-12" style="text-align:right;">
+                    <a class="btn btn-success" href="Salidas/printFormato" target="_blank" style="font-size:20px;margin-top:20px;">
+                        DESCARGAR EXCEL
+                    </a>
+                </div>
             </div>
         </div>
 

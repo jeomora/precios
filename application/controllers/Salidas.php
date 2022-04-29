@@ -352,5 +352,207 @@ class Salidas extends MY_Controller {
 		
 	}
 
+	public function printFormato(){
+		ini_set("memory_limit", "-1");
+		$user = $this->session->userdata();
+		ini_set("max_execution_time", "-1");
+		$this->load->library("excelfile");
+		$hoja = $this->excelfile->setActiveSheetIndex(0);
+		$this->excelfile->setActiveSheetIndex(0)->setTitle("REPORTE");
+        
+		$styleArray = array(
+		  'borders' => array(
+		    'allborders' => array(
+		      'style' => PHPExcel_Style_Border::BORDER_THIN
+		    )
+		  ),
+		  'alignment' => array(
+		       'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+		       'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+		   ) 
+		);
+		$styleArrayR = array(
+		  'borders' => array(
+		    'allborders' => array(
+		      'style' => PHPExcel_Style_Border::BORDER_MEDIUM
+		    )
+		  ),
+		  'alignment' => array(
+		       'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_RIGHT,
+		       'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+		   ) 
+		);
+		$styleArrayL = array(
+		  'borders' => array(
+		    'allborders' => array(
+		      'style' => PHPExcel_Style_Border::BORDER_MEDIUM
+		    )
+		  ),
+		  'alignment' => array(
+		       'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+		       'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+		   ) 
+		);
+		$hoja = $this->excelfile->getActiveSheet();
+
+		$dias = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
+		$meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+		$fecha =  $dias[date('w')]." ".date('d')." DE ".$meses[date('n')-1]. " DEL ".date('Y') ;
+		$day = date('w');
+		$hoja->mergeCells('A1:E2');
+		$this->cellStyle("A1:E2", "FFC000", "000000", FALSE, 11, "Calibri");
+
+		$hoja->mergeCells('A3:E4');
+		$hoja->setCellValue("A3", "FORMATO GENERAL")->getColumnDimension('A')->setWidth(45);
+		$this->excelfile->getActiveSheet()->getRowDimension('3')->setRowHeight(65);
+		$this->excelfile->getActiveSheet()->getStyle('A3:E3')->applyFromArray($styleArray);		
+		$this->cellStyle("A3:E4", "00B0F0", "FFFFFF", FALSE, 48, "Algerian");
+
+
+		$hoja->mergeCells('A5:E5');
+		$hoja->setCellValue("A5", $fecha)->getColumnDimension('E')->setWidth(20);
+		$this->excelfile->getActiveSheet()->getStyle('A5:E5')->applyFromArray($styleArrayR);
+		$this->cellStyle("A5:E5", "FFFF00", "203764", TRUE, 16, "Calibri");
+		$this->excelfile->getActiveSheet()->getStyle('A5')->applyFromArray($styleArrayR);
+
+		$hoja->mergeCells('A6:D6');
+		$this->cellStyle("A6:D6", "FF9900", "000000", FALSE, 11, "Calibri");
+
+		$hoja->mergeCells('A7:D7');
+		$hoja->setCellValue("A7", "SUCURSALES (A)");
+		$this->excelfile->getActiveSheet()->getStyle('A7:E7')->applyFromArray($styleArray);
+		$this->cellStyle("A7:D7", "FFFF00", "203764", FALSE, 12, "Cooper Black");
+
+		$hoja->setCellValue("A8", "SUCURSAL");
+		$hoja->setCellValue("B8", "FRUTA")->getColumnDimension('B')->setWidth(20);
+		$hoja->setCellValue("C8", "VERDURA")->getColumnDimension('C')->setWidth(20);
+		$hoja->setCellValue("D8", "ABARROTE")->getColumnDimension('D')->setWidth(20);
+		$this->excelfile->getActiveSheet()->getStyle('A8')->applyFromArray($styleArray);
+		$this->excelfile->getActiveSheet()->getStyle('B8')->applyFromArray($styleArray);
+		$this->excelfile->getActiveSheet()->getStyle('C8')->applyFromArray($styleArray);
+		$this->excelfile->getActiveSheet()->getStyle('D8')->applyFromArray($styleArray);
+		$this->cellStyle("A8:D8", "FF9900", "203764", TRUE, 16, "Algerian");
+
+		$hoja->mergeCells('E6:E8');
+		$hoja->setCellValue("E6", "TOTAL");
+		$this->excelfile->getActiveSheet()->getStyle('E6:E8')->applyFromArray($styleArray);
+		$this->cellStyle("E6:E8", "00B0F0", "203764", TRUE, 20, "Bauhaus 93");
+
+
+		$cotizHoy = $this->cotiz_md->getCotizacionesHoy(NULL);
+		$flag = 9;$flagA = 0;$flagA1 = 0;$sumb  = "";$sumc  = "";$sumd  = "";$sume  = "";
+		if($cotizHoy){
+			foreach ($cotizHoy as $key => $value) {
+				if($value->tipo == 2 && $flagA == 0){
+					$flagA = 1;
+					$hoja->mergeCells('A'.$flag.':E'.$flag);
+					$this->cellStyle("A{$flag}:E{$flag}", "FFC000", "000000", FALSE, 11, "Calibri");
+					$flag++;
+					$hoja->mergeCells('A'.$flag.':E'.$flag);
+					$hoja->setCellValue("A{$flag}", "SUCURSALES (B)");
+					$this->excelfile->getActiveSheet()->getStyle('A'.$flag.':E'.$flag)->applyFromArray($styleArray);
+					$this->cellStyle("A{$flag}:E{$flag}", "FFFF00", "203764", FALSE, 12, "Cooper Black");
+					$flag++;
+				}elseif($value->tipo == 3 && $flagA1 == 0){
+					$flagA1 = 1;
+					$hoja->mergeCells('A'.$flag.':E'.$flag);
+					$this->cellStyle("A{$flag}:E{$flag}", "FFC000", "000000", FALSE, 11, "Calibri");
+					$flag++;
+					$hoja->mergeCells('A'.$flag.':E'.$flag);
+					$hoja->setCellValue("A{$flag}", "OTROS CLIENTES");
+					$this->excelfile->getActiveSheet()->getStyle('A'.$flag.':E'.$flag)->applyFromArray($styleArray);
+					$this->cellStyle("A{$flag}:E{$flag}", "FFFF00", "203764", FALSE, 12, "Cooper Black");
+					$flag++;
+				}
+
+				$hoja->setCellValue("A{$flag}", $value->nombre);
+				$this->cellStyle("A{$flag}", "00B0F0", "203764", TRUE, 11, "Arial Black");
+				$this->excelfile->getActiveSheet()->getStyle('A'.$flag)->applyFromArray($styleArrayL);
+
+				$hoja->setCellValue("B{$flag}", $this->isZerote($value->totafru));
+				$hoja->setCellValue("C{$flag}", $this->isZerote($value->totaver));
+				$hoja->setCellValue("D{$flag}", $this->isZerote($value->totabar + $value->totis));
+				$this->cellStyle("B{$flag}:D{$flag}", "FFFFFF", "000000", TRUE, 11, "Arial Black");
+				$this->excelfile->getActiveSheet()->getStyle('B'.$flag.':D'.$flag)->applyFromArray($styleArrayR);
+
+				$hoja->setCellValue("E{$flag}", "=SUM(B{$flag}:D{$flag})");				
+				$this->cellStyle("E{$flag}", "9BC2E6", "000000", TRUE, 11, "Arial Black");
+				$this->excelfile->getActiveSheet()->getStyle('E'.$flag)->applyFromArray($styleArrayR);
+
+				$this->excelfile->getActiveSheet()->getStyle("B".$flag.":E".$flag)->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+				$sumb  .= "+B".$flag;$sumc  .= "+C".$flag;$sumd  .= "+D".$flag;$sume  .= "+E".$flag;
+				$flag++;
+				
+			}
+
+			$hoja->mergeCells('A'.$flag.':E'.$flag);
+			$this->cellStyle("A{$flag}:E{$flag}", "FFC000", "000000", FALSE, 11, "Calibri");
+			$flag++;
+
+			$hoja->setCellValue("A{$flag}", "TOTAL");
+			$this->cellStyle("A{$flag}", "00B0F0", "203764", FALSE, 12, "Arial Black");
+			$this->excelfile->getActiveSheet()->getStyle('A'.$flag)->applyFromArray($styleArrayL);
+
+			$hoja->setCellValue("B{$flag}", "=".$sumb);
+			$hoja->setCellValue("C{$flag}", "=".$sumc);
+			$hoja->setCellValue("D{$flag}", "=".$sumd);
+			$this->cellStyle("B{$flag}:D{$flag}", "FFFF00", "203764", FALSE, 12, "Arial Black");
+			$this->excelfile->getActiveSheet()->getStyle('B'.$flag.':D'.$flag)->applyFromArray($styleArrayR);
+
+			$hoja->setCellValue("E{$flag}", "=".$sume);			
+			$this->cellStyle("E{$flag}", "FFFF00", "203764", TRUE, 11, "Arial Black");
+			$this->excelfile->getActiveSheet()->getStyle('E'.$flag)->applyFromArray($styleArrayR);
+			$this->excelfile->getActiveSheet()->getStyle("B".$flag.":E".$flag)->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+			$flag++;
+
+			$this->excelfile->getActiveSheet()->getStyle("B".$flag.":B".$flag)->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+			$hoja->setCellValue("A{$flag}", "TOTAL FRUTA");
+			$this->cellStyle("A{$flag}", "00B0F0", "203764", FALSE, 12, "Arial Black");
+			$this->excelfile->getActiveSheet()->getStyle('A'.$flag)->applyFromArray($styleArrayL);
+			$hoja->setCellValue("B{$flag}", "=B".($flag-1)."");
+			$this->cellStyle("B{$flag}", "FFFF00", "203764", TRUE, 11, "Arial Black");
+			$this->excelfile->getActiveSheet()->getStyle('B'.$flag)->applyFromArray($styleArrayR);
+			$flag++;
+
+			$this->excelfile->getActiveSheet()->getStyle("B".$flag.":B".$flag)->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+			$hoja->setCellValue("A{$flag}", "TOTAL VERDURA");
+			$this->cellStyle("A{$flag}", "00B0F0", "203764", FALSE, 12, "Arial Black");
+			$this->excelfile->getActiveSheet()->getStyle('A'.$flag)->applyFromArray($styleArrayL);
+			$hoja->setCellValue("B{$flag}", "=C".($flag-2)."");			
+			$this->cellStyle("B{$flag}", "FFFF00", "203764", TRUE, 11, "Arial Black");
+			$this->excelfile->getActiveSheet()->getStyle('B'.$flag)->applyFromArray($styleArrayR);
+			$flag++;
+
+			$this->excelfile->getActiveSheet()->getStyle("B".$flag.":B".$flag)->getNumberFormat()->setFormatCode("_(\"$\"* #,##0.00_);_(\"$\"* \(#,##0.00\);_(\"$\"* \"-\"??_);_(@_)");
+			$hoja->setCellValue("A{$flag}", "TOTAL ABARROTE");			
+			$this->cellStyle("A{$flag}", "00B0F0", "203764", FALSE, 12, "Arial Black");
+			$this->excelfile->getActiveSheet()->getStyle('A'.$flag)->applyFromArray($styleArrayL);
+			$hoja->setCellValue("B{$flag}", "=D".($flag-3)."");
+			$this->cellStyle("B{$flag}", "FFFF00", "203764", TRUE, 11, "Arial Black");
+			$this->excelfile->getActiveSheet()->getStyle('B'.$flag)->applyFromArray($styleArrayR);
+			$flag++;
+
+		}
+
+
+		$file_name = "FORMATO GENERAL.xlsx"; //Nombre del documento con extención
+		header("Content-Type: application/vnd.ms-excel; charset=utf-8");
+		header("Content-Disposition: attachment;filename=".$file_name);
+		header("Cache-Control: max-age=0");
+		$excel_Writer = PHPExcel_IOFactory::createWriter($this->excelfile, "Excel2007");
+		$excel_Writer->save("php://output");
+		$this->jsonResponse($cotizHoy);
+
+		
+	}
+
+	public function isZerote($number){
+		if($number == "" || $number == NULL){
+			return 0;
+		}else{
+			return $number;
+		}
+	}
+
 
 }
