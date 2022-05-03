@@ -30,6 +30,18 @@ class Salidas extends MY_Controller {
 		$dom = file_get_contents($_FILES["file_cotizaciones"]["tmp_name"]); 
 		$articulos = [];
 
+		$filen = "sal".date("dmyHis")."".rand(1000,9999);
+		$config['upload_path']          = './assets/uploads/cotizaciones/';
+        $config['allowed_types']        = '*';
+        $config['max_size']             = 40000;
+        $config['max_width']            = 40024;
+        $config['max_height']           = 40024;
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        $this->upload->do_upload('file_cotizaciones',$filen);
+        $path_parts = pathinfo($_FILES["file_cotizaciones"]["name"]);
+		$extension = $path_parts['extension'];
+
 		$flag = 0;
 		$flagNo = 1;
 		$pos = explode("\n", $dom);
@@ -201,6 +213,18 @@ class Salidas extends MY_Controller {
 		ini_set("memory_limit", -1);
 		$dom = file_get_contents($_FILES["file_remisiones"]["tmp_name"]); 
 		$articulos = [];
+
+		$filen = "sal".date("dmyHis")."".rand(1000,9999);
+		$config['upload_path']          = './assets/uploads/remisiones/';
+        $config['allowed_types']        = '*';
+        $config['max_size']             = 40000;
+        $config['max_width']            = 40024;
+        $config['max_height']           = 40024;
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        $this->upload->do_upload('file_remisiones',$filen);
+        $path_parts = pathinfo($_FILES["file_remisiones"]["name"]);
+		$extension = $path_parts['extension'];
 
 		$flag = 0;
 		$flagNo = 1;

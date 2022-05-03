@@ -56,4 +56,19 @@ class Sucursales extends MY_Controller {
 		return $this->jsonResponse($this->sucu_md->getCharts2(["id_sucursal"=>$id_sucursal]));
 	}
 
+	public function misEntradas(){
+		ini_set("memory_limit", "-1");
+		$user = $this->session->userdata();
+		$data['scripts'] = [
+			'/scripts/Sucursales/misEntradas',
+		];
+		$fecha = new DateTime(date('Y-m-d H:i:s'));
+		$data["miEntrada"] = $this->ent_md->get(NULL, ["id_sucursal"=>$user["id_sucursal"],"estatus"=>1,"DATE(fecha_registro)"=>$fecha->format('Y-m-d') ] );
+		$data["entradas"] = $this->remis_md->getMisEntradas(NULL,$user["id_sucursal"]);
+		$data["devolus"] = $this->remis_md->getMisDevoluciones(NULL,$user["id_sucursal"]);
+		
+		$this->estructura("Sucursales/misEntradas", $data);
+		//$this->jsonResponse($data["entradas"]);
+	}
+
 }

@@ -71,6 +71,8 @@ class Inicio extends MY_Controller {
 				$data["remisNoCotiz"]= $this->remis_md->getRemisNoCotiz(NULL);
 				$data["diferencias"] = $this->remis_md->getDiferencias(NULL);
 				$this->estructura("Salidas/formato", $data);
+			}elseif($user["id_grupo"] === "3" || $user["id_grupo"] === 6){ // ENTRADAS
+				redirect("Sucursales/misEntradas", $data);
 			}
 		}else{
 			$this->data["message"] =NULL;
