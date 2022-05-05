@@ -33,7 +33,7 @@ class Entradas_model extends MY_Model {
 	}
 
 	public function getMisEntradas($where = [],$id_sucursal){
-		$this->db->select("drs.id_detalle,r.id_entrada,r.folio,r.fecha_registro,r.proveedor,r.provee, r.fecha,r.subtotal,r.siniva,r.iva,r.estatus,r.agrego,r.total,drs.producto,drs.descripcion,drs.familia,drs.unidad,drs.cantidad,drs.precio,drs.importe FROM entradas r RIGHT JOIN detalleentra drs ON r.id_entrada = drs.id_entrada WHERE r.estatus = 1 AND r.id_sucursal =".$id_sucursal." AND DATE(r.fecha_registro) = DATE(CURDATE())")
+		$this->db->select("drs.id_detalle,r.id_entrada,r.folio,r.fecha_registro,r.proveedor,r.provee, r.fecha,r.subtotal,r.siniva,r.iva,r.estatus,r.agrego,r.total,drs.producto,drs.descripcion,drs.familia,drs.unidad,drs.cantidad,drs.precio,drs.importe FROM entradas r RIGHT JOIN detalleentra drs ON r.id_entrada = drs.id_remision WHERE r.estatus = 1 AND r.id_sucursal =".$id_sucursal." AND DATE(r.fecha_registro) = DATE(CURDATE())")
 		->order_by("r.id_entrada","ASC");
 
 
@@ -90,7 +90,7 @@ class Entradas_model extends MY_Model {
 	}
 
 	public function getMisDevoluciones($where = [],$id_sucursal){
-		$this->db->select("drs.id_detalle,r.id_entrada,r.folio,r.fecha_registro,r.proveedor,r.provee,r.fecha,r.subtotal,r.siniva,r.iva,r.estatus,r.agrego,r.total,drs.producto,drs.descripcion,drs.familia,drs.unidad,drs.cantidad,drs.precio,drs.importe FROM entradas r RIGHT JOIN detalleentra drs ON r.id_entrada = drs.id_entrada WHERE r.estatus = 2 AND r.id_sucursal =".$id_sucursal." AND DATE(r.fecha_registro) = DATE(CURDATE())")
+		$this->db->select("drs.id_detalle,r.id_entrada,r.folio,r.fecha_registro,r.proveedor,r.provee,r.fecha,r.subtotal,r.siniva,r.iva,r.estatus,r.agrego,r.total,drs.producto,drs.descripcion,drs.familia,drs.unidad,drs.cantidad,drs.precio,drs.importe FROM entradas r RIGHT JOIN detalleentra drs ON r.id_entrada = drs.id_remision WHERE r.estatus = 2 AND r.id_sucursal =".$id_sucursal." AND DATE(r.fecha_registro) = DATE(CURDATE())")
 		->order_by("r.id_entrada","ASC");
 
 
@@ -200,7 +200,7 @@ class Entradas_model extends MY_Model {
 	}
 
 	public function getSucusRemisiones($where = []){
-		$this->db->select("drs.id_detalle,r.id_entrada,r.folio,r.fecha_registro,r.proveedor,r.provee, r.fecha,r.subtotal,r.siniva,r.iva,r.estatus,r.agrego,r.total,drs.producto,drs.descripcion,drs.familia,drs.unidad,drs.cantidad,drs.precio,drs.importe FROM entradas r RIGHT JOIN detalleentra drs ON r.id_entrada = drs.id_entrada WHERE r.estatus = 1 AND r.id_sucursal =".$id_sucursal." AND DATE(r.fecha_registro) = DATE(CURDATE())")
+		$this->db->select("drs.id_detalle,r.id_entrada,r.folio,r.fecha_registro,r.proveedor,r.provee, r.fecha,r.subtotal,r.siniva,r.iva,r.estatus,r.agrego,r.total,drs.producto,drs.descripcion,drs.familia,drs.unidad,drs.cantidad,drs.precio,drs.importe FROM entradas r RIGHT JOIN detalleentra drs ON r.id_entrada = drs.id_remision WHERE r.estatus = 1 AND r.id_sucursal =".$id_sucursal." AND DATE(r.fecha_registro) = DATE(CURDATE())")
 		->order_by("r.id_entrada","ASC");
 
 

@@ -68,6 +68,11 @@ class Usuarios extends MY_Controller {
 		$usuario = $this->user_md->get(NULL,["id_usuario"=>$id_usuario])[0];
 		$this->jsonResponse($usuario);
 	}	
+
+	public function showpass($id_usuario){
+		$usuario = $this->user_md->get(NULL,["id_usuario"=>$id_usuario])[0];
+		$this->jsonResponse($this->showPassword($usuario->password));
+	}
 	public function delete_user(){
 		$user = $this->session->userdata();
 		$data ['id_usuario'] = $this->user_md->update(["estatus" => 0], $this->input->post('id_usuario'));

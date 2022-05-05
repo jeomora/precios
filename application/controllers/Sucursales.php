@@ -8,6 +8,10 @@ class Sucursales extends MY_Controller {
 		$this->load->model("Usuarios_model", "user_md");
 		$this->load->model("Sucursales_model", "sucu_md");
 		$this->load->model("Cambios_model", "cambio_md");
+		$this->load->model("EntTxt_model", "ent_md");
+		$this->load->model("Entradas_model", "remis_md");
+		$this->load->model("Sucproductos_model", "sprod_md");
+		$this->load->model("Detalleremis_model", "dremis_md");
 		$this->load->library("form_validation");
 	}
 

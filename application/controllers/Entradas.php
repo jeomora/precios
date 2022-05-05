@@ -9,7 +9,7 @@ class Entradas extends MY_Controller {
 		$this->load->model("EntTxt_model", "ent_md");
 		$this->load->model("Entradas_model", "remis_md");
 		$this->load->model("Sucproductos_model", "sprod_md");
-		$this->load->model("Detalleremis_model", "dremis_md");
+		$this->load->model("Detalleentra_model", "dremis_md");
 		$this->load->library("form_validation");
 	}
 
@@ -146,7 +146,7 @@ class Entradas extends MY_Controller {
 						
 						$hayRemis = $this->remis_md->hayRemisiones(NULL,["id_sucursal"=>$user["id_sucursal"]]);
 						if($hayRemis && $flag2 == 0){
-							$this->db->query("UPDATE remisiones SET estatus = 0 WHERE DATE(fecha_registro) = DATE(CURDATE()) AND id_sucursal = ".$user["id_sucursal"]." ");
+							$this->db->query("UPDATE entradas SET estatus = 0 WHERE DATE(fecha_registro) = DATE(CURDATE()) AND id_sucursal = ".$user["id_sucursal"]." ");
 						}
 						$flag2 =1;
 						$new_c = $this->remis_md->insert($new_factura);
@@ -157,7 +157,7 @@ class Entradas extends MY_Controller {
 						$new_detalle = [];
 						
 					}elseif( strpos($pos[$i],"Tot. devolucion") ){
-						$this->db->query("UPDATE remisiones SET estatus = 0 WHERE id_remision = ".$new_c." ");
+						$this->db->query("UPDATE entradas SET estatus = 0 WHERE id_remision = ".$new_c." ");
 					}else{
 						$producto = substr($pos[$i], 22,17);
 						$producto = str_replace(" ", "", $producto);
