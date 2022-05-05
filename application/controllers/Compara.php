@@ -416,11 +416,9 @@ class Compara extends MY_Controller {
 							$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto ]);
 
 							if($existencia){
-								$id_existencia = $this->exis_md->update($new_existencia,$existencia[0]->id_existencia);
-								$id_existencia = $existencia[0]->id_existencia;
-							}else{
-								$id_existencia = $this->exis_md->insert($new_existencia);
+								$id_existencia = $this->exis_md->update(["estatus"=>0],$existencia[0]->id_existencia);
 							}
+							$id_existencia = $this->exis_md->insert($new_existencia);
 							
 
 							$new_precios=[
