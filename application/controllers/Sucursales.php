@@ -12,6 +12,8 @@ class Sucursales extends MY_Controller {
 		$this->load->model("Entradas_model", "remis_md");
 		$this->load->model("Sucproductos_model", "sprod_md");
 		$this->load->model("Detalleremis_model", "dremis_md");
+		$this->load->model("SalTxt_model", "sal_md");
+		$this->load->model("AjuTxt_model", "ajtxt_md");
 		$this->load->library("form_validation");
 	}
 
@@ -68,6 +70,12 @@ class Sucursales extends MY_Controller {
 		];
 		$fecha = new DateTime(date('Y-m-d H:i:s'));
 		$data["miEntrada"] = $this->ent_md->get(NULL, ["id_sucursal"=>$user["id_sucursal"],"estatus"=>1,"DATE(fecha_registro)"=>$fecha->format('Y-m-d') ] );
+
+		$data["miSalida"] = $this->sal_md->get(NULL, ["id_sucursal"=>$user["id_sucursal"],"estatus"=>1,"DATE(fecha_registro)"=>$fecha->format('Y-m-d') ] );
+
+		$data["miAjuste"] = $this->ajtxt_md->get(NULL, ["id_sucursal"=>$user["id_sucursal"],"estatus"=>1,"DATE(fecha_registro)"=>$fecha->format('Y-m-d') ] );
+
+
 		$data["entradas"] = $this->remis_md->getMisEntradas(NULL,$user["id_sucursal"]);
 		$data["devolus"] = $this->remis_md->getMisDevoluciones(NULL,$user["id_sucursal"]);
 		

@@ -30,21 +30,43 @@ h1.inventarioTotal,h1.ventaTotal{font-size:3rem;}
                             <div class="d-flex align-items-start justify-content-start flex-grow-1 bg-light p-8 card-rounded flex-grow-1 position-relative">
                                 <div class="d-flex flex-column align-items-start flex-grow-1 h-100">
                                     <div class="p-1 flex-grow-1">
-                                        <h4 class="text-dark font-weight-bolder">Mis Entradas</h4>
+                                        <h4 class="text-dark font-weight-bolder">Mis Archivos TXT,DAT Desde Compucaja</h4>
                                         <p class="text-dark-50 font-weight-bold mt-3">
-                                            En la parte baja podrá subir a la plataforma el archivo txt. <br>
-                                            En el texto de abajo le aparecera el enlace para descargar el archivo, en caso de querer asegurarse de haber subido el archivo correcto.
-                                            El archivo regularmente se descarga de compucaja con el nombre CEI0675R, <span style="font-weight:bold;">ESTO NO QUIERE DECIR QUE NECESARIAMENTE DEBE LLEVAR TAL NOMBRE PARA SUBIRLO A LA PLATAFORMA</span>
+                                            En la parte baja podrá subir a la plataforma los archivos txt. <br>
+                                            En el texto de abajo le aparecera el enlace para descargar los archivos, en caso de querer asegurarse de haber subido el archivo correcto.
+                                            El archivo ENTRADAS regularmente se descarga de compucaja con el nombre CEI0675R, <span style="font-weight:bold;">ESTO NO QUIERE DECIR QUE NECESARIAMENTE DEBE LLEVAR TAL NOMBRE PARA SUBIRLO A LA PLATAFORMA</span> , 
+                                            <span class="text-primary" style="font-weight:bold;">SIN EMBARGO LE PEDIMOS NO MODIFICAR NADA DENTRO DEL ARCHIVO. CASO CONTRARIO ES POSIBLE NO SE LEA CORRECTAMENTE EL CONTENIDO DEL ARCHIVO.</span>
                                         </p>
                                         <?php if($miEntrada): ?>
                                             <div class="text-dark-50 font-weight-bold mt-3" id="ultTxt">
-                                                <h1>Archivo del día : <a href="assets/img/entradas/<?php echo $miEntrada[0]->txtfile ?>" target="_blank"><?php echo $miEntrada[0]->fecha_registro ?></a></h1>
+                                                <h1>TXT NOTAS DE ENTRADA : <a href="assets/uploads/entradas/<?php echo $miEntrada[0]->txtfile ?>" target="_blank"><?php echo $miEntrada[0]->fecha_registro ?></a></h1>
                                             </div>
                                         <?php else: ?>
                                             <div class="text-dark-50 font-weight-bold mt-3" id="ultTxt">
-                                                <h1>Archivo del día : Sin archivos</h1>
+                                                <h1>TXT NOTAS DE ENTRADA : Sin archivos</h1>
                                             </div>
                                         <?php endif;?>
+
+                                        <?php if($miSalida): ?>
+                                            <div class="text-dark-50 font-weight-bold mt-3" id="ultTxt">
+                                                <h1>TXT AJUSTES DE SALIDA : <a href="assets/uploads/ajustes/<?php echo $miSalida[0]->txtfile ?>" target="_blank"><?php echo $miSalida[0]->fecha_registro ?></a></h1>
+                                            </div>
+                                        <?php else: ?>
+                                            <div class="text-dark-50 font-weight-bold mt-3" id="ultTxt">
+                                                <h1>TXT AJUSTES DE SALIDA : Sin archivos</h1>
+                                            </div>
+                                        <?php endif;?>
+
+                                        <?php if($miAjuste): ?>
+                                            <div class="text-dark-50 font-weight-bold mt-3" id="ultTxt">
+                                                <h1>TXT AJUSTES DE ENTRADA : <a href="assets/uploads/ajustes/<?php echo $miAjuste[0]->txtfile ?>" target="_blank"><?php echo $miAjuste[0]->fecha_registro ?></a></h1>
+                                            </div>
+                                        <?php else: ?>
+                                            <div class="text-dark-50 font-weight-bold mt-3" id="ultTxt">
+                                                <h1>TXT AJUSTES DE ENTRADA : Sin archivos</h1>
+                                            </div>
+                                        <?php endif;?>
+
                                     </div>
                                 </div>
                                 <div class="position-absolute right-0 bottom-0 mr-5 overflow-hidden">

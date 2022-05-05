@@ -2,7 +2,7 @@
 
 var imageName= "";var imageName2= "";
 jQuery(document).ready(function() {
-    $("#titlePrincipal").html("ENTRADAS TXT");
+    $("#titlePrincipal").html("ARCHIVOS TXT");
 });
 
 function goBack() {
@@ -48,7 +48,7 @@ var myDropzoneV = new Dropzone("div#kt_dropzone_venta", {
         myDropzoneV.removeAllFiles();
         imageName2 = response;
         location.reload();
-        $("#ultTxt").html("<h1>Archivo del día : <a href='assets/img/entradas/"+response+"' target='_blank'>"+time+"</a></h1>")
+        $("#ultTxt").html("<h1>Archivo del día : <a href='assets/uploads/entradas/"+response+"' target='_blank'>"+time+"</a></h1>")
         
     }
 });
