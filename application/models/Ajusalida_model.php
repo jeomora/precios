@@ -5,7 +5,7 @@ class Ajusalida_model extends MY_Model {
 
 	function __construct(){
 		parent::__construct();
-		$this->TABLE_NAME = "ajusalida";
+		$this->TABLE_NAME = "ajuSalida";
 		$this->PRI_INDEX = "id_ajuste";
 	}
 
