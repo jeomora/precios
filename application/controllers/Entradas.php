@@ -17,6 +17,8 @@ class Entradas extends MY_Controller {
 		$this->load->model("Ajusalida_model", "ajsal_md");
 		$this->load->model("Ajuentrada_model", "ajent_md");
 		$this->load->model("AjuTxt_model", "ajtxt_md");
+		$this->load->model("Sucprecios_model", "sprize_md");
+		$this->load->model("Existencias_model", "exis_md");
 		$this->load->library("form_validation");
 	}
 
@@ -215,6 +217,194 @@ class Entradas extends MY_Controller {
 			}
 
 			/*AJUSTES DE SALIDA*/
+		}elseif( (strpos($dom,"AJU.SALIDAS")  ||  strpos($dom,"Total de salidas")) && (strpos($dom,"AJU.ENTRADAS")  ||  strpos($dom,"Total de entradas")) ){
+			$filen = "aju".date("dmyHis")."".rand(1000,9999);
+			$config['upload_path']          = './assets/uploads/ajustes/';
+	        $config['allowed_types']        = '*';
+	        $config['max_size']             = 40000;
+	        $config['max_width']            = 40024;
+	        $config['max_height']           = 40024;
+	        $this->load->library('upload', $config);
+	        $this->upload->initialize($config);
+	        $this->upload->do_upload('file_inventario',$filen);
+
+
+	        $path_parts = pathinfo($_FILES["file_inventario"]["name"]);
+			$extension = $path_parts['extension'];
+
+			
+			$fecha = new DateTime(date('Y-m-d H:i:s'));
+			$new_entrada = [
+				"id_usuario"	=>	$user["id_usuario"],
+				"fecha_registro"=>	$fecha->format('Y-m-d H:i:s'),
+				"txtfile"		=>	$filen.".".$extension,
+				"id_sucursal"	=>	$user["id_sucursal"],
+			];
+
+			//POR SI HABIA SUBIDO ALGUN OTRO
+
+			$inventa = $this->sal_md->get(NULL,["id_sucursal"=>$user["id_sucursal"],"DATE(fecha_registro)"=>$fecha->format('Y-m-d')]);
+			if($inventa){
+				$ino = $this->sal_md->update(["estatus"=>0],["id_sucursal"=>$user["id_sucursal"],"DATE(fecha_registro)"=>$fecha->format('Y-m-d')]);
+			}
+			$ino = $this->sal_md->insert($new_entrada);
+			$inventa = $this->ajtxt_md->get(NULL,["id_sucursal"=>$user["id_sucursal"],"DATE(fecha_registro)"=>$fecha->format('Y-m-d')]);
+			if($inventa){
+				$ino = $this->ajtxt_md->update(["estatus"=>0],["id_sucursal"=>$user["id_sucursal"],"DATE(fecha_registro)"=>$fecha->format('Y-m-d')]);
+			}
+			$ino = $this->ajtxt_md->insert($new_entrada);
+
+			$cambios = [
+				"id_usuario" => $user["id_usuario"],
+				"fecha_cambio" => date('Y-m-d H:i:s'),
+				"antes" => "Sube AJUSTES INVENTARIO txt",
+				"despues" => $ino];
+			$data['cambios'] = $this->cambio_md->insert($cambios);
+
+			$ajsa = 1;
+			
+			$hayS = $this->ajsal_md->get(NULL,["id_sucursal"=>$user["id_sucursal"],"DATE(fecha_registro)"=>$fecha->format('Y-m-d'),"estatus"=>1]);
+			if($hayS){
+				$this->ajsal_md->update(["estatus"=>0],["id_sucursal"=>$user["id_sucursal"],"DATE(fecha_registro)"=>$fecha->format('Y-m-d'),"estatus"=>1]);
+			}
+			$hayS = $this->ajent_md->get(NULL,["id_sucursal"=>$user["id_sucursal"],"DATE(fecha_registro)"=>$fecha->format('Y-m-d'),"estatus"=>1]);
+			if($hayS){
+				$this->ajent_md->update(["estatus"=>0],["id_sucursal"=>$user["id_sucursal"],"DATE(fecha_registro)"=>$fecha->format('Y-m-d'),"estatus"=>1]);
+			}
+
+			$tipo = false;
+			for ($i=0; $i<sizeof($pos); $i++){
+				if (!empty($pos[$i])){
+					$pos[$i] = str_replace("", "", $pos[$i]);
+					$pos[$i] = str_replace("", "", $pos[$i]);
+					$pos[$i] = str_replace("", "", $pos[$i]);
+					$pos[$i] = str_replace("€", "P", $pos[$i]);
+					$pos[$i] = str_replace("�", "P", $pos[$i]);
+					$pos[$i] = str_replace("¥", "Ñ", $pos[$i]);
+					$pos[$i] = str_replace("?", "Ñ", $pos[$i]);
+					
+
+					if(strpos($pos[$i],"cei-029f-2.6") && strlen($pos[$i]) < 200 ){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Notas de Entrada/Salida")){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Descripcion")){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Total de articulos")){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"-----------")){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Hoja : ") && strlen($pos[$i]) < 200){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i]," ") === false){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"I m p o r t e")){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Referencia")){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Cantidad")){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Movimiento")){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"FIN DE REPORTE")){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Total de salidas")){
+						$pos[$i] = "";
+					}
+					if (strlen($pos[$i]) < 10) {
+						$pos[$i] = "";	
+					}
+					$fecha = new DateTime(date('Y-m-d H:i:s'));
+					
+					if(strpos($pos[$i],"AJU.SALIDAS")){
+						$foli = substr($pos[$i], 9,6);
+						$refe = substr($pos[$i], 16,11);
+						$fech = substr($pos[$i], 61,9);
+						
+						$new_salida = [
+							"id_sucursal"	=>	$user["id_sucursal"],
+							"folio"			=>	$foli,
+							"fecha"			=>	$fech,
+							"referencia"	=>	$refe,
+						];
+						$ajsa = $this->ajsal_md->insert($new_salida);
+						$tipo = false;
+					}elseif(strpos($pos[$i],"AJU.ENTRADAS")){
+						$foli = substr($pos[$i], 9,6);
+						$refe = substr($pos[$i], 16,11);
+						$fech = substr($pos[$i], 61,9);
+						
+						$new_salida = [
+							"id_sucursal"	=>	$user["id_sucursal"],
+							"folio"			=>	$foli,
+							"fecha"			=>	$fech,
+							"referencia"	=>	$refe,
+						];
+						$ajsa = $this->ajent_md->insert($new_salida);
+						$tipo = true;
+					}elseif($pos[$i] <> ""){
+						$code = substr($pos[$i], 6,17);
+						$code = str_replace(" ", "", $code);
+						$line = substr($pos[$i], 3,2);
+						$desc = substr($pos[$i], 23,31);
+						$desc = str_replace("  ", "", $desc);
+						$unme = substr($pos[$i], 54,3);
+						$cant = substr($pos[$i], 58,10);
+						$cant = str_replace(" ", "", $cant);
+						$cant = str_replace(",", "", $cant);
+						$prec = substr($pos[$i], 69,10);
+						$prec = str_replace(" ", "", $prec);
+						$prec = str_replace(",", "", $prec);
+						$impo = substr($pos[$i], 80,15);
+						$impo = str_replace(" ", "", $impo);
+						$impo = str_replace(",", "", $impo);
+						if($user["id_sucursal"] == 7){
+							$prodo = $this->prod_md->get(NULL,["codigo"=>$code,"id_sucursal"=>$user["id_sucursal"]]);
+						}else{
+							$prodo = $this->sprod_md->get(NULL,["codigo"=>$code,"id_sucursal"=>$user["id_sucursal"]]);
+						}
+						
+						if($prodo){
+							$prodo = $prodo[0]->id_producto;
+						}else{
+							$prodo = 2;
+						}
+
+						$new_desal = [
+							"linea"			=>	$line,
+							"code"			=>	$code,
+							"descripcion"	=>	$desc,
+							"unidad"		=>	$unme,
+							"cantidad"		=>	$cant,
+							"precio"		=>	$prec,
+							"importe"		=>	$impo,
+							"id_ajuste"		=>	$ajsa,
+							"id_producto"	=>	$prodo
+						];
+						if($tipo){
+							$this->dentr_md->insert($new_desal);
+						}else{
+							$this->dsali_md->insert($new_desal);
+						}
+						
+
+					}
+				}
+			}
+
+			/*AJUSTES DE ENTRADA*/
 		}elseif( strpos($dom,"AJU.SALIDAS")  ||  strpos($dom,"Total de salidas") ){
 			$filen = "sal".date("dmyHis")."".rand(1000,9999);
 			$config['upload_path']          = './assets/uploads/ajustes/';
@@ -523,6 +713,140 @@ class Entradas extends MY_Controller {
 					}
 				}
 			}
+		}elseif( strpos($dom,"LISTA DE PRECIOS CON EXISTENCIA") ){
+			$this->sprod_md->update(["estatus"=>0],["estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
+			for ($i=0; $i<sizeof($pos); $i++){
+				if (!empty($pos[$i])){
+					$pos[$i] = str_replace("", "", $pos[$i]);
+					$pos[$i] = str_replace("", "", $pos[$i]);
+					$pos[$i] = str_replace("€", "P", $pos[$i]);
+					$pos[$i] = str_replace("�", "P", $pos[$i]);
+					$pos[$i] = str_replace("cei-029u-2.6", "", $pos[$i]);
+					//$pos[$i] = str_replace("¥", "Ñ", $pos[$i]);
+					$pos[$i] = str_replace("�", "Ñ", $pos[$i]);
+					$pos[$i] = str_replace("?", "Ñ", $pos[$i]);
+					
+					if(strpos($pos[$i],"Hoja : ") && strlen($pos[$i]) < 200){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"Descripcion") && strlen($pos[$i]) < 200){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i]," ") === false){
+						$pos[$i] = "";
+					}
+					if(strpos($pos[$i],"LISTA DE PRECIOS CON EXISTENCIA") && strlen($pos[$i]) < 220){
+						$pos[$i] = "";
+					}
+					if (strlen($pos[$i]) < 10) {
+						$pos[$i] = "";	
+					}
+					
+					if($pos[$i] <> ""){
+						if (substr($pos[$i], 0,1) === " "){
+							//NO SE MANEJARÁ FAMILIAS PARA SUCURSALES ALV
+						}else{
+							$code1 = substr($pos[$i], 0,17);
+							$code1 = str_replace(" ", "", $code1);
+							$descripcion = substr($pos[$i], 17,41);
+							$descripcion = str_replace("  ", "", $descripcion);
+							$unidad = substr($pos[$i], 58,3);
+							$existencia = substr($pos[$i], 62,12);
+							$existencia = str_replace(" ", "", $existencia);
+							$existencia = str_replace(",", "", $existencia);
+							$exo = substr($pos[$i], 73,1);
+							if($exo == "-"){
+								$existencia = "-".$existencia;
+							}
+
+							$p1 = substr($pos[$i], 76,12);
+							$p1 = str_replace(" ", "", $p1);
+							$p1 = str_replace(",", "", $p1);
+							$exo = substr($pos[$i], 86,1);
+							if($exo == "-"){
+								$p1 = "-".$p1;
+							}
+
+							$p2 = substr($pos[$i], 87,12);
+							$p2 = str_replace(" ", "", $p2);
+							$p2 = str_replace(",", "", $p2);
+							$exo = substr($pos[$i], 98,1);
+							if($exo == "-"){
+								$p2 = "-".$p2;
+							}
+
+							$p3 = substr($pos[$i], 99,12);
+							$p3 = str_replace(" ", "", $p3);
+							$p3 = str_replace(",", "", $p3);
+							$exo = substr($pos[$i], 110,1);
+							if($exo == "-"){
+								$p3 = "-".$p3;
+							}
+
+							$code2 = substr($pos[$i], 112,26);
+							$code2 = str_replace(" ", "", $code2);
+
+							$new_producto=[
+								"codigo"		=>	$code1,
+								"nombre"		=>	$descripcion,
+								"registro"		=>	$user["id_usuario"],
+								"ums"			=>	$unidad,
+								"code"			=>	$code2,
+								"id_sucursal"	=>	$user["id_sucursal"],
+								"fecha_registro"=>	date("Y-m-d H:i:s"),
+								"estatus"		=>	1
+							];
+
+							$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"id_sucursal"=>$user["id_sucursal"],"estatus"=>1]);
+
+							if($producto){
+								$id_producto = $this->sprod_md->update($new_producto,$producto[0]->id_producto);
+								$id_producto = $producto[0]->id_producto;
+							}else{
+								$id_producto = $this->sprod_md->insert($new_producto);
+							}
+							$new_existencia=[
+								"id_producto"	=>	$id_producto,
+								"existencia"	=>	$existencia,
+								"fecha_registro"=>	date("Y-m-d H:i:s")
+							];
+
+							$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto ]);
+
+							if($existencia){
+								$id_existencia = $this->exis_md->update($new_existencia,$existencia[0]->id_existencia);
+								$id_existencia = $existencia[0]->id_existencia;
+							}else{
+								$id_existencia = $this->exis_md->insert($new_existencia);
+							}
+
+							$new_precios=[
+								"id_producto"	=>	$id_producto,
+								"preciouno"		=>	$p1,
+								"preciodos"		=>	$p2,
+								"preciotres"	=>	$p3,
+								"registro"		=>	$user["id_usuario"],
+								"fecha_registro"=>	date("Y-m-d H:i:s")
+							];
+
+
+							$precio = $this->sprize_md->get(NULL,["id_producto"=>$id_producto,"estatus"=>1])[0];
+
+							if($precio){
+								$id_producto = $this->sprize_md->update($new_precios,$precio->id_precio);
+							}else{
+								$id_producto = $this->sprize_md->insert($new_precios);
+							}
+							
+						}
+					}
+				}
+			}
+			
+			$mensaje=[	"id"	=>	'Éxito',
+						"desc"	=>	'Datos cargados correctamente en el Sistema',
+						"type"	=>	'success'];
+			$this->jsonResponse($mensaje);
 		}
 
  
