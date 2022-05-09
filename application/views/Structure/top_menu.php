@@ -215,13 +215,13 @@
                                 </a>
                             </li>
                         <?php endif; ?>
-                        <?php if($usuario["id_grupo"] == 3 || $usuario["id_grupo"] == 1): ?>
+                        <?php if($usuario["id_grupo"] == 1): ?>
                             <li class="menu-section ">
-                                <h4 class="menu-text">INVENTARIO</h4>
+                                <h4 class="menu-text">REPORTE DE SUCURSALES</h4>
                                 <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                             </li>
                             <li class="menu-images menu-item " aria-haspopup="true" >
-                                <a href="<?php echo base_url('Inventarios') ?>" class="menu-link ">
+                                <a href="<?php echo base_url('Reporte') ?>" class="menu-link ">
                                     <span class="svg-icon menu-icon">
                                         
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -233,7 +233,7 @@
                                         </svg>
                                         
                                     </span>
-                                    <span class="menu-text">INVENTARIO</span>
+                                    <span class="menu-text">REPORTES INVENTARIO</span>
                                 </a>
                             </li>
                         <?php endif; ?>

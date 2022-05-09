@@ -39,7 +39,7 @@ class Nuevodetail_model extends MY_Model {
 		->from("nuevo_detail d")
 		->join("listos l","d.id_detail = l.id_detalle AND l.id_sucursal = ".$user["id_sucursal"]."","LEFT")
 		->join("sucproductos s","d.code1 = s.codigo and s.id_sucursal = ".$user["id_sucursal"]." and s.estatus = 1","LEFT")
-		->join("existencias e","s.id_producto = e.id_producto","LEFT")
+		->join("existencias e","s.id_producto = e.id_producto AND e.estatus = 1","LEFT")
 		->join("sucproductos sss","d.code3 = sss.codigo and sss.id_sucursal = ".$user["id_sucursal"]." and sss.estatus = 1","LEFT")
 		->where("d.id_nuevo",$val);
 		if($where !== NULL){
