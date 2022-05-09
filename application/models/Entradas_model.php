@@ -256,4 +256,27 @@ class Entradas_model extends MY_Model {
 		}
 	}
 
+	public function remisMatriz($where=[],$wheros=[]){
+		$this->db->select("* FROM entradas WHERE DATE(fecha_registro) = DATE(' ".$wheros['fecha']." ') AND id_sucursal = ".$wheros['id_sucursal']." AND folio = '".$wheros['folio']."'");
+		if($where !== NULL){
+			if(is_array($where)){
+				foreach ($where as $field => $value) {
+					$this->db->where($field, $value);
+				}
+			}else{
+				$this->db->where($this->PRI_INDEX, $where);
+			}
+		}
+		$result = $this->db->get()->result();
+		if($result){
+			if(is_array($where)){
+				return $result;
+			}else{
+				return $result;
+			}
+		}else{
+			return false;
+		}
+	}
+
 }

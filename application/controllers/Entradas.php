@@ -18,7 +18,10 @@ class Entradas extends MY_Controller {
 		$this->load->model("Ajuentrada_model", "ajent_md");
 		$this->load->model("AjuTxt_model", "ajtxt_md");
 		$this->load->model("Sucprecios_model", "sprize_md");
+		$this->load->model("Precios_model", "prize_md");
 		$this->load->model("Existencias_model", "exis_md");
+		$this->load->model("Exicedis_model","exced_md");
+		$this->load->model("Unidades_model", "ums_md");
 		$this->load->library("form_validation");
 	}
 
@@ -142,6 +145,7 @@ class Entradas extends MY_Controller {
 							$total = substr($pos[$i], 120,12);
 							$total = str_replace(" ", "", $total);
 							$total = str_replace(",", "", $total);
+							$fechaGood = $this->getDateMatriz($fecha);
 							$new_factura = [
 								"folio"		=>	$folio,
 								"proveedor"	=>	$sucus,
@@ -154,13 +158,15 @@ class Entradas extends MY_Controller {
 								"agrego"	=>	$agrego,
 								"estatus"	=>	$estatus,
 								"id_sucursal"=>$user["id_sucursal"],
-								"provee"	=>	$nombresucu
+								"provee"	=>	$nombresucu,
+								"fecha_registro"=>$fechaGood
 							];
 							
-							$hayRemis = $this->remis_md->hayRemisiones(NULL,["id_sucursal"=>$user["id_sucursal"]]);
+							$this->db->query("UPDATE entradas SET estatus = 0 WHERE DATE(fecha_registro) = DATE('".$fechaGood."') AND id_sucursal = ".$user["id_sucursal"]." AND folio = '".$folio."'");
+							/*$hayRemis = $this->remis_md->remisMatriz(NULL,[ "fecha"=>$fechaGood,"folio"=>$folio,"id_sucursal"=>$user["id_sucursal"] ]);
 							if($hayRemis && $flag2 == 0){
-								$this->db->query("UPDATE entradas SET estatus = 0 WHERE DATE(fecha_registro) = DATE(CURDATE()) AND id_sucursal = ".$user["id_sucursal"]." ");
-							}
+								
+							}*/
 							$flag2 =1;
 							$new_c = $this->remis_md->insert($new_factura);
 							for ($ed=0; $ed < sizeof($new_detalle); $ed++){ 
@@ -332,26 +338,30 @@ class Entradas extends MY_Controller {
 						$foli = substr($pos[$i], 9,6);
 						$refe = substr($pos[$i], 16,11);
 						$fech = substr($pos[$i], 61,9);
-						
+						$fechaGood = $this->getDateMatriz($fech);
 						$new_salida = [
 							"id_sucursal"	=>	$user["id_sucursal"],
 							"folio"			=>	$foli,
 							"fecha"			=>	$fech,
 							"referencia"	=>	$refe,
+							"fecha_registro"=>	$fechaGood
 						];
+						$this->db->query("UPDATE ajusalida SET estatus = 0 WHERE DATE(fecha_registro) = DATE('".$fechaGood."') AND id_sucursal = ".$user["id_sucursal"]." AND folio = '".$foli."'");
 						$ajsa = $this->ajsal_md->insert($new_salida);
 						$tipo = false;
 					}elseif(strpos($pos[$i],"AJU.ENTRADAS")){
 						$foli = substr($pos[$i], 9,6);
 						$refe = substr($pos[$i], 16,11);
 						$fech = substr($pos[$i], 61,9);
-						
+						$fechaGood = $this->getDateMatriz($fech);
 						$new_salida = [
 							"id_sucursal"	=>	$user["id_sucursal"],
 							"folio"			=>	$foli,
 							"fecha"			=>	$fech,
 							"referencia"	=>	$refe,
+							"fecha_registro"=>	$fechaGood
 						];
+						$this->db->query("UPDATE ajuentrada SET estatus = 0 WHERE DATE(fecha_registro) = DATE('".$fechaGood."') AND id_sucursal = ".$user["id_sucursal"]." AND folio = '".$foli."'");
 						$ajsa = $this->ajent_md->insert($new_salida);
 						$tipo = true;
 					}elseif($pos[$i] <> ""){
@@ -513,6 +523,8 @@ class Entradas extends MY_Controller {
 							"fecha"			=>	$fech,
 							"referencia"	=>	$refe,
 						];
+						$fechaGood = $this->getDateMatriz($fech);
+						$this->db->query("UPDATE ajusalida SET estatus = 0 WHERE DATE(fecha_registro) = DATE('".$fechaGood."') AND id_sucursal = ".$user["id_sucursal"]." AND folio = '".$foli."'");
 						$ajsa = $this->ajsal_md->insert($new_salida);
 					}elseif($pos[$i] <> ""){
 						$code = substr($pos[$i], 6,17);
@@ -668,6 +680,8 @@ class Entradas extends MY_Controller {
 							"fecha"			=>	$fech,
 							"referencia"	=>	$refe,
 						];
+						$fechaGood = $this->getDateMatriz($fech);
+						$this->db->query("UPDATE ajuentrada SET estatus = 0 WHERE DATE(fecha_registro) = DATE('".$fechaGood."') AND id_sucursal = ".$user["id_sucursal"]." AND folio = '".$foli."'");
 						$ajsa = $this->ajent_md->insert($new_salida);
 					}elseif($pos[$i] <> ""){
 						$code = substr($pos[$i], 6,17);
@@ -748,94 +762,108 @@ class Entradas extends MY_Controller {
 						}else{
 							$code1 = substr($pos[$i], 0,17);
 							$code1 = str_replace(" ", "", $code1);
-							$descripcion = substr($pos[$i], 17,41);
-							$descripcion = str_replace("  ", "", $descripcion);
-							$unidad = substr($pos[$i], 58,3);
-							$existencia = substr($pos[$i], 62,12);
+							$descripcion = substr($pos[$i], 17,36);
+							//$descripcion = str_replace("¥", "Ñ", $descripcion);
+							$unidad = substr($pos[$i], 53,3);
+							$existencia = substr($pos[$i], 56,12);
 							$existencia = str_replace(" ", "", $existencia);
 							$existencia = str_replace(",", "", $existencia);
-							$exo = substr($pos[$i], 73,1);
+							$exo = substr($pos[$i], 68,1);
 							if($exo == "-"){
 								$existencia = "-".$existencia;
 							}
 
-							$p1 = substr($pos[$i], 76,12);
+							$p1 = substr($pos[$i], 70,11);
 							$p1 = str_replace(" ", "", $p1);
 							$p1 = str_replace(",", "", $p1);
-							$exo = substr($pos[$i], 86,1);
+							$exo = substr($pos[$i], 81,1);
 							if($exo == "-"){
 								$p1 = "-".$p1;
 							}
 
-							$p2 = substr($pos[$i], 87,12);
+							$p2 = substr($pos[$i], 82,12);
 							$p2 = str_replace(" ", "", $p2);
 							$p2 = str_replace(",", "", $p2);
-							$exo = substr($pos[$i], 98,1);
+							$exo = substr($pos[$i], 93,1);
 							if($exo == "-"){
 								$p2 = "-".$p2;
 							}
 
-							$p3 = substr($pos[$i], 99,12);
+							$p3 = substr($pos[$i], 94,12);
 							$p3 = str_replace(" ", "", $p3);
 							$p3 = str_replace(",", "", $p3);
-							$exo = substr($pos[$i], 110,1);
+							$exo = substr($pos[$i], 105,1);
 							if($exo == "-"){
 								$p3 = "-".$p3;
 							}
 
-							$code2 = substr($pos[$i], 112,26);
+							$p4 = substr($pos[$i], 106,12);
+							$p4 = str_replace(" ", "", $p4);
+							$p4 = str_replace(",", "", $p4);
+							$exo = substr($pos[$i], 117,1);
+							if($exo == "-"){
+								$p4 = "-".$p4;
+							}
+
+							$p5 = substr($pos[$i], 118,12);
+							$p5 = str_replace(" ", "", $p5);
+							$p5 = str_replace(",", "", $p5);
+							$exo = substr($pos[$i], 129,1);
+							if($exo == "-"){
+								$p5 = "-".$p5;
+							}
+
+							$code2 = substr($pos[$i], 130,14);
 							$code2 = str_replace(" ", "", $code2);
 
-							$new_producto=[
-								"codigo"		=>	$code1,
-								"nombre"		=>	$descripcion,
-								"registro"		=>	$user["id_usuario"],
-								"ums"			=>	$unidad,
-								"code"			=>	$code2,
-								"id_sucursal"	=>	$user["id_sucursal"],
-								"fecha_registro"=>	date("Y-m-d H:i:s"),
-								"estatus"		=>	1
-							];
 
-							$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"id_sucursal"=>$user["id_sucursal"],"estatus"=>1]);
+							if($user["id_sucursal"] == 7){
+								
+								$producto = $this->prod_md->get(NULL,["codigo"=>$code1]);
 
-							if($producto){
-								$id_producto = $this->sprod_md->update($new_producto,$producto[0]->id_producto);
-								$id_producto = $producto[0]->id_producto;
+								if($producto){
+									$id_producto = $producto[0]->id_producto;
+								}else{
+									$id_producto = 222;
+								}
+
+								$new_existencia=[
+									"id_producto"	=>	$id_producto,
+									"existencia"	=>	$existencia,
+									"fecha_registro"=>	date("Y-m-d H:i:s")
+								];
+
+								$existencia = $this->exced_md->get(NULL,[ "id_producto"=>$id_producto ]);
+
+								if($existencia){
+									$id_existencia = $this->exced_md->update(["estatus"=>0],["id_producto"=>$id_producto]);
+								}
+								$id_existencia = $this->exced_md->insert($new_existencia);
+								
 							}else{
-								$id_producto = $this->sprod_md->insert($new_producto);
-							}
-							$new_existencia=[
-								"id_producto"	=>	$id_producto,
-								"existencia"	=>	$existencia,
-								"fecha_registro"=>	date("Y-m-d H:i:s")
-							];
+								
 
-							$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto ]);
+								$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"id_sucursal"=>$user["id_sucursal"]]);
 
-							if($existencia){
-								$id_existencia = $this->exis_md->update($new_existencia,$existencia[0]->id_existencia);
-								$id_existencia = $existencia[0]->id_existencia;
-							}else{
+								if($producto){
+									$id_producto = $producto[0]->id_producto;
+								}else{
+									$id_producto = 2;
+								}
+
+								$new_existencia=[
+									"id_producto"	=>	$id_producto,
+									"existencia"	=>	$existencia,
+									"fecha_registro"=>	date("Y-m-d H:i:s")
+								];
+
+								$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto ]);
+
+								if($existencia){
+									$id_existencia = $this->exis_md->update(["estatus"=>0],["id_producto"=>$id_producto]);
+								}
 								$id_existencia = $this->exis_md->insert($new_existencia);
-							}
-
-							$new_precios=[
-								"id_producto"	=>	$id_producto,
-								"preciouno"		=>	$p1,
-								"preciodos"		=>	$p2,
-								"preciotres"	=>	$p3,
-								"registro"		=>	$user["id_usuario"],
-								"fecha_registro"=>	date("Y-m-d H:i:s")
-							];
-
-
-							$precio = $this->sprize_md->get(NULL,["id_producto"=>$id_producto,"estatus"=>1])[0];
-
-							if($precio){
-								$id_producto = $this->sprize_md->update($new_precios,$precio->id_precio);
-							}else{
-								$id_producto = $this->sprize_md->insert($new_precios);
+								
 							}
 							
 						}
@@ -851,6 +879,26 @@ class Entradas extends MY_Controller {
 
  
 		$this->jsonResponse($filen.".".$extension);
+	}
+
+
+	public function getDateMatriz($stronzo){
+		$fecha = new DateTime(date('Y-m-d H:i:s'));
+		$stronzo = str_replace("Ene", "01", $stronzo);
+		$stronzo = str_replace("Feb", "02", $stronzo);
+		$stronzo = str_replace("Mar", "03", $stronzo);
+		$stronzo = str_replace("Abr", "04", $stronzo);
+		$stronzo = str_replace("May", "05", $stronzo);
+		$stronzo = str_replace("Jun", "06", $stronzo);
+		$stronzo = str_replace("Jul", "07", $stronzo);
+		$stronzo = str_replace("Ago", "08", $stronzo);
+		$stronzo = str_replace("Sep", "09", $stronzo);
+		$stronzo = str_replace("Oct", "10", $stronzo);
+		$stronzo = str_replace("Nov", "11", $stronzo);
+		$stronzo = str_replace("Dic", "12", $stronzo);
+		$good = "20".substr($stronzo,6,2)."-".substr($stronzo,3,2)."-".substr($stronzo, 0,2)." ".$fecha->format('H:i:s');
+		
+		return $good;
 	}
 
 } 

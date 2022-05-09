@@ -47,7 +47,7 @@ var myDropzoneV = new Dropzone("div#kt_dropzone_venta", {
         var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
         myDropzoneV.removeAllFiles();
         imageName2 = response;
-        location.reload();
+        //location.reload();
         $("#ultTxt").html("<h1>Archivo del día : <a href='assets/uploads/entradas/"+response+"' target='_blank'>"+time+"</a></h1>")
         
     }

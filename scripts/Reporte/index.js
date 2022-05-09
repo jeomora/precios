@@ -5,12 +5,17 @@ jQuery(document).ready(function() {
     $("#titlePrincipal").html("REPORTE SUCURSALES");
     KTSelect2.init();
     KTBootstrapDaterangepicker.init();
+    getReporte();
 });
 
+function getReporte(){
+    console.log($('#selectLinea').val())
+    console.log($('#rangeFecha').val())
+}
 
 
-var KTSelect2 = function() {
-    
+
+var KTSelect2 = function() {   
     var demos = function() {
     
         $('#selectLinea').select2({
@@ -18,7 +23,6 @@ var KTSelect2 = function() {
         });
 
     }
-
     return {
         init: function() {
             demos();
@@ -30,7 +34,6 @@ var KTSelect2 = function() {
 // Class definition
 
 var KTBootstrapDaterangepicker = function () {
-
     // Private functions
     var demos = function () {
 

@@ -70,7 +70,7 @@ h1.inventarioTotal,h1.ventaTotal{font-size:3rem;}
                                     </div>
                                 </div>
                                 <div class="position-absolute right-0 bottom-0 mr-5 overflow-hidden">
-                                    <img src="assets/media/svg/illustrations/sucvus.svg" style="height:400px;width:400px;margin-bottom:-82px;" id="imgStart" />
+                                    <img src="assets/media/svg/illustrations/uploading.svg" style="height:400px;width:400px;margin-bottom:-82px;" id="imgStart" />
                                 </div>
                             </div>
                         </div>
