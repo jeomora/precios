@@ -140,6 +140,7 @@
                                     <span class="menu-text">Compara Precios</span>
                                 </a>
                             </li>
+                            
                             <li class="menu-codes menu-item " aria-haspopup="true" >
                                 <a href="<?php echo base_url('Compara/codigos') ?>" class="menu-link ">
                                     <span class="svg-icon menu-icon">

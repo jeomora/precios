@@ -891,4 +891,27 @@ class Compara extends MY_Controller {
 		$this->jsonResponse($comparativa);
 	}
 
+	public function faster(){
+		if($this->session->userdata("username")){
+			$user = $this->session->userdata();//Trae los datos del usuario
+			$data["dias"] = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
+			$data["meses"] = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+			$data["fecha"] =  $data["dias"][date('w')]." ".date('d')." DE ".$data["meses"][date('n')-1]. " DEL ".date('Y') ;
+			$data["lasta"] = $this->user_md->getLastDate(NULL);
+			$data['scripts'] = [
+				'/scripts/Compara/faster',
+			];
+			$this->estructura("Compara/faster", $data);
+			//$this->jsonResponse($data["lasta"]);
+		}else{
+			$this->data["message"] =NULL;
+			$this->estructura_login("Admin/login", $this->data, FALSE);
+		}
+	}
+
+	public function getComparacionFast($sucursal=8){
+		$comparativa = $this->sprod_md->getComparacionFast(NULL,$sucursal);
+		$this->jsonResponse($comparativa);
+	}
+
 }
