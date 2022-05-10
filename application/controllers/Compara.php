@@ -9,6 +9,7 @@ class Compara extends MY_Controller {
 		$this->load->model("Cambios_model", "cambio_md");
 		$this->load->model("Sucprecios_model", "sprize_md");
 		$this->load->model("Sucproductos_model", "sprod_md");
+		$this->load->model("Productos_model", "prod_md");
 		$this->load->model("Nuevos_model", "new_md");
 		$this->load->model("Nuevodetail_model", "det_md");
 		$this->load->model("Listos_model", "listo_md");
@@ -137,6 +138,20 @@ class Compara extends MY_Controller {
 							$code2 = substr($pos[$i], 112,26);
 							$code2 = str_replace(" ", "", $code2);
 
+							$code1 = str_replace("\r", "", $code1);
+							$code2 = str_replace("\r", "", $code2);
+							$prodC = $this->prod_md->get(NULL,["codigo"=>$code1,"estatus"=>1]);
+							
+							if($prodC){
+								$prodC1 = $prodC[0]->id_producto;
+							}else{
+								$prodC2 = $this->prod_md->get(NULL,["codigo"=>$code2,"estatus"=>1]);
+								if($prodC2){
+									$prodC1 = $prodC2[0]->id_producto;
+								}else{
+									$prodC1 = 222;
+								}
+							}
 							$new_producto=[
 								"codigo"		=>	$code1,
 								"nombre"		=>	$descripcion,
@@ -145,7 +160,8 @@ class Compara extends MY_Controller {
 								"code"			=>	$code2,
 								"id_sucursal"	=>	$user["id_sucursal"],
 								"fecha_registro"=>	date("Y-m-d H:i:s"),
-								"estatus"		=>	1
+								"estatus"		=>	1,
+								"id_prox"		=>	$prodC1
 							];
 
 							$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"id_sucursal"=>$user["id_sucursal"],"estatus"=>1]);
@@ -385,8 +401,22 @@ class Compara extends MY_Controller {
 
 							$code2 = substr($pos[$i], 130,14);
 							$code2 = str_replace(" ", "", $code2);
-							
 
+
+							$code1 = str_replace("\r", "", $code1);
+							$code2 = str_replace("\r", "", $code2);
+							$prodC = $this->prod_md->get(NULL,["codigo"=>$code1,"estatus"=>1]);
+							
+							if($prodC){
+								$prodC1 = $prodC[0]->id_producto;
+							}else{
+								$prodC2 = $this->prod_md->get(NULL,["codigo"=>$code2,"estatus"=>1]);
+								if($prodC2){
+									$prodC1 = $prodC2[0]->id_producto;
+								}else{
+									$prodC1 = 222;
+								}
+							}
 							$new_producto=[
 								"codigo"		=>	$code1,
 								"nombre"		=>	$descripcion,
@@ -395,7 +425,8 @@ class Compara extends MY_Controller {
 								"code"			=>	$code2,
 								"id_sucursal"	=>	$user["id_sucursal"],
 								"fecha_registro"=>	date("Y-m-d H:i:s"),
-								"estatus"		=>	1
+								"estatus"		=>	1,
+								"id_prox"		=>	$prodC1
 							];
 
 							$producto = $this->sprod_md->get(NULL,["codigo"=>$code1,"id_sucursal"=>$user["id_sucursal"]]);
