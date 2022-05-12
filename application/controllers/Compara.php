@@ -554,7 +554,7 @@ class Compara extends MY_Controller {
 								if ($prod) {
 									$this->sprod_md->update(["nombre"=>$nome],["id_producto"=>$prod[0]->id_producto]);
 
-									$lasto  = $this->lasto_md->get(NULL , ["codigo"=>$codigo,"estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
+									$lasto  = $this->lasto_md->get(NULL , ["id_producto"=>$prod[0]->id_producto,"estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
 									if($lasto){
 										$this->lasto_md->update(["costo"=>$lastco] , [ "id_last"=>$lasto[0]->id_last ]);
 									}else{

@@ -425,7 +425,7 @@ class Uploads extends MY_Controller {
 							if ($prod){
 								$this->prod_md->update(["nombre"=>$nome],["id_producto"=>$prod[0]->id_producto]);
 
-								$this->last_md->update(["estatus"=>0] , ["codigo"=>$codigo,"estatus"=>1]);
+								$this->last_md->update(["estatus"=>0] , ["id_producto"=>$prod[0]->id_producto,"estatus"=>1]);
 								$last = $this->last_md->insert(["costo"=>$lastco,"codigo"=>$codigo,"id_producto"=>$prod[0]->id_producto]);
 							}
 						}
