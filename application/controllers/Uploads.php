@@ -27,6 +27,7 @@ class Uploads extends MY_Controller {
 		$this->load->model("Nuevob_model", "newb_md");
 		$this->load->model("Ofertas_model", "ofe_md");
 		$this->load->model("Lastco_model", "last_md");
+		$this->load->model("Exicedis_model","exis_md");
 		$this->load->library("form_validation");
 	}
 
@@ -123,6 +124,12 @@ class Uploads extends MY_Controller {
 							$descripcion = substr($pos[$i], 17,36);
 							$unidad = substr($pos[$i], 53,3);
 							$existencia = substr($pos[$i], 56,12);
+							$existencia = str_replace(" ", "", $existencia);
+							$existencia = str_replace(",", "", $existencia);
+							$exo = substr($pos[$i], 68,1);
+							if($exo == "-"){
+								$existencia = "-".$existencia;
+							}
 
 							$p1 = substr($pos[$i], 70,11);
 							$p1 = str_replace(" ", "", $p1);
@@ -173,6 +180,19 @@ class Uploads extends MY_Controller {
 							}else{
 								$id_producto = $this->prod_md->insert($new_producto);
 							}
+
+							$new_existencia=[
+								"id_producto"	=>	$id_producto,
+								"existencia"	=>	$existencia,
+								"fecha_registro"=>	date("Y-m-d H:i:s")
+							];
+
+							$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto ]);
+
+							if($existencia){
+								$id_existencia = $this->exis_md->update(["estatus"=>0],["id_producto"=>$id_producto]);
+							}
+							$id_existencia = $this->exis_md->insert($new_existencia);
 							
 
 							$new_precios=[
@@ -193,6 +213,7 @@ class Uploads extends MY_Controller {
 								$id_producto = $this->prize_md->update(["estatus"=>0],["id_producto"=>$id_producto]);
 							}
 							$id_precio = $this->prize_md->insert($new_precios);
+
 							
 						}
 					}
