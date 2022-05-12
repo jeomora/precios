@@ -38,6 +38,7 @@ class Entradas extends MY_Controller {
 		$flagNo = 1;
 		$pos = explode("\n", $dom);
 		$folio = "";
+		$archi = "";
 		
 		/* EL ARCHIVO QUE SE SUBIO ES UN TXT DE NOTAS DE ENTRADA*/
 		if( strpos($dom,"Relacion Notas de Entrada")  ||  strpos($dom,"RELACION NOTAS DE ENTRADA") ){
@@ -50,6 +51,7 @@ class Entradas extends MY_Controller {
 	        $this->load->library('upload', $config);
 	        $this->upload->initialize($config);
 	        $this->upload->do_upload('file_inventario',$filen);
+	        $archi = "RELACION NOTAS DE ENTRADA";
 
 
 	        $path_parts = pathinfo($_FILES["file_inventario"]["name"]);
@@ -233,6 +235,7 @@ class Entradas extends MY_Controller {
 	        $this->load->library('upload', $config);
 	        $this->upload->initialize($config);
 	        $this->upload->do_upload('file_inventario',$filen);
+	        $archi = "AJUSTES DE INVENTARIO ENTRADA Y SALIDA";
 
 
 	        $path_parts = pathinfo($_FILES["file_inventario"]["name"]);
@@ -425,6 +428,7 @@ class Entradas extends MY_Controller {
 	        $this->load->library('upload', $config);
 	        $this->upload->initialize($config);
 	        $this->upload->do_upload('file_inventario',$filen);
+	        $archi = "AJUSTES DE INVENTARIO SALIDAS";
 
 
 	        $path_parts = pathinfo($_FILES["file_inventario"]["name"]);
@@ -582,6 +586,7 @@ class Entradas extends MY_Controller {
 	        $this->load->library('upload', $config);
 	        $this->upload->initialize($config);
 	        $this->upload->do_upload('file_inventario',$filen);
+	        $archi = "AJUSTES DE INVENTARIO ENTRADA";
 
 
 	        $path_parts = pathinfo($_FILES["file_inventario"]["name"]);
@@ -728,7 +733,7 @@ class Entradas extends MY_Controller {
 				}
 			}
 		}elseif( strpos($dom,"LISTA DE PRECIOS CON EXISTENCIA") ){
-			$this->sprod_md->update(["estatus"=>0],["estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
+			$archi = "MATRICIAL";
 			for ($i=0; $i<sizeof($pos); $i++){
 				if (!empty($pos[$i])){
 					$pos[$i] = str_replace("", "", $pos[$i]);
@@ -874,11 +879,11 @@ class Entradas extends MY_Controller {
 			$mensaje=[	"id"	=>	'Éxito',
 						"desc"	=>	'Datos cargados correctamente en el Sistema',
 						"type"	=>	'success'];
-			$this->jsonResponse($mensaje);
+			$this->jsonResponse($archi);
 		}
 
  
-		$this->jsonResponse($filen.".".$extension);
+		$this->jsonResponse($archi);
 	}
 
 

@@ -26,29 +26,47 @@ var myDropzoneV = new Dropzone("div#kt_dropzone_venta", {
         toastr.options = {
               "closeButton": true,
               "debug": false,
-              "newestOnTop": false,
+              "newestOnTop": true,
               "progressBar": true,
               "positionClass": "toast-top-right",
               "preventDuplicates": false,
-              "onclick": "location.reload()",
-              "showDuration": "300",
-              "hideDuration": "1000",
-              "timeOut": "1000",
-              "extendedTimeOut": "1000",
+              "onclick": null,
+              "showDuration": "300000",
+              "hideDuration": "100000",
+              "timeOut": "500000",
+              "extendedTimeOut": "1000000",
               "showEasing": "swing",
               "hideEasing": "linear",
               "showMethod": "fadeIn",
               "hideMethod": "fadeOut"
         };
-        toastr.success("Listo","Espere un momento a que se carguen los datos");
+        
     },
     success: function(file, response){
         var dt = new Date();
         var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
         myDropzoneV.removeAllFiles();
         imageName2 = response;
+        toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": true,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "3000000",
+              "hideDuration": "1000000",
+              "timeOut": "5000000",
+              "extendedTimeOut": "10000000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+        };
+        toastr.success("Se subio el archivo correctamente",response);
         //location.reload();
-        $("#ultTxt").html("<h1>Archivo del día : <a href='assets/uploads/entradas/"+response+"' target='_blank'>"+time+"</a></h1>")
+        $("#ultTxt").html("<h1>Archivo del día : "+time+"</h1>")
         
     }
 });
