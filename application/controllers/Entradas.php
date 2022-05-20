@@ -838,7 +838,7 @@ class Entradas extends MY_Controller {
 									"fecha_registro"=>	date("Y-m-d H:i:s")
 								];
 
-								$existencia = $this->exced_md->get(NULL,[ "id_producto"=>$id_producto ]);
+								$existencia = $this->exced_md->get(NULL,[ "id_producto"=>$id_producto,"DATE(fecha_registro)"=>date("Y-m-d") ]);
 
 								if($existencia){
 									$id_existencia = $this->exced_md->update(["estatus"=>0],["id_producto"=>$id_producto]);
@@ -862,7 +862,7 @@ class Entradas extends MY_Controller {
 									"fecha_registro"=>	date("Y-m-d H:i:s")
 								];
 
-								$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto ]);
+								$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto,"DATE(fecha_registro)"=>date("Y-m-d")]);
 
 								if($existencia){
 									$id_existencia = $this->exis_md->update(["estatus"=>0],["id_producto"=>$id_producto]);
@@ -879,7 +879,6 @@ class Entradas extends MY_Controller {
 			$mensaje=[	"id"	=>	'Éxito',
 						"desc"	=>	'Datos cargados correctamente en el Sistema',
 						"type"	=>	'success'];
-			$this->jsonResponse($archi);
 		}
 
  

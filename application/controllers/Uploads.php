@@ -187,7 +187,7 @@ class Uploads extends MY_Controller {
 								"fecha_registro"=>	date("Y-m-d H:i:s")
 							];
 
-							$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto ]);
+							$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto,"DATE(fecha_registro)"=>date("Y-m-d") ]);
 
 							if($existencia){
 								$id_existencia = $this->exis_md->update(["estatus"=>0],["id_producto"=>$id_producto]);
@@ -2320,11 +2320,11 @@ class Uploads extends MY_Controller {
 		$conju = floatval($conjunto->fecha) +1;
 		$conju2 = floatval($conjunto->fecha) +2;
 		if ( 1 == 1 ) {//OFERTAS DE LA SEMANA
-			$inicio = date('Y-m-d 07:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"B")));
-			$termino= date('Y-m-d 22:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"D")));
+			$inicio = gmdate('Y-m-d 07:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"B")));
+			$termino= gmdate('Y-m-d 22:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"D")));
 
-			$inicio2 = date('Y-m-d 07:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"G")));
-			$termin2 = date('Y-m-d 22:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"I")));
+			$inicio2 = gmdate('Y-m-d 07:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"G")));
+			$termin2 = gmdate('Y-m-d 22:00:00',PHPExcel_Shared_Date::ExcelToPHP( $this->getOldVal($sheet,3,"I")));
 			for ($i=5; $i<=$num_rows; $i++) {
 				if($this->getOldVal($sheet,$i,"A") <> "" && $this->getOldVal($sheet,$i,"A") <> "  " && $this->getOldVal($sheet,$i,"A") <> "CODIGO" && $this->getOldVal($sheet,$i,"A") <> "0" && $this->getOldVal($sheet,$i,"A") <> 0){
 					$produ = 0;$codo = $this->getOldVal($sheet,$i,"A");

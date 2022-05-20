@@ -178,7 +178,7 @@ class Compara extends MY_Controller {
 								"fecha_registro"=>	date("Y-m-d H:i:s")
 							];
 
-							$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto ]);
+							$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto,"DATE(fecha_registro)"=>date("Y-m-d") ]);
 
 							if($existencia){
 								$id_existencia = $this->exis_md->update($new_existencia,$existencia[0]->id_existencia);
@@ -444,7 +444,7 @@ class Compara extends MY_Controller {
 								"fecha_registro"=>	date("Y-m-d H:i:s")
 							];
 
-							$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto ]);
+							$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto,"DATE(fecha_registro)"=>date("Y-m-d") ]);
 
 							if($existencia){
 								$id_existencia = $this->exis_md->update(["estatus"=>0],["id_producto"=>$id_producto]);

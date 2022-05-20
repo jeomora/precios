@@ -26,6 +26,25 @@ canvas.drawingBuffer{
     top:0;
     left:0;
 }
+
+.suc0Head{background:#000;color:#FFF;font-size:24px !important;}
+.suc0Thead{background:#000;color:#FFF;}
+
+.suc7Head{background:#c00000;color:#000;font-size:24px !important;}
+.suc7Thead{background-image:linear-gradient(135deg, white 85%, #c00000 15%);}
+.suc6Head{background:#01b0f0;color:#000;font-size:24px !important;}
+.suc6Thead{background-image:linear-gradient(135deg, white 85%, #01b0f0 15%);}
+.suc5Head{background:#c5c5c5;color:#000;font-size:24px !important;}
+.suc5Thead{background-image:linear-gradient(135deg, white 85%, #c5c5c5 15%);}
+.suc4Head{background:#93d051;color:#000;font-size:24px !important;}
+.suc4Thead{background-image:linear-gradient(135deg, white 85%, #93d051 15%);}
+.suc3Head{background:#b1a0c7;color:#000;font-size:24px !important;}
+.suc3Thead{background-image:linear-gradient(135deg, white 85%, #b1a0c7 15%);}
+.suc2Head{background:#da9694;color:#000;font-size:24px !important;}
+.suc2Thead{background-image:linear-gradient(135deg, white 85%, #da9694 15%);}
+.suc1Head{background:#4cacc6;color:#000;font-size:24px !important;}
+.suc1Thead{background-image:linear-gradient(135deg, white 85%, #4cacc6 15%);}
+.posZOver{position:absolute;top:0;left:0;right:0;padding:50px;z-index:100;background:white;bottom:0;overflow:scroll;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -106,6 +125,115 @@ canvas.drawingBuffer{
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr style="text-align: center;">
+                                <th colspan="6" class="suc0 suc0Head">DETALLES DEL PRODUCTO <br>SEGÚN COMPUCAJA CEDIS</th>
+                                <th colspan="9" class="suc7 suc7Head">CEDIS</th>
+                                <th colspan="9" class="suc6 suc6Head">SOLIDARIDAD</th>
+                                <th colspan="9" class="suc5 suc5Head">ULTRA</th>
+                                <th colspan="9" class="suc4 suc4Head">TRINCHERAS</th>
+                                <th colspan="9" class="suc3 suc3Head">MERCADO</th>
+                                <th colspan="9" class="suc2 suc2Head">TENENCIA</th>
+                                <th colspan="9" class="suc1 suc1Head">TIJERAS</th>
+                                <th colspan="6" class="suc0 suc0Head">TOTALES</th>
+                            </tr>
+                            <tr>
+                                <th class="suc0Thead">ID</th>
+                                <th class="suc0Thead">CÓDIGO</th>
+                                <th class="suc0Thead">DESCRIPCIÓN</th>
+                                <th class="suc0Thead">UNIDAD</th>
+                                <th class="suc0Thead">UM</th>
+                                <th class="suc0Thead">LINEA</th>
+
+                                <th class="suc7Thead">ULTIMO <br> COSTO</th>
+                                <th class="suc7Thead">PX <br> VENTA</th>
+                                <th class="suc7Thead">% <br> UTILIDAD</th>
+                                <th class="suc7Thead">COMPRO</th>
+                                <th class="suc7Thead">VENDIO</th>
+                                <th class="suc7Thead">MERMA</th>
+                                <th class="suc7Thead">TOTAL <br>COMPRA</th>
+                                <th class="suc7Thead">TOTAL <br>MERMA</th>
+                                <th class="suc7Thead">PX <br>REAL</th>
+
+                                <th class="suc6Thead">ULTIMO <br> COSTO</th>
+                                <th class="suc6Thead">PX <br> VENTA</th>
+                                <th class="suc6Thead">% <br> UTILIDAD</th>
+                                <th class="suc6Thead">COMPRO</th>
+                                <th class="suc6Thead">VENDIO</th>
+                                <th class="suc6Thead">MERMA</th>
+                                <th class="suc6Thead">TOTAL <br>COMPRA</th>
+                                <th class="suc6Thead">TOTAL <br>MERMA</th>
+                                <th class="suc6Thead">PX <br>REAL</th>
+
+                                <th class="suc5Thead">ULTIMO <br> COSTO</th>
+                                <th class="suc5Thead">PX <br> VENTA</th>
+                                <th class="suc5Thead">% <br> UTILIDAD</th>
+                                <th class="suc5Thead">COMPRO</th>
+                                <th class="suc5Thead">VENDIO</th>
+                                <th class="suc5Thead">MERMA</th>
+                                <th class="suc5Thead">TOTAL <br>COMPRA</th>
+                                <th class="suc5Thead">TOTAL <br>MERMA</th>
+                                <th class="suc5Thead">PX <br>REAL</th>
+
+                                <th class="suc4Thead">ULTIMO <br> COSTO</th>
+                                <th class="suc4Thead">PX <br> VENTA</th>
+                                <th class="suc4Thead">% <br> UTILIDAD</th>
+                                <th class="suc4Thead">COMPRO</th>
+                                <th class="suc4Thead">VENDIO</th>
+                                <th class="suc4Thead">MERMA</th>
+                                <th class="suc4Thead">TOTAL <br>COMPRA</th>
+                                <th class="suc4Thead">TOTAL <br>MERMA</th>
+                                <th class="suc4Thead">PX <br>REAL</th>
+
+                                <th class="suc3Thead">ULTIMO <br> COSTO</th>
+                                <th class="suc3Thead">PX <br> VENTA</th>
+                                <th class="suc3Thead">% <br> UTILIDAD</th>
+                                <th class="suc3Thead">COMPRO</th>
+                                <th class="suc3Thead">VENDIO</th>
+                                <th class="suc3Thead">MERMA</th>
+                                <th class="suc3Thead">TOTAL <br>COMPRA</th>
+                                <th class="suc3Thead">TOTAL <br>MERMA</th>
+                                <th class="suc3Thead">PX <br>REAL</th>
+
+                                <th class="suc2Thead">ULTIMO <br> COSTO</th>
+                                <th class="suc2Thead">PX <br> VENTA</th>
+                                <th class="suc2Thead">% <br> UTILIDAD</th>
+                                <th class="suc2Thead">COMPRO</th>
+                                <th class="suc2Thead">VENDIO</th>
+                                <th class="suc2Thead">MERMA</th>
+                                <th class="suc2Thead">TOTAL <br>COMPRA</th>
+                                <th class="suc2Thead">TOTAL <br>MERMA</th>
+                                <th class="suc2Thead">PX <br>REAL</th>
+
+                                <th class="suc1Thead">ULTIMO <br> COSTO</th>
+                                <th class="suc1Thead">PX <br> VENTA</th>
+                                <th class="suc1Thead">% <br> UTILIDAD</th>
+                                <th class="suc1Thead">COMPRO</th>
+                                <th class="suc1Thead">VENDIO</th>
+                                <th class="suc1Thead">MERMA</th>
+                                <th class="suc1Thead">TOTAL <br>COMPRA</th>
+                                <th class="suc1Thead">TOTAL <br>MERMA</th>
+                                <th class="suc1Thead">PX <br>REAL</th>
+
+
+                                <th class="suc0Thead">TOTAL <br>COMPRA</th>
+                                <th class="suc0Thead">TOTAL <br>VENTA</th>
+                                <th class="suc0Thead">TOTAL <br>MERMA</th>
+                                <th class="suc0Thead">TOTALES <br>COMPRA</th>
+                                <th class="suc0Thead">TOTALES <br>MERMA</th>
+                                <th class="suc0Thead">PX <br>REAL</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbodyMermas">
+                            
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
