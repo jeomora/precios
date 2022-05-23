@@ -21,7 +21,8 @@ class Reporte extends MY_Controller {
 	}
 
 	public function getMerma(){
-		$merma = $this->dentr_md->getMerma(NULL);
+		$valo = $this->input->post("values");
+		$merma = $this->dentr_md->getMerma(NULL,$valo);
 		$this->jsonResponse($merma);
 	}
 

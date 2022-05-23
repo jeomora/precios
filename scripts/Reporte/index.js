@@ -5,17 +5,18 @@ jQuery(document).ready(function() {
     $("#titlePrincipal").html("REPORTE SUCURSALES");
     KTSelect2.init();
     KTBootstrapDaterangepicker.init();
-    getReporte();
+    //getReporte();
 });
 
 function getReporte(){
-    console.log($('#selectLinea').val())
-    console.log($('#rangeFecha').val())
-    getMerma().done(function(resp){
+    var fechRan = $('#rangeFecha').val();
+    var datos = {"inicio": fechRan.substring(3,5)+"-"+fechRan.substring(0,2)+"-"+fechRan.substring(6,10), "final":fechRan.substring(16,18)+"-"+fechRan.substring(13,15)+"-"+fechRan.substring(19,23), "linea":$('#selectLinea').val()}
+    $(".tbodyMermas").html("")
+    getMerma(JSON.stringify(datos)).done(function(resp){
         //console.log(resp)
         if(resp){
             $.each(resp,function(index,value){
-                console.log(value)
+                //console.log(value)
                 var porce7 =  ((value.sucursales[7].puno-value.sucursales[7].ucosto)/value.sucursales[7].puno)*100;
                 var porce6 =  ((value.sucursales[6].puno-value.sucursales[6].ucosto)/value.sucursales[6].puno)*100;
                 var porce5 =  ((value.sucursales[5].puno-value.sucursales[5].ucosto)/value.sucursales[5].puno)*100;
@@ -32,14 +33,14 @@ function getReporte(){
                 var entra4 = isnull(value.sucursales[4].entcan)+isnull(value.sucursales[4].notacan);
                 var entra5 = isnull(value.sucursales[5].entcan)+isnull(value.sucursales[5].notacan);
                 var entra6 = isnull(value.sucursales[6].entcan)+isnull(value.sucursales[6].notacan);
-                var entra7 = isnull(value.sucursales[7].entcan)+isnull(value.sucursales[7].notacan);
+                var entra7 = isnull(value.sucursales[7].entcan2)+isnull(value.sucursales[7].notacan2);
                 var entra8 = isnull(value.sucursales[8].entcan)+isnull(value.sucursales[8].notacan);
 
 
                 $(".tbodyMermas").append("<tr><td>"+value.id_producto+"</td><td>"+value.codigo+"</td><td class='font-weight-bolder'>"+value.nombre+"</td><td>"+value.ides+"</td><td>"+value.unidad+"</td><td>"+value.linea+"</td>"+
                     //RENGLONES CEDIS
                     "<td class='font-weight-bolder'>$ "+formatMoney(value.sucursales[7].ucosto)+"</td><td class='font-weight-bolder'>$ "+formatMoney(value.sucursales[7].puno)+"</td><td class='font-weight-bolder'>% "+formatMoney(porce7)+"</td>"+
-                    "<td>"+formatMoney(entra7)+"</td><td></td><td>"+formatMoney(value.sucursales[7].salcan)+"</td><td></td><td></td><td></td>"+
+                    "<td>"+formatMoney(entra7)+"</td><td>"+formatMoney(value.sucursales[7].sumorems)+"</td><td>"+formatMoney(value.sucursales[7].salcan2)+"</td><td></td><td></td><td></td>"+
                     //RENGLONES SOLIDARIDAD
                     "<td class='font-weight-bolder'>$ "+formatMoney(value.sucursales[6].ucosto)+"</td><td class='font-weight-bolder'>$ "+formatMoney(value.sucursales[6].puno)+"</td><td class='font-weight-bolder'>% "+formatMoney(porce6)+"</td>"+
                     "<td>"+formatMoney(entra6)+"</td><td></td><td>"+formatMoney(value.sucursales[6].salcan)+"</td><td></td><td></td><td></td>"+
@@ -74,15 +75,16 @@ function isnull(cant){
 }
 
 
-function getMerma() {
+function getMerma(datos) {
     return $.ajax({
         url: site_url+"Reporte/getMerma",
         type: "POST",
         cache: false,
+        data:{
+            values:datos
+        }
     });
 }
-
-
 
 var KTSelect2 = function() {   
     var demos = function() {
@@ -100,14 +102,12 @@ var KTSelect2 = function() {
 }();
 
 
-// Class definition
-
 var KTBootstrapDaterangepicker = function () {
     // Private functions
     var demos = function () {
 
-        var start = moment().subtract(6, 'days');
-        var end = moment();
+        var start = moment().subtract(7, 'days');
+        var end = moment().subtract(1, 'days');
 
         $('#rangeFecha').daterangepicker({
             buttonClasses: ' btn',
@@ -137,4 +137,14 @@ var KTBootstrapDaterangepicker = function () {
         }
     };
 }();
-    
+
+
+$(document).off("change","#rangeFecha").on("change","#rangeFecha",function(event){
+    event.preventDefault();
+    getReporte();
+})
+
+$(document).off("change","#selectLinea").on("change","#selectLinea",function(event){
+    event.preventDefault();
+    getReporte();
+})
