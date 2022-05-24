@@ -196,13 +196,19 @@ class Entradas extends MY_Controller {
 							$importe = str_replace(" ", "", $importe);
 							$importe = str_replace(",", "", $importe);
 							if($user["id_sucursal"] == 7){
-								$id_pro = $this->prod_md->get(NULL,["codigo"=>$producto,"id_sucursal"=>$user["id_sucursal"],"estatus"=>1]);
+								$id_pro = $this->prod_md->get(NULL,["codigo"=>$producto,"estatus"=>1]);
 							}else{
 								$id_pro = $this->sprod_md->get(NULL,["codigo"=>$producto,"id_sucursal"=>$user["id_sucursal"],"estatus"=>1]);
 							}
 							
 							if($id_pro){
 								$idesp = $id_pro[0]->id_producto;
+								$idsic = $this->sprod_md->get(NULL,["id_producto"=>$idesp]);
+								if($idsic){
+
+								}else{
+									$this->sprod_md->insert(["id_producto"=>$idesp,"codigo"=>"SINCODE","id_sucursal"=>7,"estatus"=>0,"registro"=>1,"code"=>"SINCODE","ums"=>1,"nombre"=>"SINCODE","id_prox"=>222]);
+								}
 							}else{
 								$idesp = 2;
 							}
@@ -384,13 +390,19 @@ class Entradas extends MY_Controller {
 						$impo = str_replace(" ", "", $impo);
 						$impo = str_replace(",", "", $impo);
 						if($user["id_sucursal"] == 7){
-							$prodo = $this->prod_md->get(NULL,["codigo"=>$code,"id_sucursal"=>$user["id_sucursal"]]);
+							$prodo = $this->prod_md->get(NULL,["codigo"=>$code]);
 						}else{
 							$prodo = $this->sprod_md->get(NULL,["codigo"=>$code,"id_sucursal"=>$user["id_sucursal"]]);
 						}
 						
 						if($prodo){
 							$prodo = $prodo[0]->id_producto;
+							$idsic = $this->sprod_md->get(NULL,["id_producto"=>$prodo]);
+							if($idsic){
+								
+							}else{
+								$this->sprod_md->insert(["id_producto"=>$prodo,"codigo"=>"SINCODE","id_sucursal"=>7,"estatus"=>0,"registro"=>1,"code"=>"SINCODE","ums"=>1,"nombre"=>"SINCODE","id_prox"=>222]);
+							}
 						}else{
 							$prodo = 2;
 						}
@@ -547,7 +559,7 @@ class Entradas extends MY_Controller {
 						$impo = str_replace(" ", "", $impo);
 						$impo = str_replace(",", "", $impo);
 						if($user["id_sucursal"] == 7){
-							$prodo = $this->prod_md->get(NULL,["codigo"=>$code,"id_sucursal"=>$user["id_sucursal"]]);
+							$prodo = $this->prod_md->get(NULL,["codigo"=>$code]);
 						}else{
 							$prodo = $this->sprod_md->get(NULL,["codigo"=>$code,"id_sucursal"=>$user["id_sucursal"]]);
 						}
@@ -705,7 +717,7 @@ class Entradas extends MY_Controller {
 						$impo = str_replace(" ", "", $impo);
 						$impo = str_replace(",", "", $impo);
 						if($user["id_sucursal"] == 7){
-							$prodo = $this->prod_md->get(NULL,["codigo"=>$code,"id_sucursal"=>$user["id_sucursal"]]);
+							$prodo = $this->prod_md->get(NULL,["codigo"=>$code]);
 						}else{
 							$prodo = $this->sprod_md->get(NULL,["codigo"=>$code,"id_sucursal"=>$user["id_sucursal"]]);
 						}

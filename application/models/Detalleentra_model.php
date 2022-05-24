@@ -30,8 +30,8 @@ class Detalleentra_model extends MY_Model {
 		->join("(SELECT *,SUM(cantidad) as salcan,SUM(importe) as salimp,COUNT(*) as salnum FROM detalleajusal WHERE id_ajuste IN (SELECT id_ajuste FROM ajusalida WHERE DATE(fecha_registro) BETWEEN '".$values->inicio."' AND '".$values->final."' AND estatus = 1) GROUP BY id_producto) sal","sp.id_producto = sal.id_producto","LEFT")
 		->join("(SELECT *,SUM(cantidad) as entcan,SUM(importe) as entimp,COUNT(*) as entnum FROM detalleajuent WHERE id_ajuste IN (SELECT id_ajuste FROM ajuentrada WHERE DATE(fecha_registro) BETWEEN '".$values->inicio."' AND '".$values->final."' AND estatus = 1) GROUP BY id_producto) ent","sp.id_producto = ent.id_producto","LEFT")
 		->join("(SELECT *,SUM(cantidad) as notacan,SUM(importe) as notaimp,COUNT(id_producto) as notanum FROM detalleentra WHERE id_remision IN (SELECT id_entrada FROM entradas where estatus = 1 AND DATE(fecha_registro) BETWEEN '".$values->inicio."' AND '".$values->final."') GROUP BY id_producto) as nota","sp.id_producto = nota.id_producto","LEFT")
-		->join("existencias sex1","sp.id_producto = sex1.id_producto AND DATE(sex1.fecha_registro) = DATE_SUB('".$values->inicio."',INTERVAL 1 DAY) AND sex1.estatus = 1","LEFT")
-		->join("existencias sex2","sp.id_producto = sex2.id_producto AND DATE(sex2.fecha_registro) = '".$values->final."' AND sex2.estatus = 1","LEFT")
+		->join("existencias sex1","sp.id_producto = sex1.id_producto AND DATE(sex1.fecha_registro) = DATE_SUB('".$values->inicio."',INTERVAL 1 DAY) ","LEFT")
+		->join("existencias sex2","sp.id_producto = sex2.id_producto AND DATE(sex2.fecha_registro) = '".$values->final."'","LEFT")
 		->where("p.estatus = 1 AND p.linea = ".$values->linea."")
 		->order_by("p.nombre","ASC");
 		if ($where !== NULL) {
@@ -146,7 +146,7 @@ class Detalleentra_model extends MY_Model {
 
 
 				$comparativaIndexada[substr($comparativa[$i]->nombre, 0,1)."".$comparativa[$i]->id_producto]["sucursales"][7]["ucosto"]	=	$comparativa[$i]->lastcosto;
-				$comparativaIndexada[substr($comparativa[$i]->nombre, 0,1)."".$comparativa[$i]->id_producto]["sucursales"][7]["puno"]	=	$comparativa[$i]->preciocinco;
+				$comparativaIndexada[substr($comparativa[$i]->nombre, 0,1)."".$comparativa[$i]->id_producto]["sucursales"][7]["puno"]	=	$comparativa[$i]->preciouno;
 				$comparativaIndexada[substr($comparativa[$i]->nombre, 0,1)."".$comparativa[$i]->id_producto]["sucursales"][7]["sumorems"]	=	$comparativa[$i]->sumorems;
 				$comparativaIndexada[substr($comparativa[$i]->nombre, 0,1)."".$comparativa[$i]->id_producto]["sucursales"][7]["notacan"]	=	$comparativa[$i]->notacan2;
 				$comparativaIndexada[substr($comparativa[$i]->nombre, 0,1)."".$comparativa[$i]->id_producto]["sucursales"][7]["salcan"]	=	$comparativa[$i]->salcan2;

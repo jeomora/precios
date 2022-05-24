@@ -200,6 +200,14 @@ function givePZ(value,index){
             imprime = "";
         }
     }
+    if(print == 0){
+            imprime = "";
+        }else{
+            imprime = "i"+printo+"\r"
+        }
+        if(value.linea == "SE" || value.linea == "77"){
+            imprime = "";
+        }
     
     var iva = "\r\n";var cajas = true;
     if(value.iva == "0.00" || value.iva == "0"){

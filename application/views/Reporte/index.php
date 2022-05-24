@@ -45,6 +45,14 @@ canvas.drawingBuffer{
 .suc1Head{background:#4cacc6;color:#000;font-size:24px !important;}
 .suc1Thead{background-image:linear-gradient(135deg, white 85%, #4cacc6 15%);}
 .posZOver{position:absolute;top:0;left:0;right:0;padding:50px;z-index:100;background:white;bottom:0;overflow:scroll;}
+.td1left{border-left: 2px solid #4cacc6 !important;}.td1right{border-right: 2px solid #4cacc6 !important;}
+.td2left{border-left: 2px solid #da9694 !important;}.td2right{border-right: 2px solid #da9694 !important;}
+.td3left{border-left: 2px solid #b1a0c7 !important;}.td3right{border-right: 2px solid #b1a0c7 !important;}
+.td4left{border-left: 2px solid #93d051 !important;}.td4right{border-right: 2px solid #93d051 !important;}
+.td5left{border-left: 2px solid #c5c5c5 !important;}.td5right{border-right: 2px solid #c5c5c5 !important;}
+.td6left{border-left: 2px solid #01b0f0 !important;}.td6right{border-right: 2px solid #01b0f0 !important;}
+.td7left{border-left: 2px solid #c00000 !important;}.td7right{border-right: 2px solid #c00000 !important;}
+.td8left{border-left: 2px solid #4cacc6 !important;}.td8right{border-right: 2px solid #4cacc6 !important;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -84,7 +92,7 @@ canvas.drawingBuffer{
             </div>
             <!--end::Row-->	
 
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-xl-12">
                     <div class="col-xl-4">
                         <div class="form-group">
@@ -96,7 +104,7 @@ canvas.drawingBuffer{
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
             <div class="row">
                 <div class="col-xl-12">
@@ -129,7 +137,7 @@ canvas.drawingBuffer{
             </div>
 
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-xl-12" style="overflow: scroll;max-height: 50rem;">
                     <table class="table table-bordered">
                         <thead>
                             <tr style="text-align: center;">
