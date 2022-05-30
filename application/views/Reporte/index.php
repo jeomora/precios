@@ -55,6 +55,8 @@ canvas.drawingBuffer{
 .td8left{border-left: 2px solid #4cacc6 !important;}.td8right{border-right: 2px solid #4cacc6 !important;}
 thead th { position: sticky; top: 0; }
 .codeSticky{ position: sticky; left: 0;background: #e7d9d9;}
+.modal-dialog.modal-dialog-centered.modal-xl{max-width: 90% !important;}
+.tfootEntra1{text-align:right;font-size:20px;}.tfootEntra2{text-align:left;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -293,7 +295,35 @@ thead th { position: sticky; top: 0; }
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xl-12" style="text-align:center;">
-                        <img src="assets/img/loading2.gif" class="imgLoadModal">
+                        <!--<img src="assets/img/loading2.gif" class="imgLoadModal">-->
+                    </div>
+                </div>
+                <div class="row col-xl-12">
+                    <div class="col-xl-4" style="padding:10px">
+                        <div class="col-xl-12">
+                            <h2 style="text-align:center">NOTAS DE ENTRADA</h2>
+                        </div>
+                        <table class="table table-bordered table-striped rounded">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>FOLIO</th>
+                                    <th>FECHA</th>
+                                    <th>PROVEEDOR</th>
+                                    <th>CANTIDAD</th>
+                                    <th>IMPORTE</th>
+                                    <th>TOTAL DE LA NOTA</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyEntra">
+                                
+                            </tbody>
+                            <tfoot class="thead-dark">
+                                <tr>
+                                    <th colspan="4" class="tfootEntra1"></th>
+                                    <th colspan="2" class="tfootEntra2"></th>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
             </div>

@@ -105,12 +105,23 @@ function getReporte(){
 
 $(document).off("click",".showdetails").on("click",".showdetails",function(event){
     event.preventDefault();
-    console.log($(this).attr("data-id-sucu"))
+    
     $(".imgLoadModal").css("display","block");
     var fechRan = $('#rangeFecha').val();
+    $(".tbodyEntra").html("");$(".tfootEntra1").html("0");$(".tfootEntra2").html("$ 0.00");
     datos = {"inicio": fechRan.substring(6,10)+"-"+fechRan.substring(0,2)+"-"+fechRan.substring(3,5), "final":fechRan.substring(19,23)+"-"+fechRan.substring(13,15)+"-"+fechRan.substring(16,18), "linea":$('#selectLinea').val(),"id_suc":$(this).data("idSucu"),"id_prod":$(this).data("idRojo")}
     getMermaProd(JSON.stringify(datos)).done(function(resp){
-
+        if(resp.entra){
+            var uno = 0;var dos = 0;var tres = 0;
+            $.each(resp.entra,function(index,value){
+                uno += parseFloat(value.cantidad);
+                dos += parseFloat(value.importe);
+                console.log(uno)
+                $(".tbodyEntra").append('<tr><td>'+value.folio+'</td> <td>'+value.fecha+'</td> <td>'+value.provee+'</td> <td style="font-weight:bold">'+formatMoney(value.cantidad)+'</td> <td>$ '+formatMoney(value.importe)+'</td> <td>$ '+formatMoney(value.total)+'</td></tr>')
+                $(".tfootEntra1").html(formatMoney(uno))
+                $(".tfootEntra2").html("$ "+formatMoney(dos))
+            })
+        }
     })
 })
 
