@@ -53,6 +53,8 @@ canvas.drawingBuffer{
 .td6left{border-left: 2px solid #01b0f0 !important;}.td6right{border-right: 2px solid #01b0f0 !important;}
 .td7left{border-left: 2px solid #c00000 !important;}.td7right{border-right: 2px solid #c00000 !important;}
 .td8left{border-left: 2px solid #4cacc6 !important;}.td8right{border-right: 2px solid #4cacc6 !important;}
+thead th { position: sticky; top: 0; }
+.codeSticky{ position: sticky; left: 0;background: #e7d9d9;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -105,7 +107,7 @@ canvas.drawingBuffer{
                     </div>
                 </div>
             </div>-->
-
+            <?php echo form_open("Reporte/downExcel", array("id" => 'reporte_downsExcel', "target" => '_blank')); ?>
             <div class="row">
                 <div class="col-xl-12">
                     <div class="col-xl-4">
@@ -136,19 +138,36 @@ canvas.drawingBuffer{
                 </div>
             </div>
 
+            <div class="row" style="margin-bottom:15px;">
+                <div class="col-xl-12">
+                    <div class="col-xl-4">
+                        <button class="btn btn-light-success d-inline-flex align-items-center btn-lg mr-5" id="btnDownExcel">
+                            <div class="d-flex flex-column text-right pr-3">
+                                <span class="text-dark-75 font-weight-bold font-size-sm">DESCARGAR</span>
+                                <span class="font-weight-bolder font-size-sm">FORMATO XLSX (EXCEL)</span>
+                            </div>
+                            <span class="symbol symbol-40">
+                                <img alt="Pic" src="assets/img/excel.svg"/>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <?php echo form_close(); ?>
+
             <div class="row">
                 <div class="col-xl-12" style="overflow: scroll;max-height: 50rem;">
                     <table class="table table-bordered">
                         <thead>
                             <tr style="text-align: center;">
                                 <th colspan="6" class="suc0 suc0Head">DETALLES DEL PRODUCTO <br>SEGÚN COMPUCAJA CEDIS</th>
-                                <th colspan="9" class="suc7 suc7Head">CEDIS</th>
-                                <th colspan="9" class="suc6 suc6Head">SOLIDARIDAD</th>
-                                <th colspan="9" class="suc5 suc5Head">ULTRA</th>
-                                <th colspan="9" class="suc4 suc4Head">TRINCHERAS</th>
-                                <th colspan="9" class="suc3 suc3Head">MERCADO</th>
-                                <th colspan="9" class="suc2 suc2Head">TENENCIA</th>
-                                <th colspan="9" class="suc1 suc1Head">TIJERAS</th>
+                                <th colspan="10" class="suc7 suc7Head">CEDIS</th>
+                                <th colspan="10" class="suc6 suc6Head">SOLIDARIDAD</th>
+                                <th colspan="10" class="suc5 suc5Head">ULTRA</th>
+                                <th colspan="10" class="suc4 suc4Head">TRINCHERAS</th>
+                                <th colspan="10" class="suc3 suc3Head">MERCADO</th>
+                                <th colspan="10" class="suc2 suc2Head">TENENCIA</th>
+                                <th colspan="10" class="suc1 suc1Head">TIJERAS</th>
                                 <th colspan="6" class="suc0 suc0Head">TOTALES</th>
                             </tr>
                             <tr>
@@ -168,6 +187,7 @@ canvas.drawingBuffer{
                                 <th class="suc7Thead">TOTAL <br>COMPRA</th>
                                 <th class="suc7Thead">TOTAL <br>MERMA</th>
                                 <th class="suc7Thead">PX <br>REAL</th>
+                                <th class="suc7Thead">DETALLES</th>
 
                                 <th class="suc6Thead">ULTIMO <br> COSTO</th>
                                 <th class="suc6Thead">PX <br> VENTA</th>
@@ -178,6 +198,7 @@ canvas.drawingBuffer{
                                 <th class="suc6Thead">TOTAL <br>COMPRA</th>
                                 <th class="suc6Thead">TOTAL <br>MERMA</th>
                                 <th class="suc6Thead">PX <br>REAL</th>
+                                <th class="suc6Thead">DETALLES</th>
 
                                 <th class="suc5Thead">ULTIMO <br> COSTO</th>
                                 <th class="suc5Thead">PX <br> VENTA</th>
@@ -188,6 +209,7 @@ canvas.drawingBuffer{
                                 <th class="suc5Thead">TOTAL <br>COMPRA</th>
                                 <th class="suc5Thead">TOTAL <br>MERMA</th>
                                 <th class="suc5Thead">PX <br>REAL</th>
+                                <th class="suc5Thead">DETALLES</th>
 
                                 <th class="suc4Thead">ULTIMO <br> COSTO</th>
                                 <th class="suc4Thead">PX <br> VENTA</th>
@@ -198,6 +220,7 @@ canvas.drawingBuffer{
                                 <th class="suc4Thead">TOTAL <br>COMPRA</th>
                                 <th class="suc4Thead">TOTAL <br>MERMA</th>
                                 <th class="suc4Thead">PX <br>REAL</th>
+                                <th class="suc4Thead">DETALLES</th>
 
                                 <th class="suc3Thead">ULTIMO <br> COSTO</th>
                                 <th class="suc3Thead">PX <br> VENTA</th>
@@ -208,6 +231,7 @@ canvas.drawingBuffer{
                                 <th class="suc3Thead">TOTAL <br>COMPRA</th>
                                 <th class="suc3Thead">TOTAL <br>MERMA</th>
                                 <th class="suc3Thead">PX <br>REAL</th>
+                                <th class="suc3Thead">DETALLES</th>
 
                                 <th class="suc2Thead">ULTIMO <br> COSTO</th>
                                 <th class="suc2Thead">PX <br> VENTA</th>
@@ -218,6 +242,7 @@ canvas.drawingBuffer{
                                 <th class="suc2Thead">TOTAL <br>COMPRA</th>
                                 <th class="suc2Thead">TOTAL <br>MERMA</th>
                                 <th class="suc2Thead">PX <br>REAL</th>
+                                <th class="suc2Thead">DETALLES</th>
 
                                 <th class="suc1Thead">ULTIMO <br> COSTO</th>
                                 <th class="suc1Thead">PX <br> VENTA</th>
@@ -228,6 +253,7 @@ canvas.drawingBuffer{
                                 <th class="suc1Thead">TOTAL <br>COMPRA</th>
                                 <th class="suc1Thead">TOTAL <br>MERMA</th>
                                 <th class="suc1Thead">PX <br>REAL</th>
+                                <th class="suc1Thead">DETALLES</th>
 
 
                                 <th class="suc0Thead">TOTAL <br>COMPRA</th>
@@ -255,3 +281,26 @@ canvas.drawingBuffer{
 </div>
 <!--end::Content-->
 
+<div class="modal fade" id="modalDetails" tabindex="-1" role="dialog" aria-labelledby="modalDetails" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">DETALLES MOVIMIENTOS DEL PRODUCTO <span class="fIni"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12" style="text-align:center;">
+                        <img src="assets/img/loading2.gif" class="imgLoadModal">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                <!--<button type="button" class="btn btn-primary"></button>-->
+            </div>
+        </div>
+    </div>
+</div>

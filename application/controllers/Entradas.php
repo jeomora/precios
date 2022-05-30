@@ -38,7 +38,6 @@ class Entradas extends MY_Controller {
 		$flagNo = 1;
 		$pos = explode("\n", $dom);
 		$folio = "";
-		$archi = "";
 		
 		/* EL ARCHIVO QUE SE SUBIO ES UN TXT DE NOTAS DE ENTRADA*/
 		if( strpos($dom,"Relacion Notas de Entrada")  ||  strpos($dom,"RELACION NOTAS DE ENTRADA") ){
@@ -750,6 +749,8 @@ class Entradas extends MY_Controller {
 				if (!empty($pos[$i])){
 					$pos[$i] = str_replace("", "", $pos[$i]);
 					$pos[$i] = str_replace("", "", $pos[$i]);
+					$pos[$i] = str_replace("", "", $pos[$i]);
+					$pos[$i] = str_replace("", "", $pos[$i]);
 					$pos[$i] = str_replace("€", "P", $pos[$i]);
 					$pos[$i] = str_replace("�", "P", $pos[$i]);
 					$pos[$i] = str_replace("cei-029u-2.6", "", $pos[$i]);
