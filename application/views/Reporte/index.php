@@ -154,7 +154,7 @@ thead th { position: sticky; top: 0; }
                 </div>
             </div>
             <?php echo form_close(); ?>
-
+ 
             <div class="row">
                 <div class="col-xl-12" style="overflow: scroll;max-height: 50rem;">
                     <table class="table table-bordered">

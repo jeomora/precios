@@ -695,8 +695,10 @@ class Reporte extends MY_Controller {
 
 	public function getMermaProd(){
 		$valo = $this->input->post("values");
-		$merma = $this->dentr_md->getMermaProd(NULL,$valo);
-		$this->jsonResponse($merma);
+		$entra = $this->dentr_md->getEntradasProd(NULL,$valo);
+		$ajuen = $this->dentr_md->getAEntradasProd(NULL,$valo);
+		$ajusa = $this->dentr_md->getSEntradasProd(NULL,$valo);
+		$this->jsonResponse(["entra"=>$entra,"ajuen"=>$ajuen,"ajusa"=>$ajusa]);
 	}
 
 }

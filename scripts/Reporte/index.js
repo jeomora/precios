@@ -8,7 +8,7 @@ jQuery(document).ready(function() {
     KTBootstrapDaterangepicker.init();
     //getReporte();
 });
-
+ 
 function getReporte(){
     var fechRan = $('#rangeFecha').val();
     datos = {"inicio": fechRan.substring(6,10)+"-"+fechRan.substring(0,2)+"-"+fechRan.substring(3,5), "final":fechRan.substring(19,23)+"-"+fechRan.substring(13,15)+"-"+fechRan.substring(16,18), "linea":$('#selectLinea').val()}
@@ -110,7 +110,7 @@ $(document).off("click",".showdetails").on("click",".showdetails",function(event
     var fechRan = $('#rangeFecha').val();
     datos = {"inicio": fechRan.substring(6,10)+"-"+fechRan.substring(0,2)+"-"+fechRan.substring(3,5), "final":fechRan.substring(19,23)+"-"+fechRan.substring(13,15)+"-"+fechRan.substring(16,18), "linea":$('#selectLinea').val(),"id_suc":$(this).data("idSucu"),"id_prod":$(this).data("idRojo")}
     getMermaProd(JSON.stringify(datos)).done(function(resp){
-        
+
     })
 })
 
