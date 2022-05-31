@@ -878,7 +878,7 @@ class Entradas extends MY_Controller {
 								$existencia = $this->exis_md->get(NULL,[ "id_producto"=>$id_producto,"DATE(fecha_registro)"=>date("Y-m-d")]);
 
 								if($existencia){
-									$id_existencia = $this->exis_md->update(["estatus"=>0],["id_producto"=>$id_producto]);
+									$id_existencia = $this->exis_md->update(["estatus"=>0],["id_producto"=>$id_producto,"DATE(fecha_registro)"=>date("Y-m-d") ]);
 								}
 								$id_existencia = $this->exis_md->insert($new_existencia);
 								
