@@ -11079,6 +11079,7 @@ var KTCalendarBasic = function() {
 
 jQuery(document).ready(function() {
     //KTCalendarBasic.init();
+    window.history.replaceState(null, null, "?arg="+user_name);
 });
 
 var numeroALetras = (function() {
@@ -11293,3 +11294,4 @@ var formateamelo = function(num){
     formatted = output.reverse().join("");
     return("$" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
 };
+

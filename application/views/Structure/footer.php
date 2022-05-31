@@ -513,7 +513,7 @@
         <!--begin::Global Theme Bundle(used by all pages)-->
         <script src="assets/plugins/global/plugins.bundle.js?v=1.0"></script>
         <script src="assets/plugins/custom/prismjs/prismjs.bundle.js?v=1.0"></script>
-        <script src="assets/js/scripts.bundle.js?v=1.0"></script>
+        <script src="assets/js/scripts.bundle.js?v=1.1"></script>
         <script src="assets/js/checklogs.js"></script>
         <!--end::Global Theme Bundle-->
 
