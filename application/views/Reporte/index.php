@@ -56,7 +56,7 @@ canvas.drawingBuffer{
 thead th { position: sticky; top: 0; }
 .codeSticky{ position: sticky; left: 0;background: #e7d9d9;}
 .modal-dialog.modal-dialog-centered.modal-xl{max-width: 90% !important;}
-.tfootEntra1{text-align:right;font-size:20px;}.tfootEntra2{text-align:left;}
+.tfootEntra1,.tfootAjue1,.tfootAjus1{text-align:right;font-size:20px;}.tfootEntra2,.tfootAjus2,.tfootAjue2{text-align:left;}
 </style>
 <!--begin::Content-->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
@@ -299,12 +299,53 @@ thead th { position: sticky; top: 0; }
                     </div>
                 </div>
                 <div class="row col-xl-12">
+                    <table class="table table-bordered table-striped rounded">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th colspan="4"><h2>CALCULO DE VENTAS </h2></th>
+                            </tr>
+                            <tr>
+                                <th>INVENTARIO INICIO</th>
+                                <th>NOTAS ENTRADA</th>
+                                <th>AJUSTES ENTRADA</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="venEnt1"></td>
+                                <td class="venEnt2"></td>
+                                <td class="venEnt3"></td>
+                                <td class="venEnt4"></td>
+                            </tr>
+                        </tbody>
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>INVENTARIO FINAL</th>
+                                <th>AJUSTES SALIDA</th>
+                                <th></th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="venSal1"></td>
+                                <td class="venSal2"></td>
+                                <td></td>
+                                <td class="venSal3"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row col-xl-12">
+                    <!-- NOTAS DE ENTRADA -->
                     <div class="col-xl-4" style="padding:10px">
-                        <div class="col-xl-12">
-                            <h2 style="text-align:center">NOTAS DE ENTRADA</h2>
-                        </div>
                         <table class="table table-bordered table-striped rounded">
                             <thead class="thead-dark">
+                                <tr>
+                                    <th colspan="6"><h2>NOTAS DE ENTRADA </h2><span class="tfootEntra1"></span></th>
+                                </tr>
                                 <tr>
                                     <th>FOLIO</th>
                                     <th>FECHA</th>
@@ -325,6 +366,63 @@ thead th { position: sticky; top: 0; }
                             </tfoot>
                         </table>
                     </div>
+
+                    <!-- AJUSTES DE ENTRADA -->
+                    <div class="col-xl-4" style="padding:10px">
+                        <table class="table table-bordered table-striped rounded">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th colspan="5"><h2>AJUSTES DE ENTRADA </h2><span class="tfootAjue1"></span></th>
+                                </tr>
+                                <tr>
+                                    <th>FOLIO</th>
+                                    <th>FECHA</th>
+                                    <th>REFERENCIA</th>
+                                    <th>CANTIDAD</th>
+                                    <th>IMPORTE</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyAjue">
+                                
+                            </tbody>
+                            <tfoot class="thead-dark">
+                                <tr>
+                                    <th colspan="4" class="tfootAjue1"></th>
+                                    <th class="tfootAjue2"></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+
+                    <!-- AJUSTES DE SALIDA -->
+                    <div class="col-xl-4" style="padding:10px">
+                        <table class="table table-bordered table-striped rounded">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th colspan="5"><h2>AJUSTES DE SALIDA </h2><span class="tfootAjus1"></span></th>
+                                </tr>
+                                <tr>
+                                    <th>FOLIO</th>
+                                    <th>FECHA</th>
+                                    <th>REFERENCIA</th>
+                                    <th>CANTIDAD</th>
+                                    <th>IMPORTE</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyAjus">
+                                
+                            </tbody>
+                            <tfoot class="thead-dark">
+                                <tr>
+                                    <th colspan="4" class="tfootAjus1"></th>
+                                    <th class="tfootAjus2"></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+
                 </div>
             </div>
             <div class="modal-footer">

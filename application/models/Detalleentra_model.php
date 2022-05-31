@@ -355,11 +355,13 @@ class Detalleentra_model extends MY_Model {
 
 	public function getEntradasProd($where=[],$valo){
 		$values = json_decode($valo);
-		$this->db->select("de.id_detalle,de.unidad,de.producto,de.descripcion,de.cantidad,de.precio,de.importe,sp.codigo,sp.nombre,spx.preciouno,spx.preciodos,spx.preciotres,spx.preciocuatro,spx.preciocinco,e.folio,e.id_entrada,e.proveedor,e.fecha,e.subtotal,e.provee, e.total,e.fecha_registro")
+		$this->db->select("de.id_detalle,de.unidad,de.producto,de.descripcion,de.cantidad,de.precio,de.importe,sp.codigo,sp.nombre,spx.preciouno,spx.preciodos,spx.preciotres,spx.preciocuatro,spx.preciocinco,e.folio,e.id_entrada,e.proveedor,e.fecha,e.subtotal,e.provee, e.total,e.fecha_registro,sex1.existencia as sexistencia1,sex2.existencia as sexistencia2")
 		->from("sucproductos sp")
 		->join("(SELECT * FROM detalleentra WHERE id_remision IN (SELECT id_entrada FROM entradas WHERE estatus = 1 AND id_sucursal = ".$values->id_suc." AND fecha_registro BETWEEN '".$values->inicio."' AND '".$values->final."')) de","sp.id_producto = de.id_producto","LEFT")
 		->join("sucprecios spx","sp.id_producto = spx.id_producto","LEFT")
 		->join("entradas e","de.id_remision = e.id_entrada AND e.estatus = 1","LEFT")
+		->join("existencias sex1","sp.id_producto = sex1.id_producto AND DATE(sex1.fecha_registro) = DATE_SUB('".$values->inicio."',INTERVAL 1 DAY) ","LEFT")
+		->join("existencias sex2","sp.id_producto = sex2.id_producto AND DATE(sex2.fecha_registro) = '".$values->final."'","LEFT")
 		->where("sp.id_sucursal", $values->id_suc)
 		->where("sp.id_prox", $values->id_prod)
 		->order_by("e.folio","DESC");
@@ -403,6 +405,9 @@ class Detalleentra_model extends MY_Model {
 				$comparativaIndexada[$comparativa[$i]->id_detalle]["provee"]		=	$comparativa[$i]->provee;
 				$comparativaIndexada[$comparativa[$i]->id_detalle]["total"]			=	$comparativa[$i]->total;
 				$comparativaIndexada[$comparativa[$i]->id_detalle]["fecha_registro"]=	$comparativa[$i]->fecha_registro;
+
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["existencia1"]		=	$comparativa[$i]->existencia1;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["existencia2"]		=	$comparativa[$i]->existencia2;
 			}
 			
 		}
