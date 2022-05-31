@@ -75,11 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	//'hostname' => '72.167.34.108',
+	//'hostname' => 'localhost',
+	'hostname' => '72.167.34.108',
 	'username' => 'root',
-	'password' => '',
-	//'password' => '$AbbeyRoad01',
+	//'password' => '',
+	'password' => '$AbbeyRoad01',
 	'database' => 'preciosdos',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
