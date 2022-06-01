@@ -227,13 +227,13 @@ var myDropzoneMatriz = new Dropzone("div#kt_dropzone_uno", {
     success: function(file, response){
         var dt = new Date();
         var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-        myDropzoneMatriz.removeAllFiles();
         if(response === "Documento incorrecto"){
             toastr.error("Por favor revise el txt que se subió a la plataforma","Archivo incorrecto");
         }else{
-            toastr.success("Se cargarón correctamente los datos","Listo");
+            toastr.success("Se cargarón correctamente los datos","SE REGISTRO "+response);
         }
         getMeNews()
+        myDropzoneMatriz.removeAllFiles();
     }
 });
 

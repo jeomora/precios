@@ -286,6 +286,7 @@ class Compara extends MY_Controller {
 		$descripcion = "";
 		$linea = 0;
 		$filena = false;
+		$archi = "";
 		if(strpos($dom,"LISTA DE PRECIOS CON EXISTENCIA")){
 			$filena = true;
 				$new_cambio = [
@@ -294,6 +295,7 @@ class Compara extends MY_Controller {
 				"id_usuario" => $user["id_usuario"]
 			];
 			$cambio = $this->cambio_md->insert($new_cambio);
+			$archi = "MATRICIAL";
 		}else{
 			$new_cambio = [
 				"accion" => "Sube CATALOGO",
@@ -301,6 +303,7 @@ class Compara extends MY_Controller {
 				"id_usuario" => $user["id_usuario"]
 			];
 			$cambio = $this->cambio_md->insert($new_cambio);
+			$archi = "CATALOGO";
 		}
 		if ($filena){
 			$this->sprod_md->update(["estatus"=>0],["estatus"=>1,"id_sucursal"=>$user["id_sucursal"]]);
@@ -480,7 +483,7 @@ class Compara extends MY_Controller {
 			$mensaje=[	"id"	=>	'Éxito',
 						"desc"	=>	'Datos cargados correctamdente en el Sistema',
 						"type"	=>	'success'];
-			$this->jsonResponse($mensaje);
+			$this->jsonResponse($archi);
 		}else{
 			if(strpos($dom,"Catalogo de Articulos")){
 				$filena = true;
@@ -570,7 +573,7 @@ class Compara extends MY_Controller {
 				$mensaje=[	"id"	=>	'Éxito',
 							"desc"	=>	'Datos cargados correctamente en el Sistema',
 							"type"	=>	'success'];
-				$this->jsonResponse($mensaje);
+				$this->jsonResponse($archi);
 			}
 		}
 	}
