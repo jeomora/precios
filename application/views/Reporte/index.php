@@ -335,6 +335,12 @@ thead th { position: sticky; top: 0; }
                                 <td class="venSal3"></td>
                             </tr>
                         </tbody>
+                        <thead class="thead-dark">
+                            <tr>
+                                <th colspan="3" style="text-align:right;">TOTAL VENTAS</th>
+                                <th class="ventotis"></th>
+                            </tr>
+                        </thead>
                     </table>
                 </div>
 

@@ -19,7 +19,7 @@ function getReporte(){
         
         if(resp){
             $.each(resp,function(index,value){
-                //console.log(value)
+                console.log(value)
                 var porce7 =  ((value.sucursales[7].puno-value.sucursales[7].ucosto)/value.sucursales[7].puno)*100;
                 var porce6 =  ((value.sucursales[6].puno-value.sucursales[6].ucosto)/value.sucursales[6].puno)*100;
                 var porce5 =  ((value.sucursales[5].puno-value.sucursales[5].ucosto)/value.sucursales[5].puno)*100;
@@ -65,7 +65,7 @@ function getReporte(){
                     "<td class='font-weight-bolder td7left'>$ "+formatMoney(value.sucursales[7].ucosto)+"</td><td class='font-weight-bolder'>$ "+formatMoney(value.sucursales[7].puno)+"</td><td class='font-weight-bolder'>% "+formatMoney(porce7)+"</td>"+
                     "<td>"+formatMoney(entra7)+"</td><td>"+formatMoney(value.sucursales[7].sumorems)+"</td><td>"+formatMoney(value.sucursales[7].salcan)+"</td><td>$ "+formatMoney( totcom7 )+"</td><td>$ "+
                     formatMoney( (value.sucursales[7].salcan * value.sucursales[7].ucosto) )+"</td><td style='font-weight:bold;font-size:16px;' >$ "+formatMoney( (totcom7/isnull(value.sucursales[7].sumorems)) )+"</td>"+
-                    "<td class='td7right'><button type='button' class='btn btn-outline-success showdetails' data-toggle='modal' data-target='#modalDetails' data-id-sucu='7' data-id-rojo='"+value.id_producto+"'>VER DETALLES</button></td>"+
+                    "<td class='td7right'></td>"+//<button type='button' class='btn btn-outline-success showdetails' data-toggle='modal' data-target='#modalDetails' data-id-sucu='7' data-id-rojo='"+value.id_producto+"'>VER DETALLES</button>
                     //RENGLONES SOLIDARIDAD
                     "<td class='font-weight-bolder td6left'>$ "+formatMoney(value.sucursales[6].ucosto)+"</td><td class='font-weight-bolder'>$ "+formatMoney(value.sucursales[6].puno)+"</td><td class='font-weight-bolder'>% "+formatMoney(porce6)+"</td>"+
                     "<td>"+formatMoney(entra6)+"</td><td>"+formatMoney(inve6)+"</td><td>"+formatMoney(value.sucursales[6].salcan)+"</td><td>$ "+formatMoney( totcom6 )+"</td><td>$ "+
@@ -114,50 +114,62 @@ $(document).off("click",".showdetails").on("click",".showdetails",function(event
 
     datos = {"inicio": fechRan.substring(6,10)+"-"+fechRan.substring(0,2)+"-"+fechRan.substring(3,5), "final":fechRan.substring(19,23)+"-"+fechRan.substring(13,15)+"-"+fechRan.substring(16,18), "linea":$('#selectLinea').val(),"id_suc":$(this).data("idSucu"),"id_prod":$(this).data("idRojo")}
     getMermaProd(JSON.stringify(datos)).done(function(resp){
+        var uno1 = 0;var dos1 = 0;var uno2 = 0;var dos2 = 0;var uno3 = 0;var dos3 = 0;var ex1 = 0;var ex2 = 0;
         if(resp.entra){
-            var uno = 0;var dos = 0;var tres = 0;
+            
             $.each(resp.entra,function(index,value){
-                uno += parseFloat(value.cantidad);
-                dos += parseFloat(value.importe);
+                uno1 += parseFloat(isnull(value.cantidad));
+                dos1 += parseFloat(isnull(value.importe));
                 $(".tbodyEntra").append('<tr><td>'+value.folio+'</td> <td>'+value.fecha+'</td> <td>'+value.provee+'</td> <td style="font-weight:bold">'+formatMoney(value.cantidad)+'</td> <td>$ '+formatMoney(value.importe)+'</td> <td>$ '+formatMoney(value.total)+'</td></tr>')
-                $(".tfootEntra1").html("CANTIDAD TOTAL : "+formatMoney(uno))
-                $(".tfootEntra2").html("$ "+formatMoney(dos))
-                $(".venEnt1").html(formatMoney(value.sexistencia1))
-                $(".venSal1").html(formatMoney(value.sexistencia2))
-                $(".venEnt2").html(formatMoney(uno))
+                $(".tfootEntra1").html("CANTIDAD TOTAL : "+formatMoney(uno1))
+                $(".tfootEntra2").html("$ "+formatMoney(dos1))
+                $(".venEnt1").html(formatMoney(value.existencia1))
+                ex1 = value.existencia1;
+                ex2 = value.existencia2;
+                $(".venSal1").html(formatMoney(value.existencia2))
+                $(".venEnt2").html(formatMoney(uno1))
+                
             })
         }
 
         if(resp.ajuen){
-            var uno = 0;var dos = 0;var tres = 0;
+            
             $.each(resp.ajuen,function(index,value){
-                uno += parseFloat(value.cantidad);
-                dos += parseFloat(value.importe);
+                uno2 += parseFloat(isnull(value.cantidad));
+                dos2 += parseFloat(isnull(value.importe));
                 $(".tbodyAjue").append('<tr><td>'+value.folio+'</td> <td>'+value.fecha+'</td> <td>'+value.referencia+'</td> <td style="font-weight:bold">'+formatMoney(value.cantidad)+'</td> <td>$ '+formatMoney(value.importe)+'</td> </tr>')
-                $(".tfootAjue1").html("CANTIDAD TOTAL : "+formatMoney(uno))
-                $(".tfootAjue2").html("$ "+formatMoney(dos))
-                $(".venEnt3").html(formatMoney(dos))
+                $(".tfootAjue1").html("CANTIDAD TOTAL : "+formatMoney(uno2))
+                $(".tfootAjue2").html("$ "+formatMoney(dos2))
+                
             })
         }
 
         if(resp.ajusa){
-            var uno = 0;var dos = 0;var tres = 0;
+            
             $.each(resp.ajusa,function(index,value){
-                uno += parseFloat(value.cantidad);
-                dos += parseFloat(value.importe);
+                uno3 += parseFloat(isnull(value.cantidad));
+                dos3 += parseFloat(isnull(value.importe));
                 $(".tbodyAjus").append('<tr><td>'+value.folio+'</td> <td>'+value.fecha+'</td> <td>'+value.referencia+'</td> <td style="font-weight:bold">'+formatMoney(value.cantidad)+'</td> <td>$ '+formatMoney(value.importe)+'</td> </tr>')
-                $(".tfootAjus1").html("CANTIDAD TOTAL : "+formatMoney(uno))
-                $(".tfootAjus2").html("$ "+formatMoney(dos))
-                $(".venSal2").html(formatMoney(uno))
+                $(".tfootAjus1").html("CANTIDAD TOTAL : "+formatMoney(uno3))
+                $(".tfootAjus2").html("$ "+formatMoney(dos3))
+                $(".venSal2").html(formatMoney(uno3))
             })
         }
+        setTimeout(function(){
+            var totent = isnull(ex1) + isnull(uno1) + isnull(dos2);
+            var totsal = isnull(ex2) + isnull(uno3);
+
+            $(".venEnt4").html(formatMoney(totent))
+            $(".venSal3").html(formatMoney(totsal))
+            $(".ventotis").html(formatMoney( (totent - totsal) ))
+        },1000)
 
 
     })
 })
 
 function isnull(cant){
-    if(cant == null || cant == ""){
+    if(cant == null || cant == ""  || cant == NaN){
         return 0;
     }else{
         return parseFloat(cant);

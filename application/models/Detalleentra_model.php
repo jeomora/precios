@@ -31,7 +31,7 @@ class Detalleentra_model extends MY_Model {
 		->join("(SELECT *,SUM(cantidad) as entcan,SUM(importe) as entimp,COUNT(*) as entnum FROM detalleajuent WHERE id_ajuste IN (SELECT id_ajuste FROM ajuentrada WHERE DATE(fecha_registro) BETWEEN '".$values->inicio."' AND '".$values->final."' AND estatus = 1) GROUP BY id_producto) ent","sp.id_producto = ent.id_producto","LEFT")
 		->join("(SELECT *,SUM(cantidad) as notacan,SUM(importe) as notaimp,COUNT(id_producto) as notanum FROM detalleentra WHERE id_remision IN (SELECT id_entrada FROM entradas where estatus = 1 AND DATE(fecha_registro) BETWEEN '".$values->inicio."' AND '".$values->final."') GROUP BY id_producto) as nota","sp.id_producto = nota.id_producto","LEFT")
 		->join("existencias sex1","sp.id_producto = sex1.id_producto AND DATE(sex1.fecha_registro) = DATE_SUB('".$values->inicio."',INTERVAL 1 DAY) ","LEFT")
-		->join("existencias sex2","sp.id_producto = sex2.id_producto AND DATE(sex2.fecha_registro) = '".$values->final."'","LEFT")
+		->join("existencias sex2","sp.id_producto = sex2.id_producto AND sex2.estatus = 1 AND DATE(sex2.fecha_registro) = '".$values->final."'","LEFT")
 		->where("p.estatus = 1 AND p.linea = ".$values->linea."")
 		->order_by("p.nombre","ASC");
 		if ($where !== NULL) {
@@ -361,7 +361,7 @@ class Detalleentra_model extends MY_Model {
 		->join("sucprecios spx","sp.id_producto = spx.id_producto","LEFT")
 		->join("entradas e","de.id_remision = e.id_entrada AND e.estatus = 1","LEFT")
 		->join("existencias sex1","sp.id_producto = sex1.id_producto AND DATE(sex1.fecha_registro) = DATE_SUB('".$values->inicio."',INTERVAL 1 DAY) ","LEFT")
-		->join("existencias sex2","sp.id_producto = sex2.id_producto AND DATE(sex2.fecha_registro) = '".$values->final."'","LEFT")
+		->join("existencias sex2","sp.id_producto = sex2.id_producto AND sex2.estatus = 1 AND DATE(sex2.fecha_registro) = '".$values->final."'","LEFT")
 		->where("sp.id_sucursal", $values->id_suc)
 		->where("sp.id_prox", $values->id_prod)
 		->order_by("e.folio","DESC");
@@ -406,8 +406,8 @@ class Detalleentra_model extends MY_Model {
 				$comparativaIndexada[$comparativa[$i]->id_detalle]["total"]			=	$comparativa[$i]->total;
 				$comparativaIndexada[$comparativa[$i]->id_detalle]["fecha_registro"]=	$comparativa[$i]->fecha_registro;
 
-				$comparativaIndexada[$comparativa[$i]->id_detalle]["existencia1"]		=	$comparativa[$i]->existencia1;
-				$comparativaIndexada[$comparativa[$i]->id_detalle]["existencia2"]		=	$comparativa[$i]->existencia2;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["existencia1"]		=	$comparativa[$i]->sexistencia1;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["existencia2"]		=	$comparativa[$i]->sexistencia2;
 			}
 			
 		}
