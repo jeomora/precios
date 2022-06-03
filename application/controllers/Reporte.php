@@ -701,4 +701,18 @@ class Reporte extends MY_Controller {
 		$this->jsonResponse(["entra"=>$entra,"ajuen"=>$ajuen,"ajusa"=>$ajusa]);
 	}
 
+	public function kardex(){
+		$data['scripts'] = [
+			'/scripts/Reporte/kardex',
+		];
+		$data["lineas"] = $this->ln_md->get(NULL,["estatus"=>1]);
+		$this->estructura("Reporte/kardex", $data);
+	}
+
+	public function buscaKardex(){
+		$valo = $this->input->post("values");
+		$merma = $this->dentr_md->buscaKardex(NULL,$valo);
+		$this->jsonResponse($merma);
+	}
+
 }

@@ -532,6 +532,61 @@ class Detalleentra_model extends MY_Model {
 		}
 	}
 
+	public function buscaKardex($where=[],$valo){
+		$values = json_decode($valo);
+		$this->db->select("sp.codigo,sp.nombre,de.code,de.descripcion,de.unidad,de.cantidad,de.precio,de.importe,de.id_detalle,a.id_sucursal,a.folio,a.fecha,a.referencia,a.fecha_registro")
+		->from("sucproductos sp")
+		->join("(SELECT * FROM detalleajusal WHERE id_ajuste IN (SELECT id_ajuste FROM ajusalida WHERE estatus = 1 AND id_sucursal = ".$values->id_suc." AND fecha_registro BETWEEN '".$values->inicio."' AND '".$values->final."')) de","sp.id_producto = de.id_producto","LEFT")
+		->join("ajusalida a","de.id_ajuste = a.id_ajuste AND a.estatus = 1","LEFT")
+		->where("sp.id_sucursal", $values->id_suc)
+		->where("sp.id_prox", $values->id_prod)
+		->order_by("a.folio","DESC");
+		if ($where !== NULL) {
+			if (is_array($where)) {
+				foreach ($where as $field=>$value) {
+					$this->db->where($field, $value);
+				}
+			} else {
+				$this->db->where($this->PRI_INDEX, $where);
+			}
+		}
+		$comparativa = $this->db->get()->result();
+		$comparativaIndexada = [];
+		$flag = 0;
+		for ($i=0; $i<sizeof($comparativa); $i++) {
+			if (isset( $comparativaIndexada[$comparativa[$i]->id_detalle] )) {
+				
+			}else{
+				$comparativaIndexada[$comparativa[$i]->id_detalle]					=	[];
+
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["codigo"]		=	$comparativa[$i]->codigo;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["nombre"]		=	$comparativa[$i]->nombre;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["code"]		=	$comparativa[$i]->code;	
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["unidad"]		=	$comparativa[$i]->unidad;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["descripcion"]	=	$comparativa[$i]->descripcion;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["cantidad"]		=	$comparativa[$i]->cantidad;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["precio"]		=	$comparativa[$i]->precio;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["importe"]		=	$comparativa[$i]->importe;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["id_detalle"]	=	$comparativa[$i]->id_detalle;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["id_sucursal"]	=	$comparativa[$i]->id_sucursal;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["folio"]			=	$comparativa[$i]->folio;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["fecha"]			=	$comparativa[$i]->fecha;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["referencia"]		=	$comparativa[$i]->referencia;
+				$comparativaIndexada[$comparativa[$i]->id_detalle]["fecha_registro"]		=	$comparativa[$i]->fecha_registro;
+			}
+			
+		}
+		if ($comparativaIndexada) {
+			if (is_array($where)) {
+				return $comparativaIndexada;
+			} else {
+				return $comparativaIndexada;
+			}
+		} else {
+			return false;
+		}
+	}
+
 }
 
 /* End of file Grupos_model.php */
