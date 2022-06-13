@@ -15,6 +15,7 @@ class AndroidApi extends MY_Controller {
 		$this->load->model("Cambios_model", "chg_md");
 		$this->load->model("Pasillos_model", "pass_md");
 		$this->load->model("Inventario_model", "inv_md");
+		$this->load->model("AjuTxt_model", "ajua_md");
 		$this->load->library("form_validation");
 	}
 
@@ -89,6 +90,12 @@ class AndroidApi extends MY_Controller {
 	public function getEntradas($id){
 		$cant = $this->inv_md->getEntradas(["id_pasillo"=>$id,"i.estatus"=>1]);
 		$this->jsonResponse($cant);
+	}
+
+	public function getDifesInves($id_sucursal,$fecha = ""){
+		$difos = $this->ajua_md->getDifesInves(NULL,$id_sucursal,$fecha);
+		$entras = $this->ajua_md->entrando(NULL,$id_sucursal,$fecha);
+		$this->jsonResponse(["difos"=>$difos,"entras"=>$entras]);
 	}
 
 }

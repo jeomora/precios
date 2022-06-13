@@ -715,4 +715,12 @@ class Reporte extends MY_Controller {
 		$this->jsonResponse($merma);
 	}
 
+	public function comparaSucursal(){
+		$data['scripts'] = [
+			'/scripts/Reporte/comparaS',
+		];
+		$data["lineas"] = $this->ln_md->get(NULL,["estatus"=>1]);
+		$this->estructura("Reporte/comparaS", $data);
+	}
+
 }

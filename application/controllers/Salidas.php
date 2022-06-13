@@ -320,9 +320,13 @@ class Salidas extends MY_Controller {
 						}
 						$flag2 =1;
 						$new_c = $this->remis_md->insert($new_factura);
+						
+
 						for ($ed=0; $ed < sizeof($new_detalle); $ed++){ 
 						 	$new_detalle[$ed]["id_remision"] = $new_c;
-							$this->dremis_md->insert($new_detalle[$ed]);
+						 	if( isset($new_detalle[$ed]["id_producto"]) ){
+						 		$this->dremis_md->insert($new_detalle[$ed]);
+						 	}
 						}
 						$new_detalle = [];
 						
