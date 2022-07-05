@@ -528,7 +528,7 @@
         <!--end::Page Vendors -->
         <?php if (isset($scripts) && $scripts): ?>
             <?php foreach ($scripts as $row): ?>
-            <script type="text/javascript" src="<?php echo base_url($row.'.js?ver=5.0') ?>"></script>
+            <script type="text/javascript" src="<?php echo base_url($row.'.js?ver=5.1') ?>"></script>
             <?php endforeach ?>
         <?php endif ?>
     </body>

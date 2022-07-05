@@ -24,7 +24,9 @@ class MY_Controller extends CI_Controller {
 		$this->load->vars($data);
 		$this->header = "Structure/header";
 		$this->top_menu  = "Structure/top_menu";
+		$this->top_menu2  = "Structure/top_menu2";
 		$this->footer = "Structure/footer";
+		$this->footer2 = "Structure/footer2";
 		$this->main = "Structure/main";
 		$this->folder = "Structure";
 		$this->load->model("Sucursales_model", "sucu_md");
@@ -41,6 +43,18 @@ class MY_Controller extends CI_Controller {
 		$this->load->view($this->top_menu, $data);
 		$this->load->view($view, $data);
 		$this->load->view($this->footer, $data);
+		$this->load->view($this->main, $data);
+	}
+
+	public function estructuraFactus($view, $data = NULL) {
+		$data["svgs33"] = $this->ava_md->get();
+		$data["dayss"] = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
+		$data["monthss"] = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+		$data["sucursales"] = $this->sucu_md->get(NULL);
+		$this->load->view($this->header, $data);
+		$this->load->view($this->top_menu2, $data);
+		$this->load->view($view, $data);
+		$this->load->view($this->footer2, $data);
 		$this->load->view($this->main, $data);
 	}
 
