@@ -89,6 +89,12 @@ h1.inventarioTotal,h1.ventaTotal{font-size:3rem;}
                     </div>
                 </div>
             </div>
+
+            <div class="row" style="padding:20px">
+                <div class="col-xl-12">
+                    <button type="button" class="btn btn-light-warning btn-lg btn-block" data-toggle="modal" data-target="#diferencias">COMPARAR CON CEDIS</button>
+                </div>
+            </div>
             <!--end::Row-->
             <div class="row col-xl-12"
             >
@@ -212,3 +218,23 @@ h1.inventarioTotal,h1.ventaTotal{font-size:3rem;}
 <!--end::Content-->
 
 
+
+<!-- Modal-->
+<div class="modal fade" id="diferencias" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">DIFERENCIAS CON CEDIS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary font-weight-bold">DESCARGAR EXCEL</button>
+            </div>
+        </div>
+    </div>
+</div>

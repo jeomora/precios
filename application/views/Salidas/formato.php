@@ -114,7 +114,7 @@
                         DIFERENCIAS (COTIZ-REMIS): -- <br><?php if($diferencias):foreach ($diferencias as $key => $value): echo "[".$value->foluno."($ ".number_format($value->totuno,2,".",",").")"." - ".$value->foldos."($".number_format($value->totdos,2,".",",").")]<br>";endforeach;endif; ?>
                     </div>
                     <div class="col-xl-12 div12FormatoGeneral">
-                        <div class="col-xl-4 titleFormatoGeneral">
+                        <div class="col-xl-3 titleFormatoGeneral">
                             SUCURSAL
                         </div>
                         <div class="col-xl-2 titleFormatoGeneral">
@@ -128,6 +128,9 @@
                         </div>
                         <div class="col-xl-2 titleFormatoGeneral">
                             TOTAL
+                        </div>
+                        <div class="col-xl-1 titleFormatoGeneral">
+                            REMISIONES
                         </div>
                     </div>
                     <?php $flagA=0;$flagA1=0;$frutas=0;$verduras=0;$abarrotes=0;if($cotizHoy):foreach ($cotizHoy as $key => $value): ?>
@@ -143,7 +146,7 @@
                         
                         <div class="col-xl-12 div12FormatoGeneral" id="resFormatoGeneral">
                             <?php $frutas+=floatval($value->totafru);$verduras+=floatval($value->totaver);$abarrotes+=floatval($value->totabar)+floatval($value->totis); ?>
-                            <div class="col-xl-4 rowFormatoGeneral" style="background:rgb(198,224,180);">
+                            <div class="col-xl-3 rowFormatoGeneral" style="background:rgb(198,224,180);">
                                 <?php echo $value->nombre ?>         
                             </div>
                             <div class="col-xl-2 rowFormatoGeneral">
@@ -155,13 +158,18 @@
                             <div class="col-xl-2 rowFormatoGeneral">
                                  <?php echo "$ ".number_format(($value->totabar + $value->totis),2,".",",")?> 
                             </div>
-                            <div class="col-xl-2 rowFormatoGeneral" style="background:rgb(0,176,240);">
-                                 <?php echo "$ ".number_format( (floatval($value->totafru)+floatval($value->totaver)+floatval($value->totabar)+floatval($value->totis)) ,2,".",",")?> 
+                            <?php $ttt1 = floatval($value->totafru)+floatval($value->totaver)+floatval($value->totabar)+floatval($value->totis) ; ?>
+                            <?php $ttt2 = floatval($value->totre) + floatval($value->totre2) ; ?>
+                            <div class="col-xl-2 rowFormatoGeneral" style="background:rgb(0,176,240)">
+                                 <?php echo "$ ".number_format( $ttt1 ,2,".",",")?> 
+                            </div>
+                            <div class="col-xl-1 rowFormatoGeneral" style="<?php if(round($ttt2,2) <> round($ttt1,2)):echo 'background:rgb(240,111,0)';else:echo 'background:rgb(0,240,185)';endif; ?> ">
+                                 <?php echo "$ ".number_format( $ttt2 ,2,".",",")?> 
                             </div>
                         </div>
                     <?php endforeach;endif; ?>
                     <div class="col-xl-12 div12FormatoGeneral" style="background:yellow;">
-                        <div class="col-xl-4 rowFormatoGeneral">
+                        <div class="col-xl-3 rowFormatoGeneral">
                                     
                         </div>
                         <div class="col-xl-2 rowFormatoGeneral">
@@ -175,6 +183,9 @@
                         </div>
                         <div class="col-xl-2 rowFormatoGeneral">
                              <?php echo "$ ".number_format( (floatval($frutas)+floatval($verduras)+floatval($abarrotes)) ,2,".",",")?> 
+                        </div>
+                        <div class="col-xl-1 rowFormatoGeneral">
+                             
                         </div>
                     </div>
                 </div>

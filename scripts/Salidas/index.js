@@ -12,7 +12,7 @@ $(document).off("change", "#file_cotizaciones").on("change", "#file_cotizaciones
             }else{
                 unblockPage();
                 $("#file_cotizaciones").val("");
-                //setTimeout("location.reload()", 1300, toastr.success(resp.desc, user_name), "");
+                location.reload()
             }
         }); 
 });
@@ -42,7 +42,7 @@ $(document).off("change", "#file_remisiones").on("change", "#file_remisiones", f
             }else{
                 unblockPage();
                 $("#file_remisiones").val("");
-                //setTimeout("location.reload()", 1300, toastr.success(resp.desc, user_name), "");
+                location.reload()
             }
         }); 
 });
